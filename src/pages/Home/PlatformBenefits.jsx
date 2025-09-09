@@ -31,7 +31,7 @@ function Card({ img, title, desc }) {
 
 function PlatformBenefits() {
     return (
-        <div className='w-full text-center flex flex-col justify-center items-center gap-y-[50px] py-[150px] px-[10px]'>
+        <div className='w-full text-center flex flex-col justify-center items-center gap-y-[50px] py-[60px] sm:py-[150px] px-[10px]'>
             <h3
                 className='max-xl:text-[25px] xl:text-[35px] text-[#581838]'
                 style={{

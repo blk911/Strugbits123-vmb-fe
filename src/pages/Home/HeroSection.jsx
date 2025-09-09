@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 function HeroSection() {
   return (
    <div
-      className='max-xl:h-[658px] xl:h-[700px] w-full py-[37px] px-[26px]'
+      className='h-auto lg:h-[658px] xl:h-[700px] w-full py-[37px] px-[26px]'
       style={{
         background: `linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), linear-gradient(180deg, #FF92A5 0%, #FFFFFF 100%)`
       }}
@@ -29,7 +29,7 @@ function HeroSection() {
         </div>
         <div className='h-full flex flex-col justify-center items-center gap-y-[31px] xl:gap-y-[45px]'>
           <h2
-            className='max-xl:text-[100px] xl:text-[140px] font-normal text-center  text-[#581838] max-xl:leading-[90px] xl:leading-[100px]'
+            className='text-[70px] sm:text-[100px] xl:text-[140px] font-normal text-center  text-[#581838] leading-[70px] lg:leading-[90px] xl:leading-[100px]'
             style={{
               fontFamily: 'Italianno, cursive',
               fontWeight: 400,
@@ -41,12 +41,11 @@ function HeroSection() {
             Connecting Salons & Customers
           </h2>
           <h3
-            className='max-xl:text-[35px] xl:text-[50px] font-medium text-center text-[#581838]'
+            className='text-[20px] max-sm:leading-[30px] sm:text-[35px] xl:text-[50px] font-medium text-center text-[#581838]'
             style={{
               fontFamily: 'Poppins, sans-serif',
               fontWeight: 500,
               fontStyle: 'normal',
-              lineHeight: '45px',
               letterSpacing: '0%',
             }}
           >

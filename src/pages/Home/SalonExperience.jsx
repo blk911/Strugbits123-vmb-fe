@@ -19,7 +19,7 @@ function SalonExperience() {
 
     return (
         <div
-            className='max-lg:h-auto lg:h-[500px] w-full bg-no-repeat bg-center bg-cover max-sm:pt-[60px] lg:px-[15px] px-[10px]'
+            className='max-lg:h-auto lg:h-[500px] w-full bg-no-repeat bg-right bg-cover max-lg:pt-[60px] lg:px-[15px] px-[10px]'
             style={{
                 backgroundImage: `url(${pic1})`,
             }}
@@ -37,7 +37,7 @@ function SalonExperience() {
                         <br />
                         New Era of Salon Invites?
                     </h4>
-                    <div className='flex gap-x-[20px]'>
+                    <div className='flex flex-col sm:flex-row gap-x-[20px] gap-y-[10px]'>
                         <Button text="List Your Salon Now" classes={'bg-[#FFFFFF] text-[#581838] w-max'} textclass={'text-[16px]'} />
                         <Button text="Gift Your First Service" classes={'bg-[#FFFFFF] text-[#581838] w-max'} textclass={'text-[16px]'} />
                     </div>
@@ -45,7 +45,7 @@ function SalonExperience() {
                 <img
                     src={pic2}
                     alt=""
-                    className='h-[400px] object-fill max-lg:w-full lg:w-[800px] self-end'
+                    className='h-[400px] max-lg:w-full lg:w-[600px] self-end'
                     style={imgShadow}
                 />
             </div>

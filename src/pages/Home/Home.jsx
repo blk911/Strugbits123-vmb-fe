@@ -5,6 +5,7 @@ import HeroSection from './HeroSection'
 import PlatformBenefits from './PlatformBenefits'
 import SalonChoice from './SalonChoice'
 import SalonExperience from './SalonExperience'
+import TopSalons from './TopSalons'
 
 function Home() {
   return (
@@ -15,6 +16,7 @@ function Home() {
     <GiftsAndInvite />
     <SalonChoice />
     <SalonExperience />
+    <TopSalons />
     </>
   )
 }

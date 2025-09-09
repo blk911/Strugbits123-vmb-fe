@@ -13,7 +13,8 @@ import logo11 from '../assets/logos/logo-11.png'
 
 export default function LogoMarquee() {
   return (
-   <div className="relative py-[58px] w-full bg-white overflow-hidden">
+   <div className="flex justify-center items-center w-full">
+    <div className="relative pt-[50px] sm:py-[58px] w-full max-w-[1920px] bg-white overflow-hidden">
   {/* Left gradient */}
   <div
     className="absolute left-0 top-0 h-full w-[120px] pointer-events-none z-10"
@@ -42,6 +43,7 @@ export default function LogoMarquee() {
     <img src={logo11} alt="Logo 11" className="h-12 mx-4" />
   </Marquee>
 </div>
+   </div>
 
   );
 }
