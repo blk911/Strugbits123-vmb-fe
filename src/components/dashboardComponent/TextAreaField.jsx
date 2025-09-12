@@ -1,0 +1,42 @@
+import { Textarea } from "@headlessui/react";
+
+export default function TextAreaField({
+  label = "Service Description",
+  name = "description",
+  placeholder = "Enter description",
+}) {
+  return (
+    <div className="flex flex-col gap-y-[8px]">
+      {/* Label */}
+      <label
+        htmlFor={name}
+        className="text-[14px] lg:text-[16px] font-poppins font-medium text-[#404040]"
+        style={{
+          fontFamily: "Poppins, sans-serif",
+          fontWeight: 500,
+          fontStyle: "normal",
+          lineHeight: "20px",
+        }}
+      >
+        {label}
+      </label>
+
+      {/* Textarea */}
+      <Textarea
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        rows={4} // adjust height
+        className="border border-[#E5E5E5] h-28 px-3 py-2 rounded-md
+                   text-[12px] leading-[24px] font-poppins font-normal
+                   placeholder:text-[#00000033] focus:outline-none resize-none"
+        style={{
+          fontFamily: "Poppins, sans-serif",
+          fontWeight: 400,
+          fontStyle: "normal",
+          letterSpacing: "0%",
+        }}
+      />
+    </div>
+  );
+}

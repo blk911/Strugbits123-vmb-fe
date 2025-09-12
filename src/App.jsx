@@ -1,16 +1,29 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import { Home, About } from "./pages";
+import SiteLayout from "./components/layout/site/SiteLayout";
+import DashboardLayout from "./components/layout/dashboard/DashboardLayout";
+
+// Site pages
+import Home from "./pages/Site/Home/Home";
+import About from "./pages/Site/About/About";
+
+// Dashboard pages
+import { DashboardHome } from "./pages/Dashboard";
 
 export default function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        {/* Public Site */}
+        <Route element={<SiteLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-        </Routes>
-      </Layout>
+        </Route>
+
+        {/* Dashboard */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/admin" element={<DashboardHome />} />
+        </Route>
+      </Routes>
     </Router>
   );
 }
