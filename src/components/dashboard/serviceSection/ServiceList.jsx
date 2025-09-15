@@ -8,8 +8,8 @@ function ServiceList() {
     return (
         <div className='w-full'>
             <div className='w-full rounded-[10px] flex items-center justify-between bg-[#FF92A51A] py-[16px] px-[20px]'>
-                <div className='flex items-center gap-x-[12px]'>
-                    <div className='rounded-[8px] flex justify-center items-center border-1 border-[#E5E7EB] bg-white h-[40px] px-[12px]'>
+                <div className='flex max-sm:flex-col items-center gap-x-[12px] max-sm:gap-y-[10px]'>
+                    <div className='rounded-[8px]  flex max-sm:self-start  justify-center items-center border-1 border-[#E5E7EB] bg-white h-[40px] px-[12px]'>
                         <img src={temp} alt="Edit" />
                     </div>
                     <div className='flex flex-col'>
