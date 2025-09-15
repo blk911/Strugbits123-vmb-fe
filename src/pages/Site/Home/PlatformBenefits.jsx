@@ -29,6 +29,7 @@ function Card({ img, title, desc }) {
   );
 }
 
+
 function PlatformBenefits() {
   return (
     <div className="w-full text-center flex flex-col justify-center items-center gap-y-[50px] py-[60px] sm:pb-[150px] px-[10px]">

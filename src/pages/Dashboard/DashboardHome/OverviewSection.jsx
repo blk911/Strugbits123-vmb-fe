@@ -1,6 +1,6 @@
 import React from "react";
 
-function CardsInfo() {
+function CardsInfo({title, value}) {
   return (
     <div className="flex bg-white p-[20px] gap-x-[10px] rounded-[10px] justify-between items-center">
       <div className="flex flex-col gap-y-[10px] ">
@@ -11,7 +11,7 @@ function CardsInfo() {
             fontWeight: 500,
           }}
         >
-          Today's Bookings
+          {title}
         </span>
 
         <span
@@ -21,7 +21,7 @@ function CardsInfo() {
             fontWeight: 700,
           }}
         >
-          24
+          {value}
         </span>
       </div>
       <div className="px-[16px] h-[52px] bg-[#FF92A54D] flex justify-center items-center rounded-[8px]">
@@ -44,7 +44,7 @@ function CardsInfo() {
 
 function OverviewSection() {
   return (
-    <div className="w-full grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-x-[30px] gap-y-[20px]">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4  gap-x-[30px] gap-y-[20px]">
       <div className="flex flex-col gap-y-[10px]">
         <span
           className="max-xl:text-[30px] text-[#581838] xl:text-[30px] max-xl:leading-[20px]"
@@ -65,9 +65,9 @@ function OverviewSection() {
           Manage your salon efficiently
         </span>
       </div>
-      <CardsInfo />
-      <CardsInfo />
-      <CardsInfo />
+      <CardsInfo title={"Today's Bookings"} value={"24"}/>
+      <CardsInfo title={"Today's Revenue"} value={"$1,245"}/>
+      <CardsInfo title={"Active Services"} value={"12"} />
     </div>
   );
 }

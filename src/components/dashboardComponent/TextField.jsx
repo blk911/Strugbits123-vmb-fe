@@ -3,10 +3,12 @@ import { Input } from "@headlessui/react";
 export default function TextField({
   label = "Service Name",
   name = "full_name",
-  placeholder = "Select Service"
+  placeholder = "Select Service",
+  classInput = '',
+  classes=''
 }) {
   return (
-    <div className="flex flex-col gap-y-[8px]">
+    <div className={`flex flex-col gap-y-[8px] ${classes}`}>
       {/* Label */}
       <label
         htmlFor={name}
@@ -27,9 +29,9 @@ export default function TextField({
         name={name}
         type="text"
         placeholder={placeholder}
-        className="border border-[#E5E5E5] h-12 px-3 rounded-md
+        className={`border border-[#E5E5E5] h-12 px-3 rounded-md
                    text-[12px] leading-[24px] font-poppins font-normal 
-                   placeholder:text-[#00000033] focus:outline-none "
+                   placeholder:text-[#00000033] focus:outline-none ${classInput}`}
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 400,

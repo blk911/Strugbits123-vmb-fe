@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/Dropdown/Dropdown";
+import { useDashboardModal } from "../../../../pages/Dashboard/ModalProvider";
 
 function UserMenu() {
   const [open, setOpen] = useState(false);
+  const { openModal } = useDashboardModal();
   const ref = useRef(null);
 
   const toggle = () => setOpen((prev) => !prev);
@@ -19,11 +21,7 @@ function UserMenu() {
   }, []);
 
   const menuItems = [
-    { label: "Profile Setting", onClick: () => console.log("Profile") },
-    {
-      label: "Notification Setting",
-      onClick: () => console.log("Notifications"),
-    },
+    { label: "Profile Setting", onClick: () => openModal("editProfile") },
     { label: "Log Out", onClick: () => console.log("Log out"), danger: true },
   ];
 

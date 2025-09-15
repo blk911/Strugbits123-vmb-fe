@@ -1,22 +1,24 @@
 function ButtonList({ desc, svg, classes }) {
   return (
     <button
-      className={`flex py-[12px] pl-[12px] pr-[66px] rounded-[14px] items-center gap-x-[16px] max-xl:text-[16px] xl:text-[16px] max-xl:leading-[20px] ${classes}`}
+      className={`flex py-[12px] pl-[12px] sm:pr-[66px] rounded-[14px] items-center gap-x-[16px] max-xl:text-[16px] xl:text-[16px] max-xl:leading-[20px] ${classes}`}
       style={{
         fontFamily: "Poppins, sans-serif",
         fontWeight: 500,
       }}
     >
       {svg}
-      {desc}
+      {/* Hide text on mobile (max width breakpoint) */}
+      <span className="hidden xl:inline">{desc}</span>
     </button>
   );
 }
 
+
 function DashboardSidebar() {
   return (
     <div className="h-full bg-white flex flex-col ">
-      <div className="flex flex-col gap-y-[10px] px-[30px] py-[30px]">
+      <div className="flex flex-col gap-y-[10px] px-[20px] py-[30px]">
         <ButtonList
           classes={"bg-[#FF92A5] text-white"}
           svg={

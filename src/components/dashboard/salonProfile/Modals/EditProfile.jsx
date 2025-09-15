@@ -78,7 +78,7 @@ function EditProfileModal() {
                     </span>
                     <img src={crossIcon} alt="Close" className="cursor-pointer" onClick={closeModal} />
                 </div>
-                <div className='w-full flex gap-x-[23px]'>
+                <div className='w-full flex max-sm:flex-col gap-y-[23px] gap-x-[23px]'>
                     <ProfileAndSaloonInfo>
                         <TextField
                             label='Full Name'
@@ -116,7 +116,7 @@ function EditProfileModal() {
                 </div>
                 <Button
                     text="Update Profile"
-                    classes={'self-end w-[180px] '}
+                    classes={'self-end sm:w-[180px] w-full '}
                 />
             </DialogPanel>
         </Modal>

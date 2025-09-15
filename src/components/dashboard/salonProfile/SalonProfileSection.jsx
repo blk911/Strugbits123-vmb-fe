@@ -86,7 +86,7 @@ function SalonProfileSection() {
           Salon Profile
         </span>
 
-        <img src={editIcon} alt="Edit" />
+        <img src={editIcon} alt="Edit" className='cursor-pointer' onClick={() => openModal("editProfile")} />
       </div>
 
       <div className='w-full flex flex-col items-center justify-center gap-y-[10px]'>

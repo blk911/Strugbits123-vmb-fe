@@ -14,7 +14,7 @@ function AddServiceModal() {
 
     return (
         <Modal isOpen={isOpen} closeModal={closeModal}>
-            <DialogPanel className="w-full flex flex-col gap-y-[32px] lg:w-max transform overflow-hidden rounded-2xl bg-white p-6  text-left align-middle shadow-xl transition-all">
+            <DialogPanel className="w-full flex flex-col gap-y-[20px] sm:gap-y-[32px] lg:w-max transform overflow-hidden rounded-2xl bg-white p-6  text-left align-middle shadow-xl transition-all">
                 <div className='w-full flex items-center justify-between'>
                     <span
                         className="max-xl:text-[24px] text-[#581838] xl:text-[26px] max-xl:leading-[20px]"
@@ -27,18 +27,18 @@ function AddServiceModal() {
                     </span>
                     <img src={crossIcon} alt="Close" className="cursor-pointer" onClick={closeModal} />
                 </div>
-                <SelectField label='Service Name' name='serviceduration' classes={"!appearance-none"} />
+                <SelectField label='Service Name' option={["Select Service"]} classes={"!appearance-none"} />
                 {/* <div className='w-full flex flex-wrap gap-x-[36px] items-center'>
                      <TextField label='Service Price' name='price'/>
                     <SelectField label='Service Duration' name='serviceduration' />
                     <SelectField label='Service Category' name='servicecategory' />
                 </div> */}
-                 <div className='w-full grid grid-cols-3 items-center gap-x-[36px]'>
+                 <div className='w-full grid grid-cols-2 gap-y-[10px] items-center gap-x-[36px]'>
                      <TextField label='Service Price' name='price' placeholder='Price'/>
-                    <SelectField label='Service Duration' name='serviceduration' />
-                    <SelectField label='Service Category' name='servicecategory' />
+                    <SelectField label='Service Duration' option={["01 Hr - 02Hr"]} classes='h-[48px] text-[#00000080]' />
+                    <SelectField label='Service Category' name='servicecategory' option={["Hair Cutting"]} classes='h-[48px] text-[#00000080]'/>
                 </div>
-                <TextAreaField />
+                <TextAreaField classes={"!text-[16px]"}/>
                 <Button 
                 text="Add Service"
                 classes={"w-[160px] self-end"}
