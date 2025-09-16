@@ -3,14 +3,14 @@ import editIcon from './icons/edit.svg'
 import deleteIcon from './icons/delete.svg'
 import temp from './icons/temp.svg'
 
-function ServiceList() {
+function ServiceList({title, value, classes, icon}) {
 
     return (
         <div className='w-full'>
-            <div className='w-full rounded-[10px] flex items-center justify-between bg-[#FF92A51A] py-[16px] px-[20px]'>
+            <div className={`w-full rounded-[10px] flex items-center justify-between bg-[#FF92A51A] py-[16px] px-[20px] ${classes}`}>
                 <div className='flex max-sm:flex-col items-center gap-x-[12px] max-sm:gap-y-[10px]'>
                     <div className='rounded-[8px]  flex max-sm:self-start  justify-center items-center border-1 border-[#E5E7EB] bg-white h-[40px] px-[12px]'>
-                        <img src={temp} alt="Edit" />
+                      {icon}
                     </div>
                     <div className='flex flex-col'>
                         <span
@@ -20,7 +20,7 @@ function ServiceList() {
                                 fontWeight: 500,
                             }}
                         >
-                            Hair Cut & Style
+                           {title}
                         </span>
                         <span
                             className="max-xl:text-[14px] text-[#581838] xl:text-[16px] max-xl:leading-[20px]"
@@ -29,7 +29,7 @@ function ServiceList() {
                                 fontWeight: 400,
                             }}
                         >
-                            60 min • $45
+                           {value}
                         </span>
                     </div>
                 </div>

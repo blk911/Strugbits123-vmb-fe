@@ -10,7 +10,7 @@ import TextAreaField from '../../../dashboardComponent/TextAreaField'
 import Button from '../../../dashboardComponent/Button'
 import Fileupload from '../../../dashboardComponent/Fileupload'
 
-function ProfileAndSaloonInfo({ children }) {
+function ProfileAndSaloonInfo({ children, title, name, status }) {
     return (
 
         <div className='w-full flex flex-col gap-y-[20px]'>
@@ -21,7 +21,7 @@ function ProfileAndSaloonInfo({ children }) {
                     fontWeight: 600,
                 }}
             >
-                Personal Information
+                {title}
             </span>
             <div className='w-full flex gap-x-[20px] items-center'>
                 <div className='h-[80px] w-[80px] relative'>
@@ -40,7 +40,7 @@ function ProfileAndSaloonInfo({ children }) {
                             fontWeight: 500,
                         }}
                     >
-                        Sarah Johnson
+                        {name}
                     </span>
                     <span
                         className="max-xl:text-[16px] text-[#737373] xl:text-[18px] max-xl:leading-[20px]"
@@ -49,7 +49,7 @@ function ProfileAndSaloonInfo({ children }) {
                             fontWeight: 400,
                         }}
                     >
-                        Salon Owner
+                        {status}
                     </span>
                 </div>
             </div>
@@ -79,7 +79,7 @@ function EditProfileModal() {
                     <img src={crossIcon} alt="Close" className="cursor-pointer" onClick={closeModal} />
                 </div>
                 <div className='w-full flex max-sm:flex-col gap-y-[23px] gap-x-[23px]'>
-                    <ProfileAndSaloonInfo>
+                    <ProfileAndSaloonInfo title={"Personal Information"} name={"Sarah Johnson"} status={"Salon Owner"}>
                         <TextField
                             label='Full Name'
                             placeholder='Sarah Johnson'
@@ -93,13 +93,14 @@ function EditProfileModal() {
                             placeholder='+1 234 567 890'
                         />
                     </ProfileAndSaloonInfo>
-                    <ProfileAndSaloonInfo>
+
+                    <ProfileAndSaloonInfo title={"Salon Information"} name={"Glam Beauty Salon"} status={"Upload Logo"}>
                         <TextField
-                            label='Full Name'
+                            label='Salon Name'
                             placeholder='Sarah Johnson'
                         />
                         <TextField
-                            label='Email'
+                            label='Address'
                             placeholder='sarah.johnson@example.com'
                         />
                         <TextField
@@ -107,7 +108,7 @@ function EditProfileModal() {
                             placeholder='+1 234 567 890'
                         />
                         <TextAreaField
-                            label='About'
+                            label='Description'
                             placeholder='Write something about your salon...'
                         />
                         <Fileupload />

@@ -5,6 +5,7 @@ export default function TextField({
   name = "full_name",
   placeholder = "Select Service",
   classInput = '',
+  type="text",
   classes=''
 }) {
   return (
@@ -27,7 +28,7 @@ export default function TextField({
       <Input
         id={name}
         name={name}
-        type="text"
+        type={type}
         placeholder={placeholder}
         className={`border border-[#E5E5E5] h-12 px-3 rounded-md
                    text-[12px] leading-[24px] font-poppins font-normal 

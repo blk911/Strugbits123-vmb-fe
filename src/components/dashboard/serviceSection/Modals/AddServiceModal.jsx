@@ -27,14 +27,14 @@ function AddServiceModal() {
                     </span>
                     <img src={crossIcon} alt="Close" className="cursor-pointer" onClick={closeModal} />
                 </div>
-                <SelectField label='Service Name' option={["Select Service"]} classes={"!appearance-none"} />
+                <SelectField label='Service Name' option={["Select Service"]} classes={"!text-[#00000033] !appearance-none text-[#00000080]"} />
                 {/* <div className='w-full flex flex-wrap gap-x-[36px] items-center'>
                      <TextField label='Service Price' name='price'/>
                     <SelectField label='Service Duration' name='serviceduration' />
                     <SelectField label='Service Category' name='servicecategory' />
                 </div> */}
-                 <div className='w-full grid grid-cols-2 gap-y-[10px] items-center gap-x-[36px]'>
-                     <TextField label='Service Price' name='price' placeholder='Price'/>
+                 <div className='w-full grid grid-col-2 sm:grid-cols-3 gap-y-[10px] items-center gap-x-[36px]'>
+                     <TextField label='Service Price' name='price' placeholder='Price' classInput='placeholder:text-[#00000080] !text-sm'/>
                     <SelectField label='Service Duration' option={["01 Hr - 02Hr"]} classes='h-[48px] text-[#00000080]' />
                     <SelectField label='Service Category' name='servicecategory' option={["Hair Cutting"]} classes='h-[48px] text-[#00000080]'/>
                 </div>

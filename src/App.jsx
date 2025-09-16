@@ -21,7 +21,7 @@ export default function App() {
 
         {/* Dashboard */}
         <Route element={<DashboardLayout />}>
-          <Route path="/admin" element={<DashboardHome />} />
+          <Route path="/saloon" element={<DashboardHome />} />
         </Route>
       </Routes>
     </Router>
