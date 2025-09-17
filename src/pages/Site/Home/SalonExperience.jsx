@@ -19,7 +19,7 @@ function SalonExperience() {
 
   return (
     <div
-      className="max-lg:h-auto lg:h-[500px] w-full bg-no-repeat bg-right bg-cover max-lg:pt-[60px] lg:px-[15px] px-[10px]"
+      className="max-lg:h-auto lg:h-auto lg:pt-[50px] w-full bg-no-repeat bg-right bg-cover max-lg:pt-[60px] lg:px-[15px] px-[10px]"
       style={{
         backgroundImage: `url(${pic1})`,
       }}

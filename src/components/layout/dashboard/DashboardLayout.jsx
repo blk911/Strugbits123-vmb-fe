@@ -5,7 +5,7 @@ import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
 import DashboardFooter from "./DashboardFooter/DashboardFooter";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 
-import { DashboardModalProvider, useDashboardModal } from "../../../pages/Dashboard/ModalProvider";
+import { DashboardModalProvider, useDashboardModal } from "../../../pages/saloon/ModalProvider";
 import AddServiceModal from "../../dashboard/serviceSection/Modals/AddServiceModal";
 import EditProfileModal from "../../dashboard/salonProfile/Modals/EditProfile";
 import InviteModal from "../../dashboard/quickInvites/Modals/InviteModal";

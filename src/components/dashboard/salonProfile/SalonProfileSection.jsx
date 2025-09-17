@@ -6,7 +6,7 @@ import phoneIcon from './icons/phone.svg'
 import clockIcon from './icons/clock.svg'
 import ratingIcon from './icons/rating.svg'
 import Button from '../../dashboardComponent/Button'
-import { useDashboardModal } from '../../../pages/Dashboard/ModalProvider';
+import { useDashboardModal } from '../../../pages/saloon/ModalProvider';
 
 
 function Lists() {

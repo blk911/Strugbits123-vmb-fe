@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../../dashboardComponent/Button'
 import ServiceList from './ServiceList'
-import { useDashboardModal } from '../../../pages/Dashboard/ModalProvider';
+import { useDashboardModal } from '../../../pages/saloon/ModalProvider';
 
 
 function ServicesSection() {

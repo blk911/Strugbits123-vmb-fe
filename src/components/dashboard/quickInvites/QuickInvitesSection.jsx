@@ -3,7 +3,7 @@ import crossIcon from '../../dashboardComponent/icons/cross.svg';
 import TextField from '../../dashboardComponent/TextField';
 import Button from '../../dashboardComponent/Button';
 import mailIcon from '../../dashboardComponent/icons/mail.svg'
-import { useDashboardModal } from '../../../pages/Dashboard/ModalProvider';
+import { useDashboardModal } from '../../../pages/saloon/ModalProvider';
 
 function QuickInvitesSection() {
 

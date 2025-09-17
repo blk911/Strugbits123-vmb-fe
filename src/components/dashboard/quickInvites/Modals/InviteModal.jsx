@@ -1,7 +1,7 @@
 import React from 'react'
 import { DialogPanel, DialogTitle } from '@headlessui/react'
 import Modal from '../../../dashboardComponent/Modal'
-import { useDashboardModal } from '../../../../pages/Dashboard/ModalProvider'
+import { useDashboardModal } from '../../../../pages/saloon/ModalProvider'
 import crossIcon from '../../../dashboardComponent/icons/cross.svg'
 import qrIcon from '../icons/qr.svg';
 import sendMailIcon from '../icons/sendMail.svg'

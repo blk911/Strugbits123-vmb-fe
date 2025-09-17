@@ -6,8 +6,10 @@ import DashboardLayout from "./components/layout/dashboard/DashboardLayout";
 import Home from "./pages/Site/Home/Home";
 import About from "./pages/Site/About/About";
 
-// Dashboard pages
-import { DashboardHome } from "./pages/Dashboard";
+// Saloon pages
+import { DashboardHome } from "./pages/saloon";
+// admin
+import { Home as AdminHome } from "./pages/admin";
 
 export default function App() {
   return (
@@ -19,10 +21,16 @@ export default function App() {
           <Route path="/about" element={<About />} />
         </Route>
 
-        {/* Dashboard */}
+        {/* saloon */}
         <Route element={<DashboardLayout />}>
           <Route path="/saloon" element={<DashboardHome />} />
         </Route>
+
+          {/* admin */}
+        <Route element={<DashboardLayout />}>
+          <Route path="/admin" element={<AdminHome />} />
+        </Route>
+
       </Routes>
     </Router>
   );

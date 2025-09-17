@@ -1,6 +1,6 @@
 import { DialogPanel, DialogTitle } from '@headlessui/react'
 import Modal from '../../../dashboardComponent/Modal'
-import { useDashboardModal } from '../../../../pages/Dashboard/ModalProvider'
+import { useDashboardModal } from '../../../../pages/saloon/ModalProvider'
 import crossIcon from '../icons/cross.svg'
 import TextField from '../../../dashboardComponent/TextField'
 import SelectField from '../../../dashboardComponent/SelectField'

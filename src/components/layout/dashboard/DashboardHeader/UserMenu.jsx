@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/Dropdown/Dropdown";
-import { useDashboardModal } from "../../../../pages/Dashboard/ModalProvider";
+import { useDashboardModal } from "../../../../pages/saloon/ModalProvider";
 
 function UserMenu() {
   const [open, setOpen] = useState(false);
