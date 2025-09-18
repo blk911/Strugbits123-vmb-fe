@@ -1,7 +1,7 @@
 import React from "react";
 import pic1 from "../../../assets/salon-experience.png";
 import pic2 from "../../../assets/dashboard-1.png";
-import Button from "../../../components/common/Button";
+import Button from "../../../components/common/site/Button";
 
 function SalonExperience() {
   // Custom box shadow for the image

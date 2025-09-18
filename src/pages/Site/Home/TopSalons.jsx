@@ -1,5 +1,5 @@
 import React from "react";
-import SalonSlider from "../../../components/common/Slider";
+import SalonSlider from "../../../components/common/site/Slider";
 
 function TopSalons() {
   return (

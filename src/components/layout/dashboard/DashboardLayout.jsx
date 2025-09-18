@@ -5,10 +5,11 @@ import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
 import DashboardFooter from "./DashboardFooter/DashboardFooter";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 
-import { DashboardModalProvider, useDashboardModal } from "../../../pages/saloon/ModalProvider";
-import AddServiceModal from "../../dashboard/serviceSection/Modals/AddServiceModal";
-import EditProfileModal from "../../dashboard/salonProfile/Modals/EditProfile";
-import InviteModal from "../../dashboard/quickInvites/Modals/InviteModal";
+import { DashboardModalProvider, useDashboardModal } from "../../../pages/ModalProvider";
+import AddServiceModal from "../../dashboard/saloon/home/serviceSection/Modals/AddServiceModal";
+import EditProfileModal from "../../dashboard/saloon/home/salonProfile/Modals/EditProfile";
+import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteModal";
+import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
 
 function DashboardModals() {
   const { activeModal, closeModal } = useDashboardModal();
@@ -18,6 +19,7 @@ function DashboardModals() {
       <AddServiceModal isOpen={activeModal === "addService"} onClose={closeModal} />
       <EditProfileModal isOpen={activeModal === "editProfile"} onClose={closeModal} />
       <InviteModal isOpen={activeModal === "invite"} onClose={closeModal} />
+      <EditAdminProfile isOpen={activeModal === "editAdminProfile"} onClose={closeModal} />
     </>
   );
 }
@@ -28,7 +30,7 @@ function DashboardLayout() {
     <DashboardModalProvider>
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <aside className="min-w-[1%] xl:min-w-[15%] bg-white/70 backdrop-blur-md sticky top-0 h-screen flex flex-col">
+        <aside className="max-sm:min-w-[20%] xl:min-w-[15%] bg-white/70 backdrop-blur-md sticky top-0 h-screen flex flex-col">
           <div className="h-[70px] flex items-center px-[20px]">
             <img src={logo} alt="Logo" className="h-[50px]" />
           </div>
@@ -38,7 +40,7 @@ function DashboardLayout() {
         </aside>
         {/* ---End--- */}
 
-        <div className="w-[100%] sm:flex-1 flex flex-col">
+        <div className="w-[80%] sm:w-[100%] sm:flex-1 flex flex-col">
           {/* Top Navbar with glassmorphism */}
           <DashboardHeader
             menuItems={[

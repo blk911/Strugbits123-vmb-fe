@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
-import Button from "../../common/Button";
+import Button from "../../common/site/Button";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -1,3 +1,3 @@
 import React from "react";
-import DashboardHome from "./DashboardHome/DashboardHome";
+import DashboardHome from "./Home/DashboardHome";
 export { DashboardHome };

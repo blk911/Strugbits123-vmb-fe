@@ -2,7 +2,7 @@ import React from "react";
 
 import pic1 from "../../../assets/gift-1.png";
 import pic2 from "../../../assets/gift-2.png";
-import Button from "../../../components/common/Button";
+import Button from "../../../components/common/site/Button";
 
 function Card({ img, title, desc, style, border, btnText }) {
   return (

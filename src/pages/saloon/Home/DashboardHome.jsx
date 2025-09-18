@@ -1,11 +1,12 @@
-import React from 'react'
-import OverviewSection from '../../../components/common/dashboard/overviewsection/OverviewSection'
-import SaloonRequests from '../../../components/dashboard/admin/home/SaloonRequests'
-import AdminProfile from '../../../components/dashboard/admin/home/AdminProfile'
+import React from "react";
+import OverviewSection from "../../../components/common/dashboard/overviewsection/OverviewSection";
+import ServicesSection from "../../../components/dashboard/saloon/home/serviceSection/ServicesSection";
+import SalonProfileSection from "../../../components/dashboard/saloon/home/salonProfile/SalonProfileSection";
+import RevenueChart from "../../../components/common/dashboard/RevenueChart";
+import QuickInvitesSection from "../../../components/dashboard/saloon/home/quickInvites/QuickInvitesSection";
 
-function Home() {
-
-    const cardsInfo = [{
+function DashboardHome() {
+      const cardsInfo = [{
         title: "Pending Requests",
         value: "12",
         icon: <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,23 +29,24 @@ function Home() {
         </svg>
 
     },
-    {
-        title: "Gifts Sent",
-        value: "89",
-        icon: <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7.55078 3.1875L8.91016 5.5H8.85938H6.04688C5.18359 5.5 4.48438 4.80078 4.48438 3.9375C4.48438 3.07422 5.18359 2.375 6.04688 2.375H6.13281C6.71484 2.375 7.25781 2.68359 7.55078 3.1875ZM2.60938 3.9375C2.60938 4.5 2.74609 5.03125 2.98438 5.5H1.35938C0.667969 5.5 0.109375 6.05859 0.109375 6.75V9.25C0.109375 9.94141 0.667969 10.5 1.35938 10.5H18.8594C19.5508 10.5 20.1094 9.94141 20.1094 9.25V6.75C20.1094 6.05859 19.5508 5.5 18.8594 5.5H17.2344C17.4727 5.03125 17.6094 4.5 17.6094 3.9375C17.6094 2.03906 16.0703 0.5 14.1719 0.5H14.0859C12.8398 0.5 11.6836 1.16016 11.0508 2.23438L10.1094 3.83984L9.16797 2.23828C8.53516 1.16016 7.37891 0.5 6.13281 0.5H6.04688C4.14844 0.5 2.60938 2.03906 2.60938 3.9375ZM15.7344 3.9375C15.7344 4.80078 15.0352 5.5 14.1719 5.5H11.3594H11.3086L12.668 3.1875C12.9648 2.68359 13.5039 2.375 14.0859 2.375H14.1719C15.0352 2.375 15.7344 3.07422 15.7344 3.9375ZM1.35938 11.75V18.625C1.35938 19.6602 2.19922 20.5 3.23438 20.5H8.85938V11.75H1.35938ZM11.3594 20.5H16.9844C18.0195 20.5 18.8594 19.6602 18.8594 18.625V11.75H11.3594V20.5Z" fill="#FF92A5" />
-        </svg>
-
-    }
+    
     ]
 
-    return (
-        <div className="w-full h-full bg-[#EFEFEF] p-6 flex flex-col gap-y-[27px] max-sm:overflow-x-scroll">
-            <OverviewSection title='Admin Dashboard' subTitle='Manage your salon efficiently' data={cardsInfo} classes={'lg:grid-cols-4 xl:grid-cols-5 '} cardsClass={'flex-row-reverse'} />
-            <SaloonRequests />
-            <AdminProfile />
+  return (
+    <div className="w-full h-full bg-[#EFEFEF] p-6 flex flex-col gap-y-[27px] max-sm:overflow-x-scroll">
+      <OverviewSection title='Dashboard' subTitle='Manage your salon efficiently' data={cardsInfo}/>
+      <div className="w-full grid lg:grid-cols-[1fr_500px] gap-x-[50px] gap-y-[40px]">
+        <div className="w-full flex flex-col gap-y-[30px]">
+          <RevenueChart />
+          <ServicesSection />
         </div>
-    )
+        <div className="w-full flex flex-col gap-y-[30px]">
+          <SalonProfileSection />
+          <QuickInvitesSection />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default DashboardHome;

@@ -3,7 +3,7 @@ import pic1 from "../../../assets/pic-1.png";
 import pic2 from "../../../assets/pic-2.png";
 import pic3 from "../../../assets/pic-3.png";
 import pic4 from "../../../assets/pic-4.png";
-import Button from "../../../components/common/Button";
+import Button from "../../../components/common/site/Button";
 
 function HeroSection() {
   return (

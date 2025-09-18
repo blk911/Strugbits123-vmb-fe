@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import profile from "../../../../assets/dashboard/profile.jpg";
-import Dropdown from "../../../common/Dropdown/Dropdown";
-import { useDashboardModal } from "../../../../pages/saloon/ModalProvider";
+import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
+import { useRole } from "../../../../context/RoleContext";
 
 function UserMenu() {
+  const {role} = useRole();
+
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();
   const ref = useRef(null);
@@ -21,7 +24,7 @@ function UserMenu() {
   }, []);
 
   const menuItems = [
-    { label: "Profile Setting", onClick: () => openModal("editProfile") },
+    { label: "Profile Setting", onClick: () => role == "admin" ? openModal("editAdminProfile") : openModal("editProfile") },
     { label: "Log Out", onClick: () => console.log("Log out"), danger: true },
   ];
 
