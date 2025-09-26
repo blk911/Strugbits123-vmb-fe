@@ -18,6 +18,8 @@ function Fileupload() {
             <Images />
             <Images />
 
+
+
             <label for="dropzone-file" class="flex flex-col items-center justify-center w-[94px] max-lg:pt[5px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white 00 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                 <div class="flex flex-col items-center justify-center ">
                     <svg width="42" height="37" viewBox="0 0 42 37" fill="none" xmlns="http://www.w3.org/2000/svg">

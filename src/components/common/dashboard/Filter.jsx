@@ -1,18 +1,24 @@
 import React from 'react'
 import TextField from './TextField'
 import SelectField from './SelectField'
+import { useDispatch } from 'react-redux'
+import { setSearchQuery } from '../../../store/features/admin/listsSaloonSlice'
 
-function Filter() {
+function Filter({ searchQuery }) {
+  const dispatch = useDispatch();
   return (
     <div className='w-full flex items-center gap-x-[10px]'>
       <TextField
         classes='w-full'
+        value={searchQuery}
         classInput='bg-white !placeholder-[#6B7280] !text-[14px]'
         label={false}
+        onChange={(e) => dispatch(setSearchQuery(e.target.value))}
         placeholder='Search (Owner,Salon,email,phone etc)'
       />
+
       <SelectField
-        classes={"!bg-transparent text-[#6B7280]"}
+        classes={"!bg-[#EFEFEF] text-[#6B7280]"}
         label={false}
         option={["Filter", "B", "C"]}
         icon={<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg">

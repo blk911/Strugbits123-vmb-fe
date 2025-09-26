@@ -5,7 +5,7 @@ import crossIcon from '../icons/cross.svg'
 import TextField from '../../../../../common/dashboard/TextField'
 import SelectField from '../../../../../common/dashboard/SelectField'
 import TextAreaField from '../../../../../common/dashboard/TextAreaField'
-import Button from '../../../../../common/site/Button'
+import Button from '../../../../../common/dashboard/Button'
 
 function AddServiceModal() {
     const { activeModal, closeModal } = useDashboardModal();

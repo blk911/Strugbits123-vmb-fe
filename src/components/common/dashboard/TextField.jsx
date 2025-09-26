@@ -5,8 +5,11 @@ export default function TextField({
   name = "full_name",
   placeholder = "Select Service",
   classInput = '',
+  onChange,
   type = "text",
-  classes = ''
+  classes = '',
+  // value = "",
+  icon = ""
 }) {
   return (
     <div className={`flex flex-col gap-y-[8px] ${classes}`}>
@@ -25,21 +28,47 @@ export default function TextField({
       </label>
       }
       {/* Input */}
-      <Input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        className={`border border-[#E5E5E5] h-12 px-3 rounded-md
+
+      {icon ?
+        <div className="relative w-full">
+          <Input
+            id={name}
+            name={name}
+            type={type}
+            onChange={onChange && ((e) => onChange(e))}
+            placeholder={placeholder}
+            className={`border border-[#E5E5E5] h-12 px-3 rounded-md
                    text-[12px] leading-[24px] font-poppins font-normal 
                    placeholder:text-[#00000033] focus:outline-none ${classInput}`}
-        style={{
-          fontFamily: "Poppins, sans-serif",
-          fontWeight: 400,
-          fontStyle: "normal",
-          letterSpacing: "0%",
-        }}
-      />
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 400,
+              fontStyle: "normal",
+              letterSpacing: "0%",
+            }}
+          />
+          <span className="absolute inset-y-0 left-3 flex items-center">
+            {icon}
+          </span>
+        </div>
+
+        : <Input
+          id={name}
+          name={name}
+          type={type}
+          onChange={onChange && ((e) => onChange(e))}
+          placeholder={placeholder}
+          className={`border border-[#E5E5E5] h-12 px-3 rounded-md
+                   text-[12px] leading-[24px] font-poppins font-normal 
+                   placeholder:text-[#00000033] focus:outline-none ${classInput}`}
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontWeight: 400,
+            fontStyle: "normal",
+            letterSpacing: "0%",
+          }}
+        />}
+
     </div>
   );
 }

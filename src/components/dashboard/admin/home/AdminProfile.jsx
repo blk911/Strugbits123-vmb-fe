@@ -29,7 +29,7 @@ function AdminProfile() {
                         <img src={cameraIcon} alt="Camera" />
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-x-[24px] gap-y-[16px]'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-x-[24px] gap-y-[16px]'>
                     <TextField
                         label='Full Name'
                         placeholder='Jessica Martinez'

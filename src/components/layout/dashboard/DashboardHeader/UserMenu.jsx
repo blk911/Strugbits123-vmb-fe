@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-import { useRole } from "../../../../context/RoleContext";
+import { useSelector } from "react-redux";
 
 function UserMenu() {
-  const {role} = useRole();
+  const { role } = useSelector((state) => state.role)
 
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();

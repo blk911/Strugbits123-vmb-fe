@@ -1,15 +1,19 @@
 import React from 'react'
 import profile from '../../../../assets/dashboard/profile.jpg'
 import Button from '../../../common/dashboard/Button'
+import { useDashboardModal } from '../../../../pages/ModalProvider'
 
 function ButtonsList() {
+    const { openModal } = useDashboardModal();
+
     return (
         <>
             <div className='flex gap-x-[12px]'>
                 <Button
                     text={"View"}
-                    classes={"bg-white"}
+                    classes={"bg-white  border border-[#581838] "}
                     textClasses={"!text-[#581838] max-sm:!text-[12px]"}
+                    onClick={() => { openModal("approveSaloons") }}
                     icon={<svg width="22" height="14" viewBox="0 0 22 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_663_4146)">
                             <path d="M10.8033 0.500055C13.0454 0.522514 15.1203 1.45213 17.0454 2.77723C18.4435 3.75816 19.701 4.91085 20.7856 6.20568C21.2085 6.69978 21.2452 7.26029 20.8467 7.72705C19.1204 9.74936 17.1351 11.4709 14.6383 12.5968C11.8173 13.8662 9.0331 13.7803 6.26415 12.4386C3.93546 11.3088 2.05519 9.66245 0.417458 7.74365C0.228336 7.53929 0.123901 7.27563 0.123901 7.0025C0.123901 6.72937 0.228336 6.4657 0.417458 6.26134C2.21621 4.16287 4.29011 2.38761 6.91231 1.28125C8.13762 0.761787 9.46344 0.495605 10.8033 0.500055ZM15.4291 7.01128C15.4257 5.79411 14.9215 4.62734 14.0259 3.76411C13.1303 2.90088 11.9156 2.41084 10.6454 2.4003C8.02112 2.3837 5.85548 4.43921 5.82083 6.97222C5.78618 9.50524 7.98239 11.6115 10.6301 11.6115C11.901 11.6046 13.1177 11.1176 14.0162 10.2564C14.9147 9.39511 15.4224 8.22903 15.4291 7.01128Z" fill="#581838" />
@@ -25,7 +29,7 @@ function ButtonsList() {
                 />
                 <Button
                     text={"Approve"}
-                    classes={"bg-white"}
+                    classes={"bg-white border border-[#581838] "}
                     textClasses={"!text-[#581838] max-sm:!text-[12px]"}
                     icon={<svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.1179 0.63208C12.4597 0.973877 12.4597 1.52895 12.1179 1.87075L5.11794 8.87075C4.77615 9.21255 4.22107 9.21255 3.87927 8.87075L0.379272 5.37075C0.0374756 5.02896 0.0374756 4.47388 0.379272 4.13208C0.721069 3.79028 1.27615 3.79028 1.61794 4.13208L4.49998 7.01138L10.882 0.63208C11.2238 0.290283 11.7789 0.290283 12.1207 0.63208H12.1179Z" fill="#581838" />
@@ -49,7 +53,7 @@ function ButtonsList() {
 function Lists() {
     return (
         <>
-            <div className='w-full flex max-lg:flex-col max-lg:gap-y-[20px] p-[20px] gap-x-[10px] justify-between items-center rounded-[10px] bg-[#FF92A533]'>
+            <div className='w-full flex max-lg:flex-col max-lg:gap-y-[20px] p-[20px] gap-x-[10px] justify-between items-center rounded-[10px] hover:bg-[#FF92A533] border-1 border-[#E5E7EB]'>
 
                 <div className='flex items-center gap-x-[16px] max-lg:self-start'>
                     <div

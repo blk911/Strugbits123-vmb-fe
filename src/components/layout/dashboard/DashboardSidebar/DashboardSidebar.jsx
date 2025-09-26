@@ -1,10 +1,11 @@
 import React from "react";
 import { menus } from "../../../../config/menuConfig";
-import { useRole } from "../../../../context/RoleContext";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function DashboardSidebar() {
-  const { role } = useRole();
+  // const { role } = useRole();
+  const {role} = useSelector((state)=> state.role)
   const items = menus[role] || [];
 
   return (

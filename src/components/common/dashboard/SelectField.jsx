@@ -13,6 +13,7 @@ export default function SelectField({
   name = "full_name",
   classes = "",
   icon, // <-- new prop
+  mainIcon = false
 }) {
   const [selected, setSelected] = useState(option[0]);
 
@@ -50,8 +51,10 @@ export default function SelectField({
       <div className="relative mt-1">
         <Listbox value={selected} onChange={setSelected}>
           <ListboxButton
-            className={`relative w-full cursor-default rounded-md border border-[#E5E5E5] bg-white py-2 pl-3 pr-10 text-left text-sm text-[#000000] focus:outline-none ${classes}`}
+            className={`relative ${mainIcon && ('flex items-center gap-x-[10px]')} w-full cursor-default rounded-md border border-[#E5E5E5] bg-white py-2 pl-3 pr-10 text-left text-sm text-[#000000] focus:outline-none ${classes}`}
           >
+            {mainIcon}
+
             <span
               className="block truncate"
               style={{
@@ -74,12 +77,14 @@ export default function SelectField({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
+
             <ListboxOptions
               className={`absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white border border-[#E5E5E5] text-sm shadow-lg focus:outline-none z-50 ${classes}`}
               style={{
                 backgroundColor: "#FFFFFF",
               }}
             >
+
               {option.map((opt) => (
                 <ListboxOption
                   key={opt}
