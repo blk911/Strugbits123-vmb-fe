@@ -33,7 +33,7 @@ export default function AuthForm() {
 
   return (
     <div
-      className="w-full min-h-screen flex items-center justify-center py-[80px]"
+      className="w-full min-h-screen flex items-center justify-center py-[80px] max-sm:px-5"
       style={{
         backgroundImage: `url(${bgImage})`,
         backgroundSize: "cover",
@@ -55,7 +55,7 @@ export default function AuthForm() {
         )}
 
         <div className="w-full flex items-center  gap-x-[10px]">
-          <PrevButton classes={`!cursor-pointer ${(nextState && mode == "signup") ? "flex" : "hidden"}`} />
+          <PrevButton classes={`!cursor-pointer ${(nextState && formValues.role !== "Customer" && mode == "signup") ? "flex" : "hidden"}`} />
           <FormButton nextState={nextState} submit={handleSubmit} />
         </div>
 
