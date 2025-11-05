@@ -11,7 +11,7 @@ import ClientRoutes from "./routes/ClientRoutes";
 export default function App() {
 
   const role = useSelector((state) => state.role.role);
-
+  console.log('Role From app==>',role)
   return (
     <Router>
       <Routes>

@@ -43,4 +43,21 @@ export const menus = {
       icon: <FaGift />,
     },
   ],
+  client: [
+    {
+      name: "Dashboard",
+      path: "/client",
+      icon: <FaChartLine />,
+    },
+    {
+      name: "Earnings",
+      path: "/client/earnings",
+      icon: <LiaDollarSignSolid />,
+    },
+    {
+      name: "Invites & Gifts",
+      path: "/client/invites_gifts",
+      icon: <FaGift />,
+    },
+  ],
 };
