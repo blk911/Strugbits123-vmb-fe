@@ -1,10 +1,32 @@
 @import "tailwindcss";
 
 
-:root {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@keyframes arrow-marquee {
+  0% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  70% {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
+@utility animate-arrow-marquee {
+  animation: arrow-marquee 0.9s ease-in-out forwards;
+}
+
+@source inline("{group-hover:,}animate-arrow-marquee");
 

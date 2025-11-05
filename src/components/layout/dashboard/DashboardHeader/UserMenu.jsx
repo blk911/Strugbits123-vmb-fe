@@ -3,16 +3,19 @@ import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
+import { clearRole } from "../../../../store/features/roleSlice";
+import { setAuthMode } from "../../../../store/features/authSlice";
+import { useNavigate } from "react-router-dom";
 function UserMenu() {
-  const { role } = useSelector((state) => state.role)
+  const { role } = useSelector((state) => state.role);
 
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();
   const ref = useRef(null);
-
+  const dispatch = useDispatch();
   const toggle = () => setOpen((prev) => !prev);
-
+const navigate = useNavigate();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -24,8 +27,22 @@ function UserMenu() {
   }, []);
 
   const menuItems = [
-    { label: "Profile Setting", onClick: () => role == "admin" ? openModal("editAdminProfile") : openModal("editProfile") },
-    { label: "Log Out", onClick: () => console.log("Log out"), danger: true },
+    {
+      label: "Profile Setting",
+      onClick: () =>
+        role == "admin"
+          ? openModal("editAdminProfile")
+          : openModal("editProfile"),
+    },
+    {
+      label: "Log Out",
+      onClick: () => {
+        dispatch(clearRole());
+        dispatch(setAuthMode("login"));
+        navigate("/register");
+      },
+      danger: true,
+    },
   ];
 
   return (

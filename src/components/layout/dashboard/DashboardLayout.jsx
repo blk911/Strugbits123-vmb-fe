@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
@@ -27,48 +27,54 @@ function DashboardModals() {
 }
 
 
+
 function DashboardLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);   
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+
   return (
     <DashboardModalProvider>
       <div className="flex min-h-screen">
-        {/* Sidebar */}
-        <aside className="max-sm:min-w-[20%] xl:min-w-[15%] bg-white/70 backdrop-blur-md sticky top-0 h-screen flex flex-col">
+
+        <aside
+          className={`
+            fixed inset-y-0 left-0 z-40
+            bg-white/70 backdrop-blur-md
+            flex flex-col
+            transition-transform duration-300 ease-in-out
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+            ${sidebarOpen ? "w-[20%] xl:w-[15%]" : "w-0"}
+          `}
+        >
           <div className="h-[70px] flex items-center px-[20px]">
             <img src={logo} alt="Logo" className="h-[50px]" />
           </div>
+
           <div className="flex-1 overflow-y-auto">
             <DashboardSidebar />
           </div>
         </aside>
-        {/* ---End--- */}
 
-        <div className="w-[80%] sm:w-[100%] sm:flex-1 flex flex-col">
-          {/* Top Navbar with glassmorphism */}
-          <DashboardHeader
-            menuItems={[
-              { label: "Profile Setting", onClick: () => console.log("Profile") },
-              {
-                label: "Notification Setting",
-                onClick: () => console.log("Notifications"),
-              },
-              {
-                label: "Log Out",
-                onClick: () => console.log("Log out"),
-                danger: true,
-              },
-            ]}
-          />
 
-          <main className="flex-1 overflow-y-auto  bg-gray-50">
+        <div
+          className={`
+            flex-1 flex flex-col
+            transition-all duration-300 ease-in-out
+            ${sidebarOpen ? "ml-[20%] xl:ml-[15%]" : "ml-0"}
+          `}
+        >
+          <DashboardHeader toggleSidebar={toggleSidebar} />
+
+          <main className="flex-1 overflow-y-auto bg-gray-50">
             <Outlet />
           </main>
 
           <DashboardFooter />
         </div>
       </div>
+
       <DashboardModals />
     </DashboardModalProvider>
   );
 }
-
 export default DashboardLayout;

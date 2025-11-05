@@ -8,6 +8,7 @@ export default function Button({ text, classes, textclass }) {
        after:left-1/2 after:bottom-0 after:-translate-x-1/2 after:translate-y-full 
         after:rounded-md after:z-0 after:transition-all after:duration-700
         hover:after:scale-[400]
+        cursor-pointer
         ${classes}`}
     >
       <span className={`max-sm:text-[14px] relative z-10 ${textclass}`}>
