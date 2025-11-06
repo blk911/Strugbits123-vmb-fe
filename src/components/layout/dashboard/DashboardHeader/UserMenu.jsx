@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 import { clearRole } from "../../../../store/features/roleSlice";
 import { setAuthMode } from "../../../../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
+
+import { useLogoutMutation } from "../../../../store/api/authApi";
+import { clearUser } from "../../../../store/features/userSlice";
 function UserMenu() {
   const { role } = useSelector((state) => state.role);
 
@@ -16,6 +19,7 @@ function UserMenu() {
   const dispatch = useDispatch();
   const toggle = () => setOpen((prev) => !prev);
 const navigate = useNavigate();
+const [logout, { isLoading }] = useLogoutMutation();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -25,7 +29,21 @@ const navigate = useNavigate();
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+const handleLogout = async () => {
+    try {
+      await logout().unwrap(); 
+      dispatch(clearRole());
+      dispatch(clearUser());
+      dispatch(setAuthMode("login"));
+      navigate("/register");
+    } catch (error) {
+      console.error("Logout failed:", error);
 
+      dispatch(clearRole());
+      dispatch(setAuthMode("login"));
+      navigate("/register");
+    }
+  };
   const menuItems = [
     {
       label: "Profile Setting",
@@ -35,12 +53,8 @@ const navigate = useNavigate();
           : openModal("editProfile"),
     },
     {
-      label: "Log Out",
-      onClick: () => {
-        dispatch(clearRole());
-        dispatch(setAuthMode("login"));
-        navigate("/register");
-      },
+label: isLoading ? "Logging out..." : "Log Out",
+      onClick: handleLogout,
       danger: true,
     },
   ];

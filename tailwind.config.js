@@ -8,7 +8,7 @@ export default {
         poppins: ["Poppins", "sans-serif"], 
       },
       colors: {
-        primary: "var(--primary)",
+        primary: "#FF92A5",
         "primary-alt": "var(--primary-alt)",
       },
     },
