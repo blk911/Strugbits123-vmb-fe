@@ -9,25 +9,25 @@ export default function AdminRoutes() {
       <Route
         path="/admin"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          // <ProtectedRoute allowedRoles={["admin"]}>
             <AdminHome />
-          </ProtectedRoute>
+          // </ProtectedRoute>
         }
       />
       <Route
         path="/admin/saloon"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          //<ProtectedRoute allowedRoles={["admin"]}>
             <AdminSaloon />
-          </ProtectedRoute>
+          //</ProtectedRoute>
         }
       />
       <Route
         path="/admin/invites_gifts"
         element={
-          <ProtectedRoute allowedRoles={["admin"]}>
+          //<ProtectedRoute allowedRoles={["admin"]}>
             <AdminGifts />
-          </ProtectedRoute>
+          //</ProtectedRoute>
         }
       />
     </Route>

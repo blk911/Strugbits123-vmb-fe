@@ -1,5 +1,5 @@
 const TableHeader = ({ keys }) => (
-  <thead className="rounded-lg bg-[#F8F8F8] shadow-sm">
+  <thead className="rounded-lg bg-[#F8F8F8] shadow-sm max-sm:hidden">
     <tr>
       {keys.map((key, index) => (
         <th

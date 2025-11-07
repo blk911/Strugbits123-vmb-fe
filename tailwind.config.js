@@ -11,6 +11,9 @@ export default {
         primary: "#FF92A5",
         "primary-alt": "var(--primary-alt)",
       },
+          screens: {
+        'xl1000': {'max': '1000px'},
+      },
     },
   },
   plugins: [],
