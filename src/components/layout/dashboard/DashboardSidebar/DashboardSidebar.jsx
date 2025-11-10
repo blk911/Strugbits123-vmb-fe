@@ -4,8 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function DashboardSidebar() {
-  // const { role } = useRole();
-  const {role} = useSelector((state)=> state.role)
+  const { role } = useSelector((state) => state.role);
   const items = menus[role] || [];
 
   return (
@@ -17,11 +16,9 @@ function DashboardSidebar() {
             key={idx}
             end
             className={({ isActive }) =>
-              `flex py-[12px] pl-[12px] sm:pr-[66px] rounded-[14px] items-center gap-x-[16px] max-xl:text-[16px] xl:text-[16px] max-xl:leading-[20px] ${
-                isActive
-                  ? "bg-[#FF92A5] text-white"
-                  : "bg-white text-[#581838]"
-              }`
+              `flex items-center gap-x-[16px] py-[12px] sm:pl-[12px] sm:pr-[66px]
+   rounded-[14px] transition-all duration-200 max-xl:text-[16px] xl:text-[16px]
+   ${isActive ? "sm:bg-[#FF92A5] text-white" : "bg-white text-[#581838]"}`
             }
             style={{
               fontFamily: "Poppins, sans-serif",
@@ -30,10 +27,17 @@ function DashboardSidebar() {
           >
             {({ isActive }) => (
               <>
-                <span className={isActive ? "text-white" : "text-[#581838]"}>
-                  {item.icon}
+                <span
+                  className={`flex items-center justify-center flex-shrink-0 rounded-full w-9 h-9
+    ${isActive ? "bg-white text-[#FF92A5]" : "bg-[#FCECEF] text-[#581838]"}
+  `}
+                >
+                  {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
-                <span className="hidden xl:inline">{item.name}</span>
+
+                <span className="flex-1 min-w-[100px] break-words hidden xl:inline">
+                  {item.name}
+                </span>
               </>
             )}
           </NavLink>

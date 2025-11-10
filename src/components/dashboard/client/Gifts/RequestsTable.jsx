@@ -1,6 +1,6 @@
 import React from "react";
-import Table from "./Table";
 
+import Table from "../../../common/dashboard/Table/Table";
 function RequestsTable({ data, cellRenderers, setActiveTab, activeTab }) {
   return (
     <div className="w-full rounded-[10px] bg-white p-[10px]">

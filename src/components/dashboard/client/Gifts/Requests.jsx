@@ -61,7 +61,7 @@ function Requests() {
   const [activeTab, setActiveTab] = useState("myRequests");
 
   return (
-    <div className="w-full flex flex-col gap-y-[31px] p-6 bg-[#EFEFEF] h-screen">
+    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF] ">
       <div className="w-full">
         <RequestsTable
           data={tabs[activeTab]}

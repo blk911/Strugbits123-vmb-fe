@@ -2,23 +2,23 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-const Table = ({ data, onActionClick, cellRenderers }) => {
-  if (!data || data.length === 0) return <p>No data available</p>;
+const Table = ({ data, cellRenderers }) => {
+  if (!data || data.length === 0)
+    return <p className="p-4 text-gray-500 text-center">No data available</p>;
 
   const keys = Object.keys(data[0]).filter((key) => key !== "id");
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm rounded-[10px] border-separate border-spacing-y-5 bg-white p-[10px] ">
+    <div className="w-full overflow-hidden ">
+      <table className="w-full table-fixed text-sm bg-white">
         <TableHeader keys={keys} />
-        <tbody>
+        <tbody className="block md:table-row-group">
           {data.map((row) => (
             <TableRow
               key={row.id}
               row={row}
               keys={keys}
-              onActionClick={onActionClick}
-              cellRenderers={cellRenderers}
+              cellRenderers={cellRenderers || {}}
             />
           ))}
         </tbody>
@@ -26,6 +26,5 @@ const Table = ({ data, onActionClick, cellRenderers }) => {
     </div>
   );
 };
-
 
 export default Table;

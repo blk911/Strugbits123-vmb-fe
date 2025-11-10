@@ -1,29 +1,28 @@
 import React from "react";
-import Button from "../../../common/dashboard/Button";
 
 export const CellRenderers = {
   serviceName: (options) => (
-    <div className="flex flex-wrap max-w-[550px] gap-2">
+    <div className="flex flex-wrap gap-1 text-xs">
       {options.map((option, index) => (
-        <Button
+        <span
           key={index}
-          text={option}
-          textClasses="!text-[12px] !text-[#FF92A5]"
-          classes="!p-[5px] !bg-white border border-[#FF92A5]"
-        />
+          className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+        >
+          {option}
+        </span>
       ))}
     </div>
   ),
 
   giftedServices: (options) => (
-    <div className="flex flex-wrap max-w-[550px] gap-2">
+    <div className="flex flex-wrap gap-1 text-xs">
       {options.map((option, index) => (
-        <Button
+        <span
           key={index}
-          text={option}
-          textClasses="!text-[12px] !text-[#FF92A5]"
-          classes="!p-[5px] !bg-white border border-[#FF92A5]"
-        />
+          className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+        >
+          {option}
+        </span>
       ))}
     </div>
   ),

@@ -5,7 +5,10 @@ import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
 import DashboardFooter from "./DashboardFooter/DashboardFooter";
 import DashboardHeader from "./DashboardHeader/DashboardHeader";
 
-import { DashboardModalProvider, useDashboardModal } from "../../../pages/ModalProvider";
+import {
+  DashboardModalProvider,
+  useDashboardModal,
+} from "../../../pages/ModalProvider";
 import AddServiceModal from "../../dashboard/saloon/home/serviceSection/Modals/AddServiceModal";
 import EditProfileModal from "../../dashboard/saloon/home/salonProfile/Modals/EditProfile";
 import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteModal";
@@ -17,25 +20,34 @@ function DashboardModals() {
 
   return (
     <>
-      <AddServiceModal isOpen={activeModal === "addService"} onClose={closeModal} />
-      <EditProfileModal isOpen={activeModal === "editProfile"} onClose={closeModal} />
+      <AddServiceModal
+        isOpen={activeModal === "addService"}
+        onClose={closeModal}
+      />
+      <EditProfileModal
+        isOpen={activeModal === "editProfile"}
+        onClose={closeModal}
+      />
       <InviteModal isOpen={activeModal === "invite"} onClose={closeModal} />
-      <EditAdminProfile isOpen={activeModal === "editAdminProfile"} onClose={closeModal} />
-      <ApproveSaloons isOpen={activeModal === "approveSaloons"} onClose={closeModal} />
+      <EditAdminProfile
+        isOpen={activeModal === "editAdminProfile"}
+        onClose={closeModal}
+      />
+      <ApproveSaloons
+        isOpen={activeModal === "approveSaloons"}
+        onClose={closeModal}
+      />
     </>
   );
 }
 
-
-
 function DashboardLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);   
-  const toggleSidebar = () => setSidebarOpen(prev => !prev);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
     <DashboardModalProvider>
       <div className="flex min-h-screen">
-
         <aside
           className={`
             fixed inset-y-0 left-0 z-40
@@ -55,7 +67,6 @@ function DashboardLayout() {
           </div>
         </aside>
 
-
         <div
           className={`
             flex-1 flex flex-col
@@ -65,7 +76,7 @@ function DashboardLayout() {
         >
           <DashboardHeader toggleSidebar={toggleSidebar} />
 
-          <main className="flex-1 overflow-y-auto bg-gray-50">
+          <main className="flex-1 overflow-y-auto bg-[#EFEFEF] ">
             <Outlet />
           </main>
 

@@ -5,6 +5,8 @@ import { DashboardHome } from "../pages/client";
 import SalonDetail from "../pages/client/SalonDetail/SalonDetail";
 import Salons from "../pages/client/Salons/Salons";
 import GiftHistory from "../pages/client/Gifts/GiftHistory";
+import AppointmentHistory from "../pages/client/Appointments/AppointmentHistory";
+import SalonInvites from "../pages/client/SalonInvites/SalonInvites";
 
 export default function ClientRoutes() {
   return (
@@ -22,6 +24,8 @@ export default function ClientRoutes() {
       <Route path="/salons" element={<Salons />} />
 
       <Route path="/gifts" element={<GiftHistory />} />
+      <Route path="/appointments" element={<AppointmentHistory />} />
+      <Route path="/saloninvites" element={<SalonInvites />} />
     </Route>
   );
 }

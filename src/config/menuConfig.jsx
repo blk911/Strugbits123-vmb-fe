@@ -1,8 +1,9 @@
-import { FaChartLine } from "react-icons/fa6";
+import { FaChartLine, FaCalendarDays } from "react-icons/fa6";
 import { PiOfficeChairFill } from "react-icons/pi";
 import { LiaDollarSignSolid } from "react-icons/lia";
 import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
+import { BsEnvelopePaperHeart } from "react-icons/bs";
 export const menus = {
   null: [
     {
@@ -30,35 +31,45 @@ export const menus = {
     {
       name: "Dashboard",
       path: "/salonOwner",
-      icon: <FaChartLine />,
+      icon: <FaChartLine className="h-5 w-5" />,
     },
     {
       name: "Earnings",
       path: "/salonOwner/earnings",
-      icon: <LiaDollarSignSolid />,
+      icon: <LiaDollarSignSolid className="h-5 w-5" />,
     },
     {
       name: "Invites & Gifts",
       path: "/salonOwner/invites_gifts",
-      icon: <FaGift />,
+      icon: <FaGift className="h-5 w-5" />,
     },
   ],
   client: [
     {
       name: "Dashboard",
       path: "/client",
-      icon: <FaChartLine />,
+      icon: <FaChartLine className="h-5 w-5" />,
     },
 
     {
       name: "Salons",
       path: "/salons",
-      icon: <GiOfficeChair />,
+      icon: <GiOfficeChair className="h-5 w-5" />,
     },
     {
       name: "Gifts",
       path: "/gifts",
       icon: <FaGift className="h-5 w-5" />,
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: <FaCalendarDays className="h-5 w-5" />,
+    },
+    {
+      name: "Salon Invites",
+      path: "/saloninvites",
+      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
     },
   ],
 };
