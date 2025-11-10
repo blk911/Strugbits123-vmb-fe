@@ -6,7 +6,7 @@ function AppointmentTable({ data, cellRenderers, setActiveTab, activeTab }) {
 
   return (
     <div className="w-full rounded-[10px] bg-white p-3 md:p-[10px]">
-      <div className="flex flex-wrap gap-1.5 md:gap-3 mb-3 text-xs md:text-sm">
+      <div className="flex flex-wrap gap-3 md:gap-6 mb-3 text-xs md:text-sm">
         {tabOrder.map((tab) => (
           <button
             key={tab}
