@@ -14,12 +14,14 @@ import EditProfileModal from "../../dashboard/saloon/home/salonProfile/Modals/Ed
 import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteModal";
 import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
 import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
+import TreatModal from "../../dashboard/client/Modals/TreatModal";
 
 function DashboardModals() {
   const { activeModal, closeModal } = useDashboardModal();
 
   return (
     <>
+      <TreatModal isOpen={activeModal === "treat"} closeModal={closeModal} />
       <AddServiceModal
         isOpen={activeModal === "addService"}
         onClose={closeModal}

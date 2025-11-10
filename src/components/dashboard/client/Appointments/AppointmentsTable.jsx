@@ -11,20 +11,18 @@ function AppointmentTable({ data, cellRenderers, setActiveTab, activeTab }) {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`
-              px-2 py-1 rounded font-medium whitespace-nowrap transition-all   cursor-pointer
-              ${
-                activeTab === tab
-                  ? "bg-[#FF92A5] text-white"
-                  : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
-              }
-            `}
+            className={`cursor-pointer pb-2 text-[20px] font-medium transition-colors ${
+              activeTab === tab
+                ? "text-[#FF92A5] border-b-2 border-[#FF92A5]"
+                : "text-gray-400 hover:text-gray-600"
+            }`}
             style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600 }}
           >
             {tab}
           </button>
         ))}
       </div>
+
       <Table data={data} cellRenderers={cellRenderers} />
     </div>
   );

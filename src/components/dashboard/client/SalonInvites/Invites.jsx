@@ -7,8 +7,8 @@ const pendingData = [
   {
     id: 1,
     salonName: "Bella Beauty Salon",
+    salonEmail: "elitejuan@gmail.com",
     serviceName: ["Hair Cutting", "Spa", "Facial"],
-    payersEmail: "elitejuan@gmail.com",
     discount: "10%",
     expiresOn: "02-08-2025",
     status: "Pending",
@@ -16,8 +16,8 @@ const pendingData = [
   {
     id: 2,
     salonName: "Glam Studio",
+    salonEmail: "maria@gmail.com",
     serviceName: ["Manicure", "Pedicure", "Massage"],
-    payersEmail: "maria@gmail.com",
     discount: "15%",
     expiresOn: "03-08-2025",
     status: "Pending",
@@ -28,8 +28,8 @@ const claimedData = [
   {
     id: 3,
     salonName: "Luxe Hair & Spa",
+    salonEmail: "john@gmail.com",
     serviceName: ["Highlight", "Hair Color"],
-    payersEmail: "john@gmail.com",
     discount: "20%",
     expiresOn: "04-08-2025",
     status: "Claimed",
@@ -40,8 +40,8 @@ const unclaimedData = [
   {
     id: 4,
     salonName: "Elegant Nails",
+    salonEmail: "sarah@gmail.com",
     serviceName: ["Nail Art", "Gel Polish"],
-    payersEmail: "sarah@gmail.com",
     discount: "12%",
     expiresOn: "05-08-2025",
     status: "Unclaimed",

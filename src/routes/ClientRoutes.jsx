@@ -1,12 +1,14 @@
 import { Route } from "react-router-dom";
 import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import { DashboardHome } from "../pages/client";
-import SalonDetail from "../pages/client/SalonDetail/SalonDetail";
-import Salons from "../pages/client/Salons/Salons";
-import GiftHistory from "../pages/client/Gifts/GiftHistory";
-import AppointmentHistory from "../pages/client/Appointments/AppointmentHistory";
-import SalonInvites from "../pages/client/SalonInvites/SalonInvites";
+import {
+  DashboardHome,
+  SalonDetail,
+  Salons,
+  GiftHistory,
+  AppointmentHistory,
+  SalonInvites,
+} from "../pages/client";
 
 export default function ClientRoutes() {
   return (

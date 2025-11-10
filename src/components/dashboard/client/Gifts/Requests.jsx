@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import RequestsTable from "./RequestsTable";
 import { CellRenderers } from "./CellRenderers";
-
+import { useLocation } from "react-router-dom";
 const myRequestsData = [
   {
     id: 1,
@@ -58,7 +58,9 @@ const tabs = {
 };
 
 function Requests() {
-  const [activeTab, setActiveTab] = useState("myRequests");
+  const location = useLocation();
+  const defaultTab = location.state?.activeTab || "myRequests";
+  const [activeTab, setActiveTab] = useState(defaultTab);
 
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF] ">
