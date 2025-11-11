@@ -48,6 +48,10 @@ export default function GiftCard({
         },
       });
     }
+
+    if (title === "Appointments") {
+      openModal("appointmentScheduled");
+    }
   };
   // const handleCardClick = () => {
   //   if (title === "My Requests") {

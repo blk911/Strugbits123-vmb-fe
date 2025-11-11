@@ -16,12 +16,17 @@ import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile
 import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
 import TreatModal from "../../dashboard/client/Modals/TreatModal";
 import TreatRequestModal from "../../dashboard/client/Modals/TreatRequestModal";
+import AppointmentScheduledModal from "../../dashboard/client/Modals/AppointmentScheduledModal";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
 
   return (
     <>
+      <AppointmentScheduledModal
+        isOpen={activeModal === "appointmentScheduled"}
+        closeModal={closeModal}
+      />
       <TreatRequestModal
         isOpen={activeModal === "treatRequest"}
         closeModal={closeModal}
