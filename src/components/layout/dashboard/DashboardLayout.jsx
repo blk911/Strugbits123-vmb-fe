@@ -15,13 +15,23 @@ import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteM
 import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
 import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
 import TreatModal from "../../dashboard/client/Modals/TreatModal";
+import TreatRequestModal from "../../dashboard/client/Modals/TreatRequestModal";
 
 function DashboardModals() {
-  const { activeModal, closeModal } = useDashboardModal();
+  const { activeModal, modalData, closeModal } = useDashboardModal();
 
   return (
     <>
-      <TreatModal isOpen={activeModal === "treat"} closeModal={closeModal} />
+      <TreatRequestModal
+        isOpen={activeModal === "treatRequest"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
+      <TreatModal
+        isOpen={activeModal === "treat"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
       <AddServiceModal
         isOpen={activeModal === "addService"}
         onClose={closeModal}

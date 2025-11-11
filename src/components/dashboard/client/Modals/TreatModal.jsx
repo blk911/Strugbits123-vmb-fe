@@ -4,7 +4,7 @@ import { IoClose, IoCopyOutline, IoChevronDown } from "react-icons/io5";
 import salonImg from "../../../../assets/salon-1.png";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 
-export default function TreatModal({ isOpen, closeModal }) {
+export default function TreatModal({ isOpen, closeModal, initialData }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedSalon, setSelectedSalon] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
@@ -15,7 +15,13 @@ export default function TreatModal({ isOpen, closeModal }) {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && initialData) {
+      setIsSubmitted(initialData.isSubmitted ?? true);
+      setSelectedSalon(initialData.selectedSalon || "");
+      setSelectedServices(initialData.selectedServices || []);
+      setEmail(initialData.email || "");
+      setMessage(initialData.message || "");
+    } else if (isOpen) {
       setIsSubmitted(false);
       setSelectedSalon("");
       setSelectedServices([]);
@@ -23,8 +29,7 @@ export default function TreatModal({ isOpen, closeModal }) {
       setMessage("");
       setServiceDropdownOpen(false);
     }
-  }, [isOpen]);
-
+  }, [isOpen, initialData]);
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -119,7 +124,6 @@ export default function TreatModal({ isOpen, closeModal }) {
 
                 {!isSubmitted ? (
                   <>
-                    {/* HEADER */}
                     <Dialog.Title
                       as="h3"
                       className="text-center text-[24px] font-bold text-[#581838]"
@@ -130,7 +134,6 @@ export default function TreatModal({ isOpen, closeModal }) {
                       Get pampered — request a treat from someone you love!
                     </p>
 
-                    {/* SALON DROPDOWN */}
                     <div className="mt-6">
                       <label className="text-[#404040] text-[14px] font-medium">
                         Select Salon
@@ -155,29 +158,12 @@ export default function TreatModal({ isOpen, closeModal }) {
                       </div>
                     </div>
 
-                    {/* SERVICE DROPDOWN WITH CHECKBOX */}
                     {selectedSalonData && (
                       <div className="mt-5 relative" ref={dropdownRef}>
                         <label className="text-[#404040] text-[14px] font-medium">
                           Select Services
                         </label>
-                        {/* <div
-                          onClick={() =>
-                            setServiceDropdownOpen((prev) => !prev)
-                          }
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1"
-                        >
-                          <span>
-                            {selectedServices.length > 0
-                              ? `${selectedServices.length} service(s) selected`
-                              : "Choose services..."}
-                          </span>
-                          <IoChevronDown
-                            className={`text-[#581838] transition-transform ${
-                              serviceDropdownOpen ? "rotate-180" : ""
-                            }`}
-                          />
-                        </div> */}
+
                         <div
                           onClick={() =>
                             setServiceDropdownOpen((prev) => !prev)
@@ -233,7 +219,6 @@ export default function TreatModal({ isOpen, closeModal }) {
                       </div>
                     )}
 
-                    {/* SERVICE SUMMARY */}
                     {selectedServices.length > 0 && (
                       <div className="mt-6 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2">
                         <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
@@ -257,7 +242,6 @@ export default function TreatModal({ isOpen, closeModal }) {
                       </div>
                     )}
 
-                    {/* EMAIL & MESSAGE */}
                     <div className="mt-6">
                       <h4 className="text-[#581838] font-bold text-[20px]">
                         Who’s treating you?
@@ -295,7 +279,6 @@ export default function TreatModal({ isOpen, closeModal }) {
                   </>
                 ) : (
                   <>
-                    {/* SUCCESS STATE */}
                     <Dialog.Title
                       as="h3"
                       className="text-center text-[22px] font-bold text-[#FF92A5]"
@@ -303,8 +286,10 @@ export default function TreatModal({ isOpen, closeModal }) {
                       Treat Request Sent!
                     </Dialog.Title>
                     <p className="text-center text-[#00000080] text-[14px] mt-2">
-                      Your request has been shared successfully. You’ll be
-                      updated soon.
+                      Your request has been shared successfully.
+                      <br /> Wait for payment confirmation.
+                      <br /> We’ve notified the user about your treat. <br />
+                      You’ll be updated soon.
                     </p>
 
                     <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">

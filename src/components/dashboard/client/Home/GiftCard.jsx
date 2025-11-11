@@ -1,5 +1,9 @@
 import defaultUser from "../../../../assets/user_icon.png";
 import { useNavigate } from "react-router-dom";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
+import salonImg from "../../../../assets/salon-1.png";
+import userImg from "../../../../assets/user_icon.png";
+
 export default function GiftCard({
   icon: Icon,
   title,
@@ -11,6 +15,55 @@ export default function GiftCard({
   statusBg,
 }) {
   const navigate = useNavigate();
+  const { openModal } = useDashboardModal();
+  const handleCardClick = () => {
+    if (title === "My Requests") {
+      openModal("treat", {
+        isSubmitted: true,
+        selectedSalon: "Bella Beauty Salon",
+        selectedServices: ["Haircuts", "Hydrafacial"],
+        email: "mike.davis@example.com",
+        message:
+          "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
+      });
+    }
+
+    if (title === "Received Requests") {
+      openModal("treatRequest", {
+        salon: {
+          name: "Glam Studio",
+          description: "Premium Beauty Services",
+          image: salonImg,
+        },
+        services: [
+          { name: "Full Color + Cut", duration: "2 Hr", price: 175 },
+          { name: "Manicure", duration: "45 min", price: 35 },
+        ],
+        sender: {
+          name: "Emma Wilson",
+          email: "emma.wilson@love.com",
+          avatar: userImg,
+          message:
+            "Hey love! Can you treat me to this? I miss you so much and deserve a little pamper day!",
+        },
+      });
+    }
+  };
+  // const handleCardClick = () => {
+  //   if (title === "My Requests") {
+  //     openModal("treat", {
+  //       isSubmitted: true,
+  //       selectedSalon: "Bella Beauty Salon",
+  //       selectedServices: ["Haircuts", "Hydrafacial"],
+  //       email: "mike.davis@example.com",
+  //       message:
+  //         "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
+  //     });
+  //   }
+  //   if (title === "Received Requests") {
+  //     openModal("treatRequest");
+  //   }
+  // };
   const handleViewAll = () => {
     if (title === "My Requests") {
       navigate("/gifts", { state: { activeTab: "myRequests" } });
@@ -40,7 +93,10 @@ export default function GiftCard({
 
       <div className="h-[1px] bg-[#D9D9D9] mb-3"></div>
 
-      <div className="p-3 border border-[#0000001A] rounded-[10px] flex items-center justify-between cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all">
+      <div
+        className="p-3 border border-[#0000001A] rounded-[10px] flex items-center justify-between cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all"
+        onClick={handleCardClick}
+      >
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
             <img
