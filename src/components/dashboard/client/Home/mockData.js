@@ -1,9 +1,9 @@
 // mockData.js
-import saloon_icon from "../../../../assets/default_saloon.png"; 
-import saloon_1 from "../../../../assets/salon-1.png"; 
-import saloon_2 from "../../../../assets/salon-2.png"; 
-import saloon_3 from "../../../../assets/salon-3.png"; 
-// helper to create services
+import saloon_icon from "../../../../assets/default_saloon.png";
+import saloon_1 from "../../../../assets/salon-1.png";
+import saloon_2 from "../../../../assets/salon-2.png";
+import saloon_3 from "../../../../assets/salon-3.png";
+
 const makeServices = (salonIndex) =>
   Array.from({ length: 12 }, (_, i) => ({
     id: `${salonIndex}-${i + 1}`,
@@ -13,7 +13,7 @@ const makeServices = (salonIndex) =>
         : i % 3 === 1
         ? "Facial Treatment"
         : "Glow Treatment",
-    duration: 60, // minutes
+    duration: 60,
     price: 20 + (i % 4) * 5,
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
@@ -28,11 +28,7 @@ export const salons = Array.from({ length: 12 }, (_, i) => ({
   address: "123 Main Street, Cityville",
   hours: "09:00 AM - 05:00 PM",
   image: saloon_icon,
-  images: [
-   saloon_1,
-    saloon_2,
-    saloon_3,
-  ],
+  images: [saloon_1, saloon_2, saloon_3],
   phone: "(555) 123-4567",
   services: makeServices(i + 1),
 }));
