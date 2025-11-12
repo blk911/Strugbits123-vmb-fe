@@ -1,4 +1,5 @@
 import { FaGift, FaRegCalendarAlt } from "react-icons/fa";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
 
 export default function ServiceCard({
   name,
@@ -6,7 +7,13 @@ export default function ServiceCard({
   price,
   description,
   image,
+  salon,
 }) {
+  const { openModal } = useDashboardModal();
+
+  const handleGiftClick = () => {
+    openModal("giftService", { salon, service: { name, duration, price } });
+  };
   return (
     <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 hover:shadow-md transition-all duration-300">
       <div className="relative w-full">
@@ -34,14 +41,17 @@ export default function ServiceCard({
       </p>
 
       <div className="flex flex-col xl:flex-row gap-3 mt-2">
-        <button className="flex-1 bg-[#FF92A54D] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A533] transition-all">
+        <button
+          onClick={handleGiftClick}
+          className="flex-1 cursor-pointer  bg-[#FF92A54D] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A533] transition-all"
+        >
           <FaGift className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
           <span className="text-[15px] sm:text-[16px] font-medium">
             Request Service
           </span>
         </button>
 
-        <button className="flex-1 border border-[#FF92A5] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A50D] transition-all">
+        <button className="flex-1 cursor-pointer border border-[#FF92A5] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A50D] transition-all">
           <FaRegCalendarAlt className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
           <span className="text-[15px] sm:text-[16px] font-medium">
             Book Now

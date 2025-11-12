@@ -1,35 +1,35 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState, useRef } from "react";
 import { IoClose, IoCopyOutline, IoChevronDown } from "react-icons/io5";
-import salonImg from "../../../../assets/salon-1.png";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 
 export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [selectedSalon, setSelectedSalon] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
-
   const dropdownRef = useRef(null);
 
+  // Extract salon & service from initialData (passed from ServiceCard)
+  const salon = initialData?.salon;
+  const service = initialData?.service;
+
   useEffect(() => {
-    if (isOpen && initialData) {
-      setIsSubmitted(initialData.isSubmitted ?? true);
-      setSelectedSalon(initialData.selectedSalon || "");
-      setSelectedServices(initialData.selectedServices || []);
-      setEmail(initialData.email || "");
-      setMessage(initialData.message || "");
+    if (isOpen && salon && service) {
+      setIsSubmitted(false);
+      setSelectedServices([service.name]);
+      setEmail("");
+      setMessage("");
     } else if (isOpen) {
       setIsSubmitted(false);
-      setSelectedSalon("");
       setSelectedServices([]);
       setEmail("");
       setMessage("");
-      setServiceDropdownOpen(false);
     }
-  }, [isOpen, initialData]);
+  }, [isOpen, salon, service]);
+
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -40,36 +40,6 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const salons = [
-    {
-      name: "Bella Beauty Salon",
-      description: "Premium Beauty Services",
-      services: [
-        { name: "Haircuts", duration: "0.5 Hr", price: "$50" },
-        { name: "Hydrafacial", duration: "1 Hr", price: "$80" },
-        { name: "Full color", duration: "1.5 Hr", price: "$100" },
-      ],
-    },
-    {
-      name: "Glam Studio",
-      description: "Premium Beauty Services",
-      services: [
-        { name: "Highlights", duration: "1 Hr", price: "$75" },
-        { name: "Standard Facials", duration: "0.5 Hr", price: "$45" },
-      ],
-    },
-    {
-      name: "Radiance Spa",
-      description: "Premium Beauty Services",
-      services: [
-        { name: "Dermaplaning", duration: "1 Hr", price: "$65" },
-        { name: "Hydrafacial", duration: "1 Hr", price: "$85" },
-      ],
-    },
-  ];
-
-  const selectedSalonData = salons.find((s) => s.name === selectedSalon);
-
   const toggleService = (serviceName) => {
     setSelectedServices((prev) =>
       prev.includes(serviceName)
@@ -79,12 +49,17 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   };
 
   const handleSubmit = () => {
-    if (!selectedSalon || selectedServices.length === 0 || !email) return;
+    if (selectedServices.length === 0 || !email) return;
     setIsSubmitted(true);
   };
 
   const getServiceDetails = (name) =>
-    selectedSalonData?.services.find((s) => s.name === name);
+    salon?.services.find((s) => s.name === name);
+
+  const totalPrice = selectedServices.reduce((sum, name) => {
+    const svc = getServiceDetails(name);
+    return sum + (svc ? parseFloat(svc.price) : 0);
+  }, 0);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -106,7 +81,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
+          <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -116,138 +91,126 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 sm:p-8 shadow-xl transition-all">
+              <Dialog.Panel className="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-white p-10 shadow-2xl transition-all flex flex-col gap-8">
                 <IoClose
                   onClick={closeModal}
-                  className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                  className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
                 />
 
                 {!isSubmitted ? (
                   <>
-                    <Dialog.Title
-                      as="h3"
-                      className="text-center text-[24px] font-bold text-[#581838]"
-                    >
-                      Treat Me, Baby!
-                    </Dialog.Title>
-                    <p className="text-center text-[#00000080] italic text-[14px] mt-1">
-                      Get pampered — request a treat from someone you love!
-                    </p>
+                    <div>
+                      <h3 className="text-[#581838] font-bold text-2xl text-center">
+                        Gift Service
+                      </h3>
+                    </div>
 
-                    <div className="mt-6">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        Select Salon
-                      </label>
-                      <div className="relative mt-1">
-                        <select
-                          value={selectedSalon}
-                          onChange={(e) => {
-                            setSelectedSalon(e.target.value);
-                            setSelectedServices([]);
-                          }}
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] appearance-none focus:outline-none"
-                        >
-                          <option value="">Find your salon..</option>
-                          {salons.map((salon, i) => (
-                            <option key={i} value={salon.name}>
-                              {salon.name}
-                            </option>
-                          ))}
-                        </select>
-                        <IoChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[#581838]" />
+                    {/* Salon Info Row */}
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={salon?.image || salon?.images?.[0]}
+                        alt={salon?.name}
+                        className="w-16 h-16 rounded-lg object-cover border border-gray-200"
+                      />
+                      <div>
+                        <p className="text-[#4B5563] font-semibold text-xl">
+                          {salon?.name}
+                        </p>
+                        <p className="text-[#4B5563] text-xs">
+                          Premium Beauty Services
+                        </p>
                       </div>
                     </div>
 
-                    {selectedSalonData && (
-                      <div className="mt-5 relative" ref={dropdownRef}>
-                        <label className="text-[#404040] text-[14px] font-medium">
-                          Select Services
-                        </label>
-
-                        <div
-                          onClick={() =>
-                            setServiceDropdownOpen((prev) => !prev)
-                          }
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]"
-                        >
-                          {selectedServices.length > 0 ? (
-                            <div className="flex flex-wrap gap-2">
-                              {selectedServices.map((srv, i) => (
-                                <div
-                                  key={i}
-                                  className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-[6px] text-[13px]"
-                                  onClick={(e) => e.stopPropagation()}
+                    {/* Select Services */}
+                    <div className="relative" ref={dropdownRef}>
+                      <label className="text-[#404040] text-sm font-medium">
+                        Select Services
+                      </label>
+                      <div
+                        onClick={() => setServiceDropdownOpen((prev) => !prev)}
+                        className="w-full mt-2 border border-[#E5E5E5] rounded-lg py-3 px-4 pr-10 text-sm text-[#00000080] flex justify-between items-center cursor-pointer flex-wrap gap-2 min-h-[48px] bg-white"
+                      >
+                        {selectedServices.length > 0 ? (
+                          <div className="flex flex-wrap gap-2">
+                            {selectedServices.map((srv) => (
+                              <div
+                                key={srv}
+                                className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-1.5 text-xs"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <span>{srv}</span>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleService(srv);
+                                  }}
+                                  className="w-5 h-5 rounded-full bg-white/30 hover:bg-white/50 flex items-center justify-center"
                                 >
-                                  <span>{srv}</span>
-                                  <button
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toggleService(srv);
-                                    }}
-                                    className="flex items-center justify-center w-5 h-5 rounded-full bg-white/30 hover:bg-white/50 text-white"
-                                  >
-                                    ✕
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            <span>Choose services...</span>
-                          )}
-
-                          <IoChevronDown
-                            className={`ml-auto text-[#581838] transition-transform ${
-                              serviceDropdownOpen ? "rotate-180" : ""
-                            }`}
-                          />
-                        </div>
-
-                        {serviceDropdownOpen && (
-                          <div className="absolute w-full bg-white border border-[#E5E5E5] rounded-[8px] mt-1 p-3 z-10 shadow-lg max-h-[180px] overflow-y-auto">
-                            {selectedSalonData.services.map((service, i) => (
-                              <CustomCheckbox
-                                key={i}
-                                label={`${service.name} (${service.duration} - ${service.price})`}
-                                checked={selectedServices.includes(
-                                  service.name
-                                )}
-                                onChange={() => toggleService(service.name)}
-                              />
+                                  ×
+                                </button>
+                              </div>
                             ))}
                           </div>
+                        ) : (
+                          <span className="text-[#00000080]">
+                            Choose services...
+                          </span>
                         )}
+                        <IoChevronDown
+                          className={`ml-auto text-[#581838] transition-transform ${
+                            serviceDropdownOpen ? "rotate-180" : ""
+                          }`}
+                        />
                       </div>
-                    )}
 
-                    {selectedServices.length > 0 && (
-                      <div className="mt-6 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2">
-                        <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
-                          <span>Service:</span>
-                          <span>Duration:</span>
-                          <span>Price:</span>
+                      {serviceDropdownOpen && (
+                        <div className="absolute w-full bg-white border border-[#E5E5E5] rounded-lg mt-2 p-4 z-10 shadow-xl max-h-60 overflow-y-auto">
+                          {salon?.services.map((svc) => (
+                            <CustomCheckbox
+                              key={svc.id}
+                              label={`${svc.name} (${svc.duration} min - $${svc.price})`}
+                              checked={selectedServices.includes(svc.name)}
+                              onChange={() => toggleService(svc.name)}
+                            />
+                          ))}
                         </div>
-                        {selectedServices.map((srv, i) => {
-                          const s = getServiceDetails(srv);
+                      )}
+                    </div>
+
+                    {/* Services Summary */}
+                    {selectedServices.length > 0 && (
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 flex flex-col gap-3">
+                        <div className="flex justify-between text-xs font-medium text-[#4B5563]">
+                          <span>Service</span>
+                          <span>Duration</span>
+                          <span>Price</span>
+                        </div>
+                        {selectedServices.map((name) => {
+                          const s = getServiceDetails(name);
                           return (
                             <div
-                              key={i}
-                              className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
+                              key={name}
+                              className="border-t border-[#D9D9D9] pt-3 flex justify-between text-xs text-[#4B5563]"
                             >
                               <span>{s?.name}</span>
-                              <span>{s?.duration}</span>
-                              <span>{s?.price}</span>
+                              <span>{s?.duration} min</span>
+                              <span>${s?.price}</span>
                             </div>
                           );
                         })}
+                        <div className="border-t-2 border-[#581838] pt-2 font-bold text-[#581838]">
+                          Total: ${totalPrice.toFixed(2)}
+                        </div>
                       </div>
                     )}
 
-                    <div className="mt-6">
-                      <h4 className="text-[#581838] font-bold text-[20px]">
+                    {/* Who’s treating you? */}
+                    <div>
+                      <h4 className="text-[#581838] font-bold text-xl">
                         Who’s treating you?
                       </h4>
-
-                      <label className="text-[#404040] text-[14px] mt-2 block">
+                      <label className="text-[#404040] text-sm mt-3 block">
                         Email
                       </label>
                       <input
@@ -255,117 +218,111 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter email..."
-                        className="w-full border border-[#E5E5E5] rounded-[8px] px-3 py-2 text-sm text-[#00000080] mt-1"
+                        className="w-full border border-[#E5E5E5] rounded-lg px-4 py-3 text-sm mt-1 focus:outline-none focus:border-[#FF92A5]"
                       />
 
-                      <label className="text-[#404040] text-[14px] mt-3 block">
+                      <label className="text-[#404040] text-sm mt-4 block">
                         Write a sweet message
                       </label>
                       <textarea
-                        rows="3"
+                        rows={3}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Type your message..."
-                        className="w-full border border-[#E5E5E5] rounded-[8px] p-3 text-sm text-[#00000080] mt-1 resize-none"
+                        className="w-full border border-[#E5E5E5] rounded-lg p-4 text-sm mt-1 resize-none focus:outline-none focus:border-[#FF92A5]"
                       />
                     </div>
 
                     <button
                       onClick={handleSubmit}
-                      className="w-full mt-6 bg-[#FF92A5] text-white text-[16px] rounded-[8px] py-2 font-medium hover:opacity-90"
+                      disabled={!email || selectedServices.length === 0}
+                      className="w-full bg-[#FF92A5] text-white text-lg rounded-lg py-3 font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition"
                     >
                       Request Now
                     </button>
                   </>
                 ) : (
+                  /* Submitted View */
                   <>
-                    <Dialog.Title
-                      as="h3"
-                      className="text-center text-[22px] font-bold text-[#FF92A5]"
-                    >
-                      Treat Request Sent!
-                    </Dialog.Title>
-                    <p className="text-center text-[#00000080] text-[14px] mt-2">
-                      Your request has been shared successfully.
-                      <br /> Wait for payment confirmation.
-                      <br /> We’ve notified the user about your treat. <br />
-                      You’ll be updated soon.
-                    </p>
+                    <div className="text-center">
+                      <h3 className="text-[#FF92A5] font-bold text-2xl">
+                        Gift Request Sent!
+                      </h3>
+                      <p className="text-[#00000080] text-sm mt-3">
+                        Your request has been shared successfully.
+                        <br />
+                        Wait for payment confirmation.
+                      </p>
+                    </div>
 
-                    <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">
-                      <div className="flex items-center gap-3">
+                    <div className="border border-[#FF92A5] bg-white rounded-xl p-6 space-y-6">
+                      <div className="flex items-center gap-4">
                         <img
-                          src={salonImg}
-                          alt="Salon"
-                          className="w-[60px] h-[60px] rounded-md object-cover"
+                          src={salon?.image || salon?.images?.[0]}
+                          alt={salon?.name}
+                          className="w-16 h-16 rounded-lg object-cover"
                         />
                         <div>
-                          <p className="text-[#4B5563] font-semibold text-[18px]">
-                            {selectedSalon}
+                          <p className="text-[#4B5563] font-semibold text-xl">
+                            {salon?.name}
                           </p>
-                          <p className="text-[#4B5563] text-[12px]">
-                            {selectedSalonData?.description}
+                          <p className="text-[#4B5563] text-xs">
+                            Premium Beauty Services
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-3 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2">
-                        <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
-                          <span>Service:</span>
-                          <span>Duration:</span>
-                          <span>Price:</span>
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
+                        <div className="flex justify-between text-xs font-medium text-[#4B5563]">
+                          <span>Service</span>
+                          <span>Duration</span>
+                          <span>Price</span>
                         </div>
-                        {selectedServices.map((srv, i) => {
-                          const s = getServiceDetails(srv);
+                        {selectedServices.map((name) => {
+                          const s = getServiceDetails(name);
                           return (
                             <div
-                              key={i}
-                              className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
+                              key={name}
+                              className="border-t border-[#D9D9D9] pt-3 flex justify-between text-xs text-[#4B5563]"
                             >
                               <span>{s?.name}</span>
-                              <span>{s?.duration}</span>
-                              <span>{s?.price}</span>
+                              <span>{s?.duration} min</span>
+                              <span>${s?.price}</span>
                             </div>
                           );
                         })}
+                        <div className="border-t-2 border-[#581838] pt-2 font-bold text-[#581838]">
+                          Total: ${totalPrice.toFixed(2)}
+                        </div>
                       </div>
 
-                      <div className="mt-4">
-                        <h4 className="text-[#581838] font-bold text-[18px]">
+                      <div>
+                        <p className="text-[#581838] font-bold text-lg">
                           Who’s treating you?
-                        </h4>
-
-                        <label className="text-[#404040] text-[14px] mt-2 block">
-                          Email
-                        </label>
+                        </p>
                         <input
                           type="email"
                           value={email}
                           readOnly
-                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-[8px] px-3 py-2 text-sm text-[#00000080] mt-1 cursor-not-allowed"
+                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-lg px-4 py-3 text-sm mt-2 cursor-not-allowed"
                         />
-
-                        <label className="text-[#404040] text-[14px] mt-3 block">
-                          Write a sweet message
-                        </label>
                         <textarea
-                          rows="3"
+                          rows={3}
                           value={message}
                           readOnly
-                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-[8px] p-3 text-sm text-[#00000080] mt-1 resize-none cursor-not-allowed"
+                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-lg p-4 text-sm mt-4 resize-none cursor-not-allowed"
                         />
                       </div>
                     </div>
 
-                    <p className="text-center italic text-[#00000080] text-[13px] mt-4">
-                      Copy link to share this treat request.
+                    <p className="text-center italic text-[#00000080] text-sm mt-6">
+                      Copy link to share this gift request.
                     </p>
-
-                    <div className="mt-2 border border-[#0000001A] rounded-[10px] flex justify-between items-center px-3 py-2">
-                      <span className="italic text-[14px] text-[#00000080] truncate">
-                        https://yourdomain.com/vmb-demo
+                    <div className="mt-3 border border-[#0000001A] rounded-xl flex justify-between items-center px-4 py-3">
+                      <span className="italic text-sm text-[#00000080] truncate">
+                        https://yourdomain.com/gift/vmb-demo
                       </span>
-                      <IoCopyOutline className="text-[#581838] text-xl cursor-pointer" />
+                      <IoCopyOutline className="text-[#581838] text-2xl cursor-pointer hover:opacity-80" />
                     </div>
                   </>
                 )}

@@ -90,6 +90,7 @@ export default function SalonDetail() {
             </div>
 
             <div className="flex items-center gap-2">
+              sm:pl-[160px] "
               <FaRegClock className="text-[#00000080]" />
               <span>{salon.hours}</span>
             </div>
@@ -101,7 +102,7 @@ export default function SalonDetail() {
         </div>
       </div>
 
-      <ServicesSection services={salon.services} />
+      <ServicesSection services={salon.services} salon={salon} />
     </div>
   );
 }

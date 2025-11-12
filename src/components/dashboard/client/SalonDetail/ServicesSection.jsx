@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ServiceCard from "./ServiceCard";
 
-export default function ServicesSection({ services = [] }) {
+export default function ServicesSection({ services = [], salon }) {
   const perPage = 9;
   const [page, setPage] = useState(1);
   const total = Math.ceil(services.length / perPage);
@@ -16,7 +16,7 @@ export default function ServicesSection({ services = [] }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {current.map((svc) => (
-          <ServiceCard key={svc.id} {...svc} />
+          <ServiceCard key={svc.id} {...svc} salon={salon} />
         ))}
       </div>
 
