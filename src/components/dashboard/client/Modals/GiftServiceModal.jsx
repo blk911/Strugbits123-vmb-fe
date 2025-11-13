@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState, useRef } from "react";
 import { IoClose, IoCopyOutline, IoChevronDown } from "react-icons/io5";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
+import AppButton from "../../../common/site/AppButton";
 
 export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -11,7 +12,6 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Extract salon & service from initialData (passed from ServiceCard)
   const salon = initialData?.salon;
   const service = initialData?.service;
 
@@ -29,7 +29,6 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
     }
   }, [isOpen, salon, service]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -54,7 +53,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   };
 
   const getServiceDetails = (name) =>
-    salon?.services.find((s) => s.name === name);
+    salon?.services?.find((s) => s.name === name);
 
   const totalPrice = selectedServices.reduce((sum, name) => {
     const svc = getServiceDetails(name);
@@ -91,7 +90,13 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-lg transform overflow-hidden rounded-xl bg-white p-10 shadow-2xl transition-all flex flex-col gap-8">
+              <Dialog.Panel
+                className={`   relative w-full max-w-[448px] transform overflow-hidden 
+  rounded-[20px] border border-[#5818381A] ${
+    isSubmitted ? "bg-[#e8e8e8]" : "bg-white"
+  }
+   p-[30px] shadow-xl transition-all flex flex-col gap-8`}
+              >
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
@@ -100,12 +105,11 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                 {!isSubmitted ? (
                   <>
                     <div>
-                      <h3 className="text-[#581838] font-bold text-2xl text-center">
+                      <h3 className="text-[#581838] font-bold text-2xl ">
                         Gift Service
                       </h3>
                     </div>
 
-                    {/* Salon Info Row */}
                     <div className="flex items-center gap-4">
                       <img
                         src={salon?.image || salon?.images?.[0]}
@@ -122,7 +126,6 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       </div>
                     </div>
 
-                    {/* Select Services */}
                     <div className="relative" ref={dropdownRef}>
                       <label className="text-[#404040] text-sm font-medium">
                         Select Services
@@ -178,20 +181,19 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       )}
                     </div>
 
-                    {/* Services Summary */}
                     {selectedServices.length > 0 && (
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 flex flex-col gap-3">
-                        <div className="flex justify-between text-xs font-medium text-[#4B5563]">
-                          <span>Service</span>
-                          <span>Duration</span>
-                          <span>Price</span>
+                        <div className="flex justify-between text-xs text-black font-medium text-">
+                          <span>Service:</span>
+                          <span>Duration:</span>
+                          <span>Price:</span>
                         </div>
                         {selectedServices.map((name) => {
                           const s = getServiceDetails(name);
                           return (
                             <div
                               key={name}
-                              className="border-t border-[#D9D9D9] pt-3 flex justify-between text-xs text-[#4B5563]"
+                              className="border-b border-[#D9D9D9] py-3 flex justify-between text-xs text-[#4B5563]"
                             >
                               <span>{s?.name}</span>
                               <span>{s?.duration} min</span>
@@ -199,13 +201,9 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                             </div>
                           );
                         })}
-                        <div className="border-t-2 border-[#581838] pt-2 font-bold text-[#581838]">
-                          Total: ${totalPrice.toFixed(2)}
-                        </div>
                       </div>
                     )}
 
-                    {/* Who’s treating you? */}
                     <div>
                       <h4 className="text-[#581838] font-bold text-xl">
                         Who’s treating you?
@@ -233,29 +231,33 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       />
                     </div>
 
-                    <button
+                    <AppButton
+                      variant="primary"
+                      size="custom"
                       onClick={handleSubmit}
                       disabled={!email || selectedServices.length === 0}
-                      className="w-full bg-[#FF92A5] text-white text-lg rounded-lg py-3 font-medium hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                      className="text-[14px] py-[15px] font-medium border border-[#E5E7EB]"
                     >
                       Request Now
-                    </button>
+                    </AppButton>
                   </>
                 ) : (
-                  /* Submitted View */
                   <>
                     <div className="text-center">
                       <h3 className="text-[#FF92A5] font-bold text-2xl">
-                        Gift Request Sent!
+                        Treat Request Sent!
                       </h3>
                       <p className="text-[#00000080] text-sm mt-3">
                         Your request has been shared successfully.
                         <br />
                         Wait for payment confirmation.
+                        <br />
+                        We’ve notified the user about your treat. You’ll be
+                        updated soon.
                       </p>
                     </div>
 
-                    <div className="border border-[#FF92A5] bg-white rounded-xl p-6 space-y-6">
+                    <div className="border border-[#FF92A5] bg-white rounded-xl p-2.5 space-y-6">
                       <div className="flex items-center gap-4">
                         <img
                           src={salon?.image || salon?.images?.[0]}
@@ -273,17 +275,17 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       </div>
 
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
-                        <div className="flex justify-between text-xs font-medium text-[#4B5563]">
-                          <span>Service</span>
-                          <span>Duration</span>
-                          <span>Price</span>
+                        <div className="flex justify-between text-xs font-medium text-black">
+                          <span>Service:</span>
+                          <span>Duration:</span>
+                          <span>Price:</span>
                         </div>
                         {selectedServices.map((name) => {
                           const s = getServiceDetails(name);
                           return (
                             <div
                               key={name}
-                              className="border-t border-[#D9D9D9] pt-3 flex justify-between text-xs text-[#4B5563]"
+                              className="border-b border-[#D9D9D9] py-3 flex justify-between text-xs text-[#4B5563]"
                             >
                               <span>{s?.name}</span>
                               <span>{s?.duration} min</span>
@@ -291,9 +293,6 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                             </div>
                           );
                         })}
-                        <div className="border-t-2 border-[#581838] pt-2 font-bold text-[#581838]">
-                          Total: ${totalPrice.toFixed(2)}
-                        </div>
                       </div>
 
                       <div>
@@ -314,15 +313,16 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         />
                       </div>
                     </div>
-
-                    <p className="text-center italic text-[#00000080] text-sm mt-6">
-                      Copy link to share this gift request.
-                    </p>
-                    <div className="mt-3 border border-[#0000001A] rounded-xl flex justify-between items-center px-4 py-3">
-                      <span className="italic text-sm text-[#00000080] truncate">
-                        https://yourdomain.com/gift/vmb-demo
-                      </span>
-                      <IoCopyOutline className="text-[#581838] text-2xl cursor-pointer hover:opacity-80" />
+                    <div>
+                      <p className="italic text-[#00000080] text-sm ">
+                        Copy link to share this gift request.
+                      </p>
+                      <div className=" border border-[#0000001A] bg-white rounded-xl flex justify-between items-center px-4 py-3 mt-2">
+                        <span className="italic text-sm text-[#00000080] truncate">
+                          https://yourdomain.com/gift/vmb-demo
+                        </span>
+                        <IoCopyOutline className="text-[#FF92A5] text-2xl cursor-pointer hover:opacity-80" />
+                      </div>
                     </div>
                   </>
                 )}

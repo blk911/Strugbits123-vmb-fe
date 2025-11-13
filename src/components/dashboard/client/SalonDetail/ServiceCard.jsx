@@ -1,5 +1,6 @@
 import { FaGift, FaRegCalendarAlt } from "react-icons/fa";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+import AppButton from "../../../common/site/AppButton";
 
 export default function ServiceCard({
   name,
@@ -13,6 +14,12 @@ export default function ServiceCard({
 
   const handleGiftClick = () => {
     openModal("giftService", { salon, service: { name, duration, price } });
+  };
+  const handleBookClick = () => {
+    openModal("bookAppointment", {
+      salon,
+      service: { name, duration, price },
+    });
   };
   return (
     <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 hover:shadow-md transition-all duration-300">
@@ -41,22 +48,29 @@ export default function ServiceCard({
       </p>
 
       <div className="flex flex-col xl:flex-row gap-3 mt-2">
-        <button
+        <AppButton
+          leftIcon={
+            <FaGift className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
+          }
+          variant="ghost-pink-light"
+          size="custom"
           onClick={handleGiftClick}
-          className="flex-1 cursor-pointer  bg-[#FF92A54D] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A533] transition-all"
+          className="py-2 sm:py-2 px-2.5 text-[15px] sm:text-[16px]  font-medium "
         >
-          <FaGift className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
-          <span className="text-[15px] sm:text-[16px] font-medium">
-            Request Service
-          </span>
-        </button>
+          Request Service
+        </AppButton>
 
-        <button className="flex-1 cursor-pointer border border-[#FF92A5] text-[#FF92A5] rounded-[8px] py-2 sm:py-2 px-2.5 flex items-center justify-center gap-2 hover:bg-[#FF92A50D] transition-all">
-          <FaRegCalendarAlt className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
-          <span className="text-[15px] sm:text-[16px] font-medium">
-            Book Now
-          </span>
-        </button>
+        <AppButton
+          leftIcon={
+            <FaRegCalendarAlt className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
+          }
+          variant="outline-pink"
+          size="custom"
+          onClick={handleBookClick}
+          className="py-2 sm:py-2 px-2.5 text-[15px] sm:text-[16px]  font-medium "
+        >
+          Book Now
+        </AppButton>
       </div>
     </div>
   );

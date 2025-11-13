@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState, useRef } from "react";
 import { IoClose, IoCopyOutline, IoChevronDown } from "react-icons/io5";
 import salonImg from "../../../../assets/salon-1.png";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
+import AppButton from "../../../common/site/AppButton";
 
 export default function TreatModal({ isOpen, closeModal, initialData }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -270,12 +271,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       />
                     </div>
 
-                    <button
+                    <AppButton
+                      variant="primary"
+                      size="custom"
                       onClick={handleSubmit}
-                      className="w-full mt-6 bg-[#FF92A5] text-white text-[16px] rounded-[8px] py-2 font-medium hover:opacity-90"
+                      className="mt-6 py-2"
                     >
                       Request Now
-                    </button>
+                    </AppButton>
                   </>
                 ) : (
                   <>

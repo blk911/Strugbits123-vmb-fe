@@ -18,12 +18,17 @@ import TreatModal from "../../dashboard/client/Modals/TreatModal";
 import TreatRequestModal from "../../dashboard/client/Modals/TreatRequestModal";
 import AppointmentScheduledModal from "../../dashboard/client/Modals/AppointmentScheduledModal";
 import GiftServiceModal from "../../dashboard/client/Modals/GiftServiceModal";
+import BookAppointmentModal from "../../dashboard/client/Modals/BookAppointmentModal";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
 
   return (
     <>
+      <BookAppointmentModal
+        isOpen={activeModal === "bookAppointment"}
+        closeModal={closeModal}
+      />
       <GiftServiceModal
         isOpen={activeModal === "giftService"}
         closeModal={closeModal}

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { CellRenderers } from "./CellRenderers";
-import InvitesTable from "./InvitesTable";
+import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 
 const pendingData = [
   {
@@ -47,29 +46,21 @@ const unclaimedData = [
     status: "Unclaimed",
   },
 ];
-
 const tabs = {
   Pending: pendingData,
   Claimed: claimedData,
   Unclaimed: unclaimedData,
 };
-
-function Invites() {
-  const [activeTab, setActiveTab] = useState("Pending");
-
+const tabOrder = ["Pending", "Claimed", "Unclaimed"];
+export default function Invites() {
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
-      <div className="w-full">
-        <InvitesTable
-          data={tabs[activeTab]}
-          cellRenderers={CellRenderers}
-          setActiveTab={setActiveTab}
-          activeTab={activeTab}
-          tabOrder={["Pending", "Claimed", "Unclaimed"]}
-        />
-      </div>
+      <TabbedTable
+        tabs={tabs}
+        tabOrder={tabOrder}
+        defaultTab="Pending"
+        cellRenderers={CellRenderers}
+      />
     </div>
   );
 }
-
-export default Invites;

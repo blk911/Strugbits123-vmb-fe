@@ -1,4 +1,5 @@
 import { FaGift } from "react-icons/fa6";
+import AppButton from "../../../common/site/AppButton";
 
 export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
   return (
@@ -23,13 +24,16 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
           </div>
         </div>
 
-        <button
-          className="flex items-center cursor-pointer justify-center gap-2 bg-[#FF92A54D] rounded-[8px] px-3 sm:px-4 py-2 text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#581838] hover:bg-[#FF92A566] transition-all w-fit"
+        <AppButton
+          leftIcon={<FaGift className="text-[#FF97A7] text-[18px]" />}
+          variant="ghost-pink"
+          size="custom"
+          fullWidth={false}
           onClick={onGiftClick}
+          className="px-3 sm:px-4 py-2 text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#581838]"
         >
-          <FaGift className="text-[#FF97A7] text-[18px]" />
           Request a Gift
-        </button>
+        </AppButton>
       </div>
 
       <div className="hidden md:block absolute bottom-[-14px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px]">

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import AppointmentTable from "./AppointmentsTable";
+import React from "react";
 import { CellRenderers } from "./CellRenderers";
+import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 
 const pendingData = [
   {
@@ -84,22 +84,17 @@ const tabs = {
   Confirmed: confirmedData,
   Decline: declineData,
 };
+const tabOrder = ["Pending", "Reschedule", "Hold", "Confirmed", "Decline"];
 
-function Appointments() {
-  const [activeTab, setActiveTab] = useState("Pending");
-
+export default function Appointments() {
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF] ">
-      <div className="w-full">
-        <AppointmentTable
-          data={tabs[activeTab]}
-          cellRenderers={CellRenderers}
-          setActiveTab={setActiveTab}
-          activeTab={activeTab}
-        />
-      </div>
+    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
+      <TabbedTable
+        tabs={tabs}
+        tabOrder={tabOrder}
+        defaultTab="Pending"
+        cellRenderers={CellRenderers}
+      />
     </div>
   );
 }
-
-export default Appointments;

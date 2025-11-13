@@ -8,6 +8,7 @@ import salonImg from "../../../../assets/salon-1.png";
 import userImg from "../../../../assets/user_icon.png";
 import treatRequestIcon from "../../../../assets/treatRequestIcon.png";
 import successGif from "../../../../assets/successGif.gif";
+import AppButton from "../../../common/site/AppButton";
 
 export default function TreatRequestModal({ isOpen, closeModal, initialData }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -187,21 +188,24 @@ export default function TreatRequestModal({ isOpen, closeModal, initialData }) {
                   </div>
 
                   <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <button
+                    <AppButton
+                      leftIcon={<FaTimes className="text-[14px]" />}
+                      variant="primary"
+                      size="custom"
                       onClick={closeModal}
-                      className="flex items-center justify-center gap-2 bg-[#FF92A5] text-white text-[14px] font-medium rounded-[8px] px-5 py-[15px] border border-[#E5E7EB] hover:opacity-90 transition-all w-full"
+                      className="text-[14px] font-medium px-5 py-[15px]"
                     >
-                      <FaTimes className="text-[14px]" />
-                      <span>Decline</span>
-                    </button>
-
-                    <button
+                      Decline
+                    </AppButton>
+                    <AppButton
+                      leftIcon={<FaCheck className="text-[14px]" />}
+                      variant="outline-dark"
+                      size="custom"
                       onClick={handleAccept}
-                      className="flex items-center justify-center gap-2 bg-white text-[#581838] text-[14px] font-medium rounded-[8px] px-5 py-[15px] border border-[#581838] hover:bg-[#581838]/10 transition-all w-full"
+                      className="text-[14px] font-medium px-5 py-[15px]"
                     >
-                      <FaCheck className="text-[14px]" />
-                      <span>Accept & Pay</span>
-                    </button>
+                      Accept & Pay
+                    </AppButton>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -243,12 +247,15 @@ export default function TreatRequestModal({ isOpen, closeModal, initialData }) {
                 treat! ✨
               </p>
 
-              <button
+              <AppButton
+                fullWidth={false}
+                variant="primary"
+                size="custom"
                 onClick={handleSeeRequests}
-                className="mt-4 border border-[#E5E7EB] bg-[#FF92A5] text-white font-semibold text-[14px] rounded-[8px] px-[20px] py-[15px] hover:opacity-90 transition-all"
+                className="mt-4 text-[14px] font-medium px-5 py-[15px]"
               >
                 See All Requests
-              </button>
+              </AppButton>
             </Dialog.Panel>
           </div>
         </Dialog>

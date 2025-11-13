@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import RequestsTable from "./RequestsTable";
-import { CellRenderers } from "./CellRenderers";
 import { useLocation } from "react-router-dom";
+import { CellRenderers } from "./CellRenderers";
+import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
+
 const myRequestsData = [
   {
     id: 1,
@@ -25,7 +26,6 @@ const myRequestsData = [
     status: "Pending",
   },
 ];
-
 const receivedRequestsData = [
   {
     id: 1,
@@ -56,24 +56,29 @@ const tabs = {
   myRequests: myRequestsData,
   receivedRequests: receivedRequestsData,
 };
+const tabOrder = ["myRequests", "receivedRequests"];
+const labelMap = {
+  myRequests: "My Requests",
+  receivedRequests: "Received Requests",
+};
 
-function Requests() {
+export default function Requests() {
   const location = useLocation();
-  const defaultTab = location.state?.activeTab || "myRequests";
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState(
+    location.state?.activeTab ?? "myRequests"
+  );
 
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF] ">
-      <div className="w-full">
-        <RequestsTable
-          data={tabs[activeTab]}
-          cellRenderers={CellRenderers}
-          setActiveTab={setActiveTab}
-          activeTab={activeTab}
-        />
-      </div>
+    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
+      <TabbedTable
+        tabs={tabs}
+        tabOrder={tabOrder}
+        defaultTab="myRequests"
+        cellRenderers={CellRenderers}
+        tabLabelMap={labelMap}
+        location={location}
+        setExternalActiveTab={setActiveTab}
+      />
     </div>
   );
 }
-
-export default Requests;
