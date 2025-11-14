@@ -18,8 +18,8 @@ function UserMenu() {
   const ref = useRef(null);
   const dispatch = useDispatch();
   const toggle = () => setOpen((prev) => !prev);
-const navigate = useNavigate();
-const [logout, { isLoading }] = useLogoutMutation();
+  const navigate = useNavigate();
+  const [logout, { isLoading }] = useLogoutMutation();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -29,9 +29,9 @@ const [logout, { isLoading }] = useLogoutMutation();
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-const handleLogout = async () => {
+  const handleLogout = async () => {
     try {
-      await logout().unwrap(); 
+      await logout().unwrap();
       dispatch(clearRole());
       dispatch(clearUser());
       dispatch(setAuthMode("login"));
@@ -53,7 +53,11 @@ const handleLogout = async () => {
           : openModal("editProfile"),
     },
     {
-label: isLoading ? "Logging out..." : "Log Out",
+      label: "Change Password",
+      onClick: () => openModal("changePassword"),
+    },
+    {
+      label: isLoading ? "Logging out..." : "Log Out",
       onClick: handleLogout,
       danger: true,
     },

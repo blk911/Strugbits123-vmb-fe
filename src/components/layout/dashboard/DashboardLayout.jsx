@@ -75,7 +75,7 @@ function DashboardLayout() {
 
   return (
     <DashboardModalProvider>
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen overflow-hidden">
         <aside
           className={`
             fixed inset-y-0 left-0 z-40

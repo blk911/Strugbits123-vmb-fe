@@ -33,16 +33,6 @@ export const menus = {
       path: "/salonOwner",
       icon: <FaChartLine className="h-5 w-5" />,
     },
-    {
-      name: "Earnings",
-      path: "/salonOwner/earnings",
-      icon: <LiaDollarSignSolid className="h-5 w-5" />,
-    },
-    {
-      name: "Invites & Gifts",
-      path: "/salonOwner/invites_gifts",
-      icon: <FaGift className="h-5 w-5" />,
-    },
   ],
   client: [
     {
