@@ -5,6 +5,7 @@ import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import AppButton from "../../../common/site/AppButton";
 
 export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
+  console.log("Data Recieved==>", initialData);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedServices, setSelectedServices] = useState([]);
   const [email, setEmail] = useState("");

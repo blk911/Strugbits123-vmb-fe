@@ -53,21 +53,7 @@ export default function GiftCard({
       openModal("appointmentScheduled");
     }
   };
-  // const handleCardClick = () => {
-  //   if (title === "My Requests") {
-  //     openModal("treat", {
-  //       isSubmitted: true,
-  //       selectedSalon: "Bella Beauty Salon",
-  //       selectedServices: ["Haircuts", "Hydrafacial"],
-  //       email: "mike.davis@example.com",
-  //       message:
-  //         "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
-  //     });
-  //   }
-  //   if (title === "Received Requests") {
-  //     openModal("treatRequest");
-  //   }
-  // };
+
   const handleViewAll = () => {
     if (title === "My Requests") {
       navigate("/gifts", { state: { activeTab: "myRequests" } });

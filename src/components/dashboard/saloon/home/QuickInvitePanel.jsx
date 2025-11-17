@@ -5,7 +5,7 @@ export default function QuickInvitePanel() {
   return (
     <SectionWrapper className="p-6 flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <FaUser className="text-[#FF92A5] w-[20px] h-[20px]" />
+        <FaUser className="text-[#FF92A5] w-[20px] h-[20px] shrink-0" />
         <p className="text-[18px] font-semibold text-[#581838]">
           Quick Invites
         </p>

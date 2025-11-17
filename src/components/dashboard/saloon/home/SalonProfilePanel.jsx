@@ -14,7 +14,7 @@ export default function SalonProfilePanel() {
         <p className="text-[18px] font-semibold text-[#581838]">
           Salon Profile
         </p>
-        <FaEdit className="text-[#FF92A5]" />
+        <FaEdit className="text-[#FF92A5] shrink-0" />
       </div>
 
       <div className="flex flex-col items-center text-center gap-2">
@@ -32,26 +32,26 @@ export default function SalonProfilePanel() {
         <p className="text-[14px] text-[#4B5563]">Premium Hair & Beauty</p>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
-          <FaMapMarkerAlt className="text-[#9CA3AF]" />
+          <FaMapMarkerAlt className="text-[#9CA3AF] shrink-0" />
           <p className="text-[14px] text-[#4B5563]">
             123 Beauty Street, NY 10001
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <FaPhone className="text-[#9CA3AF]" />
+          <FaPhone className="text-[#9CA3AF] shrink-0" />
           <p className="text-[14px] text-[#4B5563]">(555) 123-4567</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <FaClock className="text-[#9CA3AF]" />
+          <FaClock className="text-[#9CA3AF]  shrink-0" />
           <p className="text-[14px] text-[#4B5563]">9:00 AM - 8:00 PM</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <FaCalendar className="text-[#9CA3AF]" />
+          <FaCalendar className="text-[#9CA3AF] shrink-0" />
           <p className="text-[14px] text-[#4B5563]">Mon–Fri</p>
         </div>
       </div>

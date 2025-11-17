@@ -1,7 +1,10 @@
 import React from "react";
 
-const TableRow = ({ row, keys, cellRenderers }) => (
-  <tr className="block mb-4 bg-white rounded-lg hover:bg-gray-50 transition-colors md:table-row md:mb-0">
+const TableRow = ({ row, keys, cellRenderers, onRowClick }) => (
+  <tr
+    className="block mb-4 bg-white rounded-lg hover:bg-gray-50 transition-colors md:table-row md:mb-0 cursor-pointer"
+    onClick={() => onRowClick?.(row)}
+  >
     {keys.map((key, index) => {
       let cellValue = cellRenderers[key]
         ? cellRenderers[key](row[key])
