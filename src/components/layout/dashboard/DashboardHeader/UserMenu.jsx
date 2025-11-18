@@ -50,7 +50,11 @@ function UserMenu() {
       onClick: () =>
         role == "admin"
           ? openModal("editAdminProfile")
-          : openModal("editProfile"),
+          : openModal("profileSettings", {
+              fullName: "John Doe",
+              email: "john.doe@example.com",
+              phone: "+1 555 123 4567",
+            }),
     },
     {
       label: "Change Password",

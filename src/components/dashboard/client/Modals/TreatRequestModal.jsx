@@ -10,7 +10,7 @@ import treatRequestIcon from "../../../../assets/treatRequestIcon.png";
 import successGif from "../../../../assets/successGif.gif";
 import AppButton from "../../../common/site/AppButton";
 
-export default function TreatRequestModal({ isOpen, closeModal, initialData }) {
+function TreatRequestModal({ isOpen, closeModal, initialData }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
 
@@ -263,3 +263,5 @@ export default function TreatRequestModal({ isOpen, closeModal, initialData }) {
     </>
   );
 }
+
+export default TreatRequestModal;

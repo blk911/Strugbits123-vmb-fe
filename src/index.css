@@ -27,6 +27,20 @@
 @utility animate-arrow-marquee {
   animation: arrow-marquee 0.9s ease-in-out forwards;
 }
+@keyframes diagonal-marquee {
+  from {
+    transform: translateX(100%) translateY(-100%) rotate(12deg);
+  }
 
+  to {
+    transform: translateX(-100%) translateY(100%) rotate(12deg);
+  }
+}
+
+@utility animate-diagonal-marquee {
+  animation: diagonal-marquee 4s linear infinite;
+}
 @source inline("{group-hover:,}animate-arrow-marquee");
+@source inline("{group-hover:,}animate-diagonal-marquee");
+
 

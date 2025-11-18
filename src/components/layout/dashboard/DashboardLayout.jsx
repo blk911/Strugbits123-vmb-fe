@@ -14,29 +14,48 @@ import EditProfileModal from "../../dashboard/saloon/home/salonProfile/Modals/Ed
 import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteModal";
 import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
 import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
-import TreatModal from "../../dashboard/client/Modals/TreatModal";
-import TreatRequestModal from "../../dashboard/client/Modals/TreatRequestModal";
-import AppointmentScheduledModal from "../../dashboard/client/Modals/AppointmentScheduledModal";
-import GiftServiceModal from "../../dashboard/client/Modals/GiftServiceModal";
-import BookAppointmentModal from "../../dashboard/client/Modals/BookAppointmentModal";
+import {
+  AppointmentScheduledModal,
+  BookAppointmentModal,
+  ExclusiveInviteModal,
+  GiftServiceModal,
+  TreatModal,
+  TreatRequestModal,
+  OfferClaimedModal,
+  OfferExpiredModal,
+  ProfileSettingsModal,
+  ChangePasswordModal,
+} from "../../dashboard/client/Modals";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
 
   return (
     <>
-      <BookAppointmentModal
-        isOpen={activeModal === "bookAppointment"}
+      <ChangePasswordModal
+        isOpen={activeModal === "changePassword"}
         closeModal={closeModal}
       />
-      <GiftServiceModal
-        isOpen={activeModal === "giftService"}
+      <ProfileSettingsModal
+        isOpen={activeModal === "profileSettings"}
+        closeModal={closeModal}
+        user={modalData}
+      />
+
+      <OfferClaimedModal
+        isOpen={activeModal === "offerClaimed"}
+        closeModal={closeModal}
+        data={modalData}
+      />
+      <OfferExpiredModal
+        isOpen={activeModal === "offerExpired"}
+        closeModal={closeModal}
+        data={modalData}
+      />
+      <ExclusiveInviteModal
+        isOpen={activeModal === "exclusiveInvite"}
         closeModal={closeModal}
         initialData={modalData}
-      />
-      <AppointmentScheduledModal
-        isOpen={activeModal === "appointmentScheduled"}
-        closeModal={closeModal}
       />
       <TreatRequestModal
         isOpen={activeModal === "treatRequest"}
@@ -48,6 +67,21 @@ function DashboardModals() {
         closeModal={closeModal}
         initialData={modalData}
       />
+      <AppointmentScheduledModal
+        isOpen={activeModal === "appointmentScheduled"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
+      <GiftServiceModal
+        isOpen={activeModal === "giftService"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
+      <BookAppointmentModal
+        isOpen={activeModal === "bookAppointment"}
+        closeModal={closeModal}
+      />
+
       <AddServiceModal
         isOpen={activeModal === "addService"}
         onClose={closeModal}

@@ -14,6 +14,13 @@ export default function AppointmentScheduledModal({
   closeModal,
   initialData,
 }) {
+  if (initialData) {
+    if (
+      !(initialData?.salon && initialData?.services && initialData?.appointment)
+    ) {
+      return null;
+    }
+  }
   const mock = initialData || {
     salon: {
       name: "Luxe Beauty Salon",
@@ -30,7 +37,7 @@ export default function AppointmentScheduledModal({
     },
   };
 
-  const totalPrice = mock.services.reduce((s, it) => s + (it.price || 0), 0);
+  const totalPrice = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
 
   const [holdOpen, setHoldOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
