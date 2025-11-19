@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
-import { useDashboardModal } from "../../../../pages/ModalProvider";
 import salonImg1 from "../../../../assets/salon-1.png";
 import salonImg2 from "../../../../assets/salon-2.png";
-import RescheduleDirectModal from "../../client/Modals/appointmentTabsModals/RescheduleDirectModal";
-import HoldDirectModal from "../../client/Modals/appointmentTabsModals/HoldDirectModal";
-import DeclineDirectModal from "../../client/Modals/appointmentTabsModals/DeclineDirectModal";
+import { ConfirmConfirmation } from "../../client/Modals/appointmentTabsModals/ConfirmationModals";
 import {
-  ConfirmConfirmation,
-  DeclineConfirmation,
-  RescheduleSentConfirmation,
-} from "../../client/Modals/appointmentTabsModals/ConfirmationModals";
+  RescheduleAppointmentModal,
+  ScheduleAppointmentModal,
+} from "../Modals";
 
 const salonImages = {
   "Beauty Salon & Spa": salonImg1,
@@ -50,9 +46,17 @@ const createAppointmentData = () => [
         { name: "Facial", duration: "1 Hr", price: 110 },
         { name: "Spa", duration: "90 Min", price: 150 },
       ],
-      appointment: {
-        date: "02-08-2025",
-        time: "01:30 PM",
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "elitejuan@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
       },
     },
   },
@@ -75,9 +79,17 @@ const createAppointmentData = () => [
         { name: "Facial", duration: "75 Min", price: 120 },
         { name: "Hair Color", duration: "2 Hr", price: 90 },
       ],
-      appointment: {
-        date: "03-08-2025",
-        time: "02:00 PM",
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "maria@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
       },
     },
   },
@@ -100,7 +112,18 @@ const createAppointmentData = () => [
         { name: "Massage", duration: "1 Hr", price: 90 },
         { name: "Pedicure", duration: "1 Hr", price: 60 },
       ],
-      appointment: { date: "04-08-2025", time: "11:00 AM" },
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "john@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
+      },
     },
   },
   {
@@ -121,7 +144,18 @@ const createAppointmentData = () => [
         { name: "Manicure", duration: "45 Min", price: 40 },
         { name: "Spa Treatment", duration: "2 Hr", price: 160 },
       ],
-      appointment: { date: "05-08-2025", time: "03:30 PM" },
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "sarah@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
+      },
     },
   },
   {
@@ -143,7 +177,18 @@ const createAppointmentData = () => [
         { name: "Facial", duration: "1 Hr", price: 130 },
         { name: "Body Massage", duration: "90 Min", price: 110 },
       ],
-      appointment: { date: "06-08-2025", time: "10:00 AM" },
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "alex@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
+      },
     },
   },
   {
@@ -164,7 +209,18 @@ const createAppointmentData = () => [
         { name: "Nail Art", duration: "90 Min", price: 70 },
         { name: "Hair Cut", duration: "45 Min", price: 55 },
       ],
-      appointment: { date: "07-08-2025", time: "04:00 PM" },
+      treatTo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+14 256 365470",
+        image: salonImg1,
+      },
+      treatBy: {
+        name: "Jane Doe",
+        email: "emma@gmail.com",
+        phone: "+14 785 456789",
+        image: salonImg1,
+      },
     },
   },
 ];
@@ -175,6 +231,7 @@ const cleanRow = (row) => {
   return clean;
 };
 const tabsForTable = {
+  All: allAppointments.map(cleanRow),
   Pending: allAppointments.filter((a) => a.status === "Pending").map(cleanRow),
   Reschedule: allAppointments
     .filter((a) => a.status === "Reschedule")
@@ -186,31 +243,62 @@ const tabsForTable = {
   Decline: allAppointments.filter((a) => a.status === "Decline").map(cleanRow),
 };
 
-const tabOrder = ["Pending", "Reschedule", "Hold", "Confirmed", "Decline"];
+const tabOrder = [
+  "All",
+  "Pending",
+  "Reschedule",
+  "Hold",
+  "Confirmed",
+  "Decline",
+];
 
 export default function Appointments() {
-  const { openModal } = useDashboardModal();
   const [directData, setDirectData] = useState(null);
   const [showReschedule, setShowReschedule] = useState(false);
+  const [showPending, setShowPending] = useState(false);
+  const [showConfirmed, setShowConfirmed] = useState(false);
   const [showHold, setShowHold] = useState(false);
   const [showDecline, setShowDecline] = useState(false);
+
   const [showConfirmSuccess, setShowConfirmSuccess] = useState(false);
-  const [showDeclineSuccess, setShowDeclineSuccess] = useState(false);
-  const [showRescheduleSent, setShowRescheduleSent] = useState(false);
+
+  const [confirmationConfig, setConfirmationConfig] = useState(null);
   const openWithData = (cleanRow) => {
     const fullRow = allAppointments.find((r) => r.id === cleanRow.id);
     const data = fullRow?._modalData;
     if (!data) return;
 
     setDirectData(data);
-
-    if (cleanRow.status === "Reschedule") setShowReschedule(true);
+    if (cleanRow.status === "Pending") {
+      setShowPending(true);
+    } else if (cleanRow.status === "Reschedule") setShowReschedule(true);
+    else if (cleanRow.status === "Confirmed") setShowConfirmed(true);
     else if (cleanRow.status === "Hold") setShowHold(true);
     else if (cleanRow.status === "Decline") setShowDecline(true);
-    else openModal("appointmentScheduled", data);
+    else setShowPending(true);
+    // if (cleanRow.status === "Reschedule") setShowReschedule(true);
+    // else if (cleanRow.status === "Hold") setShowHold(true);
+    // else if (cleanRow.status === "Decline") setShowDecline(true);
+    // else if (cleanRow.status === "Confirmed") setShowConfirmed(true);
+    // else openModal("scheduleAppointment", data);
   };
-
+  const handleSuccess = (type) => {
+    if (type === "schedule") {
+      setConfirmationConfig({
+        title: "Appointment Successfully Scheduled",
+        subtitle:
+          "Appointment has been successfully scheduled!\nThe client has been informed and will confirm shortly.",
+      });
+    } else if (type === "reschedule") {
+      setConfirmationConfig({
+        title: "Appointment Rescheduled",
+        subtitle: "We’ve informed your client about the new schedule details.",
+      });
+    }
+    setShowConfirmSuccess(true);
+  };
   const handleRowClick = {
+    All: openWithData,
     Pending: openWithData,
     Reschedule: openWithData,
     Hold: openWithData,
@@ -228,37 +316,27 @@ export default function Appointments() {
           onRowClick={handleRowClick}
         />
       </div>
-      <RescheduleDirectModal
+
+      <RescheduleAppointmentModal
         isOpen={showReschedule}
-        onClose={() => setShowReschedule(false)}
-        data={directData}
-        onRescheduleSent={() => setShowRescheduleSent(true)}
-      />
-      <HoldDirectModal
-        isOpen={showHold}
-        onClose={() => setShowHold(false)}
-        data={directData}
-        onAccept={() => setShowConfirmSuccess(true)}
-        onDecline={() => setShowDeclineSuccess(true)}
-        onReschedule={() => setShowReschedule(true)}
-      />
-      <DeclineDirectModal
-        isOpen={showDecline}
-        onClose={() => setShowDecline(false)}
-        data={directData}
+        closeModal={() => setShowReschedule(false)}
+        initialData={directData}
+        onAccept={() => handleSuccess("reschedule")}
       />
 
+      <ScheduleAppointmentModal
+        isOpen={showPending}
+        closeModal={() => setShowPending(false)}
+        initialData={directData}
+        onAccept={() => handleSuccess("schedule")}
+      />
       <ConfirmConfirmation
         open={showConfirmSuccess}
-        onClose={() => setShowConfirmSuccess(false)}
-      />
-      <DeclineConfirmation
-        open={showDeclineSuccess}
-        onClose={() => setShowDeclineSuccess(false)}
-      />
-      <RescheduleSentConfirmation
-        open={showRescheduleSent}
-        onClose={() => setShowRescheduleSent(false)}
+        onClose={() => {
+          setShowConfirmSuccess(false);
+        }}
+        title={confirmationConfig?.title}
+        subtitle={confirmationConfig?.subtitle}
       />
     </>
   );

@@ -23,12 +23,17 @@ import {
   ProfileSettingsModal,
   ChangePasswordModal,
 } from "../../dashboard/client/Modals";
+import { ScheduleAppointmentModal } from "../../dashboard/saloon/Modals";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
 
   return (
     <>
+      <ScheduleAppointmentModal
+        isOpen={activeModal === "scheduleAppointment"}
+        closeModal={closeModal}
+      />
       <ChangePasswordModal
         isOpen={activeModal === "changePassword"}
         closeModal={closeModal}

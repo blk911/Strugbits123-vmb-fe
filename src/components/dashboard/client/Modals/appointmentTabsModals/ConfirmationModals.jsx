@@ -1,11 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import holdImg from "../../../../../assets/holdImg.png";
 import confirmGif from "../../../../../assets/successGif.gif";
 import declineGif from "../../../../../assets/declineGif.gif";
 import rescheduleSentImg from "../../../../../assets/rescheduleSent.png";
 
 export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
+  useEffect(() => {
+    if (open) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 1400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog
