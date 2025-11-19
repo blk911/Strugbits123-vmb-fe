@@ -3,16 +3,23 @@ import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { clearRole } from "../../../../store/features/roleSlice";
+import { setAuthMode } from "../../../../store/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
+import { useLogoutMutation } from "../../../../store/api/authApi";
+import { clearUser } from "../../../../store/features/userSlice";
 function UserMenu() {
-  const { role } = useSelector((state) => state.role)
+  const { role } = useSelector((state) => state.role);
 
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();
   const ref = useRef(null);
-
+  const dispatch = useDispatch();
   const toggle = () => setOpen((prev) => !prev);
-
+  const navigate = useNavigate();
+  const [logout, { isLoading }] = useLogoutMutation();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -22,10 +29,42 @@ function UserMenu() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(clearRole());
+      dispatch(clearUser());
+      dispatch(setAuthMode("login"));
+      navigate("/register");
+    } catch (error) {
+      console.error("Logout failed:", error);
 
+      dispatch(clearRole());
+      dispatch(setAuthMode("login"));
+      navigate("/register");
+    }
+  };
   const menuItems = [
-    { label: "Profile Setting", onClick: () => role == "admin" ? openModal("editAdminProfile") : openModal("editProfile") },
-    { label: "Log Out", onClick: () => console.log("Log out"), danger: true },
+    {
+      label: "Profile Setting",
+      onClick: () =>
+        role == "admin"
+          ? openModal("editAdminProfile")
+          : openModal("profileSettings", {
+              fullName: "John Doe",
+              email: "john.doe@example.com",
+              phone: "+1 555 123 4567",
+            }),
+    },
+    {
+      label: "Change Password",
+      onClick: () => openModal("changePassword"),
+    },
+    {
+      label: isLoading ? "Logging out..." : "Log Out",
+      onClick: handleLogout,
+      danger: true,
+    },
   ];
 
   return (

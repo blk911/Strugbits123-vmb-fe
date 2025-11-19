@@ -3,22 +3,33 @@ import { createContext, useContext, useState } from "react";
 const DashboardModalContext = createContext();
 
 export function DashboardModalProvider({ children }) {
-  const [activeModal, setActiveModal] = useState(null); 
-  // e.g. "addService", "editService", "editSalon"
+  const [modalState, setModalState] = useState({
+    activeModal: null,
+    data: null,
+  });
 
-  const openModal = (name) => setActiveModal(name);
-  const closeModal = () => setActiveModal(null);
+  const openModal = (name, data = null) => {
+    setModalState({ activeModal: name, data });
+  };
+
+  const closeModal = () => {
+    setModalState({ activeModal: null, data: null });
+  };
 
   return (
     <DashboardModalContext.Provider
-      value={{ activeModal, openModal, closeModal }}
+      value={{
+        activeModal: modalState.activeModal,
+        modalData: modalState.data,
+        openModal,
+        closeModal,
+      }}
     >
       {children}
     </DashboardModalContext.Provider>
   );
 }
 
-// custom hook
 export function useDashboardModal() {
   return useContext(DashboardModalContext);
 }

@@ -1,17 +1,24 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 
+const roleMap = {
+  customer: "client",
+  saloon_owner: "salonOwner",
+};
+
 const initialState = {
-  role: "admin", // "admin" | "salonOwner" | "client"
+  role: null, // null | "admin" | "salonOwner" | "client"
 };
 
 const roleSlice = createSlice({
   name: "role",
   initialState,
   reducers: {
-    setRole: (state, action) => {
-      state.role = action.payload;
+    setRole(state, { payload }) {
+      // payload comes from the API (customer | saloon_owner)
+      state.role = roleMap[payload] ?? null;
     },
-    clearRole: (state) => {
+    clearRole(state) {
       state.role = null;
     },
   },
