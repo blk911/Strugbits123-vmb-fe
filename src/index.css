@@ -27,20 +27,31 @@
 @utility animate-arrow-marquee {
   animation: arrow-marquee 0.9s ease-in-out forwards;
 }
-@keyframes diagonal-marquee {
-  from {
-    transform: translateX(100%) translateY(-100%) rotate(12deg);
+@keyframes diagonal-shine {
+  0% {
+    transform: translateX(100%) rotate(18deg);
   }
 
-  to {
-    transform: translateX(-100%) translateY(100%) rotate(12deg);
+  100% {
+    transform: translateX(-150%) rotate(18deg);
   }
 }
-
-@utility animate-diagonal-marquee {
-  animation: diagonal-marquee 4s linear infinite;
+@utility shine-overlay {
+  @apply pointer-events-none absolute inset-0 overflow-hidden rounded-[10px];
 }
+
+@utility shine-stripe {
+  @apply absolute top-0 bottom-0 right-2 w-[210px];
+    background: linear-gradient(180deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.9) 50%,
+        transparent 75%);
+    transform: rotate(18deg);
+  animation: diagonal-shine 2.6s linear infinite;
+}
+
+
 @source inline("{group-hover:,}animate-arrow-marquee");
-@source inline("{group-hover:,}animate-diagonal-marquee");
+@source inline("{group-hover:,}shine-stripe");
 
 

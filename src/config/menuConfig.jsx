@@ -4,6 +4,7 @@ import { LiaDollarSignSolid } from "react-icons/lia";
 import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
+import { LuUserRoundPlus } from "react-icons/lu";
 export const menus = {
   null: [
     {
@@ -32,6 +33,16 @@ export const menus = {
       name: "Dashboard",
       path: "/salonOwner",
       icon: <FaChartLine className="h-5 w-5" />,
+    },
+    {
+      name: "Invites",
+      path: "/saloninvites",
+      icon: <LuUserRoundPlus className="h-5 w-5" />,
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: <FaCalendarDays className="h-5 w-5" />,
     },
   ],
   client: [

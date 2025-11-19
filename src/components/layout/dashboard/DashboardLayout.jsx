@@ -9,9 +9,6 @@ import {
   DashboardModalProvider,
   useDashboardModal,
 } from "../../../pages/ModalProvider";
-import AddServiceModal from "../../dashboard/saloon/home/serviceSection/Modals/AddServiceModal";
-import EditProfileModal from "../../dashboard/saloon/home/salonProfile/Modals/EditProfile";
-import InviteModal from "../../dashboard/saloon/home/quickInvites/Modals/InviteModal";
 import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
 import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
 import {
@@ -82,15 +79,6 @@ function DashboardModals() {
         closeModal={closeModal}
       />
 
-      <AddServiceModal
-        isOpen={activeModal === "addService"}
-        onClose={closeModal}
-      />
-      <EditProfileModal
-        isOpen={activeModal === "editProfile"}
-        onClose={closeModal}
-      />
-      <InviteModal isOpen={activeModal === "invite"} onClose={closeModal} />
       <EditAdminProfile
         isOpen={activeModal === "editAdminProfile"}
         onClose={closeModal}

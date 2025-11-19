@@ -6,8 +6,8 @@ import { RiMoneyDollarCircleLine, RiFlowerLine } from "react-icons/ri";
 
 function Overview() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      <div className="flex flex-col gap-2">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 font-[Poppins] items-start">
+      <div className="flex flex-col gap-2 ">
         <h1 className="text-[18px] font-semibold text-[#581838]">
           Welcome back!
         </h1>

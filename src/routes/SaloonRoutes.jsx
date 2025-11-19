@@ -1,7 +1,11 @@
 import { Route } from "react-router-dom";
 import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import { DashboardHome } from "../pages/saloon";
+import {
+  AppointmentHistory,
+  DashboardHome,
+  SalonInvites,
+} from "../pages/saloon";
 
 export default function SalonRoutes() {
   return (
@@ -14,6 +18,8 @@ export default function SalonRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route path="/saloninvites" element={<SalonInvites />} />
+      <Route path="/appointments" element={<AppointmentHistory />} />
     </Route>
   );
 }
