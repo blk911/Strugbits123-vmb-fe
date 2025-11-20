@@ -151,18 +151,18 @@ export default function ScheduleAppointmentModal({
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
-                                  src={data.treatTo.image}
+                                  src={data.treatTo?.image}
                                   className="w-[53px] h-[53px] rounded-full object-cover"
                                 />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#4B5563]">
-                                    {data.treatTo.name}
+                                    {data.treatTo?.name}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatTo.email}
+                                    {data.treatTo?.email}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatTo.phone}
+                                    {data.treatTo?.phone}
                                   </p>
                                 </div>
                               </div>
@@ -174,18 +174,18 @@ export default function ScheduleAppointmentModal({
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
-                                  src={data.treatBy.image}
+                                  src={data.treatBy?.image}
                                   className="w-[53px] h-[53px] rounded-full object-cover"
                                 />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#581838]">
-                                    {data.treatBy.name}
+                                    {data.treatBy?.name}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatBy.email}
+                                    {data.treatBy?.email}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatBy.phone}
+                                    {data.treatBy?.phone}
                                   </p>
                                 </div>
                               </div>
@@ -206,18 +206,19 @@ export default function ScheduleAppointmentModal({
                                 </div>
                               </div>
 
-                              {data.services.map((srv, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                >
-                                  <span>{srv.name}</span>
-                                  <div className="flex gap-8">
-                                    <span>{srv.duration}</span>
-                                    <span>${srv.price}</span>
+                              {data?.services?.length > 0 &&
+                                data.services.map((srv, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
+                                  >
+                                    <span>{srv.name}</span>
+                                    <div className="flex gap-8">
+                                      <span>{srv.duration}</span>
+                                      <span>${srv.price}</span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
 
                             <div className="flex justify-end">
@@ -268,18 +269,19 @@ export default function ScheduleAppointmentModal({
                                 </div>
                               </div>
 
-                              {data.services.map((srv, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                >
-                                  <span>{srv.name}</span>
-                                  <div className="flex gap-8">
-                                    <span>{srv.duration}</span>
-                                    <span>${srv.price}</span>
+                              {data?.services?.length > 0 &&
+                                data.services.map((srv, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
+                                  >
+                                    <span>{srv.name}</span>
+                                    <div className="flex gap-8">
+                                      <span>{srv.duration}</span>
+                                      <span>${srv.price}</span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
 
                             <div className="flex justify-end">

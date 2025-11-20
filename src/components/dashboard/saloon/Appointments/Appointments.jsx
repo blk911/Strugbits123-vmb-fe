@@ -3,11 +3,9 @@ import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import salonImg1 from "../../../../assets/salon-1.png";
 import salonImg2 from "../../../../assets/salon-2.png";
-import { ConfirmConfirmation } from "../../client/Modals/appointmentTabsModals/ConfirmationModals";
-import {
-  RescheduleAppointmentModal,
-  ScheduleAppointmentModal,
-} from "../Modals";
+
+import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
 
 const salonImages = {
   "Beauty Salon & Spa": salonImg1,
@@ -124,6 +122,12 @@ const createAppointmentData = () => [
         phone: "+14 785 456789",
         image: salonImg1,
       },
+      appointment: {
+        date: "04-08-2025",
+        time: "11:00 AM",
+        message:
+          "I’d like to reschedule my booking. Please update the appointment time as per the new availability. 5pm on Wednesday 15 Oct, 2025",
+      },
     },
   },
   {
@@ -155,6 +159,10 @@ const createAppointmentData = () => [
         email: "sarah@gmail.com",
         phone: "+14 785 456789",
         image: salonImg1,
+      },
+      appointment: {
+        date: "05-08-2025",
+        time: "03:30 PM",
       },
     },
   },
@@ -189,6 +197,10 @@ const createAppointmentData = () => [
         phone: "+14 785 456789",
         image: salonImg1,
       },
+      appointment: {
+        date: "06-08-2025",
+        time: "10:00 AM",
+      },
     },
   },
   {
@@ -220,6 +232,10 @@ const createAppointmentData = () => [
         email: "emma@gmail.com",
         phone: "+14 785 456789",
         image: salonImg1,
+      },
+      appointment: {
+        date: "07-08-2025",
+        time: "04:00 PM",
       },
     },
   },
@@ -254,15 +270,10 @@ const tabOrder = [
 
 export default function Appointments() {
   const [directData, setDirectData] = useState(null);
-  const [showReschedule, setShowReschedule] = useState(false);
-  const [showPending, setShowPending] = useState(false);
-  const [showConfirmed, setShowConfirmed] = useState(false);
-  const [showHold, setShowHold] = useState(false);
-  const [showDecline, setShowDecline] = useState(false);
+  const { openModal } = useDashboardModal();
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [statusModalType, setStatusModalType] = useState("hold");
 
-  const [showConfirmSuccess, setShowConfirmSuccess] = useState(false);
-
-  const [confirmationConfig, setConfirmationConfig] = useState(null);
   const openWithData = (cleanRow) => {
     const fullRow = allAppointments.find((r) => r.id === cleanRow.id);
     const data = fullRow?._modalData;
@@ -270,37 +281,25 @@ export default function Appointments() {
 
     setDirectData(data);
     if (cleanRow.status === "Pending") {
-      setShowPending(true);
-    } else if (cleanRow.status === "Reschedule") setShowReschedule(true);
-    else if (cleanRow.status === "Confirmed") setShowConfirmed(true);
-    else if (cleanRow.status === "Hold") setShowHold(true);
-    else if (cleanRow.status === "Decline") setShowDecline(true);
-    else setShowPending(true);
-    // if (cleanRow.status === "Reschedule") setShowReschedule(true);
-    // else if (cleanRow.status === "Hold") setShowHold(true);
-    // else if (cleanRow.status === "Decline") setShowDecline(true);
-    // else if (cleanRow.status === "Confirmed") setShowConfirmed(true);
-    // else openModal("scheduleAppointment", data);
-  };
-  const handleSuccess = (type) => {
-    if (type === "schedule") {
-      setConfirmationConfig({
-        title: "Appointment Successfully Scheduled",
-        subtitle:
-          "Appointment has been successfully scheduled!\nThe client has been informed and will confirm shortly.",
-      });
-    } else if (type === "reschedule") {
-      setConfirmationConfig({
-        title: "Appointment Rescheduled",
-        subtitle: "We’ve informed your client about the new schedule details.",
-      });
+      openModal("scheduleAppointment", data);
+    } else if (cleanRow.status === "Reschedule")
+      openModal("rescheduleAppointment", data);
+    else if (["Hold", "Confirmed", "Decline"].includes(cleanRow.status)) {
+      const typeMap = {
+        Hold: "hold",
+        Confirmed: "confirmed",
+        Decline: "declined",
+      };
+      setStatusModalType(typeMap[cleanRow.status]);
+      setShowStatusModal(true);
     }
-    setShowConfirmSuccess(true);
   };
+
   const handleRowClick = {
     All: openWithData,
     Pending: openWithData,
     Reschedule: openWithData,
+    Confirmed: openWithData,
     Hold: openWithData,
     Decline: openWithData,
   };
@@ -311,32 +310,17 @@ export default function Appointments() {
         <TabbedTable
           tabs={tabsForTable}
           tabOrder={tabOrder}
-          defaultTab="Pending"
+          defaultTab="All"
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
         />
       </div>
 
-      <RescheduleAppointmentModal
-        isOpen={showReschedule}
-        closeModal={() => setShowReschedule(false)}
-        initialData={directData}
-        onAccept={() => handleSuccess("reschedule")}
-      />
-
-      <ScheduleAppointmentModal
-        isOpen={showPending}
-        closeModal={() => setShowPending(false)}
-        initialData={directData}
-        onAccept={() => handleSuccess("schedule")}
-      />
-      <ConfirmConfirmation
-        open={showConfirmSuccess}
-        onClose={() => {
-          setShowConfirmSuccess(false);
-        }}
-        title={confirmationConfig?.title}
-        subtitle={confirmationConfig?.subtitle}
+      <StatusAppointmentModal
+        isOpen={showStatusModal}
+        closeModal={() => setShowStatusModal(false)}
+        data={directData}
+        type={statusModalType}
       />
     </>
   );

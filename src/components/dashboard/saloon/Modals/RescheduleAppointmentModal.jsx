@@ -1,8 +1,15 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useRef, useLayoutEffect, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaCheck, FaTimes } from "react-icons/fa";
+
+import {
+  FaCheck,
+  FaTimes,
+  FaCalendarAlt,
+  FaClock,
+  FaChevronDown,
+  FaChevronUp,
+} from "react-icons/fa";
 import salonIcon from "../../../../assets/salon-1.png";
 import AppButton from "../../../common/site/AppButton";
 
@@ -34,10 +41,17 @@ export default function RescheduleAppointmentModal({
       { name: "Haircut & Styling", duration: "1 Hr", price: 50 },
       { name: "HydraFacial", duration: "1.5 Hr", price: 120 },
     ],
+    appointment: {
+      date: "04-08-2025",
+      time: "11:00 AM",
+      message:
+        "I’d like to reschedule my booking. Please update the appointment time as per the new availability. 5pm on Wednesday 15 Oct, 2025",
+    },
   };
 
   const [step, setStep] = useState(1);
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const totalPrice = (data.services || []).reduce(
     (s, it) => s + (it.price || 0),
     0
@@ -84,7 +98,6 @@ export default function RescheduleAppointmentModal({
   }, [isOpen]);
 
   const onAcceptAndSchedule = () => setStep(2);
-  const onBack = () => setStep(1);
   const onScheduleNow = () => {
     closeModal();
     setTimeout(() => onAccept?.(), 200);
@@ -149,18 +162,15 @@ export default function RescheduleAppointmentModal({
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
-                                  src={data.treatTo.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover"
+                                  src={data.treatTo?.image}
+                                  className="w-[40px] h-[40px] rounded-full object-cover"
                                 />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#4B5563]">
-                                    {data.treatTo.name}
+                                    {data.treatTo?.name}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatTo.email}
-                                  </p>
-                                  <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatTo.phone}
+                                    {data.treatTo?.email}
                                   </p>
                                 </div>
                               </div>
@@ -172,21 +182,77 @@ export default function RescheduleAppointmentModal({
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
-                                  src={data.treatBy.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover"
+                                  src={data.treatBy?.image}
+                                  className="w-[40px] h-[40px] rounded-full object-cover"
                                 />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#581838]">
-                                    {data.treatBy.name}
+                                    {data.treatBy?.name}
                                   </p>
                                   <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatBy.email}
-                                  </p>
-                                  <p className="text-[12px] text-[#4B5563]">
-                                    {data.treatBy.phone}
+                                    {data.treatBy?.email}
                                   </p>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+
+                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+                            <div
+                              className="flex items-center justify-between cursor-pointer"
+                              onClick={() => setDropdownOpen(!dropdownOpen)}
+                            >
+                              <p className="text-[#581838] font-medium text-[14px]">
+                                Previous Appointment Details
+                              </p>
+
+                              {dropdownOpen ? (
+                                <FaChevronUp className="text-[#581838]" />
+                              ) : (
+                                <FaChevronDown className="text-[#581838]" />
+                              )}
+                            </div>
+
+                            {dropdownOpen && (
+                              <div className="flex flex-col gap-[20px] overflow-hidden animate-fadeIn">
+                                <div className="grid grid-cols-2 gap-4">
+                                  <div>
+                                    <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                      Date
+                                    </label>
+                                    <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
+                                      <FaCalendarAlt className="text-[#581838]" />
+                                      <span className="text-[14px] text-[#404040]">
+                                        {data.appointment?.date}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div>
+                                    <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                      Time
+                                    </label>
+                                    <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
+                                      <FaClock className="text-[#581838]" />
+                                      <span className="text-[14px] text-[#404040]">
+                                        {data.appointment?.time}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                            <p className="text-[#581838] font-medium text-[14px]">
+                              Reason for Rescheduling
+                            </p>
+
+                            <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-[12px]">
+                              <p className="text-[12px] italic text-[#00000080] leading-[18px]">
+                                {data.appointment?.message ||
+                                  "No reason provided."}
+                              </p>
                             </div>
                           </div>
 
@@ -204,18 +270,19 @@ export default function RescheduleAppointmentModal({
                                 </div>
                               </div>
 
-                              {data.services.map((srv, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                >
-                                  <span>{srv.name}</span>
-                                  <div className="flex gap-8">
-                                    <span>{srv.duration}</span>
-                                    <span>${srv.price}</span>
+                              {data?.services?.length > 0 &&
+                                data.services.map((srv, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
+                                  >
+                                    <span>{srv.name}</span>
+                                    <div className="flex gap-8">
+                                      <span>{srv.duration}</span>
+                                      <span>${srv.price}</span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
 
                             <div className="flex justify-end">
@@ -266,18 +333,19 @@ export default function RescheduleAppointmentModal({
                                 </div>
                               </div>
 
-                              {data.services.map((srv, idx) => (
-                                <div
-                                  key={idx}
-                                  className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                >
-                                  <span>{srv.name}</span>
-                                  <div className="flex gap-8">
-                                    <span>{srv.duration}</span>
-                                    <span>${srv.price}</span>
+                              {data?.services?.length > 0 &&
+                                data.services.map((srv, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
+                                  >
+                                    <span>{srv.name}</span>
+                                    <div className="flex gap-8">
+                                      <span>{srv.duration}</span>
+                                      <span>${srv.price}</span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
                             </div>
 
                             <div className="flex justify-end">

@@ -276,6 +276,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       size="custom"
                       onClick={handleSubmit}
                       className="mt-6 py-2"
+                      disabled={!email || !message || !selectedServices.length}
                     >
                       Request Now
                     </AppButton>

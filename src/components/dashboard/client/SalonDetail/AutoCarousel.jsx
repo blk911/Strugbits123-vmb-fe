@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-export default function AutoCarousel({ images = [], heightClass = "h-[300px]" }) {
+export default function AutoCarousel({
+  images = [],
+  heightClass = "h-[300px]",
+}) {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -10,7 +13,7 @@ export default function AutoCarousel({ images = [], heightClass = "h-[300px]" })
   }, [images]);
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-md ${heightClass}`}>
+    <div className={`relative w-full overflow-hidden ${heightClass}`}>
       {images.map((src, i) => (
         <img
           key={i}

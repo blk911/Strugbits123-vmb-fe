@@ -1,6 +1,9 @@
-export default function Button({ text, classes, textclass }) {
+import { useNavigate } from "react-router-dom";
+export default function Button({ text, classes, textclass, navigateTo }) {
+  const navigate = useNavigate();
   return (
     <button
+      onClick={() => navigate(navigateTo)}
       className={`animated-btn flex items-center gap-2 pl-[15px] pr-[5px] py-[8px]
         rounded-full border-2 border-[#7a2c3a] text-[#7a2c3a]
         font-medium text-lg relative  overflow-hidden

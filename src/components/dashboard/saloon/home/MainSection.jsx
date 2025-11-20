@@ -10,7 +10,9 @@ import { FaUser } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
 import SectionWrapper from "./SectionWrapper";
 import defaultUser from "../../../../assets/user_icon.png";
+import { useNavigate } from "react-router-dom";
 function MainSection() {
+  const navigate = useNavigate();
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 flex flex-col gap-6">
@@ -24,7 +26,10 @@ function MainSection() {
                 </p>
               </div>
 
-              <p className="underline text-[14px] font-medium text-[#9CA3AF] cursor-pointer text-center sm:text-right">
+              <p
+                className="underline text-[14px] font-medium text-[#9CA3AF] cursor-pointer text-center sm:text-right "
+                onClick={() => navigate("/saloninvites")}
+              >
                 View All
               </p>
             </div>
@@ -48,7 +53,10 @@ function MainSection() {
                 </p>
               </div>
 
-              <p className="underline text-[14px] font-medium text-[#9CA3AF] cursor-pointer text-center sm:text-right">
+              <p
+                className="underline text-[14px] font-medium text-[#9CA3AF] cursor-pointer text-center sm:text-right"
+                onClick={() => navigate("/appointments")}
+              >
                 View All
               </p>
             </div>
@@ -79,7 +87,10 @@ function MainSection() {
           <div className="flex  flex-col sm:flex-row  items-center justify-between">
             <p className="text-[18px] font-semibold text-[#581838]">Services</p>
 
-            <button className="border border-[#E5E7EB] bg-[#FF92A5] text-white rounded-[8px] px-4 py-2 text-[16px]">
+            <button
+              className="border border-[#E5E7EB] bg-[#FF92A5] text-white rounded-[8px] px-4 py-2 text-[16px] cursor-pointer"
+              onClick={() => navigate("/salondetail")}
+            >
               Manage Services
             </button>
           </div>

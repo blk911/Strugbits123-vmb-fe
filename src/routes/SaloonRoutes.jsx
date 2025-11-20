@@ -4,6 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import {
   AppointmentHistory,
   DashboardHome,
+  SalonDetail,
   SalonInvites,
 } from "../pages/saloon";
 
@@ -20,6 +21,7 @@ export default function SalonRoutes() {
       />
       <Route path="/saloninvites" element={<SalonInvites />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
+      <Route path="/salondetail" element={<SalonDetail />} />
     </Route>
   );
 }

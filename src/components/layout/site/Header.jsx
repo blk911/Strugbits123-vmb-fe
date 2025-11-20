@@ -45,7 +45,10 @@ function Header() {
               </a>
             </li>
             <li>
-              <Button text={"Register Your Salon Today"} />
+              <Button
+                text={"Register Your Salon Today"}
+                navigateTo={"register"}
+              />
             </li>
           </ul>
         </div>

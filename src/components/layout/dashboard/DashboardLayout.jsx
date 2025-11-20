@@ -23,16 +23,77 @@ import {
   ProfileSettingsModal,
   ChangePasswordModal,
 } from "../../dashboard/client/Modals";
-import { ScheduleAppointmentModal } from "../../dashboard/saloon/Modals";
+import {
+  RescheduleAppointmentModal,
+  ScheduleAppointmentModal,
+  SendTreatModal,
+  SalonProfileSettingsModal,
+} from "../../dashboard/saloon/Modals";
+import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
+  const [showConfirmSuccess, setShowConfirmSuccess] = useState(false);
 
+  const [confirmationConfig, setConfirmationConfig] = useState(null);
+  const handleSuccess = (type) => {
+    if (type === "schedule") {
+      setConfirmationConfig({
+        title: "Appointment Successfully Scheduled",
+        subtitle:
+          "Appointment has been successfully scheduled!\nThe client has been informed and will confirm shortly.",
+      });
+    } else if (type === "reschedule") {
+      setConfirmationConfig({
+        title: "Appointment Rescheduled",
+        subtitle: "We’ve informed your client about the new schedule details.",
+      });
+    } else if (type === "sendTreat") {
+      setConfirmationConfig({
+        title: "Invite Sent Successfully!",
+        subtitle:
+          "Your invite is on its way. The recipient will get it in their inbox soon.",
+      });
+    }
+    setShowConfirmSuccess(true);
+  };
   return (
     <>
+      <SalonProfileSettingsModal
+        isOpen={activeModal === "salonprofileSettings"}
+        closeModal={closeModal}
+      />
+      <SendTreatModal
+        isOpen={activeModal === "sendTreat"}
+        closeModal={closeModal}
+        initialData={modalData}
+        onAccept={() => handleSuccess("sendTreat")}
+      />
+
+      <ConfirmConfirmation
+        open={showConfirmSuccess}
+        onClose={() => {
+          setShowConfirmSuccess(false);
+        }}
+        title={confirmationConfig?.title}
+        subtitle={confirmationConfig?.subtitle}
+      />
+      <BookAppointmentModal
+        isOpen={activeModal === "bookAppointment"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
       <ScheduleAppointmentModal
         isOpen={activeModal === "scheduleAppointment"}
         closeModal={closeModal}
+        initialData={modalData}
+        onAccept={() => handleSuccess("schedule")}
+      />
+      <RescheduleAppointmentModal
+        isOpen={activeModal === "rescheduleAppointment"}
+        closeModal={closeModal}
+        initialData={modalData}
+        onAccept={() => handleSuccess("reschedule")}
       />
       <ChangePasswordModal
         isOpen={activeModal === "changePassword"}
@@ -110,7 +171,7 @@ function DashboardLayout() {
             flex flex-col
             transition-transform duration-300 ease-in-out
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-            ${sidebarOpen ? "w-[20%] xl:w-[15%]" : "w-0"}
+            ${sidebarOpen ? "w-[24%] md:w-[16%] xl:w-[14%]" : "w-0"}
           `}
         >
           <div className="h-[70px] flex items-center px-[20px]">
@@ -126,7 +187,7 @@ function DashboardLayout() {
           className={`
             flex-1 flex flex-col
             transition-all duration-300 ease-in-out
-            ${sidebarOpen ? "ml-[20%] xl:ml-[15%]" : "ml-0"}
+            ${sidebarOpen ? "ml-[24%] md:ml-[16%] xl:ml-[14%]" : "ml-0"}
           `}
         >
           <DashboardHeader toggleSidebar={toggleSidebar} />

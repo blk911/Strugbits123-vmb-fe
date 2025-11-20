@@ -1,3 +1,5 @@
+import { useDashboardModal } from "../../../../pages/ModalProvider";
+
 export default function AppointmentCard({
   icon,
   from,
@@ -7,10 +9,18 @@ export default function AppointmentCard({
   statusColor,
   timeAgo,
 }) {
+  const { openModal } = useDashboardModal();
   return (
     <div
       className="border border-[#0000001A] rounded-[10px] p-3 
-      flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4"
+      flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all"
+      onClick={() => {
+        if (statusText === "Confirm") {
+          openModal("scheduleAppointment");
+        } else {
+          openModal("rescheduleAppointment");
+        }
+      }}
     >
       <div className="shrink-0 w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center mx-auto sm:mx-0">
         <img src={icon} alt="User" className="w-full h-full object-cover" />

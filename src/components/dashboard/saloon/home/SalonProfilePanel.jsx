@@ -7,7 +7,10 @@ import {
   FaCalendar,
 } from "react-icons/fa";
 import salonImg from "../../../../assets/salon-4.png";
+import AppButton from "../../../common/site/AppButton";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
 export default function SalonProfilePanel() {
+  const { openModal } = useDashboardModal();
   return (
     <SectionWrapper className="p-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -56,9 +59,16 @@ export default function SalonProfilePanel() {
         </div>
       </div>
 
-      <button className="w-full border border-[#E5E7EB] bg-[#FF92A5] text-white rounded-[8px] py-2">
+      <AppButton
+        variant="primary"
+        size="custom"
+        className="text-[16px] font-medium  py-2 "
+        onClick={() => {
+          openModal("salonprofileSettings");
+        }}
+      >
         Edit Profile
-      </button>
+      </AppButton>
     </SectionWrapper>
   );
 }
