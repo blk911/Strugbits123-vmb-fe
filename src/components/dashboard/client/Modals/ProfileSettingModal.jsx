@@ -38,7 +38,6 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated Profile:", form);
     closeModal();
   };
 

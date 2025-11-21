@@ -70,10 +70,6 @@ export default function AddServiceModal({
         : initialData?.image || defaultImg,
     };
 
-    console.log(
-      initialData ? "Service Updated:" : "Service Added:",
-      serviceData
-    );
     closeModal();
   };
 

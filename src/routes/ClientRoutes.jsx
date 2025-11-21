@@ -16,7 +16,7 @@ export default function ClientRoutes() {
       <Route
         path="/client"
         element={
-          <ProtectedRoute allowedRoles={["client"]}>
+          <ProtectedRoute allowedRoles={["customer"]}>
             <DashboardHome />
           </ProtectedRoute>
         }

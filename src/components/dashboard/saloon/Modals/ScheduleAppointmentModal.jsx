@@ -12,7 +12,6 @@ export default function ScheduleAppointmentModal({
   initialData,
   onAccept,
 }) {
-  //   console.log("Iniital==>", initialData);
   const data = initialData || {
     salon: {
       name: "Luxe Beauty Salon",

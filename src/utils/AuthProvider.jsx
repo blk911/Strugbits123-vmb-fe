@@ -5,11 +5,6 @@ import { setRole } from "../store/features/roleSlice";
 import LoadingIndicator from "../components/common/LoadingIndicator/LoadingIndicator";
 import { setUser } from "../store/features/userSlice";
 
-const roleMap = {
-  customer: "client",
-  saloon_owner: "salonOwner",
-};
-
 export default function AuthProvider({ children }) {
   const dispatch = useDispatch();
   const { data, isError, isLoading } = useGetMeQuery(undefined, {
@@ -17,7 +12,7 @@ export default function AuthProvider({ children }) {
   });
   useEffect(() => {
     if (data?.role) {
-      const mappedRole = roleMap[data.role];
+      const mappedRole = data.role;
       if (mappedRole) {
         dispatch(setRole(data.role));
         dispatch(setUser(data));

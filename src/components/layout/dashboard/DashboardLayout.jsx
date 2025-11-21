@@ -9,8 +9,6 @@ import {
   DashboardModalProvider,
   useDashboardModal,
 } from "../../../pages/ModalProvider";
-import EditAdminProfile from "../../dashboard/admin/home/Modals/editAdminProfile";
-import ApproveSaloons from "../../dashboard/admin/home/Modals/ApproveSaloons";
 import {
   AppointmentScheduledModal,
   BookAppointmentModal,
@@ -155,15 +153,6 @@ function DashboardModals() {
       <BookAppointmentModal
         isOpen={activeModal === "bookAppointment"}
         closeModal={closeModal}
-      />
-
-      <EditAdminProfile
-        isOpen={activeModal === "editAdminProfile"}
-        onClose={closeModal}
-      />
-      <ApproveSaloons
-        isOpen={activeModal === "approveSaloons"}
-        onClose={closeModal}
       />
     </>
   );

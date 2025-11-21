@@ -135,7 +135,6 @@ export default function Requests() {
     myRequests: (cleanRow) => {
       const row = originalRows.myRequests.find((r) => r.id === cleanRow.id);
       const d = row._modalData;
-      console.log("Row Data==>", d);
       openModal("treat", {
         isSubmitted: true,
         selectedSalon: "Bella Beauty Salon",

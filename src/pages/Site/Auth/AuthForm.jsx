@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useForm, FormProvider } from "react-hook-form";
@@ -72,7 +71,14 @@ export default function AuthForm() {
 
   const handleSuccess = (apiRole) => {
     dispatch(setRole(apiRole));
-    const target = apiRole === "customer" ? "/client" : "/salonOwner";
+    const target =
+      apiRole === "customer"
+        ? "/client"
+        : apiRole === "salonOwner"
+        ? "/salonOwner"
+        : apiRole === "admin"
+        ? "/admin"
+        : "/";
     navigate(target, { replace: true });
   };
 
@@ -89,20 +95,19 @@ export default function AuthForm() {
     try {
       if (mode === "login") {
         loadingToastId = toastLoading("Signing in...");
-        const res = await signIn({ email: full.email, password: full.password }).unwrap();
+        const res = await signIn({
+          email: full.email,
+          password: full.password,
+        }).unwrap();
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
         handleSuccess(res.role);
-      }
-
-      else if (step === "step1" && userType === "customer") {
+      } else if (step === "step1" && userType === "customer") {
         loadingToastId = toastLoading("Creating account...");
         await signUpCustomer(full).unwrap();
         toastDismiss(loadingToastId);
         handleSignupSuccess("customer");
-      }
-
-      else if (step === "step2") {
+      } else if (step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
 
         const files = {
@@ -127,7 +132,6 @@ export default function AuthForm() {
       console.error(err);
     }
   };
-
 
   return (
     <div
@@ -158,7 +162,6 @@ export default function AuthForm() {
           {mode === "signup" && step === "step2" && (
             <SalonStep2 onBack={() => setStep("step1")} />
           )}
-
         </form>
       </FormProvider>
     </div>

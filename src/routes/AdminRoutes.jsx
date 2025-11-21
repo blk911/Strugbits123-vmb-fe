@@ -1,7 +1,13 @@
 import { Route } from "react-router-dom";
 import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import { Home as AdminHome, Saloons as AdminSaloon, Gifts as AdminGifts } from "../pages/admin";
+import {
+  Home as AdminHome,
+  AppointmentHistory,
+  GiftHistory,
+  SalonInvites,
+  Salons,
+} from "../pages/admin";
 
 export default function AdminRoutes() {
   return (
@@ -9,27 +15,15 @@ export default function AdminRoutes() {
       <Route
         path="/admin"
         element={
-          // <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["admin"]}>
             <AdminHome />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         }
       />
-      <Route
-        path="/admin/saloon"
-        element={
-          //<ProtectedRoute allowedRoles={["admin"]}>
-            <AdminSaloon />
-          //</ProtectedRoute>
-        }
-      />
-      <Route
-        path="/admin/invites_gifts"
-        element={
-          //<ProtectedRoute allowedRoles={["admin"]}>
-            <AdminGifts />
-          //</ProtectedRoute>
-        }
-      />
+      <Route path="/salons" element={<Salons />} />
+      <Route path="/gifts" element={<GiftHistory />} />
+      <Route path="/appointments" element={<AppointmentHistory />} />
+      <Route path="/saloninvites" element={<SalonInvites />} />
     </Route>
   );
 }
