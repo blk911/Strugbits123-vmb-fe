@@ -9,15 +9,21 @@ import {
 import salonImg from "../../../../assets/salon-4.png";
 import AppButton from "../../../common/site/AppButton";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+import { salons as salonsData } from "../../../../components/dashboard/client/Home/mockData";
+
 export default function SalonProfilePanel() {
   const { openModal } = useDashboardModal();
+  const salon = salonsData[0];
   return (
     <SectionWrapper className="p-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <p className="text-[18px] font-semibold text-[#581838]">
           Salon Profile
         </p>
-        <FaEdit className="text-[#FF92A5] shrink-0" />
+        <FaEdit
+          className="text-[#FF92A5] shrink-0 cursor-pointer"
+          onClick={() => openModal("salonprofileSettings", { salon })}
+        />
       </div>
 
       <div className="flex flex-col items-center text-center gap-2">
@@ -63,9 +69,7 @@ export default function SalonProfilePanel() {
         variant="primary"
         size="custom"
         className="text-[16px] font-medium  py-2 "
-        onClick={() => {
-          openModal("salonprofileSettings");
-        }}
+        onClick={() => openModal("salonprofileSettings", { salon })}
       >
         Edit Profile
       </AppButton>

@@ -28,6 +28,8 @@ import {
   ScheduleAppointmentModal,
   SendTreatModal,
   SalonProfileSettingsModal,
+  AddServiceModal,
+  DeleteConfirmModal,
 } from "../../dashboard/saloon/Modals";
 import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 
@@ -59,9 +61,19 @@ function DashboardModals() {
   };
   return (
     <>
+      <DeleteConfirmModal
+        isOpen={activeModal === "delete"}
+        closeModal={closeModal}
+      />
+      <AddServiceModal
+        isOpen={activeModal === "addService"}
+        closeModal={closeModal}
+        initialData={modalData}
+      />
       <SalonProfileSettingsModal
         isOpen={activeModal === "salonprofileSettings"}
         closeModal={closeModal}
+        salon={modalData?.salon}
       />
       <SendTreatModal
         isOpen={activeModal === "sendTreat"}

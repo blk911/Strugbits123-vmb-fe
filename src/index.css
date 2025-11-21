@@ -27,31 +27,43 @@
 @utility animate-arrow-marquee {
   animation: arrow-marquee 0.9s ease-in-out forwards;
 }
-@keyframes diagonal-shine {
+@keyframes shine-horizontal {
   0% {
-    transform: translateX(100%) rotate(18deg);
+    left: 100%;
+  }
+
+  50% {
+    left: calc(-1 * var(--line-w));
   }
 
   100% {
-    transform: translateX(-150%) rotate(18deg);
+    left: 100%;
   }
 }
-@utility shine-overlay {
-  @apply pointer-events-none absolute inset-0 overflow-hidden rounded-[10px];
+
+@utility shine-line {
+  --line-w: 64px;
+
+  @apply pointer-events-none absolute top-0 bottom-0;
+  width: var(--line-w);
+  left: 100%;
+
+  transform: rotate(-50deg);
+  transform-origin: center;
+
+  background: linear-gradient(180deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.9) 50%,
+      transparent 75%);
+
+  animation: shine-horizontal 3s linear infinite;
+  will-change: left;
 }
 
-@utility shine-stripe {
-  @apply absolute top-0 bottom-0 right-2 w-[210px];
-    background: linear-gradient(180deg,
-        transparent 25%,
-        rgba(255, 255, 255, 0.9) 50%,
-        transparent 75%);
-    transform: rotate(18deg);
-  animation: diagonal-shine 2.6s linear infinite;
-}
+@source inline("{group-hover:,}shine-line");
 
 
-@source inline("{group-hover:,}animate-arrow-marquee");
-@source inline("{group-hover:,}shine-stripe");
+
+@source inline("{group-hover:,}shine-line");
 
 
