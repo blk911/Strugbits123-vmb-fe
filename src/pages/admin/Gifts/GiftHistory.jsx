@@ -1,4 +1,4 @@
-import Requests from "../../../components/dashboard/client/Gifts/Requests";
+import Requests from "../../../components/dashboard/admin/Gifts/Requests";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
 
 export default function GiftHistory() {

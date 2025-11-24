@@ -1,4 +1,4 @@
-import Invites from "../../../components/dashboard/saloon/SalonInvites/Invites";
+import Invites from "../../../components/dashboard/admin/SalonInvites/Invites";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
 
 export default function SalonInvites() {

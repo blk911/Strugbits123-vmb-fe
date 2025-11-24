@@ -1,4 +1,4 @@
-import Appointments from "../../../components/dashboard/saloon/Appointments/Appointments";
+import Appointments from "../../../components/dashboard/admin/Appointments/Appointments";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
 
 export default function AppointmentHistory() {

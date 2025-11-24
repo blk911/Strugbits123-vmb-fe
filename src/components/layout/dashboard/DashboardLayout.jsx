@@ -30,6 +30,11 @@ import {
   DeleteConfirmModal,
 } from "../../dashboard/saloon/Modals";
 import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
+import {
+  RejectionSentModal,
+  SalonRequestModal,
+  SalonVerificationRejectionModal,
+} from "../../dashboard/admin/Modals";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
@@ -54,11 +59,31 @@ function DashboardModals() {
         subtitle:
           "Your invite is on its way. The recipient will get it in their inbox soon.",
       });
+    } else if (type === "salonVerfication") {
+      setConfirmationConfig({
+        title: "Salon Verification Approved",
+        subtitle:
+          "The salon has been successfully verified and approved. The owner can now access their salon dashboard and manage services.",
+      });
     }
     setShowConfirmSuccess(true);
   };
   return (
     <>
+      <RejectionSentModal
+        isOpen={activeModal === "rejectionSent"}
+        onClose={closeModal}
+      />
+      <SalonVerificationRejectionModal
+        isOpen={activeModal === "salonRejection"}
+        onClose={closeModal}
+      />
+      <SalonRequestModal
+        isOpen={activeModal === "salonRequest"}
+        closeModal={closeModal}
+        data={modalData}
+        onAccept={() => handleSuccess("salonVerfication")}
+      />
       <DeleteConfirmModal
         isOpen={activeModal === "delete"}
         closeModal={closeModal}
@@ -79,7 +104,12 @@ function DashboardModals() {
         initialData={modalData}
         onAccept={() => handleSuccess("sendTreat")}
       />
-
+      <ConfirmConfirmation
+        open={activeModal === "salonApprovedSuccess"}
+        onClose={closeModal}
+        title={modalData?.title}
+        subtitle={modalData?.subtitle}
+      />
       <ConfirmConfirmation
         open={showConfirmSuccess}
         onClose={() => {

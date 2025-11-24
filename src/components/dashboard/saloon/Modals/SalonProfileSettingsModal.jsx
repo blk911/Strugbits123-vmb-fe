@@ -109,7 +109,7 @@ export default function SalonProfileSettingsModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-[#e8e8e8] p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px]    p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center">
                   <h2 className="text-[#581838] font-bold text-[24px]">
                     Profile Settings

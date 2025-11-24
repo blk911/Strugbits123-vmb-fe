@@ -2,8 +2,10 @@ import React from "react";
 import { FiEye, FiCheck, FiX } from "react-icons/fi";
 import defaultUser from "../../../../assets/user_icon.png";
 import AppButton from "../../../common/site/AppButton";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
 
 export default function PendingRequestsSection() {
+  const { openModal } = useDashboardModal();
   const requests = [
     {
       name: "Sarah Chen",
@@ -26,7 +28,7 @@ export default function PendingRequestsSection() {
   ];
 
   return (
-    <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 flex flex-col gap-4 font-[Poppins]">
+    <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 flex flex-col gap-4 font-[Poppins] ">
       <h2 className="text-[20px] font-semibold text-[#581838]">
         Pending Salon Owner Requests
       </h2>
@@ -76,6 +78,7 @@ export default function PendingRequestsSection() {
                 size="custom"
                 className="flex-1 sm:flex py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiEye size={16} />}
+                onClick={() => openModal("salonRequest")}
               >
                 View
               </AppButton>
@@ -85,6 +88,13 @@ export default function PendingRequestsSection() {
                 size="custom"
                 className="flex-1 sm:flex py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiCheck size={16} />}
+                onClick={() =>
+                  openModal("salonApprovedSuccess", {
+                    title: "Salon Verification Approved",
+                    subtitle:
+                      "The salon has been successfully verified and approved. The owner can now access their salon dashboard and manage services.",
+                  })
+                }
               >
                 Approve
               </AppButton>
@@ -94,6 +104,7 @@ export default function PendingRequestsSection() {
                 size="custom"
                 className="flex-1 sm:flex py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
                 leftIcon={<FiX size={16} />}
+                onClick={() => openModal("salonRejection")}
               >
                 Reject
               </AppButton>

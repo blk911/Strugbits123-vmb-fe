@@ -76,10 +76,10 @@ export const ConfirmConfirmation = ({ open, onClose, title, subtitle }) => (
     open={open}
     onClose={onClose}
     imageSrc={confirmGif}
-    title={title || "Appointment Confirmed"}
+    title={title || "Salon Verification Approved"}
     subtitle={
       subtitle ||
-      "Your appointment has been successfully confirmed. The salon has been notified."
+      "  The salon has been successfully verified and approved. The owner can now access their salon dashboard and manage services."
     }
   />
 );
