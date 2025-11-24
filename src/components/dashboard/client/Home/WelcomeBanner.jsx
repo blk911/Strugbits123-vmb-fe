@@ -22,21 +22,6 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
               Click Here
             </span>
           </div>
-          {/* <div className="relative.mt-3 md:hidden bg-[#FF92A5] rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px] overflow-hidden">
-            <div className="shine-overlay">
-              <div className="shine-stripe" />
-            </div>
-
-            <div className="relative z-10">
-              You have a new salon invitation!{" "}
-              <span
-                className="font-bold underline cursor-pointer"
-                onClick={onInviteClick}
-              >
-                Click Here
-              </span>
-            </div>
-          </div> */}
         </div>
 
         <AppButton

@@ -15,7 +15,6 @@ function DashboardHeader({ toggleSidebar }) {
       </button>
 
       <div className="flex items-center gap-x-[20px]">
-        {/* <NotificationIcon /> */}
         <UserMenu />
       </div>
     </header>

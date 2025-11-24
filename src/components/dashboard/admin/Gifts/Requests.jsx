@@ -47,8 +47,6 @@ export default function Requests() {
   const { openModal } = useDashboardModal();
 
   const openWithData = (row) => {
-    // openModal("treatRequest")
-    console.log("Row==>", row);
     openModal("giftRequestHistory", {
       timelineItems: [
         {

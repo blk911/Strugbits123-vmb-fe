@@ -21,12 +21,10 @@ export default function Fileupload({ onChange }) {
 
   return (
     <div className="w-full flex flex-wrap gap-[10px]">
-      {/* Preview */}
       {previews.map((url, i) => (
         <Images key={i} src={url} />
       ))}
 
-      {/* Upload Button */}
       <label
         htmlFor="salon-photos"
         className="flex flex-col items-center justify-center w-[94px] h-[100px] border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-white hover:bg-gray-50"

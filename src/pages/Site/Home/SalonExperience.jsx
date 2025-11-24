@@ -4,7 +4,6 @@ import pic2 from "../../../assets/dashboard-1.png";
 import Button from "../../../components/common/site/Button";
 
 function SalonExperience() {
-  // Custom box shadow for the image
   const imgShadow = {
     boxShadow: `
             -9px 9px 28px 0px #1F14181A,

@@ -15,7 +15,6 @@ export default function LogoMarquee() {
   return (
     <div className="flex justify-center items-center w-full">
       <div className="relative pt-[50px] sm:py-[58px] w-full max-w-[1920px] bg-white overflow-hidden">
-        {/* Left gradient */}
         <div
           className="absolute left-0 top-0 h-full w-[120px] pointer-events-none z-10"
           style={{
@@ -23,7 +22,6 @@ export default function LogoMarquee() {
               "linear-gradient(90deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
           }}
         />
-        {/* Right gradient */}
         <div
           className="absolute right-0 top-0 h-full w-[120px] pointer-events-none z-10"
           style={{

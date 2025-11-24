@@ -9,7 +9,6 @@ function Header() {
     <nav className="w-full h-[109px] bg-white py-[20px] px-[50px]">
       <div className="flex flex-row justify-between items-center">
         <img src={logo} alt="Logo" className="h-[69px] w-[108px]" />
-        {/* Hamburger for mobile */}
         <div className="lg:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -21,7 +20,6 @@ function Header() {
             <span className="block w-8 h-1 bg-[#7a2c3a] rounded"></span>
           </button>
         </div>
-        {/* Desktop Menu */}
         <div className="hidden lg:block">
           <ul className="flex items-center gap-[20px] text-[#4B5563]">
             <li>
@@ -53,7 +51,6 @@ function Header() {
           </ul>
         </div>
       </div>
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center">
           <ul className="flex flex-col gap-8 text-2xl text-[#4B5563]">

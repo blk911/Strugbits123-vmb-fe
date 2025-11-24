@@ -85,7 +85,6 @@ export default function ScheduleAppointmentModal({
 
   const onAcceptAndSchedule = () => setStep(2);
   const onBack = () => setStep(1);
-  //   const onScheduleNow = () => setConfirmOpen(true);
   const onScheduleNow = () => {
     closeModal();
     setTimeout(() => onAccept?.(), 200);

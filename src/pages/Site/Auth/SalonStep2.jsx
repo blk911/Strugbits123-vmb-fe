@@ -258,62 +258,6 @@ export default function SalonStep2({ onBack }) {
           )}
         </div>
 
-        {/* <div>
-          <label className="block text-[#374151] font-semibold mb-2">
-            Upload Salon Photos
-          </label>
-
-          <div className="flex flex-wrap md:flex-nowrap items-start gap-2 sm:gap-3 w-full overflow-hidden">
-            <button
-              type="button"
-              onClick={() => photosRef.current.click()}
-              className="flex-shrink-0 flex flex-col items-center justify-center 
-                 w-[70px] h-[64px] sm:w-[94px] sm:h-[82px] 
-                 border border-[#C0C0C0] bg-white rounded-md 
-                 hover:bg-[#FFF4F6] transition-all"
-            >
-              <img
-                src={uploadIcon}
-                alt="Upload"
-                className="w-5 h-5 sm:w-6 sm:h-6 mb-1"
-              />
-              <span className="text-[8px] sm:text-[9px] leading-tight font-medium text-center">
-                Upload Salon <br /> Photos
-              </span>
-            </button>
-
-            <input
-              type="file"
-              multiple
-              ref={photosRef}
-              className="hidden"
-              accept="image/*"
-              onChange={(e) =>
-                setValue("salonPhotos", Array.from(e.target.files))
-              }
-            />
-
-            <div
-              className="
-        flex flex-wrap md:flex-nowrap 
-        gap-2 sm:gap-3 
-        w-full md:max-w-[calc(100%-90px)] 
-        md:overflow-x-auto md:overflow-y-hidden 
-        scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent
-      "
-            >
-              {watch("salonPhotos")?.map((f, i) => (
-                <img
-                  key={i}
-                  src={URL.createObjectURL(f)}
-                  alt=""
-                  className="flex-shrink-0 w-[70px] h-[64px] sm:w-[80px] sm:h-[74px] 
-                     object-cover rounded-md"
-                />
-              ))}
-            </div>
-          </div>
-        </div> */}
         <div>
           <label className="block text-[#374151] font-semibold mb-2">
             Upload Salon Photos

@@ -33,7 +33,6 @@ function HeroSection() {
               fontFamily: "Italianno, cursive",
               fontWeight: 400,
               fontStyle: "normal",
-              //   lineHeight: '100px',
               letterSpacing: "0%",
             }}
           >

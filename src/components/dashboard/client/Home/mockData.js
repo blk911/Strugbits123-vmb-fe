@@ -66,15 +66,6 @@ const uniqueServices = [
   },
 ];
 
-// const makeServices = (salonIndex) =>
-//   uniqueServices.map((service, i) => ({
-//     id: `${salonIndex}-${i + 1}`,
-//     ...service,
-//     price: service.price + (salonIndex % 3) * 10,
-//     image: saloon_1,
-//   }));
-// mockData.js — Update makeServices function
-
 const makeServices = (salonIndex) =>
   uniqueServices.map((service, i) => ({
     id: `${salonIndex}-${i + 1}`,
