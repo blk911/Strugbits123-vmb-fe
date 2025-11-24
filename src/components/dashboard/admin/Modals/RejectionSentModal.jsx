@@ -13,8 +13,14 @@ export default function RejectionSentModal({ isOpen, onClose }) {
     }
   }, [isOpen]);
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-[999] p-4">
-      <div className="bg-white w-full max-w-[420px] rounded-[10px] p-[30px] font-[Poppins] flex flex-col items-center gap-3 relative">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/40 z-[999] p-4"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-full max-w-[420px] rounded-[10px] p-[30px] font-[Poppins] flex flex-col items-center gap-3 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
         <img
           src={claimGif}
           alt="Rejection Sent"

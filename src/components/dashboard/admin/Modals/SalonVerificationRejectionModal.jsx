@@ -54,9 +54,13 @@ export default function SalonVerificationRejectionModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/30 z-[999] p-4">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black/30 z-[999] p-4"
+      onClick={onClose}
+    >
       <div
         ref={dropdownRef}
+        onClick={(e) => e.stopPropagation()}
         className="bg-white w-full max-w-[450px] rounded-[12px] p-6 font-[Poppins] shadow-lg relative max-h-[90vh] overflow-y-auto"
       >
         <button

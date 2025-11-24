@@ -31,6 +31,7 @@ import {
 } from "../../dashboard/saloon/Modals";
 import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 import {
+  GiftRequestHistoryModal,
   RejectionSentModal,
   SalonRequestModal,
   SalonVerificationRejectionModal,
@@ -70,6 +71,11 @@ function DashboardModals() {
   };
   return (
     <>
+      <GiftRequestHistoryModal
+        isOpen={activeModal === "giftRequestHistory"}
+        onClose={closeModal}
+        data={modalData}
+      />
       <RejectionSentModal
         isOpen={activeModal === "rejectionSent"}
         onClose={closeModal}

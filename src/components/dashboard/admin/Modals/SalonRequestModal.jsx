@@ -4,6 +4,7 @@ import defaultImg from "../../../../assets/salon-1.png";
 import AppButton from "../../../common/site/AppButton";
 import { FiCheck, FiX } from "react-icons/fi";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+
 export default function SalonRequestModal({
   isOpen,
   closeModal,
@@ -11,10 +12,18 @@ export default function SalonRequestModal({
   onAccept,
 }) {
   if (!isOpen) return null;
+
   const { openModal } = useDashboardModal();
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30">
-      <div className="bg-[#e8e8e8] w-full max-w-[900px] max-h-[90vh] overflow-y-auto rounded-[10px] p-[30px] flex flex-col gap-[32px] font-[Poppins]">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30"
+      onClick={closeModal}
+    >
+      <div
+        className="bg-[#e8e8e8] w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[10px] p-[30px] flex flex-col gap-[32px] font-[Poppins]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center">
           <h2 className="text-[#581838] font-bold text-[24px]">
             Salon Request
@@ -29,7 +38,7 @@ export default function SalonRequestModal({
           <div className="flex gap-4 flex-col sm:flex-row">
             <img
               src={data?.image || defaultImg}
-              alt="salon"
+              alt={data?.salonName}
               className="w-[80px] h-[80px] rounded-[8px] object-cover"
             />
 
@@ -43,14 +52,15 @@ export default function SalonRequestModal({
                   Salon Name
                 </p>
                 <p className="text-[#00000080] text-[16px]">
-                  Bella Beauty Salon
+                  {data?.salonName}
                 </p>
               </div>
 
               <div>
                 <p className="text-[#000] text-[14px] font-medium">Address</p>
                 <p className="text-[#00000080] text-[16px]">
-                  123 Beauty Street, Fashion District, NY 10001
+                  {data?.address ||
+                    "123 Beauty Street, Fashion District, NY 10001"}
                 </p>
               </div>
 
@@ -58,14 +68,14 @@ export default function SalonRequestModal({
                 <div>
                   <p className="text-[#000] text-[14px] font-medium">Phone</p>
                   <p className="text-[#00000080] text-[16px]">
-                    +1 (555) 123-4567
+                    {data?.phone || "+1 (555) 123-4567"}
                   </p>
 
                   <p className="text-[#000] text-[14px] font-medium mt-3">
                     Timing
                   </p>
                   <p className="text-[#00000080] text-[16px]">
-                    09:00 AM - 05:00 PM
+                    {data?.timing || "09:00 AM - 05:00 PM"}
                   </p>
                 </div>
 
@@ -75,7 +85,7 @@ export default function SalonRequestModal({
                   </p>
                   <div className="flex items-center gap-2 mt-1">
                     <p className="text-[#00000080] text-[12px] font-medium">
-                      file-name.pdf
+                      {data?.licenseDoc || "license-document.pdf"}
                     </p>
                     <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium">
                       View
@@ -86,7 +96,7 @@ export default function SalonRequestModal({
                     Working Days
                   </p>
                   <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium">
-                    Mon - Thu - Fri
+                    {data?.workingDays || "Mon - Thu - Fri"}
                   </button>
                 </div>
               </div>
@@ -97,9 +107,11 @@ export default function SalonRequestModal({
                 </p>
                 <textarea
                   rows={4}
-                  className="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2 text-[14px] bg-white"
-                  defaultValue={
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                  readOnly
+                  className="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2 text-[14px] bg-white resize-none"
+                  value={
+                    data?.description ||
+                    "A premium beauty salon offering top-tier hair, nail, and spa services with a focus on luxury and relaxation."
                   }
                 />
               </div>
@@ -115,41 +127,38 @@ export default function SalonRequestModal({
 
             <div>
               <p className="text-[#000] text-[14px] font-medium">Full Name</p>
-              <p className="text-[#00000080] text-[16px]">Sarah Johnson</p>
+              <p className="text-[#00000080] text-[16px]">{data?.ownerName}</p>
             </div>
 
             <div>
               <p className="text-[#000] text-[14px] font-medium">Email</p>
-              <p className="text-[#00000080] text-[16px]">
-                sarah@bellabeauty.com
-              </p>
+              <p className="text-[#00000080] text-[16px]">{data?.email}</p>
             </div>
 
             <div>
               <p className="text-[#000] text-[14px] font-medium">Phone</p>
-              <p className="text-[#00000080] text-[16px]">+1 (555) 123-4567</p>
+              <p className="text-[#00000080] text-[16px]">
+                {data?.ownerPhone || "+1 (555) 987-6543"}
+              </p>
             </div>
 
             <div className="flex gap-3 overflow-x-auto py-2">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+              {[1, 2, 3, 4, 5].map((i) => (
                 <img
                   key={i}
-                  src={
-                    // data?.photos?.[i] || "https://via.placeholder.com/94x100"
-                    defaultImg
-                  }
-                  className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0"
+                  src={data?.image || defaultImg}
+                  alt={`Gallery ${i}`}
+                  className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-gray-300"
                 />
               ))}
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row  justify-center sm:justify-end gap-3 pt-4">
             <AppButton
-              fullWidth={false}
               variant="custom"
               size="custom"
-              className="sm:flex py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+              className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
               leftIcon={<FiX size={16} />}
               onClick={() => {
                 closeModal();
@@ -158,15 +167,15 @@ export default function SalonRequestModal({
             >
               Reject
             </AppButton>
+
             <AppButton
               onClick={() => {
                 closeModal();
-                setTimeout(() => onAccept?.(), 200);
+                setTimeout(() => onAccept?.(), 300);
               }}
-              fullWidth={false}
               variant="custom"
               size="custom"
-              className=" sm:flex py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+              className="py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
               leftIcon={<FiCheck size={16} />}
             >
               Approve
