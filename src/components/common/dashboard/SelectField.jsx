@@ -12,7 +12,7 @@ export default function SelectField({
   label = "Service Name",
   name = "full_name",
   classes = "",
-  icon, // <-- new prop
+  icon,
   mainIcon = false,
 }) {
   const [selected, setSelected] = useState(option[0]);

@@ -80,7 +80,6 @@ export default function Appointments() {
   const { openModal } = useDashboardModal();
 
   const openWithData = (row) => {
-    // openModal("appointmentDetails");
     openModal("appointmentRequestHistory", {
       timelineItems: [
         {

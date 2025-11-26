@@ -66,30 +66,3 @@ export const salonStep2Schema = z
       path: ["endTime"],
     }
   );
-// export const salonStep2Schema = z.object({
-//   saloonName: z.string().min(2, "Salon name required"),
-//   saloonAddress: z.string().min(5, "Enter salon address"),
-//   saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
-//   // phone: z.string().regex(/^03\d{2}-\d{7}$/, "Format: 0300-0000000"),
-//   phone: z.string().min(2, "Phone Number name required"),
-//   startTime: z.string().min(1, "Select start time"),
-//   endTime: z.string().min(1, "Select end time"),
-//   workingDays: z.array(z.string()).min(1, "Select at least one day"),
-
-//   licenseDoc: z.any().refine((file) => file instanceof File, {
-//     message: "License document is required",
-//   }),
-
-//   profilePic: z.any().refine((file) => file instanceof File, {
-//     message: "Profile picture is required",
-//   }),
-
-//   description: z.string().min(10, "Description must be at least 10 characters"),
-
-//   salonPhotos: z
-//     .array(z.any())
-//     .min(1, "At least one salon photo is required")
-//     .refine((files) => files.every((f) => f instanceof File), {
-//       message: "Invalid photo files",
-//     }),
-// });

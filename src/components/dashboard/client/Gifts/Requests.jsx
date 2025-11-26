@@ -169,7 +169,6 @@ export default function Requests() {
         location={location}
         setExternalActiveTab={setActiveTab}
         onRowClick={handleRowClick}
-        // activeTab={activeTab}
       />
     </div>
   );

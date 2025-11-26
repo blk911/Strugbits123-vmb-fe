@@ -81,7 +81,6 @@ export default function Invites() {
   const { openModal } = useDashboardModal();
 
   const openWithData = (row) => {
-    // openModal("inviteDetails");
     openModal("salonInviteTracking", {
       timelineItems: [
         {
