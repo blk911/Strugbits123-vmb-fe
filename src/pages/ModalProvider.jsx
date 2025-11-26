@@ -13,9 +13,11 @@ export function DashboardModalProvider({ children }) {
   };
 
   const closeModal = () => {
-    setModalState({ activeModal: null, data: null });
+    setModalState((prev) => ({ ...prev, activeModal: null }));
+    setTimeout(() => {
+      setModalState({ activeModal: null, data: null });
+    }, 350);
   };
-
   return (
     <DashboardModalContext.Provider
       value={{

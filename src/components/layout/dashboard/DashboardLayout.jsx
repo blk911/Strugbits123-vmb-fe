@@ -31,8 +31,10 @@ import {
 } from "../../dashboard/saloon/Modals";
 import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 import {
+  AppointmentRequestHistoryModal,
   GiftRequestHistoryModal,
   RejectionSentModal,
+  SalonInviteTrackingModal,
   SalonRequestModal,
   SalonVerificationRejectionModal,
 } from "../../dashboard/admin/Modals";
@@ -71,6 +73,16 @@ function DashboardModals() {
   };
   return (
     <>
+      <AppointmentRequestHistoryModal
+        isOpen={activeModal === "appointmentRequestHistory"}
+        onClose={closeModal}
+        data={modalData}
+      />
+      <SalonInviteTrackingModal
+        isOpen={activeModal === "salonInviteTracking"}
+        onClose={closeModal}
+        data={modalData}
+      />
       <GiftRequestHistoryModal
         isOpen={activeModal === "giftRequestHistory"}
         onClose={closeModal}

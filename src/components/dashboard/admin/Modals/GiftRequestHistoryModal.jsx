@@ -14,7 +14,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] overflow-y-auto bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
+        className="w-full max-w-[960px] font-[Poppins] max-h-[95vh] overflow-y-auto bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -53,22 +53,28 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
                         item.iconBg || "bg-[#FF92A54D]"
                       }`}
                       style={{
-                        borderColor: item.iconBorderColor || "#FF92A5",
+                        borderColor: item?.iconBorderColor || "#FF92A5",
                       }}
                     >
-                      <div className="text-[#FF92A5]">{item.icon}</div>
+                      <div className="text-[#FF92A5]">{item?.icon}</div>
                     </div>
 
                     {idx < timelineItems.length - 1 && (
                       <div
-                        className="w-0.5 mt-2 bg-[#FF92A54D]"
+                        className={`w-0.5 mt-2 ${
+                          item?.barColor || "bg-[#FF92A54D]"
+                        }`}
                         style={{ height: 50 }}
                       />
                     )}
                   </div>
 
                   <div className="flex-1 pb-2">
-                    <h4 className="font-bold text-[#1F2937] text-sm sm:text-base">
+                    <h4
+                      className={`font-bold ${
+                        item?.titleColor || "text-[#1F2937]"
+                      } text-sm sm:text-base`}
+                    >
                       {item.title}
                     </h4>
                     {item.dateBy && (
@@ -199,7 +205,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
               <AppButton
                 variant="custom"
                 size="custom"
-                className="bg-[#FF92A54D] text-[#581838] font-medium py-3 sm:py-4 rounded-[10px] hover:bg-[#ff92a5]/20 transition "
+                className="bg-[#FF92A54D] text-[#581838] font-medium py-3  rounded-[10px] hover:bg-[#ff92a5]/20 transition "
               >
                 View Salon
               </AppButton>

@@ -3,7 +3,12 @@ import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { CellRenderers } from "./CellRenderers";
 import SalonImage from "../../../../assets/salon-1.png";
-import { FaEye, FaPaperPlane, FaRegHandPointer } from "react-icons/fa";
+import {
+  FaCalendarCheck,
+  FaEye,
+  FaPaperPlane,
+  FaRegHandPointer,
+} from "react-icons/fa";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import { GiCheckMark } from "react-icons/gi";
 import userAvatar from "../../../../assets/user_icon.png";
@@ -52,32 +57,35 @@ export default function Requests() {
         {
           icon: <FaPaperPlane className="w-4 h-4" />,
           iconBg: "bg-[#FF92A54D]",
+          barColor: "bg-[#FF92A5]",
           title: "Gift Request Sent",
-          titleColor: "#1F2937",
           dateBy: "01-08-2025 | By: Sarah Johnson (Sender)",
           body: "Gift request sent to Juliana Sauve for Hair Color service.",
         },
         {
           icon: <FaEye className="w-4 h-4" />,
           iconBg: "bg-[#FF92A54D]",
+          barColor: "bg-[#FF92A5]",
           title: "Gift Accepted",
-          titleColor: "#1F2937",
           dateBy: "02-08-2025 | By: Juliana Sauve (Receiver)",
           body: "Receiver accepted the gift and paid for the services.",
         },
         {
           icon: <FaRegHandPointer className="w-4 h-4" />,
           iconBg: "bg-[#FF92A54D]",
+          barColor: "bg-[#FF92A5]",
+
           title: "Salon Responded",
-          titleColor: "#1F2937",
+          titleColor: "text-[#581838]",
+
           dateBy: "03-08-2025 | By: Bella Beauty Salon",
           body: "Salon proposed available appointment slot for 05-08-2025, 3:30 PM.",
         },
         {
-          icon: <RiCalendarScheduleLine className="w-4 h-4" />,
-          iconBg: "bg-[#FF92A54D]",
+          icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
+          iconBg: "bg-[#FF92A5]",
+
           title: "User Confirmed Appointment",
-          titleColor: "#6B7280",
           dateBy: "04-08-2025 | Status: Confirmed | By: Sarah Johnson",
           body: "Receiver confirmed appointment date and time.",
           smallTopLabel: true,
@@ -87,7 +95,7 @@ export default function Requests() {
           iconBg: "bg-[#F3F4F6]",
           iconBorderColor: "#E5E7EB",
           title: "Appointment Created",
-          titleColor: "#6B7280",
+          titleColor: "text-[#6B7280]",
           dateBy: "04-08-2025 | Status: Confirmed | By: Sarah Johnson",
           body: "Receiver confirmed appointment date and time.",
           smallTopLabel: true,
@@ -100,7 +108,7 @@ export default function Requests() {
           iconBorderColor: "#E5E7EB",
 
           title: "Reschedule",
-          titleColor: "#6B7280",
+          titleColor: "text-[#6B7280]",
           dateBy: "",
           body: null,
           reschedule: {

@@ -2,6 +2,13 @@ import React from "react";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { CellRenderers } from "./CellRenderers";
+import SalonImage from "../../../../assets/salon-1.png";
+import userAvatar from "../../../../assets/person_icon.png";
+import {
+  FaCalendarCheck,
+  FaPaperPlane,
+  FaRegHandPointer,
+} from "react-icons/fa";
 
 const allInvitesData = [
   {
@@ -73,10 +80,62 @@ const tabOrder = ["All", "Pending", "Accepted", "Booked", "Expired"];
 export default function Invites() {
   const { openModal } = useDashboardModal();
 
-  const handleRowClick = (row) => {
+  const openWithData = (row) => {
     // openModal("inviteDetails");
-  };
+    openModal("salonInviteTracking", {
+      timelineItems: [
+        {
+          icon: <FaPaperPlane className="w-4 h-4" />,
+          title: "Invitation Sent",
+          dateBy: "01-08-2025, 10:30 AM by Bella Beauty Salon",
+          body: "Salon invited user to try Hair Color service with a 10% discount.",
+        },
 
+        {
+          icon: <FaRegHandPointer className="w-4 h-4" />,
+          titleColor: "text-[#581838]",
+          title: "User Responded",
+          dateBy: "02-08-2025, 09:00 AM",
+          body: "User accepted.",
+        },
+        {
+          icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
+          iconBg: "bg-[#FF92A5]",
+          title: "Appointment Created",
+          dateBy: "03-08-2025, 11:05 AM",
+          body: "Booking created for 06-08-2025 | 2:00 PM.",
+          smallTopLabel: true,
+        },
+      ],
+
+      salonInfo: {
+        image: SalonImage,
+        name: "Bella Beauty Salon",
+        desc: "Premium Beauty Services",
+        email: "bella@gmail.com",
+        phone: "+1 (555) 123-4567",
+        service: "Hair Color",
+        discount: "10%",
+        message: `Hi Juliana,
+I want you to experience my salon with Hair Cutting at an exclusive discount!
+Signup and book today.`,
+      },
+
+      clientInfo: {
+        name: "Sarah Johnson",
+        email: "sarah@gmail.com",
+        phone: "+1 (555) 123-4567",
+        avatar: userAvatar,
+      },
+    });
+  };
+  const handleRowClick = {
+    All: openWithData,
+    Pending: openWithData,
+    Accepted: openWithData,
+    Booked: openWithData,
+    Expired: openWithData,
+  };
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
       <TabbedTable
