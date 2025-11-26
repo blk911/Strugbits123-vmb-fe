@@ -11,7 +11,6 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
         className="relative z-50 font-[Poppins]"
         onClose={closeModal}
       >
-        {/* overlay */}
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

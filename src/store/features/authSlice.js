@@ -1,10 +1,9 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    mode: "login", // "login" | "signup"
+    mode: "login",
   },
   reducers: {
     setAuthMode(state, { payload }) {

@@ -69,20 +69,33 @@ const uniqueServices = [
 const makeServices = (salonIndex) =>
   uniqueServices.map((service, i) => ({
     id: `${salonIndex}-${i + 1}`,
-    ...service,
+    name: service.name,
+    duration: service.duration,
     price: service.price + (salonIndex % 3) * 10,
+    description: service.description,
     image: saloon_1,
-  }));
 
+    discount: 10,
+    isDefault: i === 0,
+  }));
 export const salons = Array.from({ length: 12 }, (_, i) => ({
   id: i + 1,
   name: `Bella Beauty Salon ${i + 1}`,
   distance: parseFloat((Math.random() * 5 + 0.5).toFixed(1)),
-  distanceLabel: `${(Math.random() * 5 + 0.5).toFixed(1)} miles away`,
   address: "123 Main Street, Cityville",
-  hours: "09:00 AM - 08:00 PM",
+  phone: `(555) 123-${4567 + i}`,
   image: saloon_icon,
   images: [saloon_1, saloon_2, saloon_3],
-  phone: `(555) 123-${4567 + i}`,
+  description:
+    "A luxurious beauty salon offering premium hair, skin, and nail services with highly trained professionals.",
+  workingHours: { start: "9:00 AM", end: "8:00 PM" },
+  workingDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
   services: makeServices(i + 1),
+
+  licenseDocument: null,
+  salonPhotos: [saloon_1, saloon_2, saloon_3],
+  owner: {
+    fullName: `Sarah Johnson ${i + 1}`,
+    email: `sarah${i + 1}@bellabeauty.com`,
+  },
 }));

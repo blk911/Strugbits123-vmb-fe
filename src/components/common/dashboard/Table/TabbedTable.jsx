@@ -33,7 +33,7 @@ export default function TabbedTable({
             key={key}
             onClick={() => setActiveTab(key)}
             className={`
-              cursor-pointer pb-2 text-[20px] font-medium transition-colors
+              cursor-pointer pb-2 text-sm sm:text-[20px] font-medium transition-colors
               ${
                 currentTab === key
                   ? "text-[#FF92A5] border-b-2 border-[#FF92A5]"

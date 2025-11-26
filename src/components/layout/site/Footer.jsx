@@ -37,7 +37,6 @@ function Footer() {
   return (
     <footer className="bg-[#581838] px-[50px] pt-[40px] pb-[20px] flex flex-col items-center">
       <div className=" grid w-[100%] lg:w-[100%] xl:w-[80%]  max-sm:w-full gap-y-[20px] grid-cols-1 sm:grid-cols-3 lg:grid-cols-[1fr_100px_100px_100px_100px_200px] xl:grid-cols-6 gap-x-[40px] items-start">
-        {/* Logo & Social */}
         <div className="flex flex-col items-start ">
           <img
             src={logo}
@@ -56,7 +55,6 @@ function Footer() {
             />
           </div>
         </div>
-        {/* Columns */}
         <FooterColumn
           title="Quick Link"
           items={["Lorem", "Ipsum", "Lorem", "Ipsum", "Lorem", "Ipsum"]}
@@ -73,7 +71,6 @@ function Footer() {
           title="Company"
           items={["Lorem", "Ipsum", "Lorem", "Ipsum", "Lorem", "Ipsum"]}
         />
-        {/* Newsletter */}
         <div className="flex flex-col items-start">
           <span
             className="text-[18px] text-[#FF92A5] mb-[10px]"

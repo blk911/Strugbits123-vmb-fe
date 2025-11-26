@@ -70,7 +70,7 @@ export default function Invites() {
         <TabbedTable
           tabs={tabs}
           tabOrder={tabOrder}
-          defaultTab="Pending"
+          defaultTab="All"
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
         />

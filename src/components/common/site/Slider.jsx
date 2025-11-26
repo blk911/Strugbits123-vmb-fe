@@ -143,7 +143,6 @@ export default function SalonSlider() {
 
   return (
     <div className="w-full px-[10px] py-8 relative">
-      {/* Left gradient */}
       <div
         className="absolute left-0 top-0 h-full w-[60px] sm:w-[200px] pointer-events-none z-10"
         style={{
@@ -151,7 +150,6 @@ export default function SalonSlider() {
             "linear-gradient(90deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
         }}
       />
-      {/* Right gradient */}
       <div
         className="absolute right-0 top-0 h-full w-[60px] sm:w-[200px] pointer-events-none z-10"
         style={{
@@ -164,7 +162,6 @@ export default function SalonSlider() {
         {images.map((img, idx) => (
           <div key={idx} className="px-2">
             {" "}
-            {/* 👈 spacing between slides */}
             <SalonCard img={img} />
           </div>
         ))}

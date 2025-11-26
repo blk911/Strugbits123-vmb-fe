@@ -1,5 +1,4 @@
-// hooks/useUser.js
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 export const useUser = () => {
   return useSelector((state) => state.user.data);

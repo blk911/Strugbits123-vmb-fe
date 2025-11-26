@@ -13,7 +13,7 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
             Good to see you back.
           </p>
 
-          <div className="mt-3 md:hidden bg-[#FF92A5] rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px]">
+          <div className="relative mt-3 md:hidden bg-[#FF92A5] rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px]">
             You have a new salon invitation!{" "}
             <span
               className="font-bold underline cursor-pointer"
@@ -22,21 +22,6 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
               Click Here
             </span>
           </div>
-          {/* <div className="relative.mt-3 md:hidden bg-[#FF92A5] rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px] overflow-hidden">
-            <div className="shine-overlay">
-              <div className="shine-stripe" />
-            </div>
-
-            <div className="relative z-10">
-              You have a new salon invitation!{" "}
-              <span
-                className="font-bold underline cursor-pointer"
-                onClick={onInviteClick}
-              >
-                Click Here
-              </span>
-            </div>
-          </div> */}
         </div>
 
         <AppButton
@@ -50,20 +35,9 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
           Request a Gift
         </AppButton>
       </div>
-      {/* 
-      <div className="hidden md:block absolute bottom-[-14px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px]">
-        You have a new salon invitation!{" "}
-        <span
-          className="font-bold underline cursor-pointer"
-          onClick={onInviteClick}
-        >
-          Click Here
-        </span>
-      </div> */}
+
       <div className="relative hidden md:block absolute bottom-[-14px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px] overflow-hidden">
-        <div className="shine-overlay">
-          <div className="shine-stripe" />
-        </div>
+        <div className="shine-line"></div>
 
         <div className="relative z-10">
           You have a new salon invitation!{" "}

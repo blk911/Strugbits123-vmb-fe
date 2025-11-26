@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-// Routes
 import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import SaloonRoutes from "./routes/SaloonRoutes";
@@ -13,9 +12,9 @@ export default function App() {
     <Router>
       <Routes>
         {PublicRoutes()}
-        {role === null && AdminRoutes()}
+        {role === "admin" && AdminRoutes()}
         {role === "salonOwner" && SaloonRoutes()}
-        {role === "client" && ClientRoutes()}
+        {role === "customer" && ClientRoutes()}
         <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
       </Routes>
     </Router>

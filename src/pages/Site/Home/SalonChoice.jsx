@@ -100,7 +100,6 @@ function SalonChoice() {
         btnText="Create Free Account"
         classes="max-md:flex-col max-md:w-full flex-row-reverse"
       />
-      {/* You can add another SalonCard for customers or other purposes here */}
     </div>
   );
 }

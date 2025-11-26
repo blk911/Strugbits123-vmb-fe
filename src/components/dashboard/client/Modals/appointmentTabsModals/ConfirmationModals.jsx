@@ -1,11 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import holdImg from "../../../../../assets/holdImg.png";
 import confirmGif from "../../../../../assets/successGif.gif";
 import declineGif from "../../../../../assets/declineGif.gif";
 import rescheduleSentImg from "../../../../../assets/rescheduleSent.png";
 
 export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
+  useEffect(() => {
+    if (open) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 1400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog
@@ -67,10 +76,10 @@ export const ConfirmConfirmation = ({ open, onClose, title, subtitle }) => (
     open={open}
     onClose={onClose}
     imageSrc={confirmGif}
-    title={title || "Appointment Confirmed"}
+    title={title || "Salon Verification Approved"}
     subtitle={
       subtitle ||
-      "Your appointment has been successfully confirmed. The salon has been notified."
+      "  The salon has been successfully verified and approved. The owner can now access their salon dashboard and manage services."
     }
   />
 );
