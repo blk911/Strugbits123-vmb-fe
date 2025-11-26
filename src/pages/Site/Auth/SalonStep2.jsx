@@ -15,6 +15,7 @@ import InputWithIcon from "../../../components/common/site/InputWithIcon";
 import AuthButton from "../../../components/common/site/AuthButton";
 import CustomCheckbox from "../../../components/common/site/CustomCheckbox";
 import uploadIcon from "../../../assets/upload_photos.png";
+import TimeInput from "../../../components/common/site/TimeInput";
 
 const timeOptions = [
   "12:00 PM",
@@ -102,51 +103,8 @@ export default function SalonStep2({ onBack }) {
       />
 
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
-        <div className="relative">
-          <label className="block text-[#374151] text-[14px] font-semibold mb-1">
-            Start Time
-          </label>
-          <div className="relative">
-            <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5]" />
-            <select
-              {...register("startTime")}
-              className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
-            >
-              <option value="">Select</option>
-              {timeOptions.map((t) => (
-                <option key={t}>{t}</option>
-              ))}
-            </select>
-          </div>
-          {errors.startTime && (
-            <p className="text-xs text-red-600 mt-1">
-              {errors.startTime.message}
-            </p>
-          )}
-        </div>
-
-        <div className="relative">
-          <label className="block text-[#374151] text-[14px] font-semibold mb-1">
-            End Time
-          </label>
-          <div className="relative">
-            <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5]" />
-            <select
-              {...register("endTime")}
-              className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-600 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
-            >
-              <option value="">Select</option>
-              {timeOptions.map((t) => (
-                <option key={t}>{t}</option>
-              ))}
-            </select>
-          </div>
-          {errors.endTime && (
-            <p className="text-xs text-red-600 mt-1">
-              {errors.endTime.message}
-            </p>
-          )}
-        </div>
+        <TimeInput label="Start Time" name="startTime" />
+        <TimeInput label="End Time" name="endTime" />
 
         <div className="relative">
           <label className="block text-[#374151] text-[14px] font-semibold mb-1">
@@ -208,11 +166,19 @@ export default function SalonStep2({ onBack }) {
             ref={docRef}
             className="hidden"
             accept=".png,.jpg,.jpeg,.pdf"
-            onChange={(e) => setValue("licenseDoc", e.target.files[0])}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              setValue("licenseDoc", file || null, { shouldValidate: true });
+            }}
           />
           {watch("licenseDoc")?.name && (
             <p className="mt-2 text-sm italic">
               Selected: {watch("licenseDoc").name}
+            </p>
+          )}
+          {errors.licenseDoc && (
+            <p className="text-xs text-red-600 mt-1">
+              {errors.licenseDoc.message}
             </p>
           )}
         </div>
@@ -227,6 +193,11 @@ export default function SalonStep2({ onBack }) {
             placeholder="Enter description"
             className="w-full border border-[#E5E5E5] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
           />
+          {errors.description && (
+            <p className="text-xs text-red-600 mt-1">
+              {errors.description.message}
+            </p>
+          )}
         </div>
 
         <div>
@@ -249,11 +220,19 @@ export default function SalonStep2({ onBack }) {
             ref={picRef}
             className="hidden"
             accept="image/*"
-            onChange={(e) => setValue("profilePic", e.target.files[0])}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              setValue("profilePic", file || null, { shouldValidate: true });
+            }}
           />
           {watch("profilePic")?.name && (
             <p className="mt-2 text-sm italic">
               Selected: {watch("profilePic").name}
+            </p>
+          )}
+          {errors.profilePic && (
+            <p className="text-xs text-red-600 mt-1">
+              {errors.profilePic.message}
             </p>
           )}
         </div>
@@ -289,12 +268,8 @@ export default function SalonStep2({ onBack }) {
               className="hidden"
               accept="image/*"
               onChange={(e) => {
-                const files = e.target.files;
-                if (files && files.length > 0) {
-                  setValue("salonPhotos", Array.from(files), {
-                    shouldValidate: true,
-                  });
-                }
+                const files = Array.from(e.target.files || []);
+                setValue("salonPhotos", files, { shouldValidate: true });
               }}
             />
 
@@ -309,13 +284,11 @@ export default function SalonStep2({ onBack }) {
                   <button
                     type="button"
                     onClick={() => {
-                      const updatedPhotos = watch("salonPhotos").filter(
-                        (_, i) => i !== index
-                      );
-                      setValue(
-                        "salonPhotos",
-                        updatedPhotos.length > 0 ? updatedPhotos : null
-                      );
+                      const current = watch("salonPhotos") || [];
+                      const updated = current.filter((_, i) => i !== index);
+                      setValue("salonPhotos", updated, {
+                        shouldValidate: true,
+                      });
                     }}
                     className="absolute top-2 right-2 bg-[#FF92A5] text-white rounded-full w-5 h-5 text-xs 
                        flex items-center justify-center shadow-md hover:bg-[#e07a8c] 
@@ -327,6 +300,11 @@ export default function SalonStep2({ onBack }) {
                 </div>
               ))}
             </div>
+            {errors.salonPhotos && (
+              <p className="text-xs text-red-600 mt-2">
+                {errors.salonPhotos.message}
+              </p>
+            )}
           </div>
         </div>
       </div>

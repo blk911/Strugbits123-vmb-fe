@@ -47,6 +47,10 @@ export default function AuthForm() {
   const methods = useForm({
     mode: "onTouched",
     shouldUnregister: false,
+    defaultValues: {
+      salonPhotos: [],
+      workingDays: [],
+    },
     resolver: zodResolver(
       mode === "login"
         ? loginSchema
