@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 

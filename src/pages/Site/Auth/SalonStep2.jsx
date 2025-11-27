@@ -17,16 +17,6 @@ import CustomCheckbox from "../../../components/common/site/CustomCheckbox";
 import uploadIcon from "../../../assets/upload_photos.png";
 import TimeInput from "../../../components/common/site/TimeInput";
 
-const timeOptions = [
-  "12:00 PM",
-  "12:30 PM",
-  "1:00 PM",
-  "1:30 PM",
-  "2:00 PM",
-  "2:30 PM",
-  "3:00 PM",
-  "3:30 PM",
-];
 const days = [
   "Monday",
   "Tuesday",
