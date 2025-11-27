@@ -17,6 +17,7 @@ export function DashboardModalProvider({ children }) {
     setTimeout(() => {
       setModalState({ activeModal: null, data: null });
     }, 350);
+    // setModalState({ activeModal: null, data: null });
   };
   return (
     <DashboardModalContext.Provider

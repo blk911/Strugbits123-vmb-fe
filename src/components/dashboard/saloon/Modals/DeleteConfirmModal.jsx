@@ -18,7 +18,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal }) {
           enterFrom="opacity-0"
           enterTo="opacity-100"
         >
-          <div className="fixed inset-0 bg-black/10 backdrop-blur-[4px]" />
+          <div className="fixed inset-0 bg-black/30" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">

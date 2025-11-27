@@ -9,15 +9,19 @@ export default function SendTreatModal({
   initialData,
   onAccept,
 }) {
-  const [selectedServices, setSelectedServices] = useState([]);
+  // const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedService, setSelectedService] = useState(null);
   const handleInvite = () => {
     closeModal();
     setTimeout(() => onAccept?.(), 200);
   };
+  // const toggleService = (id) => {
+  //   setSelectedServices((prev) =>
+  //     prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+  //   );
+  // };
   const toggleService = (id) => {
-    setSelectedServices((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
+    setSelectedService((prev) => (prev === id ? null : id));
   };
   const prefilledEmail = initialData?.email || "";
   const services = initialData?.services || [
@@ -45,7 +49,7 @@ export default function SendTreatModal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 backdrop-blur-[5px] bg-black/10" />
+          <div className="fixed inset-0 bg-black/30" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -120,14 +124,21 @@ export default function SendTreatModal({
                           key={srv.id}
                           className="flex items-center gap-3 p-2  cursor-pointer"
                         >
-                          <input
+                          {/* <input
                             type="checkbox"
                             checked={selectedServices.includes(srv.id)}
                             onChange={() => toggleService(srv.id)}
                             className="w-4 h-4 text-[#581838]"
                             style={{ accentColor: "#581838" }}
+                          /> */}
+                          <input
+                            type="radio"
+                            name="service"
+                            checked={selectedService === srv.id}
+                            onChange={() => toggleService(srv.id)}
+                            className="w-4 h-4 text-[#581838]"
+                            style={{ accentColor: "#581838" }}
                           />
-
                           <img
                             src={srv.image}
                             className="w-[46px] h-[46px] rounded-md shadow-md border border-[#FFFFFFB2]"

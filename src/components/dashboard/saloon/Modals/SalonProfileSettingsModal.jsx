@@ -98,7 +98,7 @@ export default function SalonProfileSettingsModal({
         className="relative z-50 font-[Poppins]"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto bg-black/30">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -109,7 +109,7 @@ export default function SalonProfileSettingsModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px]    p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px]  bg-[#E8E8E8]  p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center">
                   <h2 className="text-[#581838] font-bold text-[24px]">
                     Profile Settings
