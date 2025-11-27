@@ -106,7 +106,8 @@ export default function AuthForm() {
         }).unwrap();
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
-        handleSuccess(res.role);
+        console.log("Response==>", res);
+        handleSuccess(res?.data?.user?.role);
       } else if (step === "step1" && userType === "customer") {
         loadingToastId = toastLoading("Creating account...");
         await signUpCustomer(full).unwrap();

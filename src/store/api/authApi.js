@@ -3,15 +3,31 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/common",
+    baseUrl: import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/",
     credentials: "include",
   }),
   endpoints: (builder) => ({
     signIn: builder.mutation({
-      query: (c) => ({ url: "/signin", method: "POST", body: c }),
+      query: (c) => ({ url: "/auth/signin", method: "POST", body: c }),
     }),
+
     signUpCustomer: builder.mutation({
-      query: (d) => ({ url: "/signup/customer", method: "POST", body: d }),
+      query: (formData) => {
+        const customerData = {
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword,
+          address: formData.address,
+          zipcode: formData.zipcode,
+        };
+
+        return {
+          url: "/auth/signup-customer",
+          method: "POST",
+          body: customerData,
+        };
+      },
     }),
     signUpSaloonOwner: builder.mutation({
       query: ({ formData, files }) => {
@@ -42,7 +58,6 @@ export const authApi = createApi({
     //     body: formData,
     //   }),
     // }),
-    getMe: builder.query({ query: () => "/me" }),
     logout: builder.mutation({
       query: () => ({ url: "/logout", method: "POST" }),
     }),
@@ -53,7 +68,6 @@ export const {
   useSignInMutation,
   useSignUpCustomerMutation,
   useSignUpSaloonOwnerMutation,
-  useGetMeQuery,
   useLogoutMutation,
   useGetPresignedUrlsMutation,
 } = authApi;

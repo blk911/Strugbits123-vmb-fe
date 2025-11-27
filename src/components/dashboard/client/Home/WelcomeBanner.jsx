@@ -7,7 +7,7 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="w-full sm:w-auto pt-4 px-0 md:px-4">
           <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-[#581838]">
-            Hey {user?.fullName || "there"}!
+            Hey {user?.name || "there"}!
           </h1>
           <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-[#4B5563]">
             Good to see you back.

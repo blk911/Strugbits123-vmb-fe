@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useGetMeQuery } from "../store/api/authApi";
 import { setRole } from "../store/features/roleSlice";
 import LoadingIndicator from "../components/common/LoadingIndicator/LoadingIndicator";
 import { setUser } from "../store/features/userSlice";
+import { useGetMeQuery } from "../store/api";
 
 export default function AuthProvider({ children }) {
   const dispatch = useDispatch();
@@ -11,11 +11,11 @@ export default function AuthProvider({ children }) {
     refetchOnMountOrArgChange: true,
   });
   useEffect(() => {
-    if (data?.role) {
-      const mappedRole = data.role;
+    if (data?.data?.role) {
+      const mappedRole = data?.data?.role;
       if (mappedRole) {
-        dispatch(setRole(data.role));
-        dispatch(setUser(data));
+        dispatch(setRole(data?.data?.role));
+        dispatch(setUser(data?.data));
       } else {
         dispatch(setRole(null));
       }

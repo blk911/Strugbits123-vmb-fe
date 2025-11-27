@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../../store/api/authApi";
 import { clearUser } from "../../../../store/features/userSlice";
+import { useUser } from "../../../../hooks/useUser";
 function UserMenu() {
   const { role } = useSelector((state) => state.role);
 
@@ -20,6 +21,7 @@ function UserMenu() {
   const toggle = () => setOpen((prev) => !prev);
   const navigate = useNavigate();
   const [logout, { isLoading }] = useLogoutMutation();
+  const { user } = useUser();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -47,12 +49,13 @@ function UserMenu() {
   const menuItems = [
     {
       label: "Profile Setting",
-      onClick: () =>
+      onClick: () => {
         openModal("profileSettings", {
-          fullName: "John Doe",
-          email: "john.doe@example.com",
+          fullName: user?.name || "John Doe",
+          email: user?.email || "john.doe@example.com",
           phone: "+1 555 123 4567",
-        }),
+        });
+      },
     },
     {
       label: "Change Password",
