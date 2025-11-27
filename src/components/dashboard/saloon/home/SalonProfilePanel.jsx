@@ -9,7 +9,7 @@ import {
 import salonImg from "../../../../assets/salon-4.png";
 import AppButton from "../../../common/site/AppButton";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-import { salons as salonsData } from "../../../../components/dashboard/client/Home/mockData";
+import { salons as salonsData } from "../../client/Home/mockData";
 
 export default function SalonProfilePanel() {
   const { openModal } = useDashboardModal();

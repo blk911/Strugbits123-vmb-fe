@@ -1,7 +1,7 @@
 import React from "react";
 
-import Overview from "../../../components/dashboard/saloon/Home/Overview";
-import MainSection from "../../../components/dashboard/saloon/Home/MainSection";
+import Overview from "../../../components/dashboard/saloon/home/Overview";
+import MainSection from "../../../components/dashboard/saloon/home/MainSection";
 
 function DashboardHome() {
   return (
