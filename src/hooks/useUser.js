@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
 
 export const useUser = () => {
-  return useSelector((state) => state.user.data);
+  const user = useSelector((state) => state.user.data);
+  const loading = useSelector((state) => state.user.loading);
+
+  return { user, loading };
 };
