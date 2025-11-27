@@ -204,7 +204,8 @@ export default function Appointments() {
 
     setDirectData(data);
 
-    if (cleanRow.status === "Reschedule") setShowReschedule(true);
+    if (cleanRow.status === "Reschedule")
+      openModal("rescheduleAppointmentClient", directData);
     else if (cleanRow.status === "Hold") setShowHold(true);
     else if (cleanRow.status === "Decline") setShowDecline(true);
     else openModal("appointmentScheduled", data);
@@ -251,6 +252,8 @@ export default function Appointments() {
       <ConfirmConfirmation
         open={showConfirmSuccess}
         onClose={() => setShowConfirmSuccess(false)}
+        title="Appointment Confirmed"
+        subtitle="Your appointment has been successfully confirmed. The salon has been notified and will be expecting you at the scheduled time."
       />
       <DeclineConfirmation
         open={showDeclineSuccess}

@@ -8,6 +8,12 @@ import OfferClaimedModal from "./OfferClaimedModal";
 import OfferExpiredModal from "./OfferExpiredModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import ProfileSettingsModal from "./ProfileSettingModal";
+import RescheduleDirectModal from "./appointmentTabsModals/RescheduleDirectModal";
+import {
+  RescheduleSentConfirmation,
+  HoldConfirmation,
+  DeclineConfirmation,
+} from "./appointmentTabsModals/ConfirmationModals";
 export {
   TreatRequestModal,
   TreatModal,
@@ -19,4 +25,8 @@ export {
   OfferClaimedModal,
   ChangePasswordModal,
   ProfileSettingsModal,
+  RescheduleDirectModal,
+  RescheduleSentConfirmation,
+  HoldConfirmation,
+  DeclineConfirmation,
 };

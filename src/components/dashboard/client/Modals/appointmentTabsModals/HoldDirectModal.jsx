@@ -3,9 +3,10 @@ import { Fragment, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../../common/site/AppButton";
 import AppointmentDetailsSection from "./AppointmentDetailsSection";
-import { ConfirmConfirmation, DeclineConfirmation } from "./ConfirmationModals";
+
 import RescheduleDirectModal from "./RescheduleDirectModal";
 import holdImg from "../../../../../assets/holdImg.png";
+import { useDashboardModal } from "../../../../../pages/ModalProvider";
 
 export default function HoldDirectModal({
   isOpen,
@@ -16,12 +17,12 @@ export default function HoldDirectModal({
   onReschedule,
 }) {
   const [showReschedule, setShowReschedule] = useState(false);
-
+  const { openModal } = useDashboardModal();
   if (!isOpen) return null;
 
   const handleReschedule = () => {
     onClose();
-    setTimeout(() => onReschedule?.(), 200);
+    openModal("rescheduleAppointmentClient", data);
   };
   const handleAccept = () => {
     onClose();

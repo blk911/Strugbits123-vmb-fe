@@ -20,6 +20,7 @@ import {
   OfferExpiredModal,
   ProfileSettingsModal,
   ChangePasswordModal,
+  RescheduleDirectModal,
 } from "../../dashboard/client/Modals";
 import {
   RescheduleAppointmentModal,
@@ -29,7 +30,12 @@ import {
   AddServiceModal,
   DeleteConfirmModal,
 } from "../../dashboard/saloon/Modals";
-import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
+import {
+  ConfirmConfirmation,
+  DeclineConfirmation,
+  HoldConfirmation,
+  RescheduleSentConfirmation,
+} from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 import {
   AppointmentRequestHistoryModal,
   GiftRequestHistoryModal,
@@ -73,6 +79,24 @@ function DashboardModals() {
   };
   return (
     <>
+      <DeclineConfirmation
+        open={activeModal === "declineAppointmentClient"}
+        onClose={closeModal}
+      />
+      <HoldConfirmation
+        open={activeModal === "holdAppointmentClient"}
+        onClose={closeModal}
+      />
+
+      <RescheduleSentConfirmation
+        open={activeModal === "rescheduleSent"}
+        onClose={closeModal}
+      />
+      <RescheduleDirectModal
+        isOpen={activeModal === "rescheduleAppointmentClient"}
+        onClose={closeModal}
+        data={modalData}
+      />
       <AppointmentRequestHistoryModal
         isOpen={activeModal === "appointmentRequestHistory"}
         onClose={closeModal}

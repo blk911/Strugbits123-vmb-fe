@@ -3,6 +3,7 @@ import { Fragment, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../../common/site/AppButton";
 import AppointmentDetailsSection from "./AppointmentDetailsSection";
+import { useDashboardModal } from "../../../../../pages/ModalProvider";
 
 export default function RescheduleDirectModal({
   isOpen,
@@ -13,12 +14,13 @@ export default function RescheduleDirectModal({
   const [reasonText, setReasonText] = useState(
     "I’d like to reschedule my booking. Please update the appointment time as per the new availability."
   );
-
+  const { openModal } = useDashboardModal();
   if (!isOpen || !data) return null;
 
   const handleSubmit = () => {
-    onClose();
-    setTimeout(() => onRescheduleSent?.(), 200);
+    // onClose();
+    // setTimeout(() => onRescheduleSent?.(), 200);
+    openModal("rescheduleSent");
   };
 
   return (
