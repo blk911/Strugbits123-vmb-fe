@@ -33,6 +33,7 @@ import {
   toastLoading,
   toastDismiss,
 } from "../../../utils/toast";
+import { setToken, setUser } from "../../../store/features/userSlice";
 
 export default function AuthForm() {
   const dispatch = useDispatch();
@@ -79,18 +80,18 @@ export default function AuthForm() {
     const target =
       apiRole === "customer"
         ? "/client"
-        : apiRole === "salonOwner"
-        ? "/salonOwner"
+        : apiRole === "salon-owner"
+        ? "/salon-owner"
         : apiRole === "admin"
         ? "/admin"
         : "/";
     navigate(target, { replace: true });
   };
 
-  const handleSignupSuccess = (role) => {
+  const handleSignupSuccess = (role, message) => {
     methods.reset();
     dispatch(setAuthMode("login"));
-    toastSuccess("Account created! Please log in.");
+    toastSuccess(message || "Account created! Please log in.");
   };
 
   const onSubmit = async (data) => {
@@ -106,13 +107,15 @@ export default function AuthForm() {
         }).unwrap();
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
-        console.log("Response==>", res);
+        dispatch(setUser(res?.data?.user));
+        dispatch(setToken(res?.data?.token));
         handleSuccess(res?.data?.user?.role);
       } else if (step === "step1" && userType === "customer") {
         loadingToastId = toastLoading("Creating account...");
-        await signUpCustomer(full).unwrap();
+        const res = await signUpCustomer(full).unwrap();
         toastDismiss(loadingToastId);
-        handleSignupSuccess("customer");
+        console.log("Response Message", res);
+        handleSignupSuccess("customer", res?.message);
       } else if (step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
         // const licenseDoc = methods.getValues("licenseDoc");
@@ -203,8 +206,8 @@ export default function AuthForm() {
 
         // await signUpSaloonOwner(finalFormData).unwrap();
 
-        toastDismiss(loadingToastId);
-        handleSignupSuccess("salonOwner");
+        // toastDismiss(loadingToastId);
+        // handleSignupSuccess("salonOwner");
         const files = {
           licenseDocument: full.licenseDoc ? [full.licenseDoc] : [],
           profilePic: full.profilePic ? [full.profilePic] : [],
@@ -216,9 +219,9 @@ export default function AuthForm() {
         delete formData.profilePic;
         delete formData.salonPhotos;
 
-        await signUpSaloonOwner({ formData, files }).unwrap();
+        const res = await signUpSaloonOwner({ formData, files }).unwrap();
         toastDismiss(loadingToastId);
-        handleSignupSuccess("saloon_owner");
+        handleSignupSuccess("salon-owner", res?.message);
       }
     } catch (err) {
       if (loadingToastId) toastDismiss(loadingToastId);

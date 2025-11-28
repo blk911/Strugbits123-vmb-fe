@@ -1,5 +1,10 @@
-
-import { FaUser, FaEnvelope, FaMapMarkerAlt, FaLock } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaLock,
+  FaPhoneAlt,
+} from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
 import InputWithIcon from "../../../components/common/site/InputWithIcon";
 import AuthButton from "../../../components/common/site/AuthButton";
@@ -12,7 +17,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
   } = useFormContext();
 
   const handleNext = async () => {
-    const valid = await trigger(); 
+    const valid = await trigger();
     if (valid) onNext?.();
   };
 
@@ -40,27 +45,67 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         </label>
       </div>
 
-      <InputWithIcon label="Full Name" icon={FaUser} name="fullName" register={register} error={errors.fullName} />
-      <InputWithIcon label="Email" icon={FaEnvelope} type="email" name="email" register={register} error={errors.email} />
-
+      <InputWithIcon
+        label="Full Name"
+        icon={FaUser}
+        name="fullName"
+        register={register}
+        error={errors.fullName}
+      />
+      <InputWithIcon
+        label="Email"
+        icon={FaEnvelope}
+        type="email"
+        name="email"
+        register={register}
+        error={errors.email}
+      />
+      <InputWithIcon
+        label="Phone Number"
+        icon={FaPhoneAlt}
+        name="phone"
+        register={register}
+        error={errors.phone}
+      />
       <div className="flex gap-3">
         <div className="w-[68%]">
-          <InputWithIcon label="Address" icon={FaMapMarkerAlt} name="address" register={register} error={errors.address} />
+          <InputWithIcon
+            label="Address"
+            icon={FaMapMarkerAlt}
+            name="address"
+            register={register}
+            error={errors.address}
+          />
         </div>
         <div className="w-[32%]">
-          <InputWithIcon label="Zipcode" name="zipcode" register={register} error={errors.zipcode} />
+          <InputWithIcon
+            label="Zipcode"
+            name="zipcode"
+            register={register}
+            error={errors.zipcode}
+          />
         </div>
       </div>
 
-      <InputWithIcon label="Password" icon={FaLock} type="password" name="password" register={register} error={errors.password} />
-      <InputWithIcon label="Confirm Password" icon={FaLock} type="password" name="confirmPassword" register={register} error={errors.confirmPassword} />
+      <InputWithIcon
+        label="Password"
+        icon={FaLock}
+        type="password"
+        name="password"
+        register={register}
+        error={errors.password}
+      />
+      <InputWithIcon
+        label="Confirm Password"
+        icon={FaLock}
+        type="password"
+        name="confirmPassword"
+        register={register}
+        error={errors.confirmPassword}
+      />
 
       {userType === "salon" ? (
-        <AuthButton
-          text="Next"
-          onClick={handleNext}
-          disabled={isSubmitting}
-        />
+        <AuthButton text="Next" onClick={handleNext} disabled={isSubmitting} />
       ) : (
         <AuthButton text="Sign Up" disabled={isSubmitting} />
       )}

@@ -5,7 +5,13 @@ import { useSelector } from "react-redux";
 
 function DashboardSidebar() {
   const { role } = useSelector((state) => state.role);
-  const items = menus[role] || [];
+  const roleMap = {
+    "salon-owner": "salonOwner",
+    customer: "customer",
+    admin: "admin",
+  };
+
+  const items = menus[roleMap[role]] || [];
 
   return (
     <div className="h-full bg-white flex flex-col ">

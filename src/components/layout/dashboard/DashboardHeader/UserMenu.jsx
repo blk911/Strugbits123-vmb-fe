@@ -53,7 +53,7 @@ function UserMenu() {
         openModal("profileSettings", {
           fullName: user?.name || "John Doe",
           email: user?.email || "john.doe@example.com",
-          phone: "+1 555 123 4567",
+          phone: user?.phoneNumber || "+1 555 123 4567",
         });
       },
     },

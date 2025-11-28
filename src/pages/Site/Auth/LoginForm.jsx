@@ -1,15 +1,15 @@
-
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
 import InputWithIcon from "../../../components/common/site/InputWithIcon";
 import AuthButton from "../../../components/common/site/AuthButton";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const {
     register,
     formState: { errors, isSubmitting },
   } = useFormContext();
-
+  const navigate = useNavigate();
   return (
     <div className="w-full space-y-4">
       <InputWithIcon
@@ -32,12 +32,15 @@ export default function LoginForm() {
       />
 
       <div className="w-full text-left">
-        <p className="text-[14px] text-[#FF92A5] cursor-pointer font-medium">
+        <p
+          className="text-[14px] text-[#FF92A5] cursor-pointer font-medium"
+          onClick={() => navigate("/forget-password")}
+        >
           Forgot Password?
         </p>
       </div>
 
-      <AuthButton text="Sign In"  />
+      <AuthButton text="Sign In" />
     </div>
   );
 }

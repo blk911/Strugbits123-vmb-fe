@@ -3,6 +3,8 @@ import SiteLayout from "../components/layout/site/SiteLayout";
 import Home from "../pages/Site/Home/Home";
 import About from "../pages/Site/About/About";
 import AuthForm from "../pages/Site/Auth/AuthForm";
+import ForgetPassword from "../pages/Site/Auth/ForgetPassword";
+import ResetPassword from "../pages/Site/Auth/ResetPassword";
 
 export default function PublicRoutes() {
   return (
@@ -12,6 +14,8 @@ export default function PublicRoutes() {
         <Route path="/about" element={<About />} />
       </Route>
       <Route>
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register" element={<AuthForm />} />
       </Route>
     </>

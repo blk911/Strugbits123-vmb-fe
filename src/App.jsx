@@ -13,7 +13,7 @@ export default function App() {
       <Routes>
         {PublicRoutes()}
         {role === "admin" && AdminRoutes()}
-        {role === "salonOwner" && SaloonRoutes()}
+        {role === "salon-owner" && SaloonRoutes()}
         {role === "customer" && ClientRoutes()}
         <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
       </Routes>

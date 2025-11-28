@@ -146,7 +146,7 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => docRef.current.click()}
-              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580]"
+              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580] cursor-pointer"
             >
               <FaFileAlt /> Upload
             </button>
@@ -200,7 +200,7 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => picRef.current.click()}
-              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580]"
+              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580] cursor-pointer"
             >
               <FaFileImage /> Upload
             </button>
@@ -239,14 +239,14 @@ export default function SalonStep2({ onBack }) {
               className="flex-shrink-0 flex flex-col items-center justify-center 
                  w-[70px] h-[64px] sm:w-[94px] sm:h-[82px] 
                  border border-[#C0C0C0] bg-white rounded-md 
-                 hover:bg-[#FFF4F6] transition-all"
+                 hover:bg-[#FFF4F6] transition-all cursor-pointer"
             >
               <img
                 src={uploadIcon}
                 alt="Upload"
-                className="w-5 h-5 sm:w-6 sm:h-6 mb-1"
+                className="w-5 h-5 sm:w-6 sm:h-6 mb-1 cursor-pointer"
               />
-              <span className="text-[8px] sm:text-[9px] leading-tight font-medium text-center">
+              <span className="text-[8px] sm:text-[9px] leading-tight font-medium text-center ">
                 Upload Salon <br /> Photos
               </span>
             </button>

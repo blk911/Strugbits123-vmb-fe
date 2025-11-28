@@ -3,6 +3,7 @@ import adminSaloonsReducer from "./features/admin/listsSaloonSlice";
 import roleReducer from "./features/roleSlice";
 import { authApi } from "./api/authApi";
 import { customerApi } from "./api/customerApi";
+import { adminApi } from "./api";
 import authReducer from "./features/authSlice";
 import userReducer from "./features/userSlice";
 export const store = configureStore({
@@ -12,11 +13,13 @@ export const store = configureStore({
     user: userReducer,
     [authApi.reducerPath]: authApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
+    [adminApi.reducerPath]: adminApi.reducer,
     role: roleReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
-      .concat(customerApi.middleware),
+      .concat(customerApi.middleware)
+      .concat(adminApi.middleware),
 });

@@ -75,28 +75,51 @@ export default function SalonRequestModal({
                     Timing
                   </p>
                   <p className="text-[#00000080] text-[16px]">
-                    {data?.timing || "09:00 AM - 05:00 PM"}
+                    {data?.startTime + " - " + data?.endTime ||
+                      "09:00 AM - 05:00 PM"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-[#000] text-[14px] font-medium">
+                  {/* <p className="text-[#000] text-[14px] font-medium">
                     Licensed Document
                   </p>
                   <div className="flex items-center gap-2 mt-1">
-                    <p className="text-[#00000080] text-[12px] font-medium">
-                      {data?.licenseDoc || "license-document.pdf"}
+                    <p className="text-[#00000080] text-[12px] font-medium break-all">
+                      {data?.licenseDocument || "license-document.pdf"}
                     </p>
-                    <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium">
+                    <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium cursor-pointer">
+                      View
+                    </button>
+                  </div> */}
+                  <p className="text-[#000] text-[14px] font-medium">
+                    Licensed Document
+                  </p>
+
+                  <div className="flex items-center gap-2 mt-1">
+                    <p className="text-[#00000080] text-[12px] font-medium break-all">
+                      {data?.licenseDocument
+                        ? data.licenseDocument.split("/").pop()
+                        : "license-document.pdf"}
+                    </p>
+
+                    <button
+                      onClick={() =>
+                        data?.licenseDocument &&
+                        window.open(data.licenseDocument, "_blank")
+                      }
+                      className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium cursor-pointer"
+                    >
                       View
                     </button>
                   </div>
-
                   <p className="text-[#000] text-[14px] font-medium mt-3">
                     Working Days
                   </p>
                   <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium">
-                    {data?.workingDays || "Mon - Thu - Fri"}
+                    {data?.workingDays
+                      .map((day) => day.slice(0, 3))
+                      .join("-") || "Mon - Thu - Fri"}
                   </button>
                 </div>
               </div>
@@ -127,7 +150,7 @@ export default function SalonRequestModal({
 
             <div>
               <p className="text-[#000] text-[14px] font-medium">Full Name</p>
-              <p className="text-[#00000080] text-[16px]">{data?.ownerName}</p>
+              <p className="text-[#00000080] text-[16px]">{data?.name}</p>
             </div>
 
             <div>
@@ -138,15 +161,15 @@ export default function SalonRequestModal({
             <div>
               <p className="text-[#000] text-[14px] font-medium">Phone</p>
               <p className="text-[#00000080] text-[16px]">
-                {data?.ownerPhone || "+1 (555) 987-6543"}
+                {data?.phoneNumber || "+1 (555) 987-6543"}
               </p>
             </div>
 
             <div className="flex gap-3 overflow-x-auto py-2">
-              {[1, 2, 3, 4, 5].map((i) => (
+              {data?.salonPhotos.map((i) => (
                 <img
                   key={i}
-                  src={data?.image || defaultImg}
+                  src={i || defaultImg}
                   alt={`Gallery ${i}`}
                   className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-gray-300"
                 />

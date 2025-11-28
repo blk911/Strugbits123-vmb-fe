@@ -36,7 +36,7 @@ export const menus = {
   salonOwner: [
     {
       name: "Dashboard",
-      path: "/salonOwner",
+      path: "/salon-owner",
       icon: <FaChartLine className="h-5 w-5" />,
     },
     {

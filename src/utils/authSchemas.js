@@ -13,8 +13,10 @@ export const customerSignupSchema = z
     email: z.string().email("Invalid email"),
     address: z.string().min(5, "Enter a valid address"),
     zipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
-    password,
-    confirmPassword: password,
+    phone: z.string().min(10, "Valid phone number required"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+
+    confirmPassword: z.string().min(1, "Confirm password is required"),
   })
   .refine((d) => d.password === d.confirmPassword, {
     message: "Passwords don’t match",
