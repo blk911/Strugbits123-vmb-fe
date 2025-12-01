@@ -3,7 +3,7 @@ import ServiceCard from "./ServiceCard";
 import { FaPlus } from "react-icons/fa";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 
-export default function ServicesSection({ services = [], salon }) {
+export default function ServicesSection({ services = [] }) {
   const perPage = 9;
   const [page, setPage] = useState(1);
   const total = Math.ceil(services.length / perPage);
@@ -26,7 +26,7 @@ export default function ServicesSection({ services = [], salon }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {current.map((svc) => (
-          <ServiceCard key={svc.id} {...svc} svc={svc} salon={salon} />
+          <ServiceCard key={svc._id} service={svc} />
         ))}
       </div>
 

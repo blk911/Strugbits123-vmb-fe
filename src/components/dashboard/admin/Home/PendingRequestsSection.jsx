@@ -9,7 +9,11 @@ import {
 import defaultUser from "../../../../assets/user_icon.png";
 import AppButton from "../../../common/site/AppButton";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-import { useGetPendingSalonsQuery } from "../../../../store/api";
+import {
+  useApproveSalonMutation,
+  useGetPendingSalonsQuery,
+} from "../../../../store/api";
+import { toastError, toastSuccess } from "../../../../utils/toast";
 
 export default function PendingRequestsSection() {
   const { openModal } = useDashboardModal();
@@ -23,7 +27,7 @@ export default function PendingRequestsSection() {
     error,
     isFetching,
   } = useGetPendingSalonsQuery({ page, limit, sort: "newest" });
-
+  const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
   const pendingSalons = response?.data?.items || [];
   // const total = response?.data?.total || 0;
   const totalPages = response?.data?.pages || 1;
@@ -138,15 +142,34 @@ export default function PendingRequestsSection() {
                 size="custom"
                 className="flex-1 py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiCheck size={16} />}
-                onClick={() =>
-                  openModal("salonApprovedSuccess", {
-                    title: "Salon Verification Approved",
-                    subtitle: "The salon has been successfully verified.",
-                    salonName: item.salonName,
-                  })
-                }
+                disabled={isApproving}
+                onClick={async () => {
+                  if (!item?._id) {
+                    toastError("Salon ID not found");
+                    return;
+                  }
+
+                  try {
+                    await approveSalon(item?._id).unwrap();
+                    toastSuccess(
+                      `"${item?.salonName}" has been approved successfully!`
+                    );
+                    closeModal();
+                    openModal("salonApprovedSuccess", {
+                      title: "Salon Verification Approved",
+                      subtitle: "The salon has been successfully verified.",
+                      salonName: item.salonName,
+                    });
+                  } catch (err) {
+                    console.error("Approve failed:", err);
+                    toastError(
+                      err?.data?.message ||
+                        "Failed to approve salon. Please try again."
+                    );
+                  }
+                }}
               >
-                Approve
+                {isApproving ? "Approving..." : "Approve"}
               </AppButton>
               <AppButton
                 variant="custom"

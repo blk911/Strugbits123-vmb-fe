@@ -114,7 +114,6 @@ export default function AuthForm() {
         loadingToastId = toastLoading("Creating account...");
         const res = await signUpCustomer(full).unwrap();
         toastDismiss(loadingToastId);
-        console.log("Response Message", res);
         handleSignupSuccess("customer", res?.message);
       } else if (step === "step2") {
         loadingToastId = toastLoading("Registering salon...");

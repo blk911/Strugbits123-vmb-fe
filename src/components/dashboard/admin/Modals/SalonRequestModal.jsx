@@ -4,7 +4,11 @@ import defaultImg from "../../../../assets/salon-1.png";
 import AppButton from "../../../common/site/AppButton";
 import { FiCheck, FiX } from "react-icons/fi";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-
+import {
+  useApproveSalonMutation,
+  useRejectSalonMutation,
+} from "../../../../store/api";
+import { toastSuccess, toastError } from "../../../../utils/toast";
 export default function SalonRequestModal({
   isOpen,
   closeModal,
@@ -14,7 +18,55 @@ export default function SalonRequestModal({
   if (!isOpen) return null;
 
   const { openModal } = useDashboardModal();
+  const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
+  const [declineSalon, { isLoading: isDeclining }] = useRejectSalonMutation();
+  function convertTo12Hour(time) {
+    if (!time) return "";
 
+    let [hour, minute] = time.split(":");
+    hour = parseInt(hour);
+
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12;
+
+    return `${hour}:${minute} ${ampm}`;
+  }
+
+  const handleDecline = async () => {
+    if (!data?._id) {
+      toastError("Salon ID not found");
+      return;
+    }
+    try {
+      await declineSalon(data?._id).unwrap();
+      toastSuccess(`"${data?.salonName}" has been declined successfully!`);
+      closeModal();
+      openModal("salonRejection");
+    } catch (err) {
+      console.error("Decline failed:", err);
+      toastError(
+        err?.data?.message || "Failed to decline salon. Please try again."
+      );
+    }
+  };
+  const handleApprove = async () => {
+    if (!data?._id) {
+      toastError("Salon ID not found");
+      return;
+    }
+
+    try {
+      await approveSalon(data?._id).unwrap();
+      toastSuccess(`"${data?.salonName}" has been approved successfully!`);
+      closeModal();
+      setTimeout(() => onAccept?.(), 300);
+    } catch (err) {
+      console.error("Approve failed:", err);
+      toastError(
+        err?.data?.message || "Failed to approve salon. Please try again."
+      );
+    }
+  };
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30"
@@ -37,7 +89,7 @@ export default function SalonRequestModal({
         <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-[10px] p-[20px] flex flex-col gap-[24px]">
           <div className="flex gap-4 flex-col sm:flex-row">
             <img
-              src={data?.image || defaultImg}
+              src={data?.profilePic || defaultImg}
               alt={data?.salonName}
               className="w-[80px] h-[80px] rounded-[8px] object-cover"
             />
@@ -75,23 +127,17 @@ export default function SalonRequestModal({
                     Timing
                   </p>
                   <p className="text-[#00000080] text-[16px]">
-                    {data?.startTime + " - " + data?.endTime ||
-                      "09:00 AM - 05:00 PM"}
+                    {/* {data?.startTime + " - " + data?.endTime ||
+                      "09:00 AM - 05:00 PM"} */}
+                    {data?.startTime && data?.endTime
+                      ? `${convertTo12Hour(data.startTime)} - ${convertTo12Hour(
+                          data.endTime
+                        )}`
+                      : "09:00 AM - 05:00 PM"}
                   </p>
                 </div>
 
                 <div>
-                  {/* <p className="text-[#000] text-[14px] font-medium">
-                    Licensed Document
-                  </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <p className="text-[#00000080] text-[12px] font-medium break-all">
-                      {data?.licenseDocument || "license-document.pdf"}
-                    </p>
-                    <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium cursor-pointer">
-                      View
-                    </button>
-                  </div> */}
                   <p className="text-[#000] text-[14px] font-medium">
                     Licensed Document
                   </p>
@@ -183,25 +229,29 @@ export default function SalonRequestModal({
               size="custom"
               className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
               leftIcon={<FiX size={16} />}
-              onClick={() => {
-                closeModal();
-                openModal("salonRejection");
-              }}
+              // onClick={() => {
+              //   closeModal();
+              //   openModal("salonRejection");
+              // }}
+              onClick={handleDecline}
+              disabled={isDeclining}
             >
-              Reject
+              {isDeclining ? "Rejecting..." : "Reject"}
             </AppButton>
 
             <AppButton
-              onClick={() => {
-                closeModal();
-                setTimeout(() => onAccept?.(), 300);
-              }}
+              // onClick={() => {
+              //   closeModal();
+              //   setTimeout(() => onAccept?.(), 300);
+              // }}
+              disabled={isApproving}
+              onClick={handleApprove}
               variant="custom"
               size="custom"
               className="py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
               leftIcon={<FiCheck size={16} />}
             >
-              Approve
+              {isApproving ? "Approving..." : "Approve"}
             </AppButton>
           </div>
         </div>

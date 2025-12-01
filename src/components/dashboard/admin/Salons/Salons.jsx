@@ -215,8 +215,6 @@ const columns = [
 export default function AllSalons() {
   const { openModal } = useDashboardModal();
   const handleAction = (action, row) => {
-    console.log(`Action: ${action} →`, row.salonName);
-
     if (action === "view") {
       openModal("salonRequest", row);
     }
