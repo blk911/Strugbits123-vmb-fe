@@ -129,6 +129,7 @@ function DashboardModals() {
       <DeleteConfirmModal
         isOpen={activeModal === "delete"}
         closeModal={closeModal}
+        id={modalData}
       />
       <AddServiceModal
         isOpen={activeModal === "addService"}
@@ -138,7 +139,6 @@ function DashboardModals() {
       <SalonProfileSettingsModal
         isOpen={activeModal === "salonprofileSettings"}
         closeModal={closeModal}
-        salon={modalData?.salon}
       />
       <SendTreatModal
         isOpen={activeModal === "sendTreat"}

@@ -3,8 +3,23 @@ import { Fragment } from "react";
 import deleteImg from "../../../../assets/delete-icon.png";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { useDeleteServiceMutation } from "../../../../store/api";
+import { toastError, toastSuccess } from "../../../../utils/toast";
 
-export default function DeleteConfirmModal({ isOpen, closeModal }) {
+export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
+  const [deleteService, { isLoading: isDeleting }] = useDeleteServiceMutation();
+  const handleDeleteClick = async () => {
+    if (!id) return;
+
+    try {
+      await deleteService(id).unwrap();
+      closeModal();
+      toastSuccess(`Service deleted successfully!`);
+    } catch (err) {
+      console.error("Delete failed:", err);
+      toastError(err?.data?.message || "Failed to delete service");
+    }
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -58,8 +73,10 @@ export default function DeleteConfirmModal({ isOpen, closeModal }) {
                     leftIcon={<FaCheck />}
                     variant="custom"
                     className="flex-1 bg-[#FF92A5] text-white"
+                    onClick={handleDeleteClick}
+                    disabled={isDeleting}
                   >
-                    Yes
+                    {isDeleting ? "Deleting..." : "Yes"}
                   </AppButton>
                 </div>
               </Dialog.Panel>

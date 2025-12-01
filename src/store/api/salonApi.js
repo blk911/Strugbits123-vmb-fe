@@ -20,14 +20,31 @@ export const salonApi = createApi({
       invalidatesTags: ["Service"],
     }),
     getServices: builder.query({
-      query: () => "/get-services",
+      query: ({ page = 1, limit = 9 } = {}) => ({
+        url: "/get-services",
+        params: { page, limit },
+      }),
       providesTags: ["Service"],
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+      merge: (currentCache, newItems) => {
+        return newItems;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
     }),
     updateService: builder.mutation({
       query: ({ id, data }) => ({
         url: `/update-service/${id}`,
         method: "PATCH",
         body: data,
+      }),
+      invalidatesTags: ["Service"],
+    }),
+    deleteService: builder.mutation({
+      query: (id) => ({
+        url: `/delete-service/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Service"],
     }),
@@ -38,4 +55,5 @@ export const {
   useCreateServiceMutation,
   useGetServicesQuery,
   useUpdateServiceMutation,
+  useDeleteServiceMutation,
 } = salonApi;

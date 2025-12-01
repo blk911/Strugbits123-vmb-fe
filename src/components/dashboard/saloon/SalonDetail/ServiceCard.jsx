@@ -10,7 +10,7 @@ export default function ServiceCard({ service }) {
   };
 
   const handleDeleteClick = () => {
-    openModal("delete");
+    openModal("delete", service?._id);
   };
 
   return (

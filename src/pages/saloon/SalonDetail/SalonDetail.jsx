@@ -1,11 +1,9 @@
-import { salons as salonsData } from "../../../components/dashboard/client/Home/mockData";
 import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 
 import AppButton from "../../../components/common/site/AppButton";
 import ServicesSection from "../../../components/dashboard/saloon/SalonDetail/ServicesSection";
 import { useDashboardModal } from "../../ModalProvider";
-import { useGetServicesQuery } from "../../../store/api";
 import { useUser } from "../../../hooks/useUser";
 import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
 import { convertTo12Hour } from "../../../utils/HelperFunctions";
@@ -22,30 +20,7 @@ export default function SalonDetail() {
 
   if (!user) return null;
   const { openModal } = useDashboardModal();
-  const {
-    data: servicesResponse,
-    isLoading: servicesLoading,
-    isError: servicesError,
-  } = useGetServicesQuery();
-  const services = servicesResponse?.data?.items || [];
-  console.log("Services==>", services);
-  const salon = servicesResponse?.salon || salonsData[0];
 
-  if (servicesLoading) {
-    return (
-      <div className="bg-[#EFEFEF] p-7 font-[Poppins] text-center text-gray-600">
-        Loading your salon...
-      </div>
-    );
-  }
-
-  if (servicesError) {
-    return (
-      <div className="bg-[#EFEFEF] p-7 font-[Poppins] text-center text-red-500">
-        Failed to load services. Please refresh.
-      </div>
-    );
-  }
   return (
     <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
@@ -129,7 +104,7 @@ export default function SalonDetail() {
                 leftIcon={<FaEdit />}
                 variant="primary"
                 className="w-[180px] md:w-[200px] h-[40px] block lg:hidden "
-                onClick={() => openModal("salonprofileSettings", { salon })}
+                onClick={() => openModal("salonprofileSettings")}
               >
                 Edit Salon Profile
               </AppButton>
@@ -141,7 +116,7 @@ export default function SalonDetail() {
               leftIcon={<FaEdit />}
               variant="primary"
               className="w-[180px] md:w-[200px] h-[40px]  "
-              onClick={() => openModal("salonprofileSettings", { salon })}
+              onClick={() => openModal("salonprofileSettings")}
             >
               Edit Salon Profile
             </AppButton>
@@ -149,7 +124,7 @@ export default function SalonDetail() {
         </div>
       </div>
 
-      <ServicesSection services={services} />
+      <ServicesSection />
     </div>
   );
 }
