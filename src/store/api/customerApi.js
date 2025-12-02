@@ -29,6 +29,9 @@ export const customerApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    getAllSalons: builder.query({
+      query: () => "/get-all-salons",
+    }),
   }),
 });
 
@@ -36,4 +39,5 @@ export const {
   useGetMeQuery,
   useUpdateMeMutation,
   useUpdateSalonProfileMutation,
+  useGetAllSalonsQuery,
 } = customerApi;

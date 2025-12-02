@@ -4,6 +4,7 @@ import { salons as salonsData } from "../../../components/dashboard/client/Home/
 import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
+import { useGetServicesQuery } from "../../../store/api";
 
 export default function SalonDetail() {
   const { id } = useParams();
@@ -11,11 +12,15 @@ export default function SalonDetail() {
   const navigate = useNavigate();
 
   const salonId = location.state?.salonId || Number(id);
-  const salon = useMemo(
-    () => salonsData.find((s) => Number(s.id) === Number(salonId)),
-    [salonId]
-  );
+  console.log("Salon ID==>", salonId);
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetServicesQuery();
 
+  const salon = salonsData[0];
   useEffect(() => {
     if (!salon) {
       navigate("/");

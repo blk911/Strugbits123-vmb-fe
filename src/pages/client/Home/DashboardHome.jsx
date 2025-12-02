@@ -7,8 +7,11 @@ import WelcomeBanner from "../../../components/dashboard/client/Home/WelcomeBann
 import SalonSection from "../../../components/dashboard/client/Home/SalonSection";
 import { useDashboardModal } from "../../ModalProvider";
 import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
+import { useNavigate } from "react-router-dom";
+
 const DashboardHome = () => {
   const { user, loading } = useUser();
+  const navigate = useNavigate();
   const { openModal } = useDashboardModal();
   if (loading) {
     return (
@@ -23,7 +26,7 @@ const DashboardHome = () => {
     <div className="flex flex-col  bg-[#EFEFEF] p-2 sm:p-7 font-[Poppins] gap-8">
       <WelcomeBanner
         user={user}
-        onInviteClick={() => {}}
+        onInviteClick={() => navigate("/saloninvites")}
         onGiftClick={() => {
           openModal("treat");
         }}
