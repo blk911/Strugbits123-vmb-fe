@@ -21,7 +21,19 @@ export const customerApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+    updateSalonProfile: builder.mutation({
+      query: (data) => ({
+        url: "/update-salon-profile",
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetMeQuery, useUpdateMeMutation } = customerApi;
+export const {
+  useGetMeQuery,
+  useUpdateMeMutation,
+  useUpdateSalonProfileMutation,
+} = customerApi;

@@ -41,7 +41,7 @@ export default function SalonRequestModal({
       await declineSalon(data?._id).unwrap();
       toastSuccess(`"${data?.salonName}" has been declined successfully!`);
       closeModal();
-      openModal("salonRejection");
+      openModal("rejectionSent");
     } catch (err) {
       console.error("Decline failed:", err);
       toastError(
@@ -229,10 +229,6 @@ export default function SalonRequestModal({
               size="custom"
               className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
               leftIcon={<FiX size={16} />}
-              // onClick={() => {
-              //   closeModal();
-              //   openModal("salonRejection");
-              // }}
               onClick={handleDecline}
               disabled={isDeclining}
             >
@@ -240,10 +236,6 @@ export default function SalonRequestModal({
             </AppButton>
 
             <AppButton
-              // onClick={() => {
-              //   closeModal();
-              //   setTimeout(() => onAccept?.(), 300);
-              // }}
               disabled={isApproving}
               onClick={handleApprove}
               variant="custom"

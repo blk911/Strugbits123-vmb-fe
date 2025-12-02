@@ -100,6 +100,7 @@ function MainSection() {
 
           <div className="grid grid-cols-1 gap-4">
             {isError && <p>Failed to load services.</p>}
+            {!services?.length && <p>No services found.</p>}
             {services?.length > 0 &&
               services?.map((service) => (
                 <ServiceCard

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { convertTo12Hour } from "../../utils/HelperFunctions";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -33,19 +34,9 @@ export const authApi = createApi({
     }),
     signUpSaloonOwner: builder.mutation({
       query: ({ formData, files }) => {
-        // console.log("FORM DATA==>", formData);
-        // console.log("Files==>", files);
-        // const body = new FormData();
-        // Object.entries(formData).forEach(([k, v]) => {
-        //   if (k === "workingDays") body.append(k, JSON.stringify(v));
-        //   else body.append(k, v);
-        // });
-        // files.licenseDocument?.[0] &&
-        //   body.append("licenseDocument", files.licenseDocument[0]);
-        // files.profilePic?.[0] && body.append("profilePic", files.profilePic[0]);
-        // files.saloonPhotos?.forEach((f) => body.append("saloonPhotos", f));
+        const startTime = convertTo12Hour(formData.startTime);
+        const endTime = convertTo12Hour(formData.startTime);
 
-        // console.log("BODY==>", body);
         const salonOwnerData = {
           name: formData.fullName,
           email: formData.email,
@@ -58,8 +49,8 @@ export const authApi = createApi({
           salonAddress: formData.saloonAddress,
           salonZipcode: formData.saloonZipcode,
           phoneNumber: formData.phone,
-          startTime: formData.startTime,
-          endTime: formData.endTime,
+          startTime: startTime,
+          endTime: endTime,
           workingDays: formData.workingDays,
           description: formData.description,
           licenseDocument: "https://pdfobject.com/pdf/sample.pdf",

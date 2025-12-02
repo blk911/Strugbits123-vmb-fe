@@ -119,6 +119,8 @@ function DashboardModals() {
       <SalonVerificationRejectionModal
         isOpen={activeModal === "salonRejection"}
         onClose={closeModal}
+        salonId={modalData?.salonId}
+        salonName={modalData?.salonName}
       />
       <SalonRequestModal
         isOpen={activeModal === "salonRequest"}

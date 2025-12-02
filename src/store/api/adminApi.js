@@ -30,6 +30,14 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ["Salon"],
     }),
+    holdSalon: builder.mutation({
+      query: ({ id, reason }) => ({
+        url: `/hold-salon/${id}`,
+        method: "PATCH",
+        body: { reason },
+      }),
+      invalidatesTags: ["Salon"],
+    }),
   }),
 });
 
@@ -37,4 +45,5 @@ export const {
   useGetPendingSalonsQuery,
   useApproveSalonMutation,
   useRejectSalonMutation,
+  useHoldSalonMutation,
 } = adminApi;

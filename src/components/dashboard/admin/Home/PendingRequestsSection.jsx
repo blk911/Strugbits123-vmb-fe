@@ -12,13 +12,18 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import {
   useApproveSalonMutation,
   useGetPendingSalonsQuery,
+  useRejectSalonMutation,
 } from "../../../../store/api";
 import { toastError, toastSuccess } from "../../../../utils/toast";
+import { HiHandRaised } from "react-icons/hi2";
 
 export default function PendingRequestsSection() {
   const { openModal } = useDashboardModal();
   const [page, setPage] = useState(1);
   const limit = 10;
+
+  const [approvingId, setApprovingId] = useState(null);
+  const [rejectingId, setRejectingId] = useState(null);
 
   const {
     data: response,
@@ -26,24 +31,57 @@ export default function PendingRequestsSection() {
     isError,
     error,
     isFetching,
-  } = useGetPendingSalonsQuery({ page, limit, sort: "newest" });
-  const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
+  } = useGetPendingSalonsQuery(
+    { page, limit, sort: "newest" },
+    { refetchOnMountOrArgChange: true }
+  );
+
+  const [approveSalon] = useApproveSalonMutation();
+  const [rejectSalon] = useRejectSalonMutation();
+
   const pendingSalons = response?.data?.items || [];
-  // const total = response?.data?.total || 0;
   const totalPages = response?.data?.pages || 1;
   const currentPage = response?.data?.page || page;
-
-  React.useEffect(() => {
-    if (pendingSalons.length > 0) {
-      console.log("Pending Salons (Page", currentPage + "):", pendingSalons);
-    }
-  }, [pendingSalons, currentPage]);
 
   const goToPage = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
       setPage(newPage);
     }
   };
+
+  const handleApprove = async (salonId, salonName) => {
+    setApprovingId(salonId);
+    try {
+      await approveSalon(salonId).unwrap();
+      toastSuccess(`"${salonName}" has been approved successfully!`);
+      openModal("salonApprovedSuccess", {
+        title: "Salon Verification Approved",
+        subtitle:
+          "The salon has been successfully verified and approved. The owner can now access their salon dashboard and manage services.",
+      });
+    } catch (err) {
+      toastError(err?.data?.message || "Failed to approve salon.");
+    } finally {
+      setApprovingId(null);
+    }
+  };
+
+  const handleReject = async (salonId, salonName) => {
+    setRejectingId(salonId);
+    try {
+      await rejectSalon(salonId).unwrap();
+      toastSuccess(`"${salonName}" has been rejected successfully!`);
+      openModal("rejectionSent");
+    } catch (err) {
+      toastError(err?.data?.message || "Failed to reject salon.");
+    } finally {
+      setRejectingId(null);
+    }
+  };
+
+  const isApprovingThis = (id) => approvingId === id;
+  const isRejectingThis = (id) => rejectingId === id;
+  const isProcessingThis = (id) => isApprovingThis(id) || isRejectingThis(id);
 
   if (isLoading && page === 1) {
     return (
@@ -59,7 +97,6 @@ export default function PendingRequestsSection() {
   }
 
   if (isError) {
-    console.error("Error:", error);
     return (
       <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 font-[Poppins]">
         <h2 className="text-[20px] font-semibold text-[#581838]">
@@ -106,7 +143,7 @@ export default function PendingRequestsSection() {
         {pendingSalons.map((item) => (
           <div
             key={item._id}
-            className="flex flex-col md:flex-row items-start md:items-center justify-between border border-[#E5E7EB] rounded-[8px] p-[17px] gap-4 hover:bg-[#FF92A533] transition cursor-pointer"
+            className="flex flex-col lg:flex-row items-start lg:items-center justify-between border border-[#E5E7EB] rounded-[8px] p-[17px] gap-4 hover:bg-[#FF92A533] transition cursor-pointer"
           >
             <div className="flex items-start gap-4 w-full">
               <img
@@ -134,53 +171,46 @@ export default function PendingRequestsSection() {
                 className="flex-1 py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiEye size={16} />}
                 onClick={() => openModal("salonRequest", item)}
+                disabled={isProcessingThis(item._id)}
               >
                 View
               </AppButton>
+
               <AppButton
                 variant="custom"
                 size="custom"
                 className="flex-1 py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiCheck size={16} />}
-                disabled={isApproving}
-                onClick={async () => {
-                  if (!item?._id) {
-                    toastError("Salon ID not found");
-                    return;
-                  }
-
-                  try {
-                    await approveSalon(item?._id).unwrap();
-                    toastSuccess(
-                      `"${item?.salonName}" has been approved successfully!`
-                    );
-                    closeModal();
-                    openModal("salonApprovedSuccess", {
-                      title: "Salon Verification Approved",
-                      subtitle: "The salon has been successfully verified.",
-                      salonName: item.salonName,
-                    });
-                  } catch (err) {
-                    console.error("Approve failed:", err);
-                    toastError(
-                      err?.data?.message ||
-                        "Failed to approve salon. Please try again."
-                    );
-                  }
-                }}
+                disabled={isProcessingThis(item._id)}
+                onClick={() => handleApprove(item._id, item.salonName)}
               >
-                {isApproving ? "Approving..." : "Approve"}
+                {isApprovingThis(item._id) ? "Approving..." : "Approve"}
+              </AppButton>
+              <AppButton
+                variant="custom"
+                size="custom"
+                className="flex-1 py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+                leftIcon={<HiHandRaised size={16} />}
+                disabled={isProcessingThis(item._id)}
+                // onClick={() => handleReject(item._id, item.salonName)}
+                onClick={() =>
+                  openModal("salonRejection", {
+                    salonId: item._id,
+                    salonName: item.salonName,
+                  })
+                }
+              >
+                Hold
               </AppButton>
               <AppButton
                 variant="custom"
                 size="custom"
                 className="flex-1 py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
                 leftIcon={<FiX size={16} />}
-                onClick={() =>
-                  openModal("salonRejection", { salonId: item._id })
-                }
+                disabled={isProcessingThis(item._id)}
+                onClick={() => handleReject(item._id, item.salonName)}
               >
-                Reject
+                {isRejectingThis(item._id) ? "Rejecting..." : "Reject"}
               </AppButton>
             </div>
           </div>
@@ -196,7 +226,7 @@ export default function PendingRequestsSection() {
           <AppButton
             variant="custom"
             size="custom"
-            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50"
             leftIcon={<FiChevronLeft size={16} />}
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1 || isFetching}
@@ -207,7 +237,7 @@ export default function PendingRequestsSection() {
           <AppButton
             variant="custom"
             size="custom"
-            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50"
             rightIcon={<FiChevronRight size={16} />}
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages || isFetching}
