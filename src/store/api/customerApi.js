@@ -36,6 +36,11 @@ export const customerApi = createApi({
         params: { page, limit, sort },
       }),
     }),
+    getSalonById: builder.query({
+      query: (id) => ({
+        url: `/get-salon-by-id/${id}`,
+      }),
+    }),
   }),
 });
 
@@ -44,4 +49,5 @@ export const {
   useUpdateMeMutation,
   useUpdateSalonProfileMutation,
   useGetAllSalonsQuery,
+  useGetSalonByIdQuery,
 } = customerApi;

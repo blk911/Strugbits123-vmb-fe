@@ -4,17 +4,25 @@ import { IoClose, IoCopyOutline, IoChevronDown } from "react-icons/io5";
 import salonImg from "../../../../assets/salon-1.png";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import AppButton from "../../../common/site/AppButton";
+import { formatDuration } from "../../../../utils/HelperFunctions";
 
 export default function TreatModal({ isOpen, closeModal, initialData }) {
+  const gift = initialData?.gift;
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [selectedSalon, setSelectedSalon] = useState("");
   const [selectedServices, setSelectedServices] = useState([]);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
-
+  const salonName = gift?.salonId?.salonName || "Unknown Salon";
+  const salonImage = gift?.salonId?.profilePic || salonImg;
+  const description = gift?.salonId?.description || "";
+  const services = gift?.services || [];
+  const receiverEmail = gift?.receiverEmail || "N/A";
+  const giftmessage = gift?.message || "No message";
+  const requesterName = gift?.requesterId?.name || "Someone";
   const dropdownRef = useRef(null);
-
+  console.log("Initial Data Recieved in Modal==>", initialData);
   useEffect(() => {
     if (isOpen && initialData) {
       setIsSubmitted(initialData.isSubmitted ?? true);
@@ -299,16 +307,16 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                     <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">
                       <div className="flex items-center gap-3">
                         <img
-                          src={salonImg}
+                          src={salonImage}
                           alt="Salon"
-                          className="w-[60px] h-[60px] rounded-md object-cover"
+                          className="w-[60px] h-[60px] rounded-md object-cover border border-gray-200"
                         />
                         <div>
                           <p className="text-[#4B5563] font-semibold text-[18px]">
-                            {selectedSalon}
+                            {salonName}
                           </p>
                           <p className="text-[#4B5563] text-[12px]">
-                            {selectedSalonData?.description}
+                            {description}
                           </p>
                         </div>
                       </div>
@@ -319,16 +327,17 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           <span>Duration:</span>
                           <span>Price:</span>
                         </div>
-                        {selectedServices.map((srv, i) => {
-                          const s = getServiceDetails(srv);
+                        {services.map((srv, i) => {
                           return (
                             <div
                               key={i}
                               className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
                             >
-                              <span>{s?.name}</span>
-                              <span>{s?.duration}</span>
-                              <span>{s?.price}</span>
+                              <span>{srv?.serviceName}</span>
+                              <span>
+                                {formatDuration(srv?.serviceDuration)}
+                              </span>
+                              <span>{srv?.servicePrice}</span>
                             </div>
                           );
                         })}

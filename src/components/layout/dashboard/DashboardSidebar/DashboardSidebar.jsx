@@ -43,7 +43,7 @@ function DashboardSidebar() {
                   {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
 
-                <span className=" max-[1100px]:text-center text-left text-wrap  text-[10px] sm:text-[12px]    break-all ">
+                <span className=" max-[1100px]:text-center text-left text-wrap  text-[10px] sm:text-[12px]    break-all max-sm:hidden ">
                   {item.name}
                 </span>
               </>

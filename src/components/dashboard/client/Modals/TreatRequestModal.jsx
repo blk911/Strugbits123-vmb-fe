@@ -9,6 +9,7 @@ import userImg from "../../../../assets/user_icon.png";
 import treatRequestIcon from "../../../../assets/treatRequestIcon.png";
 import successGif from "../../../../assets/successGif.gif";
 import AppButton from "../../../common/site/AppButton";
+import { useGetSalonByIdQuery } from "../../../../store/api";
 
 function TreatRequestModal({ isOpen, closeModal, initialData }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -34,6 +35,12 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
   };
 
   const info = initialData || mock;
+  const { data: salon } = useGetSalonByIdQuery(info?.gift?.salonId?._id);
+
+  const handleViewSalon = () => {
+    console.log("Recieved Salon==>", salon);
+    // navigate(`/salon/${salon.id}`);
+  };
   if (!isOpen && !showSuccessModal) return null;
 
   const totalPrice = Array.isArray(info.services)
@@ -91,7 +98,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                     <img
                       src={treatRequestIcon}
                       alt="Treat"
-                      className="w-[77px] h-[76px] object-cover"
+                      className="w-[77px] h-[76px] object-cover "
                     />
                     <h2 className="text-[#581838] font-bold text-[22px] mt-3 text-center">
                       You’ve a Treat Request!
@@ -108,7 +115,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         <img
                           src={info.salon.image}
                           alt="Salon"
-                          className="w-[40px] h-[40px] rounded-md object-cover flex-shrink-0"
+                          className="w-[40px] h-[40px] rounded-md object-cover flex-shrink-0 border border-gray-200 "
                         />
                         <div className="min-w-0">
                           <p className="text-[#4B5563] font-semibold text-[14px] break-words">
@@ -119,7 +126,10 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                           </p>
                         </div>
                       </div>
-                      <button className="bg-[#FF92A54D] text-[#581838] text-[12px] rounded-[5px] px-[10px] py-[5px] w-fit self-end sm:self-auto">
+                      <button
+                        className="bg-[#FF92A54D] text-[#581838] text-[12px] rounded-[5px] px-[10px] py-[5px] w-fit self-end sm:self-auto cursor-pointer"
+                        onClick={handleViewSalon}
+                      >
                         View Salon
                       </button>
                     </div>
@@ -164,11 +174,11 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       </p>
 
                       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-3">
-                        <img
+                        {/* <img
                           src={info.sender.avatar}
                           alt="Sender"
                           className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0"
-                        />
+                        /> */}
                         <div className="min-w-0">
                           <p className="text-[#4B5563] font-semibold text-[14px] break-words">
                             {info.sender.name}

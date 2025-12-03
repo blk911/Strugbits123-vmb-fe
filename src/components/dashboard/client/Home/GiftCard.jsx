@@ -1,50 +1,55 @@
-import defaultUser from "../../../../assets/user_icon.png";
 import { useNavigate } from "react-router-dom";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-import salonImg from "../../../../assets/salon-1.png";
-import userImg from "../../../../assets/user_icon.png";
+import defaultUser from "../../../../assets/user_icon.png";
+import { da } from "zod/locales";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 export default function GiftCard({
   icon: Icon,
   title,
   userName,
   packageName,
-
   status,
   statusColor,
   statusBg,
+  hasData = true,
+  data,
+  isLoading = false,
 }) {
   const navigate = useNavigate();
   const { openModal } = useDashboardModal();
+
   const handleCardClick = () => {
-    if (title === "My Requests") {
+    if (!hasData) return;
+    console.log("Card Data==>", data);
+    if (title === "My Requests" && data) {
       openModal("treat", {
         isSubmitted: true,
-        selectedSalon: "Bella Beauty Salon",
-        selectedServices: ["Haircuts", "Hydrafacial"],
-        email: "mike.davis@example.com",
-        message:
-          "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
+        gift: data,
+        selectedSalon: data.salonId?.salonName || "Unknown Salon",
+        selectedServices: data.services.map((s) => s.serviceName || s.name),
+        email: data.receiverEmail,
+        message: data.message || "No message",
       });
     }
 
-    if (title === "Received Requests") {
+    if (title === "Received Requests" && data) {
       openModal("treatRequest", {
+        gift: data,
         salon: {
-          name: "Glam Studio",
-          description: "Premium Beauty Services",
-          image: salonImg,
+          name: data.salonId?.salonName,
+          description: data.salonId?.description,
+          image: data.salonId?.profilePic,
         },
-        services: [
-          { name: "Full Color + Cut", duration: "2 Hr", price: 175 },
-          { name: "Manicure", duration: "45 min", price: 35 },
-        ],
+        services: data.services.map((s) => ({
+          name: s.serviceName || s.name,
+          duration: `${s.serviceDuration} min`,
+          price: s.servicePrice,
+        })),
         sender: {
-          name: "Emma Wilson",
-          email: "emma.wilson@love.com",
-          avatar: userImg,
-          message:
-            "Hey love! Can you treat me to this? I miss you so much and deserve a little pamper day!",
+          name: data.requesterId?.name || "Someone",
+          email: data.requesterId?.email,
+          message: data.message,
         },
       });
     }
@@ -74,45 +79,54 @@ export default function GiftCard({
           </span>
         </div>
         <span
-          className="text-[14px] font-medium text-[#9CA3AF] underline cursor-pointer hover:text-[#FF92A5] transition-all"
           onClick={handleViewAll}
+          className="text-[14px] font-medium text-[#9CA3AF] underline cursor-pointer hover:text-[#FF92A5] transition-all"
         >
           View All
         </span>
       </div>
 
       <div className="h-[1px] bg-[#D9D9D9] mb-3"></div>
-
-      <div
-        className="p-3 border border-[#0000001A] rounded-[10px] flex items-center justify-between cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all"
-        onClick={handleCardClick}
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
-            <img
-              src={defaultUser}
-              alt="User"
-              className="w-full h-full object-cover"
-            />
+      {isLoading ? (
+        <div className="w-full h-full flex items-center justify-center">
+          <LoadingIndicator size="md" />
+        </div>
+      ) : hasData ? (
+        <div
+          className="p-3 border border-[#0000001A] rounded-[10px] flex items-center justify-between cursor-pointer hover:border-2 hover:border-[#FF92A5] transition-all"
+          onClick={handleCardClick}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0">
+              <img
+                src={data?.salonId?.profilePic || defaultUser}
+                alt="User"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-[#4B5563] font-semibold text-[14px] leading-[18px] break-all">
+                {userName}
+              </p>
+              <p className="text-[12px] text-[#4B5563]/70">{packageName}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-[#4B5563] font-semibold text-[14px] leading-[18px]">
-              {userName}
+
+          <div className="text-center">
+            <p
+              className="font-semibold text-[10px] rounded-[4px] px-2 py-[2px]"
+              style={{ color: statusColor, backgroundColor: statusBg }}
+            >
+              {status}
             </p>
-            <p className="text-[12px] text-[#4B5563]/70">{packageName}</p>
+            <p className="text-[10px] text-[#00000080] mt-1">Recent</p>
           </div>
         </div>
-
-        <div className="text-center">
-          <p
-            className="font-semibold text-[10px] rounded-[4px] px-2 py-[2px]"
-            style={{ color: statusColor, backgroundColor: statusBg }}
-          >
-            {status}
-          </p>
-          <p className="text-[10px] text-[#00000080] mt-1">2 days ago</p>
+      ) : (
+        <div className="text-center py-5 text-[#9CA3AF]">
+          <p className="text-[14px] font-medium">No requests to show</p>
         </div>
-      </div>
+      )}
     </div>
   );
 }
