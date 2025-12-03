@@ -2,3 +2,5 @@ export * from "./authApi";
 export * from "./customerApi";
 export * from "./adminApi";
 export * from "./salonApi";
+export * from "./giftApi";
+export * from "./inviteApi";

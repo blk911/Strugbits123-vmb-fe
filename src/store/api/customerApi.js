@@ -29,8 +29,12 @@ export const customerApi = createApi({
       }),
       invalidatesTags: ["User"],
     }),
+
     getAllSalons: builder.query({
-      query: () => "/get-all-salons",
+      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+        url: "/get-all-salons",
+        params: { page, limit, sort },
+      }),
     }),
   }),
 });

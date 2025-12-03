@@ -1,8 +1,18 @@
 import { FaGift, FaPaperPlane } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import GiftCard from "./GiftCard";
+import {
+  useRecievedGiftsQuery,
+  useRequestedGiftsQuery,
+} from "../../../../store/api";
 
 export default function GiftCardsSection() {
+  const { data } = useRecievedGiftsQuery({ refetchOnMountOrArgChange: true });
+  const { data: requests } = useRequestedGiftsQuery({
+    refetchOnMountOrArgChange: true,
+  });
+  console.log("Requested Gifts==>", requests);
+  console.log("Data Recieved==>", data);
   const cards = [
     {
       id: 1,
@@ -10,7 +20,7 @@ export default function GiftCardsSection() {
       title: "My Requests",
       userName: "Emma Wilson",
       packageName: "Luxury Spa Package • $85",
-  
+
       status: "Pending",
       statusColor: "#FF9500",
       statusBg: "#FF950033",
@@ -21,7 +31,7 @@ export default function GiftCardsSection() {
       title: "Received Requests",
       userName: "From: Mike Davis",
       packageName: "Luxury Spa Package • $85",
-    
+
       status: "Redeemed",
       statusColor: "#4FCF00",
       statusBg: "#4FCF0033",
@@ -32,7 +42,7 @@ export default function GiftCardsSection() {
       title: "Appointments",
       userName: "Luxe Beauty Salon",
       packageName: "Hair color, nail polish...",
-      
+
       status: "Accepted",
       statusColor: "#4FCF00",
       statusBg: "#4FCF0033",

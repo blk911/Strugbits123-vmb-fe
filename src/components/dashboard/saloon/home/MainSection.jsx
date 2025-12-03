@@ -13,7 +13,7 @@ import defaultUser from "../../../../assets/user_icon.png";
 import { useNavigate } from "react-router-dom";
 import { useGetServicesQuery } from "../../../../store/api";
 function MainSection() {
-  const { data: response, isError } = useGetServicesQuery();
+  const { data: response, isLoading, isError } = useGetServicesQuery();
   const services = response?.data?.items.slice(0, 4);
   const navigate = useNavigate();
   return (
@@ -99,8 +99,8 @@ function MainSection() {
           </div>
 
           <div className="grid grid-cols-1 gap-4">
+            {isLoading && <p>Loading services...</p>}
             {isError && <p>Failed to load services.</p>}
-            {!services?.length && <p>No services found.</p>}
             {services?.length > 0 &&
               services?.map((service) => (
                 <ServiceCard

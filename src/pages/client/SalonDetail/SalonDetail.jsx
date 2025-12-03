@@ -4,37 +4,37 @@ import { salons as salonsData } from "../../../components/dashboard/client/Home/
 import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
-import { useGetServicesQuery } from "../../../store/api";
+import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
+import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
 
 export default function SalonDetail() {
-  const { id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const salonId = location.state?.salonId || Number(id);
-  console.log("Salon ID==>", salonId);
-  const {
-    data: response,
-    isLoading,
-    isFetching,
-    isError,
-  } = useGetServicesQuery();
-
+  const { salon: selectedSalon, loading } = useSelectedSalon();
+  console.log("Selected Salon==>", selectedSalon);
   const salon = salonsData[0];
-  useEffect(() => {
-    if (!salon) {
-      navigate("/");
-    }
-  }, [salon, navigate]);
 
-  if (!salon) return null;
+  useEffect(() => {
+    if (!loading && !selectedSalon) {
+      navigate("/salons", { replace: true });
+    }
+  }, [selectedSalon, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#EFEFEF]">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (!selectedSalon) return null;
 
   return (
     <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative z-0">
           <AutoCarousel
-            images={salon.images}
+            images={selectedSalon?.salonPhotos}
             heightClass="h-[192px]   rounded-tl-xl rounded-tr-xl"
           />
 
@@ -49,8 +49,8 @@ export default function SalonDetail() {
       "
           >
             <img
-              src={salon.image}
-              alt={salon.name}
+              src={selectedSalon?.profilePic}
+              alt={selectedSalon?.salonName}
               className="w-full h-full object-cover"
             />
           </div>
@@ -67,10 +67,10 @@ export default function SalonDetail() {
         >
           <div className="sm:pl-[160px]">
             <h1 className="text-[#581838] font-bold text-[22px] sm:text-[26px] md:text-[30px] leading-tight">
-              {salon.name}
+              {selectedSalon?.salonName}
             </h1>
             <p className="text-[#4B5563] text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
-              Where beauty meets luxury ✨
+              {selectedSalon?.description}
             </p>
           </div>
 
@@ -85,29 +85,35 @@ export default function SalonDetail() {
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-[#00000080]" />
               <span>
-                {salon.address} | {salon.distance.toFixed(1)} miles
+                {selectedSalon?.salonAddress} | {selectedSalon?.distance}
               </span>
             </div>
 
             <div className="flex items-center gap-2">
               <FaPhoneAlt className="text-[#00000080]" />
-              <span>{salon.phone}</span>
+              <span>{selectedSalon?.phoneNumber}</span>
             </div>
 
-            <div className="flex items-center gap-2">
-              sm:pl-[160px] "
+            <div className="flex items-center gap-2 ">
               <FaRegClock className="text-[#00000080]" />
-              <span>{salon.hours}</span>
+              <span>
+                {selectedSalon?.startTime} - {selectedSalon?.endTime}
+              </span>
             </div>
 
             <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838] whitespace-nowrap">
-              Mon-Thru-Fri
+              {selectedSalon?.workingDays
+                .map((day) => day.slice(0, 3))
+                .join("-")}
             </div>
           </div>
         </div>
       </div>
 
-      <ServicesSection services={salon.services} salon={salon} />
+      <ServicesSection
+        services={selectedSalon?.services}
+        salon={selectedSalon}
+      />
     </div>
   );
 }

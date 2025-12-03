@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import AppButton from "../../../common/site/AppButton";
+import { useDispatch } from "react-redux";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 
 export default function SalonCard({ salon }) {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const openDetail = () => {
+    dispatch(setSelectedSalon(salon));
     navigate(`/salon/${salon?._id}`, { state: { salonId: salon?._id } });
   };
 
