@@ -9,6 +9,7 @@ export default function ExclusiveInviteModal({
   closeModal,
   initialData = {},
 }) {
+  console.log("Initial Data Recieved Exclusive==>", initialData);
   const [inviteOpen, setInviteOpen] = useState(isOpen);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
@@ -107,7 +108,7 @@ export default function ExclusiveInviteModal({
                             {salon?.name}
                           </div>
                           <div className="text-sm text-[#4B5563]">
-                            Premium Beauty Services
+                            {salon?.description}
                           </div>
                         </div>
                       </div>
@@ -128,7 +129,7 @@ export default function ExclusiveInviteModal({
                         </div>
                         {services.map((s) => (
                           <div
-                            key={s.id}
+                            key={s.name}
                             className="grid grid-cols-3 text-[#4B5563] mt-2"
                           >
                             <div>{s.name}</div>

@@ -19,7 +19,50 @@ export const inviteApi = createApi({
       },
       invalidatesTags: ["Invite"],
     }),
+    acceptInvite: builder.mutation({
+      query: ({ id, data }) => {
+        return {
+          url: `/accept-invite/${id}`,
+          method: "PATCH",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Invite"],
+    }),
+    getUserInvites: builder.query({
+      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+        url: "/get-user-invites",
+        params: { page, limit, sort },
+      }),
+      providesTags: ["Invite"],
+    }),
+    getSalonInvites: builder.query({
+      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+        url: "/get-salon-invites",
+        params: { page, limit, sort },
+      }),
+      providesTags: ["Invite"],
+    }),
+    getAdminInvites: builder.query({
+      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+        url: "/get-admin-invites",
+        params: { page, limit, sort },
+      }),
+      providesTags: ["Invite"],
+    }),
+    getInviteDetails: builder.query({
+      query: (id) => ({
+        url: `/get-invite-details/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useCreateInviteMutation } = inviteApi;
+export const {
+  useCreateInviteMutation,
+  useGetInviteDetailsQuery,
+  useGetUserInvitesQuery,
+  useGetSalonInvitesQuery,
+  useGetAdminInvitesQuery,
+  useAcceptInviteMutation,
+} = inviteApi;

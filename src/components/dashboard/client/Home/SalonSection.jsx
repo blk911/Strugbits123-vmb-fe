@@ -18,6 +18,7 @@ export default function SalonSection() {
     data: response,
     isLoading,
     isFetching,
+    refetch,
   } = useGetAllSalonsQuery(
     {
       page: currentPage,
@@ -28,6 +29,10 @@ export default function SalonSection() {
       refetchOnMountOrArgChange: true,
     }
   );
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const salons = response?.data?.items || [];
   const totalPages = response?.data?.pages || 1;
   const totalItems = response?.data?.total || 0;

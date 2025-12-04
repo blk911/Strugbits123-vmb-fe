@@ -6,16 +6,49 @@ import {
   useRequestedGiftsQuery,
 } from "../../../../store/api";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
+import { useEffect, useMemo } from "react";
+import { capitalizeFirst } from "../../../../utils/HelperFunctions";
 
 export default function GiftCardsSection() {
-  const { data: requestedGiftsData, isLoading: loadingRequested } =
-    useRequestedGiftsQuery({ refetchOnMountOrArgChange: true });
+  const {
+    data: requestedGiftsData,
+    isLoading: loadingRequested,
+    refetch: refetchRequested,
+  } = useRequestedGiftsQuery({
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
+  });
 
-  const { data: receivedGiftsData, isLoading: loadingReceived } =
-    useRecievedGiftsQuery({ refetchOnMountOrArgChange: true });
+  const {
+    data: receivedGiftsData,
+    isLoading: loadingReceived,
+    refetch: refetchReceived,
+  } = useRecievedGiftsQuery({
+    refetchOnMountOrArgChange: true,
+    refetchOnReconnect: true,
+  });
+  useEffect(() => {
+    refetchRequested();
+    refetchReceived();
+  }, [refetchRequested, refetchReceived]);
+  const firstRequestedGift = useMemo(() => {
+    const items = requestedGiftsData?.data?.items;
+    if (!items || items.length === 0) return null;
 
-  const firstRequestedGift = requestedGiftsData?.data?.items?.[0];
-  const firstReceivedGift = receivedGiftsData?.data?.items?.[0];
+    return items
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+  }, [requestedGiftsData]);
+
+  const firstReceivedGift = useMemo(() => {
+    const items = receivedGiftsData?.data?.items;
+    if (!items || items.length === 0) return null;
+
+    return items
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+  }, [receivedGiftsData]);
+
   const loading = loadingReceived || loadingRequested;
   const cards = [
     {
@@ -32,7 +65,7 @@ export default function GiftCardsSection() {
             0
           )}`
         : null,
-      status: firstRequestedGift?.status || null,
+      status: capitalizeFirst(firstRequestedGift?.status) || null,
       statusColor:
         firstRequestedGift?.status === "pending"
           ? "#FF9500"
@@ -63,9 +96,20 @@ export default function GiftCardsSection() {
             0
           )}`
         : null,
-      status: firstReceivedGift?.isPaid ? "Redeemed" : "Pending",
-      statusColor: firstReceivedGift?.isPaid ? "#4FCF00" : "#FF9500",
-      statusBg: firstReceivedGift?.isPaid ? "#4FCF0033" : "#FF950033",
+
+      status: capitalizeFirst(firstReceivedGift?.status) || null,
+      statusColor:
+        firstReceivedGift?.status === "pending"
+          ? "#FF9500"
+          : firstReceivedGift?.status === "accepted"
+          ? "#4FCF00"
+          : "#EF4444",
+      statusBg:
+        firstReceivedGift?.status === "pending"
+          ? "#FF950033"
+          : firstReceivedGift?.status === "accepted"
+          ? "#4FCF0033"
+          : "#EF444433",
       data: firstReceivedGift,
     },
     {

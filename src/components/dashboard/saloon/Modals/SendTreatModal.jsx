@@ -102,7 +102,7 @@ export default function SendTreatModal({
 
     try {
       await createInvite({
-        service: data.serviceId,
+        services: [data.serviceId],
         inviteeEmail: data.email,
         firstName: data.firstName,
         lastName: data.lastName,

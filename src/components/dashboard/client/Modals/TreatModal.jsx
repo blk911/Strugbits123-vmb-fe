@@ -22,7 +22,6 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
   const giftmessage = gift?.message || "No message";
   const requesterName = gift?.requesterId?.name || "Someone";
   const dropdownRef = useRef(null);
-  console.log("Initial Data Recieved in Modal==>", initialData);
   useEffect(() => {
     if (isOpen && initialData) {
       setIsSubmitted(initialData.isSubmitted ?? true);

@@ -13,6 +13,7 @@ import {
   toastLoading,
   toastDismiss,
 } from "../../../../utils/toast";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 const giftSchema = z.object({
   selectedServices: z
@@ -54,21 +55,38 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   });
 
   const selectedServices = watch("selectedServices") || [];
-
   useEffect(() => {
-    if (isOpen && salon) {
-      const initialServiceName = prefilledService?.serviceName;
-      const defaultServices = initialServiceName ? [initialServiceName] : [];
+    if (!isOpen) return;
+
+    if (salon && initialData) {
+      const prefilledEmail = initialData.email || "";
+      const prefilledMessage =
+        initialData.message ||
+        `Hi! I’d love to gift you a special treat at ${salon.salonName}. Enjoy!`;
+      const prefilledServiceName = prefilledService?.serviceName;
+      const defaultServices = prefilledServiceName
+        ? [prefilledServiceName]
+        : [];
 
       reset({
         selectedServices: defaultServices,
+        email: prefilledEmail,
+        message: prefilledMessage,
+      });
+
+      setIsSubmitted(initialData.isSubmitted ?? false);
+      if (toastId) toastDismiss(toastId);
+    } else {
+      reset({
+        selectedServices: [],
         email: "",
-        message: `Hi! I’d love to gift you a special treat at ${salon.salonName}. Enjoy!`,
+        message: salon
+          ? `Hi! I’d love to gift you a special treat at ${salon.salonName}. Enjoy!`
+          : "",
       });
       setIsSubmitted(false);
-      if (toastId) toastDismiss(toastId);
     }
-  }, [isOpen, salon, prefilledService, reset, toastId]);
+  }, [isOpen, salon, initialData, prefilledService, reset, toastId]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -95,7 +113,12 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
     const svc = getServiceByName(name);
     return sum + (svc ? Number(svc.servicePrice) : 0);
   }, 0);
-
+  const findtotalPrice = (data) => {
+    return data.reduce((sum, name) => {
+      const svc = getServiceByName(name);
+      return sum + (svc ? Number(svc.servicePrice) : 0);
+    }, 0);
+  };
   const onSubmit = async (data) => {
     if (!salon?._id) {
       toastError("Salon not found");
@@ -160,7 +183,11 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                   className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
                 />
 
-                {!isSubmitted ? (
+                {isLoading ? (
+                  <div className="flex justify-center">
+                    <LoadingIndicator />
+                  </div>
+                ) : !isSubmitted ? (
                   <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="flex flex-col gap-6"
@@ -367,7 +394,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           <span>Duration</span>
                           <span>Price</span>
                         </div>
-                        {selectedServices.map((name) => {
+                        {submittedData.selectedServices.map((name) => {
                           const s = getServiceByName(name);
                           return (
                             <div
@@ -381,7 +408,10 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           );
                         })}
                         <div className="flex justify-end font-bold text-[#581838] mt-3">
-                          Total: ${totalPrice.toFixed(2)}
+                          Total: $
+                          {findtotalPrice(
+                            submittedData.selectedServices
+                          ).toFixed(2)}
                         </div>
                       </div>
 

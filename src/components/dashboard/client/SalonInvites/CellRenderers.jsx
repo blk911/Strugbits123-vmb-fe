@@ -3,14 +3,14 @@ import React from "react";
 export const CellRenderers = {
   serviceName: (options) => (
     <div className="flex flex-wrap gap-1 text-xs">
-      {options.map((option, index) => (
-        <span
-          key={index}
-          className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
-        >
-          {option}
-        </span>
-      ))}
+      {/* {options.map((option, index) => ( */}
+      <span
+        // key={index}
+        className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+      >
+        {options}
+      </span>
+      {/* ))} */}
     </div>
   ),
 

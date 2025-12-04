@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IoClose, IoTimeOutline } from "react-icons/io5";
 import { FaTimes, FaCheck } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,19 @@ import userImg from "../../../../assets/user_icon.png";
 import treatRequestIcon from "../../../../assets/treatRequestIcon.png";
 import successGif from "../../../../assets/successGif.gif";
 import AppButton from "../../../common/site/AppButton";
-import { useGetSalonByIdQuery } from "../../../../store/api";
+import {
+  useAcceptGiftMutation,
+  useGetSalonByIdQuery,
+  useRejectGiftMutation,
+} from "../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useDispatch } from "react-redux";
 
 function TreatRequestModal({ isOpen, closeModal, initialData }) {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -33,25 +45,93 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
         "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
     },
   };
-
+  const dispatch = useDispatch();
   const info = initialData || mock;
-  const { data: salon } = useGetSalonByIdQuery(info?.gift?.salonId?._id);
-
+  const gift = initialData?.gift;
+  const salonId = gift?.salonId?._id;
+  const giftId = gift?._id;
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const [acceptGift, { isLoading: accepting }] = useAcceptGiftMutation();
+  const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();
   const handleViewSalon = () => {
-    console.log("Recieved Salon==>", salon);
-    // navigate(`/salon/${salon.id}`);
+    if (!salonId) return;
+
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      closeModal();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    closeModal();
+    navigate(`/salon/${salonId}`);
   };
+
+  useEffect(() => {
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+    }
+  }, [isSuccess, salonResponse, dispatch]);
+
   if (!isOpen && !showSuccessModal) return null;
 
   const totalPrice = Array.isArray(info.services)
     ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
 
-  const handleAccept = () => {
-    closeModal();
-    setTimeout(() => setShowSuccessModal(true), 200);
+  // const handleAccept = () => {
+  //   closeModal();
+  //   setTimeout(() => setShowSuccessModal(true), 200);
+  // };
+  // const handleDecline = () => {
+
+  //   closeModal();
+  // };
+  const handleAccept = async () => {
+    if (!giftId) return;
+
+    const loadingToast = toastLoading("Processing your payment...");
+    try {
+      await acceptGift({
+        id: giftId,
+        data: gift,
+      }).unwrap();
+
+      toastDismiss(loadingToast);
+      toastSuccess("Payment successful! Treat accepted.");
+      closeModal();
+      setTimeout(() => setShowSuccessModal(true), 300);
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to accept gift");
+    }
   };
 
+  const handleDecline = async () => {
+    if (!giftId) return;
+
+    const loadingToast = toastLoading("Declining request...");
+    try {
+      await rejectGift(giftId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Gift request declined");
+      closeModal();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to decline");
+    }
+  };
   const handleSeeRequests = () => {
     setShowSuccessModal(false);
     navigate("/gifts", { state: { activeTab: "receivedRequests" } });
@@ -196,27 +276,30 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       </div>
                     </div>
                   </div>
-
-                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <AppButton
-                      leftIcon={<FaTimes className="text-[14px]" />}
-                      variant="primary"
-                      size="custom"
-                      onClick={closeModal}
-                      className="text-[14px] font-medium px-5 py-[15px]"
-                    >
-                      Decline
-                    </AppButton>
-                    <AppButton
-                      leftIcon={<FaCheck className="text-[14px]" />}
-                      variant="outline-dark"
-                      size="custom"
-                      onClick={handleAccept}
-                      className="text-[14px] font-medium px-5 py-[15px]"
-                    >
-                      Accept & Pay
-                    </AppButton>
-                  </div>
+                  {gift.status === "pending" && (
+                    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <AppButton
+                        leftIcon={<FaTimes className="text-[14px]" />}
+                        variant="primary"
+                        size="custom"
+                        onClick={handleDecline}
+                        className="text-[14px] font-medium px-5 py-[15px]"
+                        disabled={rejecting}
+                      >
+                        {rejecting ? "Declining..." : "Decline"}
+                      </AppButton>
+                      <AppButton
+                        leftIcon={<FaCheck className="text-[14px]" />}
+                        variant="outline-dark"
+                        size="custom"
+                        disabled={accepting}
+                        onClick={handleAccept}
+                        className="text-[14px] font-medium px-5 py-[15px]"
+                      >
+                        {accepting ? "Processing..." : "Accept & Pay"}
+                      </AppButton>
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

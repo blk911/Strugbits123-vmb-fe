@@ -1,79 +1,125 @@
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
+import { useGetSalonInvitesQuery } from "../../../../store/api";
 
-const pendingData = [
-  {
-    id: 1,
-    Email: "elitejuan@gmail.com",
-    message:
-      "Hi! You’ve been invited to check out our salon. Explore our services and book your next appointment with us.",
-    serviceName: ["Hair Cutting", "Spa", "Facial"],
-    discount: 10,
-    inviteDate: "02-08-2025",
-    status: "Pending",
-  },
-  {
-    id: 2,
-    Email: "maria@gmail.com",
-    message:
-      "Exclusive invite! Enjoy premium beauty services with a special discount just for you.",
-    serviceName: ["Manicure", "Pedicure", "Massage"],
-    discount: 15,
-    inviteDate: "03-08-2025",
-    status: "Accepted",
-  },
-  {
-    id: 3,
-    Email: "john@gmail.com",
-    message:
-      "We’d love to have you! Claim your special offer before it expires.",
-    serviceName: ["Highlight", "Hair Color", "Blow Dry"],
-    discount: 20,
-    inviteDate: "01-08-2025",
-    status: "Pending",
-  },
-  {
-    id: 4,
-    Email: "sarah@gmail.com",
-    message:
-      "Special invitation: Get pampered with luxury nail services at a great discount!",
-    serviceName: ["Nail Art", "Gel Polish", "French Tips"],
-    discount: 12,
-    inviteDate: "04-08-2025",
-    status: "Accepted",
-  },
-];
-
-const originalRows = {
-  Pending: pendingData.filter((r) => r.status === "Pending"),
-  Accepted: pendingData.filter((r) => r.status === "Accepted"),
-};
-
-const tabs = {
-  Pending: pendingData.filter((r) => r.status === "Pending"),
-  Accepted: pendingData.filter((r) => r.status === "Accepted"),
-  All: pendingData,
-};
-
-const tabOrder = ["All", "Pending", "Accepted"];
+const PAGE_SIZE = 10;
 
 export default function Invites() {
+  const location = useLocation();
+  const { openModal } = useDashboardModal();
+
+  const [activeTab, setActiveTab] = useState(
+    location.state?.activeTab || "All"
+  );
+  const [allPage, setAllPage] = useState(1);
+  const [pendingPage, setPendingPage] = useState(1);
+  const [acceptedPage, setAcceptedPage] = useState(1);
+
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+  } = useGetSalonInvitesQuery({
+    page:
+      activeTab === "All"
+        ? allPage
+        : activeTab === "Pending"
+        ? pendingPage
+        : acceptedPage,
+    limit: PAGE_SIZE,
+    sort: "newest",
+    refetchOnMountOrArgChange: true,
+
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+
+  const invites = response?.data?.items || [];
+  const totalPages = response?.data?.pages || 1;
+
+  const transformedData = invites.map((invite) => ({
+    id: invite._id,
+    Email: invite.inviteeEmail || "N/A",
+    message: invite.message || "No message",
+    serviceName: invite.services.serviceName || "N/A",
+    discount: invite.discountPercentage ?? 0,
+    inviteDate: invite.createdAt
+      ? new Date(invite.createdAt).toLocaleDateString("en-GB")
+      : "N/A",
+    status: invite.status.charAt(0).toUpperCase() + invite.status.slice(1),
+    _modalData: invite,
+  }));
+
+  const allInvites = transformedData;
+  const pendingInvites = transformedData.filter((i) => i.status === "Pending");
+  const acceptedInvites = transformedData.filter(
+    (i) => i.status === "Accepted"
+  );
+
+  const cleanDataForTable = (data) =>
+    data.map(({ _modalData, ...rest }) => rest);
+
+  const tabs = {
+    All: cleanDataForTable(allInvites),
+    Pending: cleanDataForTable(pendingInvites),
+    Accepted: cleanDataForTable(acceptedInvites),
+  };
+
+  const originalRows = {
+    All: allInvites,
+    Pending: pendingInvites,
+    Accepted: acceptedInvites,
+  };
+
+  const totalPagesByTab = {
+    All: totalPages,
+    Pending: totalPages,
+    Accepted: totalPages,
+  };
+
   const handleRowClick = {
+    All: () => {},
     Pending: () => {},
     Accepted: () => {},
   };
 
+  const handlePageChange = (tab, page) => {
+    if (tab === "All") setAllPage(page);
+    if (tab === "Pending") setPendingPage(page);
+    if (tab === "Accepted") setAcceptedPage(page);
+  };
+
+  const currentPage =
+    activeTab === "All"
+      ? allPage
+      : activeTab === "Pending"
+      ? pendingPage
+      : acceptedPage;
+
   return (
-    <>
-      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
-        <TabbedTable
-          tabs={tabs}
-          tabOrder={tabOrder}
-          defaultTab="All"
-          cellRenderers={CellRenderers}
-          onRowClick={handleRowClick}
-        />
-      </div>
-    </>
+    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
+      <TabbedTable
+        tabs={tabs}
+        tabOrder={["All", "Pending", "Accepted"]}
+        defaultTab="All"
+        cellRenderers={CellRenderers}
+        tabLabelMap={{
+          All: "All",
+          Pending: "Pending",
+          Accepted: "Accepted",
+        }}
+        location={location}
+        setExternalActiveTab={setActiveTab}
+        onRowClick={handleRowClick}
+        currentPage={currentPage}
+        totalPages={totalPagesByTab[activeTab]}
+        onPageChange={(page) => handlePageChange(activeTab, page)}
+        isLoading={isLoading}
+        isFetching={isFetching}
+      />
+    </div>
   );
 }
