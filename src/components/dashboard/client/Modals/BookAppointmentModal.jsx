@@ -1,41 +1,94 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { IoClose, IoChevronDown } from "react-icons/io5";
-import salonImg from "../../../../assets/salon-1.png";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import successGif from "../../../../assets/successGif.gif";
-import AppButton from "../../../common/site/AppButton";
 
-export default function BookAppointmentModal({ isOpen, closeModal }) {
-  const [selectedServices, setSelectedServices] = useState([]);
+const bookingSchema = z.object({
+  fullName: z.string().min(2, "Full name is required"),
+  selectedServices: z
+    .array(z.string())
+    .min(1, "Please select at least one service"),
+  appointmentDate: z
+    .string()
+    .min(1, "Please select a date")
+    .refine(
+      (date) => date && new Date(date) >= new Date().setHours(0, 0, 0, 0),
+      {
+        message: "Date cannot be in the past",
+      }
+    ),
+  appointmentTime: z
+    .string()
+    .min(1, "Please select a time")
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+});
+
+export default function BookAppointmentModal({
+  isOpen,
+  closeModal,
+  initialData = {},
+}) {
+  const dropdownRef = useRef(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [fullName, setFullName] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const salonData = {
-    name: "Bella Beauty Salon",
-    description: "Premium Beauty Services",
-    services: [
-      { name: "Haircut", duration: "0.5 Hr", price: "$50" },
-      { name: "Hydrafacial", duration: "1 Hr", price: "$80" },
-      { name: "Full Color", duration: "1.5 Hr", price: "$100" },
-    ],
-  };
+  const salon = initialData?.salon;
+  const prefilledService = initialData?.service;
+
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(bookingSchema),
+    mode: "onChange",
+    defaultValues: {
+      fullName: "",
+      selectedServices: [],
+      appointmentDate: "",
+      appointmentTime: "",
+    },
+  });
+
+  const selectedServices = watch("selectedServices") || [];
+
+  useEffect(() => {
+    if (isOpen && salon) {
+      const prefilledServiceName = prefilledService?.serviceName;
+      const defaultServices = prefilledServiceName
+        ? [prefilledServiceName]
+        : [];
+
+      reset({
+        fullName: "",
+        selectedServices: defaultServices,
+        appointmentDate: "",
+        appointmentTime: "",
+      });
+    }
+  }, [isOpen, salon, prefilledService, reset]);
 
   const toggleService = (serviceName) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceName)
-        ? prev.filter((s) => s !== serviceName)
-        : [...prev, serviceName]
-    );
+    const current = selectedServices || [];
+    const updated = current.includes(serviceName)
+      ? current.filter((s) => s !== serviceName)
+      : [...current, serviceName];
+    setValue("selectedServices", updated, { shouldValidate: true });
   };
 
-  const getServiceDetails = (name) =>
-    salonData.services.find((s) => s.name === name);
+  const getServiceByName = (name) =>
+    salon?.services?.find((s) => s.serviceName === name);
 
-  const handleConfirm = () => {
+  const handleConfirm = (data) => {
+    console.log("Booking confirmed:", data);
     closeModal();
     setTimeout(() => setShowSuccessModal(true), 300);
   };
@@ -48,30 +101,14 @@ export default function BookAppointmentModal({ isOpen, closeModal }) {
           className="relative z-50 font-[Poppins]"
           onClose={closeModal}
         >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <Transition.Child as={Fragment}>
             <div className="fixed inset-0 bg-black/30" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="relative w-full max-w-[420px] transform overflow-hidden rounded-[10px] bg-white p-10 shadow-xl transition-all flex flex-col gap-8">
+              <Transition.Child as={Fragment}>
+                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-white p-10 shadow-xl flex flex-col gap-8">
                   <div className="flex justify-between items-center">
                     <h2 className="text-[#581838] font-bold text-[24px]">
                       Book Your Appointment
@@ -84,144 +121,181 @@ export default function BookAppointmentModal({ isOpen, closeModal }) {
 
                   <div className="flex items-center gap-4">
                     <img
-                      src={salonImg}
-                      alt="Salon"
+                      src={
+                        salon?.profilePic ||
+                        salon?.salonPhotos?.[0] ||
+                        "/default-salon.jpg"
+                      }
+                      alt={salon?.salonName}
                       className="w-[60px] h-[60px] rounded-md object-cover"
                     />
                     <div>
                       <p className="text-[#4B5563] font-semibold text-[20px]">
-                        {salonData.name}
+                        {salon?.salonName}
                       </p>
                       <p className="text-[#4B5563] text-[12px]">
-                        {salonData.description}
+                        {salon?.description || "Premium Beauty Services"}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                    <label className="text-[#404040] text-[14px] font-medium">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Enter your full name"
-                      className="border border-[#E5E5E5] bg-[#F2F2F2] rounded-[8px] px-3 py-3 text-[16px] text-black focus:outline-none"
-                    />
-                  </div>
+                  <form
+                    onSubmit={handleSubmit(handleConfirm)}
+                    className="space-y-6"
+                  >
+                    <div className="flex flex-col gap-2">
+                      <label className="text-[#404040] text-[14px] font-medium">
+                        Full Name
+                      </label>
+                      <Controller
+                        name="fullName"
+                        control={control}
+                        render={({ field }) => (
+                          <input
+                            {...field}
+                            type="text"
+                            placeholder="Enter your full name"
+                            className={`border rounded-[8px] px-3 py-3 text-[16px] focus:outline-none focus:border-[#FF92A5] ${
+                              errors.fullName
+                                ? "border-red-500"
+                                : "border-[#E5E5E5]"
+                            }`}
+                          />
+                        )}
+                      />
+                      {errors.fullName && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.fullName.message}
+                        </p>
+                      )}
+                    </div>
 
-                  <div className="flex flex-col gap-2 relative">
-                    <label className="text-[#404040] text-[14px] font-medium">
-                      Select Services
-                    </label>
-                    <div
-                      onClick={() => setDropdownOpen((prev) => !prev)}
-                      className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]"
-                    >
-                      {selectedServices.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {selectedServices.map((srv, i) => (
-                            <div
-                              key={i}
-                              className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-[6px] text-[13px]"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <span>{srv}</span>
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  toggleService(srv);
-                                }}
-                                className="flex items-center justify-center w-5 h-5 rounded-full bg-white/30 hover:bg-white/50 text-white"
+                    <div className="flex flex-col gap-2 relative">
+                      <label className="text-[#404040] text-[14px] font-medium">
+                        Select Services
+                      </label>
+                      <div
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                        className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]"
+                      >
+                        {selectedServices.length > 0 ? (
+                          <div className="flex flex-wrap gap-2">
+                            {selectedServices.map((srv) => (
+                              <div
+                                key={srv}
+                                className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-[6px] text-[13px]"
                               >
-                                ✕
-                              </button>
-                            </div>
+                                <span>{srv}</span>
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleService(srv);
+                                  }}
+                                  className="flex items-center justify-center w-5 h-5 rounded-full bg-white/30 hover:bg-white/50 text-white"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <span>Choose services...</span>
+                        )}
+                        <IoChevronDown
+                          className={`ml-auto text-[#581838] transition-transform ${
+                            dropdownOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                      </div>
+
+                      {dropdownOpen && salon?.services && (
+                        <div
+                          ref={dropdownRef}
+                          className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto"
+                        >
+                          {salon.services.map((s) => (
+                            <CustomCheckbox
+                              key={s._id}
+                              label={`${s.serviceName} (${s.serviceDuration} min - $${s.servicePrice})`}
+                              checked={selectedServices.includes(s.serviceName)}
+                              onChange={() => toggleService(s.serviceName)}
+                            />
                           ))}
                         </div>
-                      ) : (
-                        <span>Choose services...</span>
                       )}
-
-                      <IoChevronDown
-                        className={`ml-auto text-[#581838] transition-transform ${
-                          dropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
+                      {errors.selectedServices && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.selectedServices.message}
+                        </p>
+                      )}
                     </div>
 
-                    {dropdownOpen && (
-                      <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto">
-                        {salonData.services.map((s, i) => (
-                          <CustomCheckbox
-                            key={i}
-                            label={`${s.name} (${s.duration} - ${s.price})`}
-                            checked={selectedServices.includes(s.name)}
-                            onChange={() => toggleService(s.name)}
-                          />
-                        ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[#404040] text-[14px] font-medium">
+                          Booking Date
+                        </label>
+                        <Controller
+                          name="appointmentDate"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              type="date"
+                              min={new Date().toISOString().split("T")[0]}
+                              className={`border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
+                                errors.appointmentDate
+                                  ? "border-red-500"
+                                  : "border-[#E5E5E5]"
+                              }`}
+                            />
+                          )}
+                        />
+                        {errors.appointmentDate && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.appointmentDate.message}
+                          </p>
+                        )}
                       </div>
-                    )}
-                  </div>
 
-                  {selectedServices.length > 0 && (
-                    <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2">
-                      <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
-                        <span>Service:</span>
-                        <span>Duration:</span>
-                        <span>Price:</span>
+                      <div className="flex flex-col gap-2">
+                        <label className="text-[#404040] text-[14px] font-medium">
+                          Booking Time
+                        </label>
+                        <Controller
+                          name="appointmentTime"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              type="time"
+                              className={`border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
+                                errors.appointmentTime
+                                  ? "border-red-500"
+                                  : "border-[#E5E5E5]"
+                              }`}
+                            />
+                          )}
+                        />
+                        {errors.appointmentTime && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.appointmentTime.message}
+                          </p>
+                        )}
                       </div>
-
-                      {selectedServices.map((srvName, idx) => {
-                        const s = getServiceDetails(srvName);
-                        return (
-                          <div
-                            key={idx}
-                            className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
-                          >
-                            <span>{s?.name}</span>
-                            <span>{s?.duration}</span>
-                            <span>{s?.price}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-2">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        Booking Date
-                      </label>
-                      <input
-                        type="date"
-                        value={selectedDate}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                        className="border border-[#E5E5E5] bg-white rounded-[8px] px-3 py-3 text-[14px] text-[#00000080] focus:outline-none"
-                      />
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        Booking Time
-                      </label>
-                      <input
-                        type="time"
-                        value={selectedTime}
-                        onChange={(e) => setSelectedTime(e.target.value)}
-                        className="border border-[#E5E5E5] bg-white rounded-[8px] px-3 py-3 text-[14px] text-[#00000080] focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                  <AppButton
-                    variant="primary"
-                    size="custom"
-                    onClick={handleConfirm}
-                    className="text-[16px]  py-3"
-                  >
-                    Confirm & Pay
-                  </AppButton>
+                    <AppButton
+                      type="submit"
+                      variant="primary"
+                      size="custom"
+                      disabled={!isValid}
+                      className="text-[16px] py-3 w-full"
+                    >
+                      Confirm & Pay
+                    </AppButton>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -235,43 +309,24 @@ export default function BookAppointmentModal({ isOpen, closeModal }) {
           className="relative z-50 font-[Poppins]"
           onClose={() => setShowSuccessModal(false)}
         >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
+          <Transition.Child as={Fragment}>
             <div className="fixed inset-0 bg-black/30" />
           </Transition.Child>
-
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <Dialog.Panel className="bg-white rounded-[10px] p-[30px] flex flex-col items-center gap-[12px] w-full max-w-[420px] text-center shadow-lg">
-                <img
-                  src={successGif}
-                  alt="Success"
-                  className="w-[138px] h-[138px]"
-                />
-                <h3 className="text-[#FF92A5] text-[20px] font-semibold">
-                  Thank you for your booking!
-                </h3>
-                <p className="text-[#404040] text-[14px] font-medium">
-                  We’ve shared your details with the salon — you’ll get a
-                  confirmation soon!
-                </p>
-              </Dialog.Panel>
-            </Transition.Child>
+            <Dialog.Panel className="bg-white rounded-[10px] p-[30px] flex flex-col items-center gap-[12px] w-full max-w-[420px] text-center shadow-lg">
+              <img
+                src={successGif}
+                alt="Success"
+                className="w-[138px] h-[138px]"
+              />
+              <h3 className="text-[#FF92A5] text-[20px] font-semibold">
+                Thank you for your booking!
+              </h3>
+              <p className="text-[#404040] text-[14px] font-medium">
+                We’ve shared your details with the salon — you’ll get a
+                confirmation soon!
+              </p>
+            </Dialog.Panel>
           </div>
         </Dialog>
       </Transition>

@@ -55,9 +55,7 @@ export default function Invites() {
 
   const allInvites = transformedData;
   const pendingInvites = transformedData.filter((i) => i.status === "Pending");
-  const acceptedInvites = transformedData.filter(
-    (i) => i.status === "Accepted"
-  );
+  const acceptedInvites = transformedData.filter((i) => i.status === "Claimed");
 
   const cleanDataForTable = (data) =>
     data.map(({ _modalData, ...rest }) => rest);
@@ -74,12 +72,16 @@ export default function Invites() {
     Accepted: acceptedInvites,
   };
 
+  // const totalPagesByTab = {
+  //   All: totalPages,
+  //   Pending: totalPages,
+  //   Accepted: totalPages,
+  // };
   const totalPagesByTab = {
     All: totalPages,
-    Pending: totalPages,
-    Accepted: totalPages,
+    Pending: Math.ceil(pendingInvites.length / PAGE_SIZE),
+    Accepted: Math.ceil(acceptedInvites.length / PAGE_SIZE),
   };
-
   const handleRowClick = {
     All: () => {},
     Pending: () => {},

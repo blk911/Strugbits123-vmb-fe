@@ -224,10 +224,6 @@ function DashboardModals() {
         closeModal={closeModal}
         initialData={modalData}
       />
-      <BookAppointmentModal
-        isOpen={activeModal === "bookAppointment"}
-        closeModal={closeModal}
-      />
     </>
   );
 }

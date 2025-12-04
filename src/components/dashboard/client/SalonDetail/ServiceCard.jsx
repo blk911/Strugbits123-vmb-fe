@@ -21,7 +21,7 @@ export default function ServiceCard({ services, salon }) {
   const handleBookClick = () => {
     openModal("bookAppointment", {
       salon,
-      service: { serviceName, serviceDuration, servicePrice },
+      service: { _id, serviceName, serviceDuration, servicePrice },
     });
   };
   return (

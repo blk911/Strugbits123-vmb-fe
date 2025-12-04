@@ -60,6 +60,12 @@ export const giftApi = createApi({
       query: (id) => `/gift-details/${id}`,
       providesTags: ["Gift"],
     }),
+    getAllGiftsAdmin: builder.query({
+      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+        url: "/get-all-gifts",
+        params: { page, limit, sort },
+      }),
+    }),
   }),
 });
 
@@ -70,4 +76,5 @@ export const {
   useRequestedGiftsQuery,
   useRecievedGiftsQuery,
   useGiftDetailsQuery,
+  useGetAllGiftsAdminQuery,
 } = giftApi;

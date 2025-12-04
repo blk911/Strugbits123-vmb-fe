@@ -3,24 +3,66 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import {
+  useAcceptInviteMutation,
+  useGetSalonByIdQuery,
+} from "../../../../store/api";
+import { useDispatch } from "react-redux";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
+import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 
 export default function ExclusiveInviteModal({
   isOpen,
   closeModal,
   initialData = {},
 }) {
-  console.log("Initial Data Recieved Exclusive==>", initialData);
   const [inviteOpen, setInviteOpen] = useState(isOpen);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-
+  const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
   const salon = initialData;
-  const services = salon?.services || [];
+  const services = Array.isArray(salon?.services) ? salon.services : [];
+
   const discountPercent = salon?.discount || 0;
-
+  const salonId = salon?.salonId;
+  const inviteId = salon?.inviteId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  console.log("Salon Id==>", salonId);
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
   useEffect(() => setInviteOpen(isOpen), [isOpen]);
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      closeModal();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    closeModal();
+    navigate(`/salon/${salonId}`);
+  };
   const closeAll = () => {
     setInviteOpen(false);
     setScheduleOpen(false);
@@ -36,11 +78,43 @@ export default function ExclusiveInviteModal({
     setScheduleOpen(true);
   };
 
-  const handleConfirmBooking = () => {
-    closeAll();
-    initialData?.onBookingSuccess?.();
-  };
+  // const handleConfirmBooking = () => {
+  //   closeAll();
+  //   initialData?.onBookingSuccess?.();
+  // };
+  const handleConfirmBooking = async () => {
+    if (!inviteId) {
+      toastError("Invite not found");
+      return;
+    }
 
+    if (!selectedDate || !selectedTime) {
+      toastError("Please select date and time");
+      return;
+    }
+
+    const loadingToast = toastLoading("Confirming your appointment...");
+
+    try {
+      await acceptInvite({
+        id: inviteId,
+        data: {
+          appointmentDate: selectedDate,
+          startTime: convertTo12Hour(selectedTime),
+        },
+      }).unwrap();
+
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment booked successfully!");
+
+      closeAll();
+      initialData?.onBookingSuccess?.();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to book appointment");
+      console.error("Accept invite failed:", err);
+    }
+  };
   return (
     <>
       <Transition appear show={inviteOpen} as={Fragment}>
@@ -101,7 +175,7 @@ export default function ExclusiveInviteModal({
                         <img
                           src={salon?.image}
                           alt={salon?.name}
-                          className="w-10 h-10 rounded-lg object-cover border"
+                          className="w-10 h-10 rounded-lg object-cover border border-gray-200"
                         />
                         <div>
                           <div className="font-semibold text-[#4B5563]">
@@ -112,7 +186,10 @@ export default function ExclusiveInviteModal({
                           </div>
                         </div>
                       </div>
-                      <button className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded">
+                      <button
+                        className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                        onClick={handleViewSalon}
+                      >
                         View Salon
                       </button>
                     </div>
@@ -258,6 +335,7 @@ export default function ExclusiveInviteModal({
                           type="date"
                           value={selectedDate}
                           onChange={(e) => setSelectedDate(e.target.value)}
+                          min={new Date().toISOString().split("T")[0]}
                           className="border border-[#E5E5E5] rounded-lg px-4 py-3"
                         />
                         <input
@@ -273,9 +351,10 @@ export default function ExclusiveInviteModal({
                   <AppButton
                     variant="primary"
                     onClick={handleConfirmBooking}
+                    disabled={accepting || !selectedDate || !selectedTime}
                     className="text-lg py-3"
                   >
-                    Pay Now
+                    {accepting ? "Booking..." : "Pay Now"}
                   </AppButton>
                 </Dialog.Panel>
               </Transition.Child>

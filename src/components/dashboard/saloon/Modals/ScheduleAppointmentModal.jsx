@@ -12,7 +12,7 @@ export default function ScheduleAppointmentModal({
   initialData,
   onAccept,
 }) {
-  const data = initialData || {
+  const data = {
     salon: {
       name: "Luxe Beauty Salon",
       description: "Premium Beauty Services",
@@ -38,7 +38,7 @@ export default function ScheduleAppointmentModal({
 
   const [step, setStep] = useState(1);
 
-  const totalPrice = (data.services || []).reduce(
+  const totalPrice = (data?.services || []).reduce(
     (s, it) => s + (it.price || 0),
     0
   );

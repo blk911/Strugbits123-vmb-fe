@@ -14,7 +14,7 @@ export const CellRenderers = {
 
   status: (status) => {
     const styles = {
-      Confirmed: "bg-[#4FCF0033] text-[#4FCF00]",
+      Accepted: "bg-[#4FCF0033] text-[#4FCF00]",
       Pending: "bg-[#FF950033] text-[#FF9500]",
       Declined: "bg-[#DC26264D] text-[#DC2626]",
     };

@@ -40,7 +40,7 @@ export const CellRenderers = {
 
   status: (value) => {
     const styles = {
-      Accepted: "bg-[#4FCF0033] text-[#4FCF00]",
+      Claimed: "bg-[#4FCF0033] text-[#4FCF00]",
       Pending: "bg-[#FF950033] text-[#FF9500]",
     };
 

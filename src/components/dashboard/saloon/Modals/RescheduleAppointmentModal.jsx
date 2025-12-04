@@ -19,7 +19,7 @@ export default function RescheduleAppointmentModal({
   initialData,
   onAccept,
 }) {
-  const data = initialData || {
+  const data = {
     salon: {
       name: "Luxe Beauty Salon",
       description: "Premium Beauty Services",

@@ -236,7 +236,9 @@ export default function Invites() {
     _modalData: {
       name: invite.salonName,
       image: invite.salonProfilePic || "/default-salon.jpg",
-      descrition: invite.salonDesc || "N/A",
+      description: invite.salonDesc || "N/A",
+      salonId: invite.salonId,
+      inviteId: invite._id,
       services: invite.services
         ? [
             {
@@ -265,7 +267,11 @@ export default function Invites() {
     Claimed: cleanDataForTable(claimedInvites),
     Unclaimed: cleanDataForTable(unclaimedInvites),
   };
-
+  const totalPagesByTab = {
+    Pending: totalPages,
+    Claimed: Math.ceil(claimedInvites.length / PAGE_SIZE),
+    Unclaimed: Math.ceil(unclaimedInvites.length / PAGE_SIZE),
+  };
   const originalRows = {
     Pending: pendingInvites,
     Claimed: claimedInvites,
@@ -317,7 +323,7 @@ export default function Invites() {
           onRowClick={handleRowClick}
           setExternalActiveTab={setActiveTab}
           currentPage={currentPage}
-          totalPages={totalPages}
+          totalPages={totalPagesByTab[activeTab]}
           onPageChange={(page) => handlePageChange(activeTab, page)}
           isLoading={isLoading}
           isFetching={isFetching}

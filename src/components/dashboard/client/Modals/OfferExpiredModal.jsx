@@ -2,14 +2,47 @@ import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 import declineGif from "../../../../assets/declineGif.gif";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetSalonByIdQuery } from "../../../../store/api";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../../utils/toast";
 export default function OfferExpiredModal({ isOpen, closeModal, data }) {
   const salon = data;
-  const services = salon?.services || [];
+  const services = Array.isArray(salon?.services) ? salon.services : [];
+
   const discountPercent = salon?.discount || 0;
 
   const subtotal = services.reduce((sum, s) => sum + s.price, 0);
   const finalPrice = subtotal - (subtotal * discountPercent) / 100;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const salonId = salon?.salonId;
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      closeModal();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    closeModal();
+    navigate(`/salon/${salonId}`);
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -72,19 +105,22 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                       <img
                         src={salon?.image}
                         alt={salon?.name}
-                        className="w-10 h-10 rounded-lg object-cover border"
+                        className="w-10 h-10 rounded-lg object-cover border border-gray-200"
                       />
                       <div>
                         <div className="font-semibold text-[#4B5563]">
                           {salon?.name}
                         </div>
                         <div className="text-sm text-[#4B5563]">
-                          Premium Beauty Services
+                          {salon?.description}
                         </div>
                       </div>
                     </div>
 
-                    <button className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded">
+                    <button
+                      className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                      onClick={handleViewSalon}
+                    >
                       View Salon
                     </button>
                   </div>
