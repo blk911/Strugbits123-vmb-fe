@@ -39,7 +39,6 @@ const createSchema = (hasServices) =>
 export default function TreatModal({ isOpen, closeModal, initialData }) {
   const gift = initialData?.gift;
 
-  console.log("Gift==>", gift);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [salonDropdownOpen, setSalonDropdownOpen] = useState(false);

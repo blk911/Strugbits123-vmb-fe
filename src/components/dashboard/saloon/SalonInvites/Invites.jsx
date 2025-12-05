@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
+import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonInvitesQuery } from "../../../../store/api";
 
@@ -11,41 +11,92 @@ export default function Invites() {
   const location = useLocation();
   const { openModal } = useDashboardModal();
 
-  const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab || "All"
-  );
+  const [activeTab, setActiveTab] = useState("All");
+
   const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
-  const [acceptedPage, setAcceptedPage] = useState(1);
+  const [claimedPage, setClaimedPage] = useState(1);
+  const [unclaimedPage, setUnclaimedPage] = useState(1);
 
   const {
-    data: response,
-    isLoading,
-    isFetching,
+    data: allData,
+    isLoading: loadingAll,
+    isFetching: fetchingAll,
   } = useGetSalonInvitesQuery({
-    page:
-      activeTab === "All"
-        ? allPage
-        : activeTab === "Pending"
-        ? pendingPage
-        : acceptedPage,
+    page: allPage,
     limit: PAGE_SIZE,
     sort: "newest",
-    refetchOnMountOrArgChange: true,
-
-    refetchOnFocus: true,
-    refetchOnReconnect: true,
   });
 
-  const invites = response?.data?.items || [];
-  const totalPages = response?.data?.pages || 1;
+  const {
+    data: pendingData,
+    isLoading: loadingPending,
+    isFetching: fetchingPending,
+  } = useGetSalonInvitesQuery({
+    page: pendingPage,
+    limit: PAGE_SIZE,
+    sort: "newest",
+    status: "pending",
+  });
+
+  const {
+    data: claimedData,
+    isLoading: loadingClaimed,
+    isFetching: fetchingClaimed,
+  } = useGetSalonInvitesQuery({
+    page: claimedPage,
+    limit: PAGE_SIZE,
+    sort: "newest",
+    status: "claimed",
+  });
+
+  const {
+    data: unclaimedData,
+    isLoading: loadingUnclaimed,
+    isFetching: fetchingUnclaimed,
+  } = useGetSalonInvitesQuery({
+    page: unclaimedPage,
+    limit: PAGE_SIZE,
+    sort: "newest",
+    status: "unclaimed",
+  });
+
+  const currentData =
+    activeTab === "All"
+      ? allData
+      : activeTab === "Pending"
+      ? pendingData
+      : activeTab === "Claimed"
+      ? claimedData
+      : unclaimedData;
+
+  const isLoading =
+    activeTab === "All"
+      ? loadingAll
+      : activeTab === "Pending"
+      ? loadingPending
+      : activeTab === "Claimed"
+      ? loadingClaimed
+      : loadingUnclaimed;
+
+  const isFetching =
+    activeTab === "All"
+      ? fetchingAll
+      : activeTab === "Pending"
+      ? fetchingPending
+      : activeTab === "Claimed"
+      ? fetchingClaimed
+      : fetchingUnclaimed;
+
+  const invites = currentData?.data?.items || [];
+  const totalPages = currentData?.data?.pages || 1;
 
   const transformedData = invites.map((invite) => ({
     id: invite._id,
     Email: invite.inviteeEmail || "N/A",
     message: invite.message || "No message",
-    serviceName: invite.services.serviceName || "N/A",
-    discount: invite.discountPercentage ?? 0,
+    serviceName: invite.services?.serviceName || "N/A",
+    discount: `${invite.discountPercentage}%`,
     inviteDate: invite.createdAt
       ? new Date(invite.createdAt).toLocaleDateString("en-GB")
       : "N/A",
@@ -53,45 +104,28 @@ export default function Invites() {
     _modalData: invite,
   }));
 
-  const allInvites = transformedData;
-  const pendingInvites = transformedData.filter((i) => i.status === "Pending");
-  const acceptedInvites = transformedData.filter((i) => i.status === "Claimed");
-
   const cleanDataForTable = (data) =>
     data.map(({ _modalData, ...rest }) => rest);
 
   const tabs = {
-    All: cleanDataForTable(allInvites),
-    Pending: cleanDataForTable(pendingInvites),
-    Accepted: cleanDataForTable(acceptedInvites),
+    All: cleanDataForTable(transformedData),
+    Pending: cleanDataForTable(transformedData),
+    Claimed: cleanDataForTable(transformedData),
+    Unclaimed: cleanDataForTable(transformedData),
   };
 
-  const originalRows = {
-    All: allInvites,
-    Pending: pendingInvites,
-    Accepted: acceptedInvites,
-  };
-
-  // const totalPagesByTab = {
-  //   All: totalPages,
-  //   Pending: totalPages,
-  //   Accepted: totalPages,
-  // };
-  const totalPagesByTab = {
-    All: totalPages,
-    Pending: Math.ceil(pendingInvites.length / PAGE_SIZE),
-    Accepted: Math.ceil(acceptedInvites.length / PAGE_SIZE),
-  };
   const handleRowClick = {
     All: () => {},
     Pending: () => {},
-    Accepted: () => {},
+    Claimed: () => {},
+    Unclaimed: () => {},
   };
 
-  const handlePageChange = (tab, page) => {
-    if (tab === "All") setAllPage(page);
-    if (tab === "Pending") setPendingPage(page);
-    if (tab === "Accepted") setAcceptedPage(page);
+  const handlePageChange = (page) => {
+    if (activeTab === "All") setAllPage(page);
+    else if (activeTab === "Pending") setPendingPage(page);
+    else if (activeTab === "Claimed") setClaimedPage(page);
+    else if (activeTab === "Unclaimed") setUnclaimedPage(page);
   };
 
   const currentPage =
@@ -99,26 +133,29 @@ export default function Invites() {
       ? allPage
       : activeTab === "Pending"
       ? pendingPage
-      : acceptedPage;
+      : activeTab === "Claimed"
+      ? claimedPage
+      : unclaimedPage;
 
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
       <TabbedTable
         tabs={tabs}
-        tabOrder={["All", "Pending", "Accepted"]}
+        tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}
         defaultTab="All"
         cellRenderers={CellRenderers}
         tabLabelMap={{
           All: "All",
           Pending: "Pending",
-          Accepted: "Accepted",
+          Claimed: "Claimed",
+          Unclaimed: "Unclaimed",
         }}
         location={location}
         setExternalActiveTab={setActiveTab}
         onRowClick={handleRowClick}
         currentPage={currentPage}
-        totalPages={totalPagesByTab[activeTab]}
-        onPageChange={(page) => handlePageChange(activeTab, page)}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
         isLoading={isLoading}
         isFetching={isFetching}
       />

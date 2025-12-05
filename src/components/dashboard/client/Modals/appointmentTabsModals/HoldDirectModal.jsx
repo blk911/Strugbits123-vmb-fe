@@ -7,6 +7,16 @@ import AppointmentDetailsSection from "./AppointmentDetailsSection";
 import RescheduleDirectModal from "./RescheduleDirectModal";
 import holdImg from "../../../../../assets/holdImg.png";
 import { useDashboardModal } from "../../../../../pages/ModalProvider";
+import {
+  useConfirmAppointmentMutation,
+  useDeclineAppointmentMutation,
+} from "../../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../../utils/toast";
 
 export default function HoldDirectModal({
   isOpen,
@@ -16,23 +26,56 @@ export default function HoldDirectModal({
   onDecline,
   onReschedule,
 }) {
-  const [showReschedule, setShowReschedule] = useState(false);
   const { openModal } = useDashboardModal();
-  if (!isOpen) return null;
+  const [showReschedule, setShowReschedule] = useState(false);
 
+  const appointmentId = data?.appointment?.id;
+
+  const [confirmAppointment, { isLoading: confirming }] =
+    useConfirmAppointmentMutation();
+  const [declineAppointment, { isLoading: declining }] =
+    useDeclineAppointmentMutation();
   const handleReschedule = () => {
     onClose();
     openModal("rescheduleAppointmentClient", data);
   };
-  const handleAccept = () => {
-    onClose();
-    setTimeout(() => onAccept?.(), 200);
-  };
-  const handleDecline = () => {
-    onClose();
-    setTimeout(() => onDecline?.(), 200);
-  };
+  const handleAccept = async () => {
+    if (!appointmentId) {
+      toastError("Appointment not found");
+      return;
+    }
 
+    const loadingToast = toastLoading("Confirming appointment...");
+    try {
+      await confirmAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment confirmed successfully!");
+      onClose();
+      onAccept?.();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to confirm appointment");
+    }
+  };
+  const handleDecline = async () => {
+    if (!appointmentId) {
+      toastError("Appointment not found");
+      return;
+    }
+
+    const loadingToast = toastLoading("Declining appointment...");
+    try {
+      await declineAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment declined");
+      onClose();
+      onDecline?.();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to decline appointment");
+    }
+  };
+  if (!isOpen) return null;
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -77,16 +120,18 @@ export default function HoldDirectModal({
                     size="custom"
                     onClick={handleDecline}
                     className="py-[15px] px-[20px] text-[14px]"
+                    disabled={declining}
                   >
-                    Decline
+                    {declining ? "Declining..." : "Decline"}
                   </AppButton>
                   <AppButton
                     variant="primary"
                     size="custom"
                     onClick={handleAccept}
                     className="py-[15px] px-[20px] text-[14px]"
+                    disabled={confirming}
                   >
-                    Accept
+                    {confirming ? "Confirming..." : "Accept"}
                   </AppButton>
                 </div>
               </Dialog.Panel>

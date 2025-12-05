@@ -21,7 +21,6 @@ export default function GiftCard({
 
   const handleCardClick = () => {
     if (!hasData) return;
-    console.log("Card Data==>", data);
     if (title === "My Requests" && data) {
       openModal("treat", {
         isSubmitted: true,

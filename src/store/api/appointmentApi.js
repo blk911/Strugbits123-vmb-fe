@@ -33,9 +33,15 @@ export const appointmentApi = createApi({
     }),
 
     getSalonAppointments: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status = "",
+      } = {}) => ({
         url: "/get-salon-appointment",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search, status },
       }),
       providesTags: ["Appointment"],
     }),

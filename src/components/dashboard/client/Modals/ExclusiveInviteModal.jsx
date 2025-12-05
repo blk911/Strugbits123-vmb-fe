@@ -36,7 +36,6 @@ export default function ExclusiveInviteModal({
   const inviteId = salon?.inviteId;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("Salon Id==>", salonId);
   const {
     data: salonResponse,
     isLoading: loadingSalon,

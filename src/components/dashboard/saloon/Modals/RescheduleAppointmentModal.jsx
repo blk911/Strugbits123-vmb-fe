@@ -12,14 +12,31 @@ import {
 } from "react-icons/fa";
 import salonIcon from "../../../../assets/salon-1.png";
 import AppButton from "../../../common/site/AppButton";
-
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { convertTo12Hour } from "../../../../utils/HelperFunctions";
+import { useScheduleAppointmentMutation } from "../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
 export default function RescheduleAppointmentModal({
   isOpen,
   closeModal,
   initialData,
   onAccept,
 }) {
-  const data = {
+  const scheduleSchema = z.object({
+    appointmentDate: z.string().min(1, "Please select a date"),
+    appointmentTime: z.string().min(1, "Please select a time"),
+  });
+  const appointmentId = initialData?.appointment?.id;
+  const [scheduleAppointment, { isLoading: scheduling }] =
+    useScheduleAppointmentMutation();
+  const data = initialData || {
     salon: {
       name: "Luxe Beauty Salon",
       description: "Premium Beauty Services",
@@ -48,7 +65,19 @@ export default function RescheduleAppointmentModal({
         "I’d like to reschedule my booking. Please update the appointment time as per the new availability. 5pm on Wednesday 15 Oct, 2025",
     },
   };
-
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset: resetForm,
+  } = useForm({
+    resolver: zodResolver(scheduleSchema),
+    mode: "onChange",
+    defaultValues: {
+      appointmentDate: "",
+      appointmentTime: "",
+    },
+  });
   const [step, setStep] = useState(1);
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -98,11 +127,32 @@ export default function RescheduleAppointmentModal({
   }, [isOpen]);
 
   const onAcceptAndSchedule = () => setStep(2);
-  const onScheduleNow = () => {
-    closeModal();
-    setTimeout(() => onAccept?.(), 200);
-  };
+  // const onScheduleNow = () => {
+  //   closeModal();
+  //   setTimeout(() => onAccept?.(), 200);
+  // };
+  const onScheduleNow = async (formData) => {
+    if (!appointmentId) return toastError("Appointment not found");
 
+    const loadingToast = toastLoading("Scheduling appointment...");
+    try {
+      await scheduleAppointment({
+        id: appointmentId,
+        data: {
+          appointmentDate: formData.appointmentDate,
+          startTime: convertTo12Hour(formData.appointmentTime),
+        },
+      }).unwrap();
+
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment scheduled successfully!");
+      closeModal();
+      onAccept?.();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to schedule appointment");
+    }
+  };
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -161,10 +211,10 @@ export default function RescheduleAppointmentModal({
                                 Treat To:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                <img
+                                {/* <img
                                   src={data.treatTo?.image}
                                   className="w-[40px] h-[40px] rounded-full object-cover"
-                                />
+                                /> */}
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#4B5563]">
                                     {data.treatTo?.name}
@@ -181,10 +231,10 @@ export default function RescheduleAppointmentModal({
                                 Treat By:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                <img
+                                {/* <img
                                   src={data.treatBy?.image}
                                   className="w-[40px] h-[40px] rounded-full object-cover"
-                                />
+                                /> */}
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#581838]">
                                     {data.treatBy?.name}
@@ -318,7 +368,12 @@ export default function RescheduleAppointmentModal({
                           Reschedule Appointment
                         </h2>
 
-                        <div className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]">
+                        {/* <div className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]">
+                         */}
+                        <form
+                          onSubmit={handleSubmit(onScheduleNow)}
+                          className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                        >
                           <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
@@ -365,35 +420,81 @@ export default function RescheduleAppointmentModal({
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Date
                                 </label>
-                                <input
+                                {/* <input
                                   type="date"
                                   className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
+                                /> */}
+                                <Controller
+                                  name="appointmentDate"
+                                  control={control}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="date"
+                                      min={
+                                        new Date().toISOString().split("T")[0]
+                                      }
+                                      className={`w-full border rounded-[8px] p-3 ${
+                                        errors.appointmentDate
+                                          ? "border-red-500"
+                                          : "border-[#E5E5E5]"
+                                      }`}
+                                    />
+                                  )}
                                 />
+                                {errors.appointmentDate && (
+                                  <p className="text-red-500 text-xs mt-1">
+                                    {errors.appointmentDate.message}
+                                  </p>
+                                )}
                               </div>
 
                               <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
-                                <input
+                                {/* <input
                                   type="time"
                                   className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
+                                /> */}
+                                <Controller
+                                  name="appointmentTime"
+                                  control={control}
+                                  render={({ field }) => (
+                                    <input
+                                      {...field}
+                                      type="time"
+                                      className={`w-full border rounded-[8px] p-3 ${
+                                        errors.appointmentTime
+                                          ? "border-red-500"
+                                          : "border-[#E5E5E5]"
+                                      }`}
+                                    />
+                                  )}
                                 />
+                                {errors.appointmentTime && (
+                                  <p className="text-red-500 text-xs mt-1">
+                                    {errors.appointmentTime.message}
+                                  </p>
+                                )}
                               </div>
                             </div>
                           </div>
-                        </div>
+                          {/* </div> */}
 
-                        <div className="flex items-center gap-3 mt-4">
-                          <AppButton
-                            variant="primary"
-                            size="custom"
-                            onClick={onScheduleNow}
-                            className="text-[16px] font-medium py-2"
-                          >
-                            Schedule Now
-                          </AppButton>
-                        </div>
+                          <div className="flex items-center gap-3 mt-4">
+                            <AppButton
+                              type="submit"
+                              variant="primary"
+                              size="custom"
+                              // onClick={onScheduleNow}
+                              className="text-[16px] font-medium py-2"
+                              disabled={!isValid || scheduling}
+                            >
+                              {scheduling ? "Scheduling..." : "Schedule Now"}
+                            </AppButton>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>

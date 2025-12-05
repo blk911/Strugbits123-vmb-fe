@@ -169,7 +169,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       };
 
       const res = await updateMe(payload).unwrap();
-      console.log("Updated Response==>", res);
       toast.success(res?.message || "Profile updated successfully!");
       closeModal();
     } catch (err) {

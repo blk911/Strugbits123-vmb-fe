@@ -20,7 +20,6 @@ export default function SalonDetail() {
   });
 
   const salon = apiData?.data || reduxSalon;
-  console.log("Salon==>", salon);
   const isLoading = apiLoading && !salon;
 
   useEffect(() => {

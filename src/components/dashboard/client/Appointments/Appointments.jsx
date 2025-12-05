@@ -11,6 +11,7 @@ import {
 import RescheduleDirectModal from "../Modals/appointmentTabsModals/RescheduleDirectModal";
 import HoldDirectModal from "../Modals/appointmentTabsModals/HoldDirectModal";
 import DeclineDirectModal from "../Modals/appointmentTabsModals/DeclineDirectModal";
+import { id } from "zod/locales";
 
 const PAGE_SIZE = 10;
 
@@ -43,7 +44,6 @@ export default function Appointments() {
     sort: "newest",
     status: "pending",
   });
-
   const {
     data: rescheduleData,
     isLoading: loadingReschedule,
@@ -52,7 +52,7 @@ export default function Appointments() {
     page: reschedulePage,
     limit: PAGE_SIZE,
     sort: "newest",
-    status: "reschedule",
+    status: "reschedule-requested",
   });
 
   const {
@@ -154,7 +154,7 @@ export default function Appointments() {
     _modalData: {
       salon: {
         name: appt.salonName,
-        description: appt.description || "",
+        description: appt.salonDescription || "",
         image: appt.salonImage || "/default-salon.jpg",
       },
       services: (appt.services || []).map((s) => ({
@@ -165,6 +165,7 @@ export default function Appointments() {
       appointment: {
         date: appt.appointmentDate,
         time: appt.startTime,
+        id: appt._id,
       },
     },
   }));
@@ -213,10 +214,11 @@ export default function Appointments() {
     //   const row = originalRows.Confirmed.find((r) => r.id === cleanRow.id);
     //   if (row?._modalData) openModal("appointmentScheduled", row._modalData);
     // },
-    // Scheduled: (cleanRow) => {
-    //   const row = originalRows.Scheduled.find((r) => r.id === cleanRow.id);
-    //   if (row?._modalData) openModal("appointmentScheduled", row._modalData);
-    // },
+    Scheduled: (cleanRow) => {
+      const row = originalRows.Scheduled.find((r) => r.id === cleanRow.id);
+      if (row?._modalData)
+        openModal("rescheduleAppointmentClient", row._modalData);
+    },
     Decline: (cleanRow) => {
       const row = originalRows.Decline.find((r) => r.id === cleanRow.id);
       if (row?._modalData) {

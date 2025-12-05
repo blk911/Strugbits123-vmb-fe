@@ -12,7 +12,6 @@ import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice"
 import { toastLoading } from "../../../../utils/toast";
 export default function OfferClaimedModal({ isOpen, closeModal, data }) {
   const salon = data;
-  console.log("Data Recieved==>", salon);
   const services = Array.isArray(salon?.services) ? salon.services : [];
 
   const discountPercent = salon?.discount || 0;

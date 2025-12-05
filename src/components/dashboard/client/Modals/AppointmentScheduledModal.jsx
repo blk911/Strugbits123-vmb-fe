@@ -5,6 +5,17 @@ import salonIcon from "../../../../assets/salon-1.png";
 
 import AppButton from "../../../common/site/AppButton";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+import {
+  useConfirmAppointmentMutation,
+  useDeclineAppointmentMutation,
+  useHoldAppointmentMutation,
+} from "../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
 
 export default function AppointmentScheduledModal({
   isOpen,
@@ -18,38 +29,65 @@ export default function AppointmentScheduledModal({
       return null;
     }
   }
-  const mock = initialData || {
-    salon: {
-      name: "Luxe Beauty Salon",
-      description: "Premium Beauty Services",
-      image: salonIcon,
-    },
-    services: [
-      { name: "Haircut & Styling", duration: "1 Hr", price: 50 },
-      { name: "HydraFacial", duration: "1.5 Hr", price: 120 },
-    ],
-    appointment: {
-      date: "02-08-2025",
-      time: "12:00 PM",
-    },
-  };
+  const mock = initialData || {};
+  const appointmentId = initialData?.appointment?.id;
 
+  const [holdAppointment, { isLoading: holding }] =
+    useHoldAppointmentMutation();
+  const [declineAppointment, { isLoading: declining }] =
+    useDeclineAppointmentMutation();
+  const [confirmAppointment, { isLoading: confirming }] =
+    useConfirmAppointmentMutation();
   const totalPrice = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
 
   const { openModal } = useDashboardModal();
 
-  const openHold = () => {
-    openModal("holdAppointmentClient");
+  const openHold = async () => {
+    if (!appointmentId) return toastError("Appointment not found");
+
+    const loadingToast = toastLoading("Holding appointment...");
+    try {
+      await holdAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment put on hold");
+      openModal("holdAppointmentClient");
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to hold appointment");
+    }
   };
-  const openConfirm = () => {
-    openModal("salonApprovedSuccess", {
-      title: "Appointment Confirmed",
-      subtitle:
-        "Your appointment has been successfully confirmed. The salon has been notified and will be expecting you at the scheduled time.",
-    });
+  const openConfirm = async () => {
+    if (!appointmentId) return toastError("Appointment not found");
+
+    const loadingToast = toastLoading("Confirming appointment...");
+    try {
+      await confirmAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment confirmed successfully!");
+      closeModal();
+      openModal("salonApprovedSuccess", {
+        title: "Appointment Confirmed",
+        subtitle:
+          "Your appointment has been successfully confirmed. The salon has been notified and will be expecting you at the scheduled time.",
+      });
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to confirm appointment");
+    }
   };
-  const openDecline = () => {
-    openModal("declineAppointmentClient");
+  const openDecline = async () => {
+    if (!appointmentId) return toastError("Appointment not found");
+
+    const loadingToast = toastLoading("Declining appointment...");
+    try {
+      await declineAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment declined");
+      openModal("declineAppointmentClient");
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to decline appointment");
+    }
   };
   const openReschedule = () => {
     openModal("rescheduleAppointmentClient", mock);
@@ -106,16 +144,16 @@ export default function AppointmentScheduledModal({
                   <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 flex flex-col gap-4">
                     <div className="border border-[#0000001A] rounded-[10px] p-3 flex items-center gap-3 flex-wrap sm:flex-nowrap">
                       <img
-                        src={mock.salon.image}
+                        src={mock?.salon?.image}
                         alt="Salon"
                         className="w-[40px] h-[40px] rounded-md object-cover flex-shrink-0"
                       />
                       <div className="min-w-0">
                         <p className="text-[#4B5563] font-semibold text-[14px] break-words">
-                          {mock.salon.name}
+                          {mock?.salon?.name}
                         </p>
                         <p className="text-[#4B5563] text-[12px] break-words">
-                          {mock.salon.description}
+                          {mock?.salon?.description}
                         </p>
                       </div>
                     </div>
@@ -134,15 +172,15 @@ export default function AppointmentScheduledModal({
                           </div>
                         </div>
 
-                        {mock.services.map((srv, i) => (
+                        {mock?.services?.map((srv, i) => (
                           <div
                             key={i}
                             className="flex justify-between text-[12px] text-[#581838]"
                           >
-                            <span>{srv.name}</span>
+                            <span>{srv?.name}</span>
                             <div className="flex gap-8">
-                              <span>{srv.duration}</span>
-                              <span>${srv.price}</span>
+                              <span>{srv?.duration}</span>
+                              <span>${srv?.price}</span>
                             </div>
                           </div>
                         ))}
@@ -167,7 +205,7 @@ export default function AppointmentScheduledModal({
                           </p>
                           <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
                             <IoCalendarOutline className="text-[#00000080]" />
-                            <span>{mock.appointment.date}</span>
+                            <span>{mock?.appointment?.date}</span>
                           </div>
                         </div>
 
@@ -177,7 +215,7 @@ export default function AppointmentScheduledModal({
                           </p>
                           <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
                             <IoTimeOutline className="text-[#00000080]" />
-                            <span>{mock.appointment.time}</span>
+                            <span>{mock?.appointment?.time}</span>
                           </div>
                         </div>
                       </div>
@@ -189,8 +227,9 @@ export default function AppointmentScheduledModal({
                         size="custom"
                         onClick={openHold}
                         className="py-[15px] px-[20px] text-[14px]"
+                        disabled={holding}
                       >
-                        Hold
+                        {holding ? "Holding..." : "Hold"}
                       </AppButton>
 
                       <AppButton
@@ -207,8 +246,9 @@ export default function AppointmentScheduledModal({
                         size="custom"
                         onClick={openDecline}
                         className="py-[15px] px-[20px] text-[14px]"
+                        disabled={declining}
                       >
-                        Decline
+                        {declining ? "Declining..." : "Decline"}
                       </AppButton>
 
                       <AppButton
@@ -216,8 +256,9 @@ export default function AppointmentScheduledModal({
                         size="custom"
                         onClick={openConfirm}
                         className="py-[15px] px-[20px] text-[14px]"
+                        disabled={confirming}
                       >
-                        Accept
+                        {confirming ? "Confirming..." : "Accept"}
                       </AppButton>
                     </div>
                   </div>

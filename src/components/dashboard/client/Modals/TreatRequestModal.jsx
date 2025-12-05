@@ -219,11 +219,11 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         Requested Services
                       </h3>
 
-                      <div className="flex flex-col gap-3">
+                      <div className="flex flex-col gap-3 max-h-[150px] overflow-y-auto no-scrollbar">
                         {info.services.map((srv, i) => (
                           <div
                             key={i}
-                            className="border border-[#9CA3AF4D] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+                            className="border border-[#9CA3AF4D] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 "
                           >
                             <div className="min-w-0">
                               <p className="text-[#581838] font-medium text-[14px] break-words">

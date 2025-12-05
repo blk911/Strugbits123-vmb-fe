@@ -100,8 +100,6 @@ export default function BookAppointmentModal({
     return sum + (svc ? Number(svc.servicePrice) : 0);
   }, 0);
   const handleConfirm = async (data) => {
-    console.log("Booking confirmed:", data);
-
     if (!salon?._id) {
       toastError("Salon not found");
       return;
@@ -115,7 +113,6 @@ export default function BookAppointmentModal({
       toastError("No valid services selected");
       return;
     }
-    console.log("Service Ids==>", serviceIds);
     const payload = {
       salonId: salon._id,
       services: serviceIds,

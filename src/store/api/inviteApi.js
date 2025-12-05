@@ -43,9 +43,15 @@ export const inviteApi = createApi({
       providesTags: ["Invite"],
     }),
     getSalonInvites: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        status = "",
+        search = "",
+      } = {}) => ({
         url: "/get-salon-invites",
-        params: { page, limit, sort },
+        params: { page, limit, sort, status, search },
       }),
       providesTags: ["Invite"],
     }),

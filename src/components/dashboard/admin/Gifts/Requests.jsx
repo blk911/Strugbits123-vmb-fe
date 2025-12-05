@@ -242,7 +242,6 @@ export default function Requests() {
   }));
 
   const allGifts = transformedData;
-  console.log("All gifts==>", allGifts);
   const confirmedGifts = transformedData.filter((g) => g.status === "Accepted");
   const pendingGifts = transformedData.filter((g) => g.status === "Pending");
   const declinedGifts = transformedData.filter((g) => g.status === "Declined");
