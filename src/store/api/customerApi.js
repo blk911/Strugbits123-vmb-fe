@@ -31,9 +31,9 @@ export const customerApi = createApi({
     }),
 
     getAllSalons: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({ page = 1, limit = 10, sort = "newest", search = "" } = {}) => ({
         url: "/get-all-salons",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search },
       }),
     }),
     getSalonById: builder.query({

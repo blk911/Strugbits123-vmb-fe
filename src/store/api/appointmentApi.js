@@ -10,10 +10,24 @@ export const appointmentApi = createApi({
   }),
   tagTypes: ["Appointment"],
   endpoints: (builder) => ({
+    createAppointment: builder.mutation({
+      query: (data) => ({
+        url: "/create-appointment",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Appointment"],
+    }),
     getUserAppointments: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status = "",
+      } = {}) => ({
         url: "/get-user-appointment",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search, status },
       }),
       providesTags: ["Appointment"],
     }),
@@ -76,4 +90,5 @@ export const {
   useHoldAppointmentMutation,
   useDeclineAppointmentMutation,
   useConfirmAppointmentMutation,
+  useCreateAppointmentMutation,
 } = appointmentApi;

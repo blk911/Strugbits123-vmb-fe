@@ -7,6 +7,14 @@ import * as z from "zod";
 import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import successGif from "../../../../assets/successGif.gif";
+import { useCreateAppointmentMutation } from "../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
+import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 
 const bookingSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -39,7 +47,8 @@ export default function BookAppointmentModal({
 
   const salon = initialData?.salon;
   const prefilledService = initialData?.service;
-
+  const [createAppointment, { isLoading: booking }] =
+    useCreateAppointmentMutation();
   const {
     control,
     handleSubmit,
@@ -86,11 +95,49 @@ export default function BookAppointmentModal({
 
   const getServiceByName = (name) =>
     salon?.services?.find((s) => s.serviceName === name);
-
-  const handleConfirm = (data) => {
+  const totalPrice = selectedServices.reduce((sum, name) => {
+    const svc = getServiceByName(name);
+    return sum + (svc ? Number(svc.servicePrice) : 0);
+  }, 0);
+  const handleConfirm = async (data) => {
     console.log("Booking confirmed:", data);
-    closeModal();
-    setTimeout(() => setShowSuccessModal(true), 300);
+
+    if (!salon?._id) {
+      toastError("Salon not found");
+      return;
+    }
+
+    const serviceIds = selectedServices
+      .map((name) => getServiceByName(name)?._id)
+      .filter(Boolean);
+
+    if (serviceIds.length === 0) {
+      toastError("No valid services selected");
+      return;
+    }
+    console.log("Service Ids==>", serviceIds);
+    const payload = {
+      salonId: salon._id,
+      services: serviceIds,
+      clientName: data.fullName,
+      appointmentDate: data.appointmentDate,
+      startTime: convertTo12Hour(data.appointmentTime),
+      payment: totalPrice,
+    };
+
+    const loadingToast = toastLoading("Creating your appointment...");
+
+    try {
+      await createAppointment(payload).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment booked successfully!");
+      closeModal();
+      setTimeout(() => setShowSuccessModal(true), 300);
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to book appointment");
+      console.error("Booking failed:", err);
+    }
   };
 
   return (
@@ -231,6 +278,31 @@ export default function BookAppointmentModal({
                       )}
                     </div>
 
+                    {selectedServices.length > 0 && (
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
+                        <div className="flex justify-between text-xs font-medium mb-2">
+                          <span>Service</span>
+                          <span>Duration</span>
+                          <span>Price</span>
+                        </div>
+                        {selectedServices.map((name) => {
+                          const s = getServiceByName(name);
+                          return (
+                            <div
+                              key={name}
+                              className="border-b border-[#D9D9D9] py-2 flex justify-between text-xs text-[#4B5563]"
+                            >
+                              <span>{s?.serviceName}</span>
+                              <span>{s?.serviceDuration} min</span>
+                              <span>${s?.servicePrice}</span>
+                            </div>
+                          );
+                        })}
+                        <div className="flex justify-end font-bold text-[#581838] mt-3">
+                          Total: ${totalPrice.toFixed(2)}
+                        </div>
+                      </div>
+                    )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col gap-2">
                         <label className="text-[#404040] text-[14px] font-medium">
@@ -244,7 +316,7 @@ export default function BookAppointmentModal({
                               {...field}
                               type="date"
                               min={new Date().toISOString().split("T")[0]}
-                              className={`border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
+                              className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
                                 errors.appointmentDate
                                   ? "border-red-500"
                                   : "border-[#E5E5E5]"
@@ -270,7 +342,7 @@ export default function BookAppointmentModal({
                             <input
                               {...field}
                               type="time"
-                              className={`border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
+                              className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
                                 errors.appointmentTime
                                   ? "border-red-500"
                                   : "border-[#E5E5E5]"
@@ -290,10 +362,10 @@ export default function BookAppointmentModal({
                       type="submit"
                       variant="primary"
                       size="custom"
-                      disabled={!isValid}
+                      disabled={!isValid || booking}
                       className="text-[16px] py-3 w-full"
                     >
-                      Confirm & Pay
+                      {booking ? "Booking..." : "Confirm & Pay"}
                     </AppButton>
                   </form>
                 </Dialog.Panel>

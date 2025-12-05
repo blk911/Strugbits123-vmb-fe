@@ -40,7 +40,6 @@ export default function Requests() {
     limit: PAGE_SIZE,
     sort: "newest",
   });
-  console.log("Data Recieved==>", receivedData?.data?.items);
   const myRequestsData = (requestedData?.data?.items || []).map((gift) => ({
     id: gift._id,
     payersEmail: gift.receiverEmail,
