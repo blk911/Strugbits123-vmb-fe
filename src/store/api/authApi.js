@@ -35,7 +35,7 @@ export const authApi = createApi({
     signUpSaloonOwner: builder.mutation({
       query: ({ formData, files }) => {
         const startTime = convertTo12Hour(formData.startTime);
-        const endTime = convertTo12Hour(formData.startTime);
+        const endTime = convertTo12Hour(formData.endTime);
 
         const salonOwnerData = {
           name: formData.fullName,

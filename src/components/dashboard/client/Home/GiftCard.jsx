@@ -54,7 +54,23 @@ export default function GiftCard({
     }
 
     if (title === "Appointments") {
-      openModal("appointmentScheduled");
+      openModal("appointmentScheduled", {
+        salon: {
+          name: data?.salonName,
+          description: data?.salonDescription || "",
+          image: data?.salonImage || "/default-salon.jpg",
+        },
+        services: (data?.services || []).map((s) => ({
+          name: s.serviceName || s.name,
+          duration: `${s.duration || 60} min`,
+          price: s.price || 0,
+        })),
+        appointment: {
+          date: data?.appointmentDate,
+          time: data?.startTime,
+          id: data?._id,
+        },
+      });
     }
   };
 
@@ -98,7 +114,11 @@ export default function GiftCard({
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0">
               <img
-                src={data?.salonId?.profilePic || defaultUser}
+                src={
+                  data?.salonId?.profilePic ||
+                  data?.requestedBy?.image ||
+                  defaultUser
+                }
                 alt="User"
                 className="w-full h-full object-cover"
               />

@@ -8,6 +8,7 @@ export default function PageHeader({
   onSearch,
   onSort,
   defaultSort = "Newest",
+  sortOptions = ["Newest", "Oldest"],
 }) {
   const [sortOpen, setSortOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState(defaultSort);
@@ -52,7 +53,7 @@ export default function PageHeader({
 
           {sortOpen && (
             <div className="absolute top-[105%] right-0 mt-1 w-full bg-white border border-[#9CA3AF4D] rounded-[10px] shadow-md z-20">
-              {["Newest", "Oldest"].map((option) => (
+              {sortOptions.map((option) => (
                 <div
                   key={option}
                   onClick={() => handleSortSelect(option)}

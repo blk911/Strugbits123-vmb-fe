@@ -23,7 +23,12 @@ const DashboardHome = () => {
 
   if (!user) return null;
   return (
-    <div className="flex flex-col  bg-[#EFEFEF] p-2 sm:p-7 font-[Poppins] gap-8">
+    <div
+      className="h-full flex flex-col  bg-[#EFEFEF] mb-6 p-2 sm:p-7 font-[Poppins] gap-8 no-scrollbar"
+      style={{
+        scrollbarWidth: "none",
+      }}
+    >
       <WelcomeBanner
         user={user}
         onInviteClick={() => navigate("/saloninvites")}

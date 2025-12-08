@@ -1,17 +1,22 @@
 import Appointments from "../../../components/dashboard/client/Appointments/Appointments";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
+import { useState } from "react";
 
 export default function AppointmentHistory() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("Newest");
   return (
     <div className="bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <PageHeader
         title="Appointments"
         description="Manage your bookings efficiently"
-        onSearch={(q) => console.log("Appt search:", q)}
-        onSort={(opt) => console.log("Appt sort:", opt)}
+        onSearch={setSearchQuery}
+        onSort={setSortOption}
+        defaultSort={sortOption}
+        sortOptions={["Newest", "Oldest"]}
       />
       <div className="w-full ">
-        <Appointments />
+        <Appointments searchQuery={searchQuery} sortOption={sortOption} />
       </div>
     </div>
   );

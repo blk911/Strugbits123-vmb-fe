@@ -40,18 +40,18 @@ export const giftApi = createApi({
     }),
 
     requestedGifts: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({ page = 1, limit = 10, sort = "newest", search = "" } = {}) => ({
         url: "/requested-gifts",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search },
       }),
 
       providesTags: ["Gift"],
     }),
 
     recievedGifts: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({ page = 1, limit = 10, sort = "newest", search = "" } = {}) => ({
         url: "/recieved-gifts",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search },
       }),
       providesTags: ["Gift"],
     }),

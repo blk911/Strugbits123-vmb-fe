@@ -11,7 +11,7 @@ export default function ServiceCard({ img, title, desc, price }) {
       </div>
 
       <p className="text-[20px] font-bold text-[#581838] whitespace-nowrap">
-        {price}
+        $ {price}
       </p>
     </div>
   );

@@ -2,6 +2,7 @@ import { FaGift, FaPaperPlane } from "react-icons/fa6";
 import { SlCalender } from "react-icons/sl";
 import GiftCard from "./GiftCard";
 import {
+  useGetUserAppointmentsQuery,
   useRecievedGiftsQuery,
   useRequestedGiftsQuery,
 } from "../../../../store/api";
@@ -27,10 +28,21 @@ export default function GiftCardsSection() {
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
   });
+
+  const {
+    data: pendingData,
+    isLoading: loadingPending,
+    refetch: refetchPending,
+  } = useGetUserAppointmentsQuery({
+    sort: "newest",
+    status: "pending",
+  });
+  console.log("Pending Appointments Data==>", pendingData);
   useEffect(() => {
     refetchRequested();
     refetchReceived();
-  }, [refetchRequested, refetchReceived]);
+    refetchPending();
+  }, [refetchRequested, refetchReceived, refetchPending]);
   const firstRequestedGift = useMemo(() => {
     const items = requestedGiftsData?.data?.items;
     if (!items || items.length === 0) return null;
@@ -49,6 +61,15 @@ export default function GiftCardsSection() {
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
   }, [receivedGiftsData]);
 
+  const firstPendingAppointment = useMemo(() => {
+    const items = pendingData?.data?.items;
+    if (!items || items.length === 0) return null;
+
+    return items
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+  });
+  console.log("firstPendingAppointment==>", firstPendingAppointment);
   const loading = loadingReceived || loadingRequested;
   const cards = [
     {
@@ -116,11 +137,15 @@ export default function GiftCardsSection() {
       id: 3,
       icon: SlCalender,
       title: "Appointments",
-      userName: "Luxe Beauty Salon",
-      packageName: "Hair color, nail polish...",
-      status: "Upcoming",
-      statusColor: "#4FCF00",
-      statusBg: "#4FCF0033",
+      hasData: !!firstPendingAppointment,
+      userName: firstPendingAppointment?.requestedBy?.name || "Someone",
+      packageName:
+        firstPendingAppointment?.services?.map((s) => s.name).join(", ") ||
+        null,
+      status: "Pending",
+      statusColor: "#FF9500",
+      statusBg: "#FF950033",
+      data: firstPendingAppointment,
     },
   ];
 

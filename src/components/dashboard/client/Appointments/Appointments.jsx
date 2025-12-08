@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
@@ -11,13 +11,20 @@ import {
 import RescheduleDirectModal from "../Modals/appointmentTabsModals/RescheduleDirectModal";
 import HoldDirectModal from "../Modals/appointmentTabsModals/HoldDirectModal";
 import DeclineDirectModal from "../Modals/appointmentTabsModals/DeclineDirectModal";
-import { id } from "zod/locales";
 
 const PAGE_SIZE = 10;
 
-export default function Appointments() {
+export default function Appointments({
+  searchQuery = "",
+  sortOption = "Newest",
+}) {
   const { openModal } = useDashboardModal();
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
 
+  const sortValue = sortMap[sortOption] || "newest";
   const [activeTab, setActiveTab] = useState("Pending");
 
   const [pendingPage, setPendingPage] = useState(1);
@@ -38,20 +45,24 @@ export default function Appointments() {
     data: pendingData,
     isLoading: loadingPending,
     isFetching: fetchingPending,
+    refetch: refetchPending,
   } = useGetUserAppointmentsQuery({
     page: pendingPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "pending",
   });
   const {
     data: rescheduleData,
     isLoading: loadingReschedule,
     isFetching: fetchingReschedule,
+    refetch: refetchReschedule,
   } = useGetUserAppointmentsQuery({
     page: reschedulePage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "reschedule-requested",
   });
 
@@ -59,10 +70,12 @@ export default function Appointments() {
     data: holdData,
     isLoading: loadingHold,
     isFetching: fetchingHold,
+    refetch: refetchHold,
   } = useGetUserAppointmentsQuery({
     page: holdPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "hold",
   });
 
@@ -70,20 +83,24 @@ export default function Appointments() {
     data: confirmedData,
     isLoading: loadingConfirmed,
     isFetching: fetchingConfirmed,
+    refetch: refetchConfirmed,
   } = useGetUserAppointmentsQuery({
     page: confirmedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "confirmed",
   });
   const {
     data: scheduledData,
     isLoading: loadingScheduled,
     isFetching: fetchingScheduled,
+    refetch: refetchScheduled,
   } = useGetUserAppointmentsQuery({
     page: confirmedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "scheduled",
   });
 
@@ -91,13 +108,29 @@ export default function Appointments() {
     data: declinedData,
     isLoading: loadingDeclined,
     isFetching: fetchingDeclined,
+    refetch: refetchDeclined,
   } = useGetUserAppointmentsQuery({
     page: declinedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "declined",
   });
-
+  useEffect(() => {
+    refetchConfirmed();
+    refetchDeclined();
+    refetchHold();
+    refetchPending();
+    refetchReschedule();
+    refetchScheduled();
+  }, [
+    refetchConfirmed,
+    refetchDeclined,
+    refetchHold,
+    refetchPending,
+    refetchReschedule,
+    refetchScheduled,
+  ]);
   const currentData =
     activeTab === "Pending"
       ? pendingData
@@ -139,12 +172,11 @@ export default function Appointments() {
 
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
-
   const transformedAppointments = appointments.map((appt) => ({
     id: appt._id,
     salonName: appt.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
-    payersEmail: appt.requestedFromEmail || "N/A",
+    payersEmail: appt?.requestedFrom?.email || "N/A",
     appointmentDate: appt.appointmentDate
       ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",

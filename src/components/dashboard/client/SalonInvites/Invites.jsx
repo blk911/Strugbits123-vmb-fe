@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
@@ -8,8 +8,14 @@ import { formatDuration } from "../../../../utils/HelperFunctions";
 
 const PAGE_SIZE = 10;
 
-export default function Invites() {
+export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
+
+  const sortValue = sortMap[sortOption] || "newest";
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
   const [activeTab, setActiveTab] = useState("Pending");
@@ -22,20 +28,24 @@ export default function Invites() {
     data: pendingData,
     isLoading: loadingPending,
     isFetching: fetchingPending,
+    refetch: refetchPending,
   } = useGetUserInvitesQuery({
     page: pendingPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "pending",
   });
   const {
     data: claimedData,
     isLoading: loadingClaimed,
     isFetching: fetchingClaimed,
+    refetch: refetchClaimed,
   } = useGetUserInvitesQuery({
     page: claimedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "claimed",
   });
 
@@ -43,13 +53,20 @@ export default function Invites() {
     data: unclaimedData,
     isLoading: loadingUnclaimed,
     isFetching: fetchingUnclaimed,
+    refetch: refetchUnclaimed,
   } = useGetUserInvitesQuery({
     page: unclaimedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "unclaimed",
   });
 
+  useEffect(() => {
+    refetchClaimed();
+    refetchPending();
+    refetchUnclaimed();
+  }, [refetchClaimed, refetchPending, refetchUnclaimed]);
   const currentData =
     activeTab === "Pending"
       ? pendingData

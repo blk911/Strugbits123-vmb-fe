@@ -263,7 +263,12 @@ function DashboardLayout() {
         >
           <DashboardHeader toggleSidebar={toggleSidebar} />
 
-          <main className="flex-1 overflow-y-auto bg-[#EFEFEF] ">
+          <main
+            className="flex-1 overflow-y-auto bg-[#EFEFEF] no-scrollbar"
+            style={{
+              scrollbarWidth: "none",
+            }}
+          >
             <Outlet />
           </main>
 

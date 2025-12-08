@@ -33,7 +33,7 @@ export default function Appointments() {
     limit: PAGE_SIZE,
     sort: "newest",
   });
-
+  console.log("All Data==>", allData);
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -150,7 +150,7 @@ export default function Appointments() {
     id: appt._id,
     salonName: appt.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
-    payersEmail: appt.requestedByEmail || "N/A",
+    payersEmail: appt.requestedBy.email || "N/A",
     appointmentDate: appt.appointmentDate
       ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
@@ -171,16 +171,16 @@ export default function Appointments() {
         price: s.price || 0,
       })),
       treatTo: {
-        name: appt.requestedByName || "Client",
-        email: appt.requestedByEmail || "N/A",
-        phone: appt.requestedByPhone || "N/A",
-        image: appt.requestedByImage || "/default-user.jpg",
+        name: appt.requestedBy.name || "Client",
+        email: appt.requestedBy.email || "N/A",
+        phone: appt.requestedBy.phone || "N/A",
+        image: appt.requestedBy.image || "/default-user.jpg",
       },
       treatBy: {
-        name: appt.requestedFromName || "Payer",
-        email: appt.requestedFromEmail || "N/A",
-        phone: appt.requestedFromPhone || "N/A",
-        image: appt.requestedFromImage || "/default-user.jpg",
+        name: appt.requestedFrom.name || "Payer",
+        email: appt.requestedFrom.email || "N/A",
+        phone: appt.requestedFrom.phone || "N/A",
+        image: appt.requestedFrom.image || "/default-user.jpg",
       },
       appointment: {
         id: appt._id,

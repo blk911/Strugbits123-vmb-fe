@@ -17,6 +17,7 @@ import {
   toastLoading,
   toastSuccess,
 } from "../../../../utils/toast";
+import { useUser } from "../../../../hooks/useUser";
 
 const createSchema = (hasServices) =>
   z.object({
@@ -44,7 +45,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
   const [salonDropdownOpen, setSalonDropdownOpen] = useState(false);
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
-
+  const { user } = useUser();
   const salonDropdownRef = useRef(null);
   const serviceDropdownRef = useRef(null);
   const [createGift, { isLoading }] = useCreateGiftMutation();
@@ -52,6 +53,8 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
     useGetAllSalonsQuery({
       search: searchTerm,
       limit: 50,
+      userLng: user?.location?.coordinates?.[0] ?? null,
+      userLat: user?.location?.coordinates?.[1] ?? null,
     });
 
   const salons = salonsResponse?.data?.items || [];

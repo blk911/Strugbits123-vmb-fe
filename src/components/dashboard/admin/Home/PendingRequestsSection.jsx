@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiEye,
   FiCheck,
@@ -31,11 +31,15 @@ export default function PendingRequestsSection() {
     isError,
     error,
     isFetching,
+    refetch,
   } = useGetPendingSalonsQuery(
     { page, limit, sort: "newest" },
     { refetchOnMountOrArgChange: true }
   );
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   const [approveSalon] = useApproveSalonMutation();
   const [rejectSalon] = useRejectSalonMutation();
 

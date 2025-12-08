@@ -2,18 +2,26 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import SalonCard from "./SalonCard";
 import { useGetAllSalonsQuery } from "../../../../store/api";
+import { useUser } from "../../../../hooks/useUser";
 
 const LIMIT = 10;
 
-export default function SalonSection() {
+export default function SalonSection({
+  searchQuery = "",
+  sortOption = "Nearest",
+}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedMiles, setSelectedMiles] = useState(null);
-
+  const [selectedMiles, setSelectedMiles] = useState(10);
+  const { user } = useUser();
   const location = useLocation();
   const navigate = useNavigate();
   const isSalonPage = location.pathname === "/salons";
-
+  const shouldApplyDistance = !isSalonPage;
+  const sortMap = {
+    Nearest: "nearest",
+    Farthest: "farthest",
+  };
   const {
     data: response,
     isLoading,
@@ -23,23 +31,27 @@ export default function SalonSection() {
     {
       page: currentPage,
       limit: LIMIT,
-      sort: "newest",
+      sort: sortMap[sortOption] || "nearest",
+      search: searchQuery,
+      ...(shouldApplyDistance && {
+        distance: selectedMiles,
+      }),
+      userLng: user?.location?.coordinates[0],
+      userLat: user?.location?.coordinates[1],
     },
     {
       refetchOnMountOrArgChange: true,
     }
   );
-
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, sortOption, selectedMiles]);
   useEffect(() => {
     refetch();
   }, [refetch]);
   const salons = response?.data?.items || [];
   const totalPages = response?.data?.pages || 1;
   const totalItems = response?.data?.total || 0;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [selectedMiles]);
 
   const milesOptions = [1, 5, 10];
 
@@ -91,16 +103,7 @@ export default function SalonSection() {
             </div>
 
             {filterOpen && (
-              <div className="absolute top-[110%] left-0 md:right-20 rounded-[12px] border border-[#F3F4F6] bg-white p-[12px] flex flex-col gap-2 z-20 shadow-lg">
-                <div
-                  onClick={() => {
-                    setSelectedMiles(null);
-                    setFilterOpen(false);
-                  }}
-                  className="cursor-pointer text-center text-[#581838] text-[14px] p-2 rounded-full bg-[#FF92A54D] hover:bg-[#FF92A566] transition"
-                >
-                  All Miles
-                </div>
+              <div className="w-[150px] absolute top-[110%] left-0 md:right-20 rounded-[12px] border border-[#F3F4F6] bg-white p-[12px] flex flex-col gap-2 z-20 shadow-lg">
                 {milesOptions.map((mile) => (
                   <div
                     key={mile}
@@ -108,7 +111,7 @@ export default function SalonSection() {
                       setSelectedMiles(mile);
                       setFilterOpen(false);
                     }}
-                    className={`cursor-pointer text-center text-[#581838] text-[14px] p-2 rounded-full transition ${
+                    className={`w-[120px] cursor-pointer text-center text-[#581838] text-[14px] p-2 rounded-full transition ${
                       selectedMiles === mile
                         ? "bg-[#FF92A5] text-white"
                         : "bg-[#FF92A54D] hover:bg-[#FF92A566]"
@@ -124,7 +127,9 @@ export default function SalonSection() {
       )}
 
       {salons.length === 0 ? (
-        <p className="text-center text-gray-500 py-10">No salons found.</p>
+        <p className="text-center text-gray-500 py-10">
+          Currently within this distance there are no salons.
+        </p>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 px-2 sm:px-4 md:px-6">
           {salons.map((salon) => (

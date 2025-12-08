@@ -10,7 +10,7 @@ import {
 
 const PAGE_SIZE = 10;
 
-export default function Requests() {
+export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   const location = useLocation();
   const { openModal } = useDashboardModal();
 
@@ -20,7 +20,12 @@ export default function Requests() {
 
   const [myRequestsPage, setMyRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
 
+  const sortValue = sortMap[sortOption] || "newest";
   const {
     data: requestedData,
     isLoading: loadingRequested,
@@ -28,7 +33,8 @@ export default function Requests() {
   } = useRequestedGiftsQuery({
     page: myRequestsPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
   });
 
   const {
@@ -38,7 +44,8 @@ export default function Requests() {
   } = useRecievedGiftsQuery({
     page: receivedRequestsPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
   });
   const myRequestsData = (requestedData?.data?.items || []).map((gift) => ({
     id: gift._id,
