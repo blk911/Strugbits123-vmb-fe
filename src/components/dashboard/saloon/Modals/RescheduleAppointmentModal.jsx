@@ -211,10 +211,10 @@ export default function RescheduleAppointmentModal({
                                 Treat To:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                {/* <img
+                                <img
                                   src={data.treatTo?.image}
-                                  className="w-[40px] h-[40px] rounded-full object-cover"
-                                /> */}
+                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#4B5563]">
                                     {data.treatTo?.name}
@@ -231,10 +231,10 @@ export default function RescheduleAppointmentModal({
                                 Treat By:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                {/* <img
+                                <img
                                   src={data.treatBy?.image}
-                                  className="w-[40px] h-[40px] rounded-full object-cover"
-                                /> */}
+                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#581838]">
                                     {data.treatBy?.name}

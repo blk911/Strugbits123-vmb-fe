@@ -3,26 +3,29 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { FaGift } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useGetWeeklyStatsQuery } from "../../../../store/api";
 
 export default function AdminStatsSection() {
+  const { data } = useGetWeeklyStatsQuery();
+
   const navigate = useNavigate();
   const items = [
     {
       icon: <FaRegCalendarAlt className="w-5 h-5 text-[#FF92A5]" />,
       label: "Weekly Appointments",
-      value: 12,
+      value: data?.data?.appointmentsCount || 0,
       path: "/appointments",
     },
     {
       icon: <IoMailOutline className="w-5 h-5 text-[#FF92A5]" />,
       label: "Weekly Invites",
-      value: 12,
+      value: data?.data?.invitesCount || 0,
       path: "/saloninvites",
     },
     {
       icon: <FaGift className="w-5 h-5 text-[#FF92A5]" />,
       label: "Weekly Gifts",
-      value: 12,
+      value: data?.data?.giftsCount || 0,
       path: "/gifts",
     },
   ];

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { CellRenderers } from "./CellRenderers";
@@ -7,10 +7,15 @@ import { useGetSalonInvitesQuery } from "../../../../store/api";
 
 const PAGE_SIZE = 10;
 
-export default function Invites() {
+export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const location = useLocation();
   const { openModal } = useDashboardModal();
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
 
+  const sortValue = sortMap[sortOption] || "newest";
   const [activeTab, setActiveTab] = useState("All");
 
   const [allPage, setAllPage] = useState(1);
@@ -22,20 +27,25 @@ export default function Invites() {
     data: allData,
     isLoading: loadingAll,
     isFetching: fetchingAll,
+
+    refetch: refetchAll,
   } = useGetSalonInvitesQuery({
     page: allPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
   });
 
   const {
     data: pendingData,
     isLoading: loadingPending,
     isFetching: fetchingPending,
+    refetch: refetchPending,
   } = useGetSalonInvitesQuery({
     page: pendingPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "pending",
   });
 
@@ -43,10 +53,12 @@ export default function Invites() {
     data: claimedData,
     isLoading: loadingClaimed,
     isFetching: fetchingClaimed,
+    refetch: refetchClaimed,
   } = useGetSalonInvitesQuery({
     page: claimedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "claimed",
   });
 
@@ -54,13 +66,21 @@ export default function Invites() {
     data: unclaimedData,
     isLoading: loadingUnclaimed,
     isFetching: fetchingUnclaimed,
+    refetch: refetchUnclaimed,
   } = useGetSalonInvitesQuery({
     page: unclaimedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "unclaimed",
   });
 
+  useEffect(() => {
+    refetchAll();
+    refetchPending();
+    refetchClaimed();
+    refetchUnclaimed();
+  }, [refetchAll, refetchPending, refetchClaimed, refetchUnclaimed]);
   const currentData =
     activeTab === "All"
       ? allData

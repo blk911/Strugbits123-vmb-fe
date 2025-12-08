@@ -8,6 +8,7 @@ export default function AppointmentCard({
   statusText,
   statusColor,
   timeAgo,
+  data,
 }) {
   const { openModal } = useDashboardModal();
   return (
@@ -15,11 +16,36 @@ export default function AppointmentCard({
       className="border border-[#0000001A] rounded-[10px] p-3 
       flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all"
       onClick={() => {
-        if (statusText === "Confirm") {
-          openModal("scheduleAppointment");
-        } else {
-          openModal("rescheduleAppointment");
-        }
+        openModal("scheduleAppointment", {
+          salon: {
+            name: data?.salonName,
+            description: data?.salonDescription || "",
+            image: data?.salonImage || "/default-salon.jpg",
+          },
+          services: (data?.services || []).map((s) => ({
+            name: s.serviceName || s.name,
+            duration: s.duration ? `${s.duration} min` : "N/A",
+            price: s.price || 0,
+          })),
+          treatTo: {
+            name: data?.requestedBy.name || "Client",
+            email: data?.requestedBy.email || "N/A",
+            phone: data?.requestedBy.phone || "N/A",
+            image: data?.requestedBy.image || "/default-user.jpg",
+          },
+          treatBy: {
+            name: data?.requestedFrom.name || "Payer",
+            email: data?.requestedFrom.email || "N/A",
+            phone: data?.requestedFrom.phone || "N/A",
+            image: data?.requestedFrom.image || "/default-user.jpg",
+          },
+          appointment: {
+            id: data?._id,
+            date: data?.appointmentDate,
+            time: data?.startTime,
+            message: data?.reschduleReason || "",
+          },
+        });
       }}
     >
       <div className="shrink-0 w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center mx-auto sm:mx-0">

@@ -56,9 +56,15 @@ export const inviteApi = createApi({
       providesTags: ["Invite"],
     }),
     getAdminInvites: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status = "",
+      } = {}) => ({
         url: "/get-admin-invites",
-        params: { page, limit, sort },
+        params: { page, limit, sort, search, status },
       }),
       providesTags: ["Invite"],
     }),

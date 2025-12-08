@@ -1,17 +1,22 @@
 import Requests from "../../../components/dashboard/admin/Gifts/Requests";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
+import { useState } from "react";
 
 export default function GiftHistory() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("Newest");
   return (
     <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <PageHeader
         title="Gifts Requests"
         description="Manage your salon efficiently."
-        onSearch={(q) => console.log("Gift search:", q)}
-        onSort={(opt) => console.log("Gift sort:", opt)}
+        onSearch={setSearchQuery}
+        onSort={setSortOption}
+        defaultSort={sortOption}
+        sortOptions={["Newest", "Oldest"]}
       />
       <div className="w-full">
-        <Requests />
+        <Requests searchQuery={searchQuery} sortOption={sortOption} />
       </div>
     </div>
   );

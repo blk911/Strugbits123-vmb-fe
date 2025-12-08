@@ -49,6 +49,11 @@ export const customerApi = createApi({
         url: `/get-salon-by-id/${id}`,
       }),
     }),
+    getDailyStats: builder.query({
+      query: () => ({
+        url: `/get-daily-stats/`,
+      }),
+    }),
   }),
 });
 
@@ -58,4 +63,5 @@ export const {
   useUpdateSalonProfileMutation,
   useGetAllSalonsQuery,
   useGetSalonByIdQuery,
+  useGetDailyStatsQuery,
 } = customerApi;

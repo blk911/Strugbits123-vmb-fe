@@ -214,10 +214,10 @@ export default function ScheduleAppointmentModal({
                                 Treat To:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                {/* <img
+                                <img
                                   src={data.treatTo?.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover"
-                                /> */}
+                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#4B5563]">
                                     {data.treatTo?.name}
@@ -225,9 +225,9 @@ export default function ScheduleAppointmentModal({
                                   <p className="text-[12px] text-[#4B5563]">
                                     {data.treatTo?.email}
                                   </p>
-                                  {/* <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-[#4B5563]">
                                     {data.treatTo?.phone}
-                                  </p> */}
+                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -237,10 +237,10 @@ export default function ScheduleAppointmentModal({
                                 Treat By:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
-                                {/* <img
+                                <img
                                   src={data.treatBy?.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover"
-                                /> */}
+                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                />
                                 <div>
                                   <p className="font-semibold text-[14px] text-[#581838]">
                                     {data.treatBy?.name}
@@ -248,9 +248,9 @@ export default function ScheduleAppointmentModal({
                                   <p className="text-[12px] text-[#4B5563]">
                                     {data.treatBy?.email}
                                   </p>
-                                  {/* <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-[#4B5563]">
                                     {data.treatBy?.phone}
-                                  </p> */}
+                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -319,7 +319,6 @@ export default function ScheduleAppointmentModal({
                           Schedule Appointment
                         </h2>
 
-                        {/* <div className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"> */}
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
                           className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"
@@ -370,10 +369,7 @@ export default function ScheduleAppointmentModal({
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Date
                                 </label>
-                                {/* <input
-                                  type="date"
-                                  className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
-                                /> */}
+
                                 <Controller
                                   name="appointmentDate"
                                   control={control}
@@ -403,10 +399,7 @@ export default function ScheduleAppointmentModal({
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
-                                {/* <input
-                                  type="time"
-                                  className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
-                                /> */}
+
                                 <Controller
                                   name="appointmentTime"
                                   control={control}
@@ -430,7 +423,6 @@ export default function ScheduleAppointmentModal({
                               </div>
                             </div>
                           </div>
-                          {/* </div> */}
 
                           <div className="flex items-center gap-3 mt-4">
                             <button
@@ -450,7 +442,6 @@ export default function ScheduleAppointmentModal({
                               type="submit"
                               variant="primary"
                               size="custom"
-                              // onClick={onScheduleNow}
                               disabled={!isValid || scheduling}
                               className="text-[16px] font-medium py-2"
                             >
@@ -458,7 +449,6 @@ export default function ScheduleAppointmentModal({
                             </AppButton>
                           </div>
                         </form>
-                        {/* </div> */}
                       </div>
                     </div>
                   </div>

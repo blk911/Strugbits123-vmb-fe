@@ -1,17 +1,22 @@
 import Invites from "../../../components/dashboard/admin/SalonInvites/Invites";
 import PageHeader from "../../../components/common/dashboard/PageHeader";
+import { useState } from "react";
 
 export default function SalonInvites() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("Newest");
   return (
     <div className="bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <PageHeader
         title="Invites"
         description="Manage your salon efficiently."
-        onSearch={(q) => console.log("Invite search:", q)}
-        onSort={(opt) => console.log("Invite sort:", opt)}
+        onSearch={setSearchQuery}
+        onSort={setSortOption}
+        defaultSort={sortOption}
+        sortOptions={["Newest", "Oldest"]}
       />
       <div className="w-full ">
-        <Invites />
+        <Invites searchQuery={searchQuery} sortOption={sortOption} />
       </div>
     </div>
   );

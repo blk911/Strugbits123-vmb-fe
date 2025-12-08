@@ -17,14 +17,14 @@ export const CellRenderers = {
 
   serviceName: (options) => (
     <div className="flex flex-wrap gap-1 text-xs">
-      {options.map((option, index) => (
-        <span
-          key={index}
-          className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
-        >
-          {option}
-        </span>
-      ))}
+      {/* {options.map((option, index) => ( */}
+      <span
+        // key={index}
+        className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+      >
+        {options}
+      </span>
+      {/* ))} */}
     </div>
   ),
 
@@ -41,9 +41,8 @@ export const CellRenderers = {
   status: (status) => {
     const statusStyles = {
       Pending: "bg-[#FF950033] text-[#FF9500]",
-      Accepted: "bg-[#4FCF0033] text-[#4FCF00]",
-      Booked: "bg-[#4376C033] text-[#4376C0]",
-      Expired: "bg-[#DC26264D] text-[#DC2626]",
+      Claimed: "bg-[#4FCF0033] text-[#4FCF00]",
+      Unclaimed: "bg-[#64748B33] text-[#64748B]",
     };
 
     return (

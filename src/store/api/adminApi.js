@@ -38,6 +38,12 @@ export const adminApi = createApi({
       }),
       invalidatesTags: ["Salon"],
     }),
+
+    getWeeklyStats: builder.query({
+      query: () => ({
+        url: "/get-weekly-stats",
+      }),
+    }),
   }),
 });
 
@@ -46,4 +52,5 @@ export const {
   useApproveSalonMutation,
   useRejectSalonMutation,
   useHoldSalonMutation,
+  useGetWeeklyStatsQuery,
 } = adminApi;

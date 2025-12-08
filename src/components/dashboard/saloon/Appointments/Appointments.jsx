@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
@@ -7,9 +7,17 @@ import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
 
 const PAGE_SIZE = 10;
 
-export default function Appointments() {
+export default function Appointments({
+  searchQuery = "",
+  sortOption = "Newest",
+}) {
   const { openModal } = useDashboardModal();
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
 
+  const sortValue = sortMap[sortOption] || "newest";
   const [activeTab, setActiveTab] = useState("All");
 
   const [allPage, setAllPage] = useState(1);
@@ -28,30 +36,36 @@ export default function Appointments() {
     data: allData,
     isLoading: loadingAll,
     isFetching: fetchingAll,
+    refetch: refetchAll,
   } = useGetSalonAppointmentsQuery({
     page: allPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
   });
   console.log("All Data==>", allData);
   const {
     data: pendingData,
     isLoading: loadingPending,
     isFetching: fetchingPending,
+    refetch: refetchPending,
   } = useGetSalonAppointmentsQuery({
     page: pendingPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "pending",
   });
   const {
     data: scheduledData,
     isLoading: loadingScheduled,
     isFetching: fetchingScheduled,
+    refetch: refetchScheduled,
   } = useGetSalonAppointmentsQuery({
     page: scheduledPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "scheduled",
   });
 
@@ -59,20 +73,25 @@ export default function Appointments() {
     data: rescheduleData,
     isLoading: loadingReschedule,
     isFetching: fetchingReschedule,
+    refetch: refetchReschedule,
   } = useGetSalonAppointmentsQuery({
     page: reschedulePage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "reschedule-requested",
   });
+  console.log("Reschedule Requestes==>", rescheduleData);
   const {
     data: holdData,
     isLoading: loadingHold,
     isFetching: fetchingHold,
+    refetch: refetchHold,
   } = useGetSalonAppointmentsQuery({
     page: holdPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "hold",
   });
 
@@ -80,10 +99,12 @@ export default function Appointments() {
     data: confirmedData,
     isLoading: loadingConfirmed,
     isFetching: fetchingConfirmed,
+    refetch: refetchConfirmed,
   } = useGetSalonAppointmentsQuery({
     page: confirmedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "confirmed",
   });
 
@@ -91,13 +112,32 @@ export default function Appointments() {
     data: declinedData,
     isLoading: loadingDeclined,
     isFetching: fetchingDeclined,
+    refetch: refetchDeclined,
   } = useGetSalonAppointmentsQuery({
     page: declinedPage,
     limit: PAGE_SIZE,
-    sort: "newest",
+    sort: sortValue,
+    search: searchQuery,
     status: "declined",
   });
 
+  useEffect(() => {
+    refetchAll();
+    refetchPending();
+    refetchScheduled();
+    refetchReschedule();
+    refetchHold();
+    refetchConfirmed();
+    refetchDeclined();
+  }, [
+    refetchAll,
+    refetchPending,
+    refetchScheduled,
+    refetchReschedule,
+    refetchHold,
+    refetchConfirmed,
+    refetchDeclined,
+  ]);
   const currentData =
     activeTab === "All"
       ? allData
@@ -186,7 +226,7 @@ export default function Appointments() {
         id: appt._id,
         date: appt.appointmentDate,
         time: appt.startTime,
-        message: appt.rescheduleReason || "",
+        message: appt.reschduleReason || "",
       },
     },
   }));
