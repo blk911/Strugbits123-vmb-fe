@@ -44,6 +44,19 @@ export const adminApi = createApi({
         url: "/get-weekly-stats",
       }),
     }),
+    getAllAdminSalons: builder.query({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status,
+      } = {}) => ({
+        url: "/get-all-salons",
+        params: { page, limit, sort, search, status },
+      }),
+      providesTags: ["Salon"],
+    }),
   }),
 });
 
@@ -53,4 +66,5 @@ export const {
   useRejectSalonMutation,
   useHoldSalonMutation,
   useGetWeeklyStatsQuery,
+  useGetAllAdminSalonsQuery,
 } = adminApi;

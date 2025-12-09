@@ -25,7 +25,10 @@ const TableHeader = ({ keys }) => (
             className={`
               text-[#FF92A5] font-medium px-2 py-2 text-left text-[13px]
               ${widthClass}
-              ${noTruncate ? "whitespace-nowrap" : "truncate"}
+            ${
+              noTruncate ? "whitespace-nowrap" : "whitespace-normal break-words"
+            }
+
               ${index === 0 ? "rounded-l-lg" : ""}
               ${index === keys.length - 1 ? "rounded-r-lg" : ""}
             `}

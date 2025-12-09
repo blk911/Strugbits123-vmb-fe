@@ -67,3 +67,46 @@
 @source inline("{group-hover:,}shine-line");
 
 
+.table-header-1035 {
+  display: none;
+}
+
+.table-row-1035 {
+  display: block;
+}
+
+.table-rowgroup-1035 {
+  display: block;
+}
+
+.table-cell-1035 {
+  display: block;
+}
+
+.hide-on-1035 {
+  display: block;
+}
+
+
+@media (min-width: 1035px) {
+  .table-header-1035 {
+    display: table-header-group !important;
+  }
+
+  .table-row-1035 {
+    display: table-row !important;
+  }
+
+  .table-rowgroup-1035 {
+    display: table-row-group !important;
+  }
+
+  .table-cell-1035 {
+    display: table-cell !important;
+  }
+
+  .hide-on-1035 {
+    display: none !important;
+  }
+}
+

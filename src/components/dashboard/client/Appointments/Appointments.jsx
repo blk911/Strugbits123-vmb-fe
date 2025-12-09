@@ -171,23 +171,25 @@ export default function Appointments({
       : fetchingDeclined;
 
   const appointments = currentData?.data?.items || [];
+  console.log("Client Appointments===>", appointments);
   const totalPages = currentData?.data?.pages || 1;
   const transformedAppointments = appointments.map((appt) => ({
-    id: appt._id,
-    salonName: appt.salonName || "Unknown Salon",
+    id: appt?._id,
+    salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
     payersEmail: appt?.requestedFrom?.email || "N/A",
-    appointmentDate: appt.appointmentDate
-      ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
+    appointmentDate: appt?.appointmentDate
+      ? new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
-    appointmentTime: appt.startTime || "N/A",
+    appointmentTime: appt?.startTime || "N/A",
     status:
-      appt.status?.charAt(0).toUpperCase() + appt.status?.slice(1) || "Pending",
+      appt?.status?.charAt(0).toUpperCase() + appt?.status?.slice(1) ||
+      "Pending",
     _modalData: {
       salon: {
-        name: appt.salonName,
-        description: appt.salonDescription || "",
-        image: appt.salonImage || "/default-salon.jpg",
+        name: appt?.salon?.salonName,
+        description: appt?.salon?.salonDescription || "",
+        image: appt?.salon?.salonImage || "/default-salon.jpg",
       },
       services: (appt.services || []).map((s) => ({
         name: s.serviceName || s.name,

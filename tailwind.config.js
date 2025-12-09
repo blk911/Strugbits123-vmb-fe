@@ -1,18 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+module.exports = {
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx,html}"],
 
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"], 
+        poppins: ["Poppins", "sans-serif"],
       },
+
       colors: {
         primary: "#FF92A5",
         "primary-alt": "var(--primary-alt)",
       },
-          screens: {
-        'xl1000': {'max': '1000px'},
+
+      screens: {
+        custom: "64.6875rem",
       },
     },
   },

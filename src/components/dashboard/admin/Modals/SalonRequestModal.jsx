@@ -16,7 +16,7 @@ export default function SalonRequestModal({
   onAccept,
 }) {
   if (!isOpen) return null;
-
+  console.log("Data Recieved==>", data);
   const { openModal } = useDashboardModal();
   const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
   const [declineSalon, { isLoading: isDeclining }] = useRejectSalonMutation();
@@ -222,30 +222,31 @@ export default function SalonRequestModal({
               ))}
             </div>
           </div>
+          {(data?.status === "pending" || data?.status === "deactivated") && (
+            <div className="flex flex-col sm:flex-row  justify-center sm:justify-end gap-3 pt-4">
+              <AppButton
+                variant="custom"
+                size="custom"
+                className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+                leftIcon={<FiX size={16} />}
+                onClick={handleDecline}
+                disabled={isDeclining}
+              >
+                {isDeclining ? "Rejecting..." : "Reject"}
+              </AppButton>
 
-          <div className="flex flex-col sm:flex-row  justify-center sm:justify-end gap-3 pt-4">
-            <AppButton
-              variant="custom"
-              size="custom"
-              className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
-              leftIcon={<FiX size={16} />}
-              onClick={handleDecline}
-              disabled={isDeclining}
-            >
-              {isDeclining ? "Rejecting..." : "Reject"}
-            </AppButton>
-
-            <AppButton
-              disabled={isApproving}
-              onClick={handleApprove}
-              variant="custom"
-              size="custom"
-              className="py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
-              leftIcon={<FiCheck size={16} />}
-            >
-              {isApproving ? "Approving..." : "Approve"}
-            </AppButton>
-          </div>
+              <AppButton
+                disabled={isApproving}
+                onClick={handleApprove}
+                variant="custom"
+                size="custom"
+                className="py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+                leftIcon={<FiCheck size={16} />}
+              >
+                {isApproving ? "Approving..." : "Approve"}
+              </AppButton>
+            </div>
+          )}
         </div>
       </div>
     </div>

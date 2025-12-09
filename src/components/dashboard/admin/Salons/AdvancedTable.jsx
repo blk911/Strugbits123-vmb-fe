@@ -16,7 +16,7 @@ export default function AdvancedTable({
 
   return (
     <div className="overflow-x-auto -mx-4 sm:mx-0">
-      <table className="w-full table-fixed hidden lg:table">
+      <table className="w-full hidden lg:table">
         <thead>
           <tr className="border-b border-gray-200">
             {columns.map((col) => (
@@ -38,8 +38,13 @@ export default function AdvancedTable({
               onClick={() => onRowClick?.(row)}
             >
               {columns.map((col) => (
-                <td key={col.key} className="py-4 px-3 text-sm text-gray-700">
-                  {col.render ? col.render(row, onActionClick) : row[col.key]}
+                <td
+                  key={col.key}
+                  className="py-4 px-3 text-sm text-gray-700 align-top"
+                >
+                  <div className="break-words max-w-xs">
+                    {col.render ? col.render(row, onActionClick) : row[col.key]}
+                  </div>
                 </td>
               ))}
             </tr>
@@ -64,7 +69,7 @@ export default function AdvancedTable({
                   alt={row.salonName}
                   className="w-11 h-11 rounded-lg object-cover border border-gray-200 flex-shrink-0"
                 />
-                <span className="font-medium text-gray-800 text-sm">
+                <span className="font-medium text-gray-800 text-sm break-words">
                   {row.salonName}
                 </span>
               </div>
@@ -74,10 +79,10 @@ export default function AdvancedTable({
               .filter((col) => col.key !== "salonName" && col.key !== "actions")
               .map((col) => (
                 <div key={col.key} className="mb-3 last:mb-4">
-                  <span className="text-xs font-medium text-gray-500">
+                  <span className="text-xs font-medium text-gray-500 block">
                     {col.header}
                   </span>
-                  <div className="mt-1 text-sm text-gray-700">
+                  <div className="mt-1 text-sm text-gray-700 break-words">
                     {col.render ? col.render(row, onActionClick) : row[col.key]}
                   </div>
                 </div>

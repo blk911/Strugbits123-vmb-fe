@@ -85,6 +85,20 @@ export const appointmentApi = createApi({
       }),
       invalidatesTags: ["Appointment"],
     }),
+
+    getAdminAppointments: builder.query({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status = "",
+      } = {}) => ({
+        url: "/get-admin-appointment",
+        params: { page, limit, sort, search, status },
+      }),
+      providesTags: ["Appointment"],
+    }),
   }),
 });
 
@@ -97,4 +111,5 @@ export const {
   useDeclineAppointmentMutation,
   useConfirmAppointmentMutation,
   useCreateAppointmentMutation,
+  useGetAdminAppointmentsQuery,
 } = appointmentApi;
