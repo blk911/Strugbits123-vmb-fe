@@ -14,12 +14,20 @@ import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import { useUser } from "../../../../hooks/useUser";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
-import { useUpdateSalonProfileMutation } from "../../../../store/api";
+import {
+  useGetUploadUrlMutation,
+  useUpdateSalonProfileMutation,
+} from "../../../../store/api";
 import {
   convert12HourTo24Hour,
   convertTo12Hour,
 } from "../../../../utils/HelperFunctions";
-
+import {
+  toastLoading,
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../../utils/toast";
 const days = [
   "Monday",
   "Tuesday",
@@ -36,6 +44,7 @@ const salonProfileSchema = z
     email: z.string().email("Invalid email address"),
     salonName: z.string().min(2, "Salon name is required"),
     address: z.string().min(5, "Address is required"),
+    zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
     phone: z
       .string()
       .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number")
@@ -49,9 +58,11 @@ const salonProfileSchema = z
       .string()
       .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
     selectedDays: z.array(z.string()).min(1, "Select at least one working day"),
-    logo: z.instanceof(File).optional(),
-    licenseDocument: z.instanceof(File).optional(),
-    salonPhotos: z.array(z.instanceof(File)).optional(),
+    logo: z.string().url().optional().or(z.literal("")),
+    licenseDocument: z.string().url().optional().or(z.literal("")),
+    salonPhotos: z
+      .array(z.object({ url: z.string().url(), name: z.string() }))
+      .min(1, "At least one salon photo is required"),
   })
   .refine(
     (data) => {
@@ -67,6 +78,7 @@ const salonProfileSchema = z
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
   const [updateMe, { isLoading: isUpdating }] = useUpdateSalonProfileMutation();
+  const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   const logoRef = useRef();
   const docRef = useRef();
   const photosRef = useRef();
@@ -93,11 +105,12 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       address: "",
       phone: "",
       description: "",
+      zipcode: "",
       startTime: "",
       endTime: "",
       selectedDays: [],
-      logo: undefined,
-      licenseDocument: undefined,
+      logo: "",
+      licenseDocument: "",
       salonPhotos: [],
     },
   });
@@ -109,14 +122,18 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
         email: user.email || "",
         salonName: user.salonName || "",
         address: user.salonAddress || "",
+        zipcode: user.zipcode || "",
         phone: user.phoneNumber || "",
         description: user.description || "",
         startTime: user.startTime ? convert12HourTo24Hour(user.startTime) : "",
         endTime: user.endTime ? convert12HourTo24Hour(user.endTime) : "",
         selectedDays: user.workingDays || [],
-        logo: undefined,
-        licenseDocument: undefined,
-        salonPhotos: [],
+        logo: user.profilePic || "",
+        licenseDocument: user.licenseDocument || "",
+        salonPhotos: (user.salonPhotos || []).map((url) => ({
+          url,
+          name: url.split("/").pop() || "photo.jpg",
+        })),
       };
 
       reset(formData);
@@ -142,7 +159,88 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       : [...current, day];
     setValue("selectedDays", updated, { shouldValidate: true });
   };
+  const uploadFile = async (file, folder = "salon") => {
+    if (!file) return null;
 
+    const toastId = toastLoading("Uploading...");
+
+    try {
+      const fileName = `${folder}/${Date.now()}_${file.name.replace(
+        /[^a-zA-Z0-9.-]/g,
+        "_"
+      )}`;
+      const { data } = await getUploadUrl({
+        fileName,
+        fileType: file.type || "application/octet-stream",
+      }).unwrap();
+
+      await fetch(data.uploadUrl || data, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+
+      const publicUrl = (data.uploadUrl || data).split("?")[0];
+      toastDismiss(toastId);
+      toastSuccess("Uploaded!");
+      return { url: publicUrl, name: file.name };
+    } catch (err) {
+      toastDismiss(toastId);
+      toastError("Upload failed");
+      console.error(err);
+      return null;
+    }
+  };
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const result = await uploadFile(file, "profiles");
+    if (result) {
+      setValue("logo", result.url, { shouldValidate: true });
+      setPreviewLogo(result.url);
+    }
+  };
+
+  const handleLicenseUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const result = await uploadFile(file, "licenses");
+    if (result) {
+      setValue("licenseDocument", result.url, { shouldValidate: true });
+      setValue("licenseDocName", result.name);
+    }
+  };
+
+  const handleSalonPhotosUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const toastId = toastLoading(`Uploading ${files.length} photo(s)...`);
+    const uploaded = [];
+
+    for (const file of files) {
+      const result = await uploadFile(file, "salon-photos");
+      if (result) uploaded.push(result);
+    }
+
+    const current = watch("salonPhotos") || [];
+    setValue("salonPhotos", [...current, ...uploaded], {
+      shouldValidate: true,
+    });
+    toastDismiss(toastId);
+    toastSuccess("Photos uploaded!");
+  };
+
+  const removeSalonPhoto = (index) => {
+    const current = watch("salonPhotos") || [];
+    const updated = current.filter((_, i) => i !== index);
+    setValue("salonPhotos", updated.length > 0 ? updated : [], {
+      shouldValidate: true,
+    });
+  };
   const onSubmit = async (data) => {
     try {
       const startTime = convertTo12Hour(data.startTime);
@@ -153,19 +251,15 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
         phoneNumber: data.phone || null,
         salonName: data.salonName,
         salonAddress: data.address,
+        zipcode: data.zipcode,
         description: data.description,
         startTime: startTime,
         endTime: endTime,
         workingDays: data.selectedDays,
-        // profilePic: data.logo,
-        // licenseDocument: data.licenseDocument,
-        // salonPhotos: data.salonPhotos,
-        licenseDocument: "https://pdfobject.com/pdf/sample.pdf",
-        profilePic:
-          "https://static.wixstatic.com/media/e3c477_ea6d7ddfe1a04ed5b93e47155be95f0a~mv2.png",
-        salonPhotos: [
-          "https://static.wixstatic.com/media/e3c477_ea6d7ddfe1a04ed5b93e47155be95f0a~mv2.png",
-        ],
+
+        profilePic: data.logo || null,
+        licenseDocument: data.licenseDocument || null,
+        salonPhotos: data.salonPhotos?.map((p) => p.url) || [],
       };
 
       const res = await updateMe(payload).unwrap();
@@ -286,7 +380,10 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         <button
                           type="button"
                           onClick={() => logoRef.current.click()}
-                          className="absolute bottom-[-6px] right-[-6px] w-[32px] h-[32px] rounded-full bg-[#FF92A5] flex justify-center items-center shadow"
+                          disabled={uploading}
+                          className={`absolute bottom-[-6px] right-[-6px] w-[32px] h-[32px] rounded-full bg-[#FF92A5] flex justify-center items-center shadow ${
+                            uploading ? "opacity-50" : ""
+                          }`}
                         >
                           <IoCamera className="text-white text-[18px] cursor-pointer" />
                         </button>
@@ -295,13 +392,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           type="file"
                           accept="image/*"
                           className="hidden"
-                          onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                              setValue("logo", file);
-                              setPreviewLogo(URL.createObjectURL(file));
-                            }
-                          }}
+                          onChange={handleLogoUpload}
+                          // onChange={(e) => {
+                          //   const file = e.target.files[0];
+                          //   if (file) {
+                          //     setValue("logo", file);
+                          //     setPreviewLogo(URL.createObjectURL(file));
+                          //   }
+                          // }}
                         />
                       </div>
                       <div>
@@ -347,7 +445,20 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         </p>
                       )}
                     </div>
-
+                    <div>
+                      <label className="text-[#404040] text-[14px] font-medium">
+                        Zip Code
+                      </label>
+                      <input
+                        {...register("zipcode")}
+                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
+                      />
+                      {errors.zipcode && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.zipcode.message}
+                        </p>
+                      )}
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[#374151] text-[14px] font-semibold mb-1">
@@ -457,14 +568,15 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         type="file"
                         accept=".png,.jpg,.jpeg,.pdf"
                         className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          if (file) setValue("licenseDocument", file);
-                        }}
+                        // onChange={(e) => {
+                        //   const file = e.target.files[0];
+                        //   if (file) setValue("licenseDocument", file);
+                        // }}
+                        onChange={handleLicenseUpload}
                       />
                       {watch("licenseDocument") && (
                         <p className="text-sm text-[#581838] mt-1">
-                          Selected: {watch("licenseDocument").name}
+                          Selected: {watch("licenseDocName")}
                         </p>
                       )}
                     </div>
@@ -508,12 +620,13 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           multiple
                           accept="image/*"
                           className="hidden"
-                          onChange={(e) => {
-                            const files = Array.from(e.target.files);
-                            if (files.length > 0) {
-                              setValue("salonPhotos", files);
-                            }
-                          }}
+                          // onChange={(e) => {
+                          //   const files = Array.from(e.target.files);
+                          //   if (files.length > 0) {
+                          //     setValue("salonPhotos", files);
+                          //   }
+                          // }}
+                          onChange={handleSalonPhotosUpload}
                         />
 
                         {existingPhotos.map((url, i) => (
@@ -536,8 +649,26 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                             </button>
                           </div>
                         ))}
-
-                        {watch("salonPhotos")?.map((file, i) => (
+                        {watch("salonPhotos")?.map((photo, i) => (
+                          <div key={i} className="relative">
+                            <img
+                              src={photo.url}
+                              alt="salon"
+                              className="w-[80px] h-[74px] object-cover rounded-md"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeSalonPhoto(i)}
+                              className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs cursor-pointer"
+                            >
+                              ×
+                            </button>
+                            <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
+                              {photo.name}
+                            </p>
+                          </div>
+                        ))}
+                        {/* {watch("salonPhotos")?.map((file, i) => (
                           <div key={`new-${i}`} className="relative">
                             <img
                               src={URL.createObjectURL(file)}
@@ -560,7 +691,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                               ×
                             </button>
                           </div>
-                        ))}
+                        ))} */}
                       </div>
                     </div>
                   </div>

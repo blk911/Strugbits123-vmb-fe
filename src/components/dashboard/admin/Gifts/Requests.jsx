@@ -7,6 +7,7 @@ import { useGetAllGiftsAdminQuery } from "../../../../store/api";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 import {
   FaCalendarCheck,
+  FaClock,
   FaEye,
   FaPaperPlane,
   FaRegHandPointer,
@@ -82,6 +83,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
 
         case "accepted":
         case "paid":
+        case "gift-accepted":
           return {
             ...base,
             icon: <FaEye className="w-4 h-4" />,
@@ -100,7 +102,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
             title: "Salon Responded",
             titleColor: "text-[#581838]",
             dateBy: `${formatDate(item.timestamp)} | By: ${
-              gift.salonId?.salonName
+              gift.salonId?.salonName || "Salon"
             }`,
             body:
               item.description || "Salon proposed available appointment slot.",
@@ -171,11 +173,22 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
             body: item.description || "Gift request was rejected.",
           };
 
+        case "hold":
+          return {
+            ...base,
+            icon: <FaClock className="w-4 h-4" />,
+            iconBg: "bg-[#FFAA0033]",
+            barColor: "bg-[#FFAA00]",
+            title: "On Hold",
+            dateBy: `${formatDate(item.timestamp)}`,
+            body: item.description || "Gift request is on hold.",
+          };
+
         default:
           return {
             ...base,
             icon: <FaPaperPlane className="w-4 h-4" />,
-            title: item.event || "Unknown Event",
+            title: item.event || "Event Occurred",
             dateBy: formatDate(item.timestamp),
             body: item.description || "No details available.",
           };

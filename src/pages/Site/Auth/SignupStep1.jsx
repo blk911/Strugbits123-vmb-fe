@@ -4,18 +4,61 @@ import {
   FaMapMarkerAlt,
   FaLock,
   FaPhoneAlt,
+  FaFileImage,
 } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
 import InputWithIcon from "../../../components/common/site/InputWithIcon";
 import AuthButton from "../../../components/common/site/AuthButton";
-
+import { useRef } from "react";
+import { useGetUploadUrlMutation } from "../../../store/api";
+import {
+  toastLoading,
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../utils/toast";
 export default function SignupStep1({ userType, setUserType, onNext }) {
   const {
     register,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
     trigger,
   } = useFormContext();
+  const picRef = useRef();
+  const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
+    const originalFileName = file.name;
+    const toastId = toastLoading("Uploading image...");
+    try {
+      const { data } = await getUploadUrl({
+        fileName: `profiles/${Date.now()}_${file.name}`,
+        fileType: file.type,
+      }).unwrap();
+
+      await fetch(data, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file.type,
+        },
+      });
+
+      const publicUrl = data.split("?")[0];
+      console.log("Public Url==>", publicUrl);
+      setValue("userProfile", publicUrl, { shouldValidate: true });
+      setValue("uploadedFileName", originalFileName);
+      toastDismiss(toastId);
+      toastSuccess("Image uploaded successfully!");
+    } catch (err) {
+      toastDismiss(toastId);
+      toastError("Failed to upload image");
+      console.error(err);
+    }
+  };
   const handleNext = async () => {
     const valid = await trigger();
     if (valid) onNext?.();
@@ -86,7 +129,47 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
           />
         </div>
       </div>
+      <div>
+        <div className="flex justify-between items-start">
+          <div className="w-[69%]">
+            <label className="block text-[#374151] text-[16px] font-semibold">
+              Upload Picture
+            </label>
+          </div>
+          <button
+            type="button"
+            onClick={() => picRef.current.click()}
+            disabled={uploading}
+            className={`flex items-center cursor-pointer gap-2 px-4 py-3 rounded-xl font-medium transition ${
+              uploading
+                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
+            }`}
+          >
+            <FaFileImage /> {uploading ? "Uploading..." : "Upload"}
+          </button>
+        </div>
 
+        <input
+          type="file"
+          ref={picRef}
+          className="hidden"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+
+        {watch("userProfile") && (
+          <p className="mt-2 text-sm italic">
+            Selected: {watch("uploadedFileName")}
+          </p>
+        )}
+
+        {errors.userProfile && (
+          <p className="text-xs text-red-600 mt-1">
+            {errors.userProfile.message}
+          </p>
+        )}
+      </div>
       <InputWithIcon
         label="Password"
         icon={FaLock}

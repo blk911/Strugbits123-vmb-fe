@@ -16,7 +16,13 @@ import AuthButton from "../../../components/common/site/AuthButton";
 import CustomCheckbox from "../../../components/common/site/CustomCheckbox";
 import uploadIcon from "../../../assets/upload_photos.png";
 import TimeInput from "../../../components/common/site/TimeInput";
-
+import { useGetUploadUrlMutation } from "../../../store/api";
+import {
+  toastLoading,
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../utils/toast";
 const days = [
   "Monday",
   "Tuesday",
@@ -33,12 +39,15 @@ export default function SalonStep2({ onBack }) {
     setValue,
     watch,
     formState: { errors, isSubmitting },
+    trigger,
   } = useFormContext();
   const [selectedDays, setSelectedDays] = useState(watch("workingDays") || []);
   const detailsRef = useRef(null);
   const docRef = useRef();
   const picRef = useRef();
   const photosRef = useRef();
+
+  const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (detailsRef.current && !detailsRef.current.contains(e.target)) {
@@ -55,7 +64,86 @@ export default function SalonStep2({ onBack }) {
     setSelectedDays(updated);
     setValue("workingDays", updated, { shouldValidate: true });
   };
+  const uploadFile = async (file, folder = "salon") => {
+    if (!file) return null;
 
+    const toastId = toastLoading("Uploading...");
+
+    try {
+      const fileName = `${folder}/${Date.now()}_${file.name.replace(
+        /[^a-zA-Z0-9.-]/g,
+        "_"
+      )}`;
+      const { data } = await getUploadUrl({
+        fileName,
+        fileType: file.type || "application/octet-stream",
+      }).unwrap();
+
+      await fetch(data.uploadUrl || data, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+
+      const publicUrl = (data.uploadUrl || data).split("?")[0];
+      toastDismiss(toastId);
+      toastSuccess("Uploaded successfully!");
+      return { url: publicUrl, name: file.name };
+    } catch (err) {
+      toastDismiss(toastId);
+      toastError("Upload failed");
+      console.error(err);
+      return null;
+    }
+  };
+
+  const handleLicenseUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const result = await uploadFile(file, "licenses");
+    if (result) {
+      setValue("licenseDoc", result.url, { shouldValidate: true });
+      setValue("licenseDocName", result.name);
+    }
+  };
+
+  const handleProfilePicUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const result = await uploadFile(file, "profiles");
+    if (result) {
+      setValue("profilePic", result.url, { shouldValidate: true });
+      setValue("profilePicName", result.name);
+    }
+  };
+
+  const handleSalonPhotosUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const toastId = toastLoading(`Uploading ${files.length} photo(s)...`);
+    const uploaded = [];
+
+    for (const file of files) {
+      const result = await uploadFile(file, "salon-photos");
+      if (result) uploaded.push({ url: result.url, name: result.name });
+    }
+
+    const current = watch("salonPhotos") || [];
+    setValue("salonPhotos", [...current, ...uploaded], {
+      shouldValidate: true,
+    });
+    toastDismiss(toastId);
+    if (uploaded.length === files.length) toastSuccess("All photos uploaded!");
+  };
+
+  const removeSalonPhoto = (index) => {
+    const current = watch("salonPhotos") || [];
+    const updated = current.filter((_, i) => i !== index);
+    setValue("salonPhotos", updated, { shouldValidate: true });
+  };
   return (
     <div className="w-full space-y-4 font-[Poppins,sans-serif]">
       <InputWithIcon
@@ -146,9 +234,14 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => docRef.current.click()}
-              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580] cursor-pointer"
+              disabled={uploading}
+              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
+                uploading
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
+              }`}
             >
-              <FaFileAlt /> Upload
+              <FaFileAlt /> {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
           <input
@@ -156,14 +249,11 @@ export default function SalonStep2({ onBack }) {
             ref={docRef}
             className="hidden"
             accept=".png,.jpg,.jpeg,.pdf"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              setValue("licenseDoc", file || null, { shouldValidate: true });
-            }}
+            onChange={handleLicenseUpload}
           />
-          {watch("licenseDoc")?.name && (
+          {watch("licenseDoc") && (
             <p className="mt-2 text-sm italic">
-              Selected: {watch("licenseDoc").name}
+              Selected: {watch("licenseDocName")}
             </p>
           )}
           {errors.licenseDoc && (
@@ -200,9 +290,14 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => picRef.current.click()}
-              className="flex items-center gap-2 bg-[#FF92A54D] text-[#FF92A5] font-medium rounded-xl px-4 py-3 hover:bg-[#FF92A580] cursor-pointer"
+              disabled={uploading}
+              className={` cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
+                uploading
+                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+                  : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
+              }`}
             >
-              <FaFileImage /> Upload
+              <FaFileImage /> {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
           <input
@@ -210,14 +305,11 @@ export default function SalonStep2({ onBack }) {
             ref={picRef}
             className="hidden"
             accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              setValue("profilePic", file || null, { shouldValidate: true });
-            }}
+            onChange={handleProfilePicUpload}
           />
-          {watch("profilePic")?.name && (
+          {watch("profilePic") && (
             <p className="mt-2 text-sm italic">
-              Selected: {watch("profilePic").name}
+              Selected: {watch("profilePicName")}
             </p>
           )}
           {errors.profilePic && (
@@ -236,10 +328,10 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => photosRef.current.click()}
-              className="flex-shrink-0 flex flex-col items-center justify-center 
-                 w-[70px] h-[64px] sm:w-[94px] sm:h-[82px] 
-                 border border-[#C0C0C0] bg-white rounded-md 
-                 hover:bg-[#FFF4F6] transition-all cursor-pointer"
+              disabled={uploading}
+              className={`flex-shrink-0 flex flex-col items-center justify-center w-[94px] h-[82px] border border-[#C0C0C0] bg-white rounded-md hover:bg-[#FFF4F6] transition-all cursor-pointer ${
+                uploading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               <img
                 src={uploadIcon}
@@ -257,36 +349,27 @@ export default function SalonStep2({ onBack }) {
               ref={photosRef}
               className="hidden"
               accept="image/*"
-              onChange={(e) => {
-                const files = Array.from(e.target.files || []);
-                setValue("salonPhotos", files, { shouldValidate: true });
-              }}
+              onChange={handleSalonPhotosUpload}
             />
 
             <div className="flex flex-wrap gap-2 sm:gap-3">
-              {watch("salonPhotos")?.map((file, index) => (
+              {watch("salonPhotos")?.map((photo, index) => (
                 <div key={index} className="relative flex-shrink-0">
                   <img
-                    src={URL.createObjectURL(file)}
+                    src={photo.url}
                     alt={`Salon photo ${index + 1}`}
-                    className="w-[70px] h-[64px] sm:w-[80px] sm:h-[74px] object-cover rounded-md "
+                    className="w-[80px] h-[74px] object-cover rounded-md border"
                   />
                   <button
                     type="button"
-                    onClick={() => {
-                      const current = watch("salonPhotos") || [];
-                      const updated = current.filter((_, i) => i !== index);
-                      setValue("salonPhotos", updated, {
-                        shouldValidate: true,
-                      });
-                    }}
-                    className="absolute top-2 right-2 bg-[#FF92A5] text-white rounded-full w-5 h-5 text-xs 
-                       flex items-center justify-center shadow-md hover:bg-[#e07a8c] 
-                       transform translate-x-1/2 -translate-y-1/2 transition-all cursor-pointer"
-                    aria-label="Remove photo"
+                    onClick={() => removeSalonPhoto(index)}
+                    className="absolute cursor-pointer top-[-2px] right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
                   >
                     ×
                   </button>
+                  <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
+                    {photo.name}
+                  </p>
                 </div>
               ))}
             </div>

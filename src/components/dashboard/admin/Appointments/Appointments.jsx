@@ -7,6 +7,7 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetAdminAppointmentsQuery } from "../../../../store/api";
 import {
   FaCalendarCheck,
+  FaClock,
   FaEye,
   FaPaperPlane,
   FaRegHandPointer,
@@ -15,6 +16,7 @@ import { GiCheckMark } from "react-icons/gi";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 import userAvatar from "../../../../assets/person_icon.png";
 import SalonImage from "../../../../assets/salon-1.png";
+import { FiX } from "react-icons/fi";
 
 const PAGE_SIZE = 10;
 
@@ -45,12 +47,148 @@ export default function Appointments({
   const appointments = response?.data?.items || [];
   console.log("Appointments Data Recieved==>", appointments);
   const totalPages = response?.data?.pages || 1;
+  const formatDate = (date) =>
+    !date ? "" : new Date(date).toLocaleDateString("en-GB");
+  const formatTime = (date) =>
+    !date
+      ? ""
+      : new Date(date).toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
 
+  const mapTimeline = (timeline = [], appt) => {
+    return timeline.map((item, index) => {
+      const isLast = index === timeline.length - 1;
+      const tag = item.tag?.toLowerCase();
+
+      const base = {
+        iconBg: isLast ? "bg-[#F3F4F6]" : "bg-[#FF92A54D]",
+        barColor: isLast ? "bg-[#E5E7EB]" : "bg-[#FF92A5]",
+        titleColor: isLast ? "text-[#6B7280]" : "text-[#581838]",
+      };
+
+      switch (tag) {
+        case "requested":
+        case "appointment-created":
+        case "scheduled":
+          return {
+            ...base,
+            icon: <FaPaperPlane className="w-4 h-4" />,
+            title: "Appointment Request Created",
+            dateBy: `${formatDate(item.timestamp)} | By: ${
+              appt.requestedBy?.name || "Client"
+            }`,
+            body: item.description || "Appointment request was created.",
+          };
+
+        case "salon-accepted":
+        case "appointment-proposed":
+          return {
+            ...base,
+            icon: <FaEye className="w-4 h-4" />,
+            title: "Salon Accepted Request",
+            dateBy: `${formatDate(item.timestamp)} | By: ${
+              appt.salon?.salonName || "Salon"
+            }`,
+            body:
+              item.description || "Salon reviewed and accepted the booking.",
+          };
+
+        case "confirmed":
+        case "user-confirmed":
+        case "scheduled":
+          return {
+            ...base,
+            icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
+            iconBg: "bg-[#FF92A5]",
+            title: "Appointment Confirmed",
+            dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
+            body: item.description || "Client confirmed the appointment.",
+            smallTopLabel: true,
+          };
+
+        case "appointment-scheduled":
+        case "appointment-created":
+          return {
+            ...base,
+            icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
+            iconBg: "bg-[#F3F4F6]",
+            iconBorderColor: "#E5E7EB",
+            title: "Appointment Scheduled",
+            titleColor: "text-[#6B7280]",
+            dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
+            body: item.description || "Appointment scheduled successfully.",
+            smallTopLabel: true,
+          };
+
+        case "reschedule-requested":
+        case "rescheduled":
+          return {
+            ...base,
+            icon: (
+              <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
+            ),
+            iconBg: "bg-[#F3F4F6]",
+            iconBorderColor: "#E5E7EB",
+            title: "Reschedule Requested",
+            titleColor: "text-[#6B7280]",
+            dateBy: "",
+            body: null,
+            reschedule: {
+              requestFrom:
+                "Rescheduled request from " + appt.requestedFrom.name ||
+                "Client",
+              requestMessage: `• Message: ${
+                item.description || "Reschedule requested"
+              }`,
+              acceptedBy: "Rescheduled request accepted:",
+              newAppointment: "• New appointment time/date:",
+              appointmentDateTime: `• ${formatDate(item.newDate)} | ${
+                item.newTime || "Time TBD"
+              }`,
+            },
+          };
+
+        case "declined":
+        case "rejected":
+          return {
+            ...base,
+            icon: <FiX className="w-4 h-4" />,
+            iconBg: "bg-red-100",
+            barColor: "bg-red-500",
+            title: "Appointment Declined",
+            dateBy: `${formatDate(item.timestamp)} | By: Receiver/Salon`,
+            body: item.description || "Appointment was declined.",
+          };
+
+        case "hold":
+          return {
+            ...base,
+            icon: <FaClock className="w-4 h-4" />,
+            iconBg: "bg-[#FFAA0033]",
+            barColor: "bg-[#FFAA00]",
+            title: "On Hold",
+            dateBy: `${formatDate(item.timestamp)}`,
+            body: item.description || "Appointment is on hold.",
+          };
+
+        default:
+          return {
+            ...base,
+            icon: <FaPaperPlane className="w-4 h-4" />,
+            title: item.event || "Event Occurred",
+            dateBy: formatDate(item.timestamp),
+            body: item.description || "No details available.",
+          };
+      }
+    });
+  };
   const transformedData = appointments.map((appt) => ({
     id: appt._id,
     clientName: appt?.requestedBy?.name || "Unknown",
-    salonName: appt.salon.salonName || "Unknown Salon",
-    serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
+    salonName: appt?.salon.salonName || "Unknown Salon",
+    serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
     clientEmail: appt.requestedBy?.email || "N/A",
     appointmentDate: appt.appointmentDate
       ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
@@ -64,28 +202,27 @@ export default function Appointments({
       appointment: appt,
       treatSection: {
         sender: {
-          name: appt.clientName || appt.requestedByName || "Client",
-          email: appt.clientEmail || appt.requestedByEmail || "N/A",
-          phone: appt.clientPhone || "+1 XXX XXX XXXX",
-          avatar: userAvatar,
+          name: appt.requestedBy?.name || appt.requestedByName || "Client",
+          email: appt.requestedBy?.email || appt.requestedByEmail || "N/A",
+          phone: appt.requestedBy?.phone || "",
+          avatar: appt.requestedBy?.image || userAvatar,
         },
         receiver: {
-          name: appt.salonOwnerName || "Salon Owner",
-          email: appt.salonEmail || "N/A",
-          phone: appt.salonPhone || "+1 XXX XXX XXXX",
-          avatar: userAvatar,
+          name: appt.requestedFrom?.name || "Salon Owner",
+          email: appt.requestedFrom?.email || "",
+          phone: appt.requestedFrom?.phone || "",
+          avatar: appt.requestedFrom?.image || userAvatar,
         },
         salon: {
           name: appt.salon.salonName,
-          desc: appt.salon.salonDescription || "Premium Beauty Services",
+          desc: appt.salon.salonDescription || "",
           email: appt.salon.salonEmail,
           phone: appt.salon.salonPhone,
-          serviceRequested:
-            appt.services?.map((s) => s.serviceName).join(", ") || "N/A",
-          image: appt.salonImage || SalonImage,
+          serviceRequested: appt.services,
+          image: appt.salon.salonImage || SalonImage,
         },
       },
-      timelineItems: appt.timeline || [],
+      timelineItems: mapTimeline(appt.timeline, appt),
     },
   }));
 
@@ -94,59 +231,59 @@ export default function Appointments({
   const handleRowClick = (row) => {
     const fullRow = transformedData.find((r) => r.id === row.id);
     if (fullRow?._modalData) {
-      // openModal("appointmentRequestHistory", fullRow._modalData);
-      openModal("appointmentRequestHistory", {
-        timelineItems: [
-          {
-            icon: <FaPaperPlane className="w-4 h-4" />,
-            iconBg: "bg-[#FF92A54D]",
-            barColor: "bg-[#FF92A5]",
-            title: "Appointment Request Created",
-            dateBy: "01-08-2025 | By: Sarah Johnson",
-            body: "User booked service at Bella Beauty Salon.",
-          },
-          {
-            icon: <FaEye className="w-4 h-4" />,
-            iconBg: "bg-[#FF92A54D]",
-            barColor: "bg-[#FF92A5]",
-            title: "Salon Accepted Request",
-            dateBy: "02-08-2025",
-            body: "Salon reviewed the booking and accepted.",
-          },
-          {
-            icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
-            title: "Appointment Created",
-            titleColor: "#6B7280",
-            dateBy: "03-08-2025, 11:05 AM",
-            body: "Booking created for 06-08-2025 | 2:00 PM.",
-            smallTopLabel: true,
-          },
-        ],
-        treatSection: {
-          sender: {
-            name: "Sarah Johnson",
-            email: "sarah@gmail.com",
-            phone: "+14 256 365470",
-            avatar: userAvatar,
-          },
-          receiver: {
-            name: "Juliana Sauvé",
-            email: "juliana@gmail.com",
-            phone: "+14 256 365470",
-            avatar: userAvatar,
-          },
-          salon: {
-            name: row.salonName,
-            desc: "Premium Beauty Services",
-            email: "bella@gmail.com",
-            phone: "+1 (555) 123-4567",
-            serviceRequested: ["Facial", "Manicure"].join(", "),
-            image: SalonImage,
-          },
-        },
-      });
+      openModal("appointmentRequestHistory", fullRow._modalData);
+      // openModal("appointmentRequestHistory", {
+      //   timelineItems: [
+      //     {
+      //       icon: <FaPaperPlane className="w-4 h-4" />,
+      //       iconBg: "bg-[#FF92A54D]",
+      //       barColor: "bg-[#FF92A5]",
+      //       title: "Appointment Request Created",
+      //       dateBy: "01-08-2025 | By: Sarah Johnson",
+      //       body: "User booked service at Bella Beauty Salon.",
+      //     },
+      //     {
+      //       icon: <FaEye className="w-4 h-4" />,
+      //       iconBg: "bg-[#FF92A54D]",
+      //       barColor: "bg-[#FF92A5]",
+      //       title: "Salon Accepted Request",
+      //       dateBy: "02-08-2025",
+      //       body: "Salon reviewed the booking and accepted.",
+      //     },
+      //     {
+      //       icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
+      //       iconBg: "bg-[#F3F4F6]",
+      //       iconBorderColor: "#E5E7EB",
+      //       title: "Appointment Created",
+      //       titleColor: "#6B7280",
+      //       dateBy: "03-08-2025, 11:05 AM",
+      //       body: "Booking created for 06-08-2025 | 2:00 PM.",
+      //       smallTopLabel: true,
+      //     },
+      //   ],
+      //   treatSection: {
+      //     sender: {
+      //       name: "Sarah Johnson",
+      //       email: "sarah@gmail.com",
+      //       phone: "+14 256 365470",
+      //       avatar: userAvatar,
+      //     },
+      //     receiver: {
+      //       name: "Juliana Sauvé",
+      //       email: "juliana@gmail.com",
+      //       phone: "+14 256 365470",
+      //       avatar: userAvatar,
+      //     },
+      //     salon: {
+      //       name: row.salonName,
+      //       desc: "Premium Beauty Services",
+      //       email: "bella@gmail.com",
+      //       phone: "+1 (555) 123-4567",
+      //       serviceRequested: ["Facial", "Manicure"].join(", "),
+      //       image: SalonImage,
+      //     },
+      //   },
+      // });
     }
   };
 

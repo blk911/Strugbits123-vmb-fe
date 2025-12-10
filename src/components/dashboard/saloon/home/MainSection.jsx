@@ -14,7 +14,7 @@ import {
   useGetServicesQuery,
 } from "../../../../store/api";
 import { formatTimeAgo } from "../../../../utils/HelperFunctions";
-
+import SalonImage from "../../../../assets/salon-1.png";
 export default function MainSection() {
   const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ export default function MainSection() {
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const latestInvite = invitesRes?.data?.items?.[0];
   const pendingAppointments = appointmentsRes?.data?.items || [];
-
+  console.log("Pending Appointments==>", pendingAppointments);
   useEffect(() => {}, []);
 
   return (
@@ -73,7 +73,7 @@ export default function MainSection() {
               <>
                 <AppointmentCard
                   key={pendingAppointments[0]._id}
-                  icon={pendingAppointments[0].salonImage}
+                  icon={pendingAppointments[0].salonImage || SalonImage}
                   from={pendingAppointments[0].requestedFrom?.name || "Client"}
                   service={pendingAppointments[0].services
                     ?.map((s) => s.name)
@@ -126,7 +126,7 @@ export default function MainSection() {
             </h3>
             <button
               onClick={() => navigate("/salondetail")}
-              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[16px] hover:bg-[#ff7a8a] transition"
+              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[16px] hover:bg-[#ff7a8a] transition cursor-pointer"
             >
               Manage Services
             </button>

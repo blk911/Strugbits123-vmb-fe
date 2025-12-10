@@ -15,7 +15,7 @@ export const customerSignupSchema = z
     zipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
     phone: z.string().min(10, "Valid phone number required"),
     password: z.string().min(6, "Password must be at least 6 characters"),
-
+    userProfile: z.string().min(1, "Profile picture is required"),
     confirmPassword: z.string().min(1, "Confirm password is required"),
   })
   .refine((d) => d.password === d.confirmPassword, {
@@ -42,21 +42,25 @@ export const salonStep2Schema = z
 
     workingDays: z.array(z.string()).min(1, "Select at least one day"),
 
-    licenseDoc: z.any().refine((file) => file instanceof File, {
-      message: "License document is required",
-    }),
-    profilePic: z.any().refine((file) => file instanceof File, {
-      message: "Profile picture is required",
-    }),
+    licenseDoc: z
+      .string()
+      .url("Invalid document URL")
+      .min(1, "License document required"),
+    profilePic: z
+      .string()
+      .url("Invalid image URL")
+      .min(1, "Profile picture required"),
     description: z
       .string()
       .min(10, "Description must be at least 10 characters"),
     salonPhotos: z
-      .array(z.any())
-      .min(1, "At least one salon photo is required")
-      .refine((files) => files.every((f) => f instanceof File), {
-        message: "Invalid photo files",
-      }),
+      .array(
+        z.object({
+          url: z.string().url(),
+          name: z.string(),
+        })
+      )
+      .min(1, "At least one salon photo is required"),
   })
   .refine(
     (data) => {

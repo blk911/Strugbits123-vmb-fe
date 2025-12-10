@@ -9,7 +9,13 @@ import {
   useCreateServiceMutation,
   useUpdateServiceMutation,
 } from "../../../../store/api/salonApi";
-import { toastSuccess, toastError } from "../../../../utils/toast";
+import {
+  toastLoading,
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../../utils/toast";
+import { useGetUploadUrlMutation } from "../../../../store/api";
 
 const durations = [
   { label: "30 min", value: 30 },
@@ -30,6 +36,7 @@ export default function AddServiceModal({
 }) {
   const [createService, { isLoading: isCreating }] = useCreateServiceMutation();
   const [updateService, { isLoading: isUpdating }] = useUpdateServiceMutation();
+  const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   const isLoading = isCreating || isUpdating;
   const isEditMode = !!initialData;
   const imgRef = useRef();
@@ -73,7 +80,41 @@ export default function AddServiceModal({
       }
     }
   }, [isOpen, initialData, reset]);
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
+    const toastId = toastLoading("Uploading image...");
+
+    try {
+      const fileName = `services/${Date.now()}_${file.name.replace(
+        /[^a-zA-Z0-9.-]/g,
+        "_"
+      )}`;
+      const { data } = await getUploadUrl({
+        fileName,
+        fileType: file.type || "application/octet-stream",
+      }).unwrap();
+
+      await fetch(data.uploadUrl || data, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+
+      const publicUrl = (data.uploadUrl || data).split("?")[0];
+
+      setValue("serviceImage", [{ url: publicUrl, name: file.name }], {
+        shouldValidate: true,
+      });
+      toastDismiss(toastId);
+      toastSuccess("Image uploaded!");
+    } catch (err) {
+      toastDismiss(toastId);
+      toastError("Failed to upload image");
+      console.error(err);
+    }
+  };
   const onSubmit = async (data) => {
     try {
       const valuesForBackend = {
@@ -81,7 +122,7 @@ export default function AddServiceModal({
         serviceDuration:
           durations.find((d) => d.label === data.serviceDuration)?.value || 60,
         serviceImage:
-          "https://static.wixstatic.com/media/e3c477_ea6d7ddfe1a04ed5b93e47155be95f0a~mv2.png",
+          data.serviceImage?.[0]?.url || initialData?.serviceImage || null,
       };
 
       if (isEditMode) {
@@ -137,9 +178,10 @@ export default function AddServiceModal({
                         <div className="relative">
                           <img
                             src={
-                              watchedImage?.[0]
+                              watchedImage?.[0]?.url ||
+                              (watchedImage?.[0]
                                 ? URL.createObjectURL(watchedImage[0])
-                                : initialData?.serviceImage || defaultImg
+                                : initialData?.serviceImage || defaultImg)
                             }
                             alt="Service"
                             className="w-24 h-24 rounded-lg object-cover border-2 border-dashed border-gray-300"
@@ -147,7 +189,10 @@ export default function AddServiceModal({
                           <button
                             type="button"
                             onClick={() => imgRef.current?.click()}
-                            className="absolute bottom-0 right-0 w-9 h-9 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg cursor-pointer"
+                            disabled={uploading}
+                            className={`absolute bottom-0 right-0 w-9 h-9 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg ${
+                              uploading ? "opacity-50" : ""
+                            }`}
                           >
                             <IoCamera className="text-white text-xl" />
                           </button>
@@ -156,18 +201,18 @@ export default function AddServiceModal({
                             accept="image/*"
                             ref={imgRef}
                             className="hidden"
-                            onChange={(e) => field.onChange(e.target.files)}
+                            onChange={handleImageUpload}
                           />
                         </div>
                         <div>
                           <p className="font-medium text-[#581838]">
                             Service Image
                           </p>
-                          <p className="text-sm text-gray-600 ">
+                          <p className="text-sm text-gray-600">
                             {watchedImage?.[0]?.name ||
-                            initialData?.serviceImage
-                              ? "Change photo"
-                              : "Upload photo"}
+                              (watchedImage?.[0]
+                                ? "Image selected"
+                                : "Upload photo")}
                           </p>
                         </div>
                       </div>

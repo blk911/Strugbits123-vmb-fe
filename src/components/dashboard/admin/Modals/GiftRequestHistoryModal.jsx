@@ -125,11 +125,11 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
                         <p className="mt-1 whitespace-pre-line">
                           {item.reschedule.requestMessage}
                         </p>
-                        <p className="font-semibold text-[#6B7280] mt-4">
+                        {/* <p className="font-semibold text-[#6B7280] mt-4">
                           {item.reschedule.acceptedBy}
                         </p>
                         <p className="mt-1">{item.reschedule.newAppointment}</p>
-                        <p>{item.reschedule.appointmentDateTime}</p>
+                        <p>{item.reschedule.appointmentDateTime}</p> */}
                       </div>
                     )}
                   </div>

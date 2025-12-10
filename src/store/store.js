@@ -7,6 +7,7 @@ import { adminApi } from "./api/adminApi";
 import { salonApi } from "./api/salonApi";
 import { giftApi } from "./api/giftApi";
 import { inviteApi } from "./api/inviteApi";
+import { awsApi } from "./api/awsApi";
 import { appointmentApi } from "./api/appointmentApi";
 import authReducer from "./features/authSlice";
 import userReducer from "./features/userSlice";
@@ -24,6 +25,7 @@ export const store = configureStore({
     [giftApi.reducerPath]: giftApi.reducer,
     [inviteApi.reducerPath]: inviteApi.reducer,
     [appointmentApi.reducerPath]: appointmentApi.reducer,
+    [awsApi.reducerPath]: awsApi.reducer,
     role: roleReducer,
   },
 
@@ -35,5 +37,6 @@ export const store = configureStore({
       .concat(salonApi.middleware)
       .concat(giftApi.middleware)
       .concat(inviteApi.middleware)
+      .concat(awsApi.middleware)
       .concat(appointmentApi.middleware),
 });

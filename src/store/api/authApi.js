@@ -23,6 +23,7 @@ export const authApi = createApi({
           confirmPassword: formData.confirmPassword,
           address: formData.address,
           zipcode: formData.zipcode,
+          userProfile: formData.userProfile,
         };
 
         return {
@@ -36,7 +37,9 @@ export const authApi = createApi({
       query: ({ formData, files }) => {
         const startTime = convertTo12Hour(formData.startTime);
         const endTime = convertTo12Hour(formData.endTime);
-
+        const salonPhotoUrls =
+          formData.salonPhotos?.map((photo) => photo.url) || [];
+        console.log("Form Data Recieved==>", formData);
         const salonOwnerData = {
           name: formData.fullName,
           email: formData.email,
@@ -53,12 +56,9 @@ export const authApi = createApi({
           endTime: endTime,
           workingDays: formData.workingDays,
           description: formData.description,
-          licenseDocument: "https://pdfobject.com/pdf/sample.pdf",
-          profilePic:
-            "https://static.wixstatic.com/media/e3c477_ea6d7ddfe1a04ed5b93e47155be95f0a~mv2.png",
-          salonPhotos: [
-            "https://static.wixstatic.com/media/e3c477_ea6d7ddfe1a04ed5b93e47155be95f0a~mv2.png",
-          ],
+          licenseDocument: formData.licenseDoc,
+          profilePic: formData.profilePic,
+          salonPhotos: salonPhotoUrls,
         };
 
         return {

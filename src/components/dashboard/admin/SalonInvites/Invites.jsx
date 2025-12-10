@@ -5,11 +5,14 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetAdminInvitesQuery } from "../../../../store/api";
 import {
   FaCalendarCheck,
+  FaClock,
   FaPaperPlane,
   FaRegHandPointer,
 } from "react-icons/fa";
 import SalonImage from "../../../../assets/salon-1.png";
 import userAvatar from "../../../../assets/person_icon.png";
+import { FiX } from "react-icons/fi";
+import { RiCalendarScheduleLine } from "react-icons/ri";
 const PAGE_SIZE = 10;
 
 export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
@@ -126,8 +129,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     });
 
   const mapTimeline = (timeline = []) => {
-    return timeline.map((item, idx) => {
-      const isLast = idx === timeline.length - 1;
+    return timeline.map((item, index) => {
+      const isLast = index === timeline.length - 1;
       const tag = item.tag?.toLowerCase();
 
       const base = {
@@ -145,8 +148,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             title: "Invitation Sent",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
               item.timestamp
-            )} by ${item.salonName || "Salon"}`,
-            body: item.description || "Invitation created successfully.",
+            )} by Salon`,
+            body: item.description || "Invitation sent to client.",
           };
 
         case "accepted":
@@ -159,11 +162,12 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
               item.timestamp
             )}`,
-            body: item.description || "User accepted the invitation.",
+            body: item.description || "Client accepted the invitation.",
           };
 
         case "scheduled":
         case "booked":
+        case "appointment-created":
           return {
             ...base,
             icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
@@ -172,19 +176,70 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
               item.timestamp
             )}`,
-            body: item.description || "Booking created successfully.",
+            body: item.description || "Client booked an appointment.",
             smallTopLabel: true,
+          };
+
+        case "declined":
+        case "rejected":
+          return {
+            ...base,
+            icon: <FiX className="w-4 h-4" />,
+            iconBg: "bg-red-100",
+            barColor: "bg-red-500",
+            title: "Invitation Declined",
+            dateBy: `${formatDate(item.timestamp)}, ${formatTime(
+              item.timestamp
+            )}`,
+            body: item.description || "Client declined the invitation.",
+          };
+
+        case "hold":
+          return {
+            ...base,
+            icon: <FaClock className="w-4 h-4" />,
+            iconBg: "bg-[#FFAA0033]",
+            barColor: "bg-[#FFAA00]",
+            title: "On Hold",
+            dateBy: `${formatDate(item.timestamp)}`,
+            body: item.description || "Invitation is on hold.",
+          };
+
+        case "reschedule-requested":
+        case "rescheduled":
+          return {
+            ...base,
+            icon: (
+              <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
+            ),
+            iconBg: "bg-[#F3F4F6]",
+            iconBorderColor: "#E5E7EB",
+            title: "Reschedule",
+            titleColor: "text-[#6B7280]",
+            dateBy: "",
+            body: null,
+            reschedule: {
+              requestFrom: "Reschedule request from client:",
+              requestMessage: `• Message: ${
+                item.description || "Reschedule requested"
+              }`,
+              acceptedBy: "Reschedule request accepted:",
+              newAppointment: "• New appointment time/date:",
+              appointmentDateTime: `• ${formatDate(item.newDate)} | ${
+                item.newTime || "Time TBD"
+              }`,
+            },
           };
 
         default:
           return {
             ...base,
             icon: <FaPaperPlane className="w-4 h-4" />,
-            title: item.event || "Unknown Event",
+            title: item.event || "Event Occurred",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
               item.timestamp
             )}`,
-            body: item.description || "No details.",
+            body: item.description || "No details available.",
           };
       }
     });
