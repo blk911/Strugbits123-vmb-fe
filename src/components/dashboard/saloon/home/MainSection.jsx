@@ -131,7 +131,7 @@ export default function MainSection() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {loadingServices ? (
               <p className="text-gray-500 col-span-2 text-center">
                 Loading services...

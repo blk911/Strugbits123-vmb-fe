@@ -4,8 +4,10 @@ import DashboardCard from "./DashboardCard";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RiMoneyDollarCircleLine, RiFlowerLine } from "react-icons/ri";
 import { useGetDailyStatsQuery } from "../../../../store/api";
+import { useUser } from "../../../../hooks/useUser";
 
 function Overview() {
+  const { user } = useUser();
   const { data: response, refetch } = useGetDailyStatsQuery();
   useEffect(() => {
     refetch();
@@ -22,7 +24,7 @@ function Overview() {
         </h1>
 
         <h2 className="text-[35px] font-semibold text-[#FF92A5] leading-tight">
-          Bella Beauty Salon
+          {user?.salonName || "Salon"}
         </h2>
 
         <p className="text-[16px] text-[#4B5563]">
@@ -38,7 +40,7 @@ function Overview() {
 
       <DashboardCard
         title="Today's Revenue"
-        value="$1,245"
+        value="$0"
         icon={
           <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
         }

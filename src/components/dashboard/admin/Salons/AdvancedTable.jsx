@@ -17,8 +17,8 @@ export default function AdvancedTable({
   return (
     <div className=" -mx-4 sm:mx-0">
       <table className="w-full advanced-table-desktop">
-        <thead>
-          <tr className="border-b border-gray-200">
+        <thead className="rounded-[5px]">
+          <tr className="border-b border-gray-200 bg-[#F8F8F8] ">
             {columns.map((col) => (
               <th
                 key={col.key}
@@ -34,13 +34,13 @@ export default function AdvancedTable({
           {data.map((row) => (
             <tr
               key={row.id}
-              className="border-b border-gray-100 hover:bg-gray-50 transition cursor-pointer"
+              className="border border-[#9CA3AF4D] hover:bg-gray-50 transition cursor-pointer "
               onClick={() => onRowClick?.(row)}
             >
               {columns.map((col) => (
                 <td
                   key={col.key}
-                  className="py-4 px-3 text-sm text-gray-700 align-top"
+                  className="py-4 px-3 text-sm text-gray-700 align-center"
                 >
                   <div className="break-words max-w-xs">
                     {col.render ? col.render(row, onActionClick) : row[col.key]}

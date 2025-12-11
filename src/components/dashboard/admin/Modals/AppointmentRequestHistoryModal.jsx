@@ -104,7 +104,7 @@ export default function AppointmentRequestHistoryModal({
             </div>
 
             <div
-              className="h-[60vh] overflow-y-auto pr-2 no-scrollbar"
+              className="max-h-[60vh] overflow-y-auto pr-2 no-scrollbar"
               style={{ scrollbarWidth: "none" }}
             >
               {timelineItems.length === 0 ? (
@@ -195,7 +195,7 @@ export default function AppointmentRequestHistoryModal({
                   <p className="text-[#4B5563] font-semibold text-[16px]">
                     {sender.name || "Client"}
                   </p>
-                  <p className="text-[#4B5563] text-[12px]">
+                  <p className="text-[#4B5563] text-[12px] break-all">
                     {sender.email || "N/A"}
                   </p>
                   {sender?.phone && (
@@ -209,43 +209,55 @@ export default function AppointmentRequestHistoryModal({
               <p className="text-[#581838] font-medium text-[14px]">
                 Services:
               </p>
+
               <div className="border border-[#9CA3AF4D] rounded-[10px] p-3 text-[12px]">
                 {salon.serviceRequested ? (
-                  <>
-                    <div className="hidden sm:grid grid-cols-3 font-medium text-black mb-2">
-                      <p>Service</p>
-                      <p>Duration</p>
-                      <p>Price</p>
+                  <div className="flex flex-col gap-3">
+                    <div className="hidden sm:flex justify-between text-[12px] font-medium text-[#000] px-1">
+                      <div>Service</div>
+                      <div>Duration</div>
+                      <div>Price</div>
                     </div>
-                    {salon.serviceRequested.map((service, i) => (
+
+                    {salon.serviceRequested.map((s, i) => (
                       <div
                         key={i}
-                        className="hidden sm:grid border-t border-[#D9D9D9] pt-2 grid-cols-3 text-[#4B5563]"
+                        className={`border border-[#D9D9D9] rounded-lg p-3 text-sm 
+            flex flex-col sm:flex-row sm:justify-between gap-2`}
                       >
-                        <p>{service.name}</p>
-                        <p>{service.duration}</p>
-                        <p>${service.price}</p>
+                        <div className="flex flex-col sm:hidden justify-between">
+                          <span className="text-[#000] font-medium">
+                            Service:
+                          </span>
+                          <span className="text-[#4B5563]">{s.name}</span>
+                        </div>
+
+                        <div className="flex flex-col sm:hidden justify-between">
+                          <span className="text-[#000] font-medium">
+                            Duration:
+                          </span>
+                          <span className="text-[#4B5563]">{s.duration}</span>
+                        </div>
+
+                        <div className="flex flex-col sm:hidden justify-between">
+                          <span className="text-[#000] font-medium">
+                            Price:
+                          </span>
+                          <span className="text-[#4B5563]">${s.price}</span>
+                        </div>
+
+                        <div className="hidden sm:flex justify-between w-full text-[#4B5563]">
+                          <div>{s.name}</div>
+                          <div>{s.duration}</div>
+                          <div>${s.price}</div>
+                        </div>
                       </div>
                     ))}
-
-                    <div className="sm:hidden flex flex-col gap-2 pt-2 text-[#4B5563]">
-                      {salon.serviceRequested.map((service, i) => (
-                        <div key={i} className="flex gap-2">
-                          <p className="font-medium text-black">Service:</p>
-                          <p>{service.name}</p>
-                          <p className="font-medium text-black">Duration:</p>
-                          <p>{service.duration}</p>
-                          <p className="font-medium text-black">Price:</p>
-                          <p>{service.price}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                  </div>
                 ) : (
                   <p className="text-[#4B5563]">No services selected</p>
                 )}
               </div>
-
               <p className="text-left sm:text-right text-[#FF92A5] font-bold text-[13px]">
                 Amount Paid: $
                 {salon?.serviceRequested.reduce((a, b) => a + b.price, 0)}

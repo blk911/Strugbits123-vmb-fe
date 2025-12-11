@@ -267,21 +267,20 @@ export default function Appointments({
     if (!row?._modalData) return;
 
     const data = row._modalData;
-
-    if (tab === "Pending") {
+    if (cleanRow?.status === "Pending") {
       openModal("scheduleAppointment", data);
-    } else if (tab === "Reschedule") {
+    } else if (cleanRow?.status === "Reschedule") {
       openModal("rescheduleAppointment", data);
-    } else if (tab === "Scheduled") {
+    } else if (cleanRow?.status === "Scheduled") {
       // openModal("scheduleAppointment", data);
     } else {
       const typeMap = {
         Hold: "hold",
         Confirmed: "confirmed",
-        Decline: "declined",
+        Declined: "declined",
       };
       setModalData(data);
-      setStatusModalType(typeMap[tab] || "hold");
+      setStatusModalType(typeMap[cleanRow?.status] || "hold");
       setShowStatusModal(true);
     }
   };

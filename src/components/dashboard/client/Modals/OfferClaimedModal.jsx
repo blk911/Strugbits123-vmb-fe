@@ -133,28 +133,30 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                     <h4 className="font-medium text-[#581838]">
                       Exclusive Offer
                     </h4>
-
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm">
-                      <div className="grid grid-cols-3 font-medium text-[#000]">
+                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
+                      <div className="flex justify-between text-[12px]  font-medium text-[#000]">
                         <div>Service</div>
                         <div>Duration</div>
                         <div>Price</div>
                       </div>
-
-                      {services.map((s) => (
+                      {services.map((s, i) => (
                         <div
-                          key={s.id}
-                          className="grid grid-cols-3 text-[#4B5563] mt-2"
+                          key={i}
+                          className={`flex justify-between text-[#4B5563] mt-2 ${
+                            i === services?.length - 1
+                              ? ""
+                              : "border-b border-[#D9D9D9]"
+                          }`}
                         >
                           <div>{s.name}</div>
-                          <div>{s.duration} min</div>
+                          <div>{s.duration}</div>
                           <div>${s.price}</div>
                         </div>
                       ))}
                     </div>
 
                     <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
-                      <div>Discount: {discountPercent}%</div>
+                      <div>Discount (%) : &nbsp; {discountPercent}%</div>
                       <div>Price After Discount: ${finalPrice.toFixed(2)}</div>
                     </div>
                   </div>

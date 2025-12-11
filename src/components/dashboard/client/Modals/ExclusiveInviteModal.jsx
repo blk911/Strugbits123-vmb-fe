@@ -143,7 +143,7 @@ export default function ExclusiveInviteModal({
               >
                 <Dialog.Panel
                   style={{ background: "#FFF2F4" }}
-                  className="relative w-full max-w-[480px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
+                  className="relative w-full max-w-[448px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
                 >
                   <IoClose
                     onClick={closeAll}
@@ -157,10 +157,10 @@ export default function ExclusiveInviteModal({
                       Salon Invite!
                     </h3>
                     <p className="text-[#00000080] text-[14px] mt-3">
-                      {salon?.name} has invited you to enjoy their services with
-                      a special discount just for you. <br /> Review the offer
-                      details below and confirm your booking to claim your
-                      discount.
+                      {salon?.name} Salon has invited you to enjoy their
+                      services with a special discount just for you. <br />{" "}
+                      Review the offer details below and confirm your booking to
+                      claim your discount.
                     </p>
                   </div>
 
@@ -193,16 +193,20 @@ export default function ExclusiveInviteModal({
                       <h4 className="font-medium text-[#581838]">
                         Exclusive Offer
                       </h4>
-                      <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm">
-                        <div className="grid grid-cols-3 font-medium text-[#000]">
+                      <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
+                        <div className="flex justify-between text-[12px]  font-medium text-[#000]">
                           <div>Service</div>
                           <div>Duration</div>
                           <div>Price</div>
                         </div>
-                        {services.map((s) => (
+                        {services.map((s, i) => (
                           <div
-                            key={s.name}
-                            className="grid grid-cols-3 text-[#4B5563] mt-2"
+                            key={i}
+                            className={`flex justify-between text-[#4B5563] mt-2 ${
+                              i === services?.length - 1
+                                ? ""
+                                : "border-b border-[#D9D9D9]"
+                            }`}
                           >
                             <div>{s.name}</div>
                             <div>{s.duration}</div>
@@ -211,7 +215,7 @@ export default function ExclusiveInviteModal({
                         ))}
                       </div>
                       <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
-                        <div>Discount: {discountPercent}%</div>
+                        <div>Discount (%): &nbsp; {discountPercent}%</div>
                         <div>
                           Price After Discount: ${finalPrice.toFixed(2)}
                         </div>
@@ -219,20 +223,22 @@ export default function ExclusiveInviteModal({
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <AppButton
                       leftIcon={<FaTimes />}
-                      variant="primary"
+                      size="custom"
+                      variant="custom"
                       onClick={closeAll}
-                      className="flex-1"
+                      className="text-[10px] text-[12px] text-white bg-[#FF92A5] hover:bg-[#FF92A5] px-[20px] py-[15px] rounded-[8px]"
                     >
                       Maybe Later
                     </AppButton>
                     <AppButton
                       leftIcon={<FaCheck />}
-                      variant="outline-dark"
+                      variant="custom"
+                      size="custom"
                       onClick={handleAccept}
-                      className="flex-1"
+                      className="border border-[#581838] text-[12px] text-[#581838] bg-white hover:bg-white px-[20px] py-[15px] rounded-[8px]"
                     >
                       Accept & Book Now
                     </AppButton>

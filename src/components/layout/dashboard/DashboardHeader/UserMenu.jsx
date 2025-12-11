@@ -48,11 +48,16 @@ function UserMenu() {
     {
       label: "Profile Setting",
       onClick: () => {
-        openModal("profileSettings", {
-          fullName: user?.name || "John Doe",
-          email: user?.email || "john.doe@example.com",
-          phone: user?.phoneNumber || "+1 555 123 4567",
-        });
+        openModal(
+          "profileSettings",
+          user
+          // {
+          // fullName: user?.name || "John Doe",
+          // email: user?.email || "john.doe@example.com",
+          // phone: user?.phoneNumber || "+1 555 123 4567",
+          // userProfile: user?.userProfile || profile,
+          // }
+        );
       },
     },
     {

@@ -1,7 +1,10 @@
 import React from "react";
 
 const TableRow = ({ row, keys, cellRenderers, onRowClick }) => (
-  <tr onClick={() => onRowClick?.(row)}>
+  <tr
+    onClick={() => onRowClick?.(row)}
+    className="cursor-pointer border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px] "
+  >
     {keys.map((key, index) => {
       let cellValue = cellRenderers[key]
         ? cellRenderers[key](row[key])
@@ -13,7 +16,7 @@ const TableRow = ({ row, keys, cellRenderers, onRowClick }) => (
 
       return (
         <td key={key} data-label={headerText}>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col ">
             <span className="label md:hidden">{headerText}:</span>
             <div
               className={`value ${

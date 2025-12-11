@@ -10,7 +10,7 @@ const Table = ({ data, cellRenderers, onRowClick }) => {
 
   return (
     <div className="w-full overflow-x-auto">
-      <table className="w-full table-fixed text-sm bg-white custom-table">
+      <table className="w-full table-fixed text-sm bg-white custom-table ">
         <TableHeader keys={keys} />
         <tbody>
           {data.map((row) => (

@@ -27,7 +27,7 @@ export default function SalonDetail() {
         <div className="w-full relative">
           <AutoCarousel
             images={user?.salonPhotos}
-            heightClass="h-[180px] sm:h-[220px] md:h-[260px] rounded-tl-xl rounded-tr-xl"
+            heightClass="h-[180px] sm:h-[220px] md:h-[192px] rounded-tl-xl rounded-tr-xl"
           />
 
           <div

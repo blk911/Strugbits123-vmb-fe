@@ -32,7 +32,11 @@ export default function AppointmentDetailsSection({ data }) {
           {data.services.map((srv, i) => (
             <div
               key={i}
-              className="flex justify-between text-[12px] text-[#581838]"
+              className={`flex justify-between text-[12px] text-[#581838] ${
+                i === data?.services?.length - 1
+                  ? ""
+                  : "border-b border-[#D9D9D9]"
+              }`}
             >
               <span>{srv.name}</span>
               <div className="flex gap-8">

@@ -206,13 +206,11 @@ export default function AddServiceModal({
                         </div>
                         <div>
                           <p className="font-medium text-[#581838]">
-                            Service Image
+                            Service Picture
                           </p>
                           <p className="text-sm text-gray-600">
                             {watchedImage?.[0]?.name ||
-                              (watchedImage?.[0]
-                                ? "Image selected"
-                                : "Upload photo")}
+                              (watchedImage?.[0] ? "Image selected" : "Upload")}
                           </p>
                         </div>
                       </div>
@@ -227,7 +225,7 @@ export default function AddServiceModal({
                       {...register("serviceName", {
                         required: "Service name is required",
                       })}
-                      className="mt-1 w-full px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                      className="mt-1 w-full px-4 py-3 bg-white  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
                       placeholder="e.g. Classic Haircut"
                     />
                     {errors.serviceName && (
@@ -252,7 +250,7 @@ export default function AddServiceModal({
                             message: "Price must be greater than 0",
                           },
                         })}
-                        className="mt-1 w-full px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                        className="mt-1 w-full bg-white px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
                         placeholder="50.00"
                       />
                       {errors.servicePrice && (
@@ -273,7 +271,7 @@ export default function AddServiceModal({
                         render={({ field }) => (
                           <select
                             {...field}
-                            className="mt-1 w-full px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                            className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
                           >
                             <option value="">Select duration</option>
                             {durations.map((d) => (
@@ -292,42 +290,41 @@ export default function AddServiceModal({
                     </div>
                   </div>
 
-                  <div>
+                  <div className="bg-white rounded-[10px] p-[10px] flex flex-col gap-[20px] ">
+                    <Controller
+                      name="isDefault"
+                      control={control}
+                      render={({ field }) => (
+                        <label className="flex items-center gap-3 ">
+                          <div
+                            onClick={() => setValue("isDefault", !field.value)}
+                            className="w-4 h-4 rounded border-2 border-[#FF92A5] flex items-center justify-center"
+                          >
+                            {field.value && (
+                              <FaCheck className="text-[#FF92A5] text-sm cursor-pointer" />
+                            )}
+                          </div>
+                          <span
+                            className="text-gray-700 cursor-pointer"
+                            onClick={() => setValue("isDefault", !field.value)}
+                          >
+                            Set as default service
+                          </span>
+                        </label>
+                      )}
+                    />
                     <label className="block text-sm font-medium text-gray-700">
-                      Discount (%)
+                      Service Discount (%)
                     </label>
                     <input
                       type="number"
                       min="0"
                       max="100"
                       {...register("serviceDiscount")}
-                      className="mt-1 w-full px-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg"
+                      className="mt-1 w-full bg-[#9CA3AF4D] px-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg"
                       placeholder="10"
                     />
                   </div>
-
-                  <Controller
-                    name="isDefault"
-                    control={control}
-                    render={({ field }) => (
-                      <label className="flex items-center gap-3 ">
-                        <div
-                          onClick={() => setValue("isDefault", !field.value)}
-                          className="w-6 h-6 rounded border-2 border-[#FF92A5] flex items-center justify-center"
-                        >
-                          {field.value && (
-                            <FaCheck className="text-[#FF92A5] text-sm cursor-pointer" />
-                          )}
-                        </div>
-                        <span
-                          className="text-gray-700 cursor-pointer"
-                          onClick={() => setValue("isDefault", !field.value)}
-                        >
-                          Set as default service
-                        </span>
-                      </label>
-                    )}
-                  />
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
@@ -336,7 +333,7 @@ export default function AddServiceModal({
                     <textarea
                       rows={4}
                       {...register("description")}
-                      className="mt-1 w-full px-4 py-3  border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg "
+                      className="mt-1 bg-white w-full px-4 py-3  border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg "
                       placeholder="Describe your service..."
                     />
                   </div>

@@ -61,7 +61,7 @@ export default function AdminStatsSection() {
               </p>
 
               <span
-                className="text-[#64748B] text-[14px] self-center font-medium underline cursor-pointer"
+                className="text-[#64748B] text-[14px] self-center font-medium cursor-pointer pb-[2px] border-b border-[#64748B]"
                 onClick={() => handleViewClick(item)}
               >
                 View All

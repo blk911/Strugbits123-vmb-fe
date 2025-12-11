@@ -58,7 +58,6 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
     });
 
   const salons = salonsResponse?.data?.items || [];
-  console.log("Salons Filtered==>", salons);
   const {
     control,
     handleSubmit,

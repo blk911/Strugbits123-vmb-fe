@@ -7,7 +7,7 @@ export const CellRenderers = {
 
   message: (value) => (
     <p
-      className="italic text-xs text-[#00000080] max-w-[340px] line-clamp-3"
+      className="italic text-[12px] text-[#00000080] max-w-[340px] line-clamp-3"
       title={value}
       style={{ fontStyle: "italic", opacity: 0.5 }}
     >
@@ -46,7 +46,7 @@ export const CellRenderers = {
 
     return (
       <span
-        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+        className={`inline-block px-3 py-1 rounded-full text-[10px] font-semibold whitespace-nowrap ${
           styles[value] || "bg-[#64748B33] text-[#64748B]"
         }`}
       >

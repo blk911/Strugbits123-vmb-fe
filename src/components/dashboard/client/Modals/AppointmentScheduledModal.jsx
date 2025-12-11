@@ -132,7 +132,7 @@ export default function AppointmentScheduledModal({
 
                   <div className="flex flex-col items-center text-center">
                     <h2 className="text-[#581838] font-bold text-[22px]">
-                      Great News! Your appointment is Scheduled.
+                      Great News! <br /> Your appointment is Scheduled.
                     </h2>
                     <p className="text-[#00000080] text-[14px] mt-2 leading-[20px]">
                       The salon has successfully scheduled your appointment.
@@ -175,7 +175,11 @@ export default function AppointmentScheduledModal({
                         {mock?.services?.map((srv, i) => (
                           <div
                             key={i}
-                            className="flex justify-between text-[12px] text-[#581838]"
+                            className={`flex ${
+                              i === mock?.services?.length - 1
+                                ? ""
+                                : "border-b border-[#D9D9D9]"
+                            } justify-between text-[12px] text-[#581838]`}
                           >
                             <span>{srv?.name}</span>
                             <div className="flex gap-8">

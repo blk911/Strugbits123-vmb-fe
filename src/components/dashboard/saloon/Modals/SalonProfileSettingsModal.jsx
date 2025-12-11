@@ -404,7 +404,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           onClick={() => logoRef.current.click()}
                           className="text-[#737373] text-sm cursor-pointer"
                         >
-                          Change Logo
+                          Upload Logo
                         </button>
                       </div>
                     </div>

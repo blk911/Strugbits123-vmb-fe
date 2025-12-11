@@ -293,12 +293,13 @@ export default function ScheduleAppointmentModal({
                           </div>
                         </div>
 
-                        <div className="flex gap-4 mt-4">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-4">
                           <AppButton
                             leftIcon={<FaTimes />}
                             variant="primary"
                             onClick={handleDecline}
-                            className="flex-1"
+                            size="custom"
+                            className="flex-1 text-[13px] px-[20px] py-[15px]"
                             disabled={declining}
                           >
                             {declining ? "Declining..." : "Decline"}
@@ -306,8 +307,9 @@ export default function ScheduleAppointmentModal({
                           <AppButton
                             leftIcon={<FaCheck />}
                             variant="outline-dark"
+                            size="custom"
                             onClick={onAcceptAndSchedule}
-                            className="flex-1"
+                            className="flex-1 text-[13px] px-[20px] py-[15px]"
                           >
                             Accept & Schedule
                           </AppButton>

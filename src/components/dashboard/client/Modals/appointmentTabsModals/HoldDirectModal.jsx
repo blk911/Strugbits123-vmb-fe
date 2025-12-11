@@ -99,7 +99,8 @@ export default function HoldDirectModal({
                     You’ve Held Your Booking
                   </h2>
                   <p className="text-[#00000080] text-[14px]">
-                    You can resume or confirm it anytime before it expires.
+                    Your booking request has been put on hold. You can resume or
+                    confirm it anytime before it expires.
                   </p>
                 </div>
 

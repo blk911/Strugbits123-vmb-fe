@@ -351,7 +351,6 @@ export default function BookAppointmentModal({
                               <input
                                 type="time"
                                 {...field}
-                                min={new Date().toISOString().split("T")[0]}
                                 className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
                    focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
                    transition-all cursor-pointer
@@ -363,15 +362,6 @@ export default function BookAppointmentModal({
                                 style={{ appearance: "none" }}
                               />
                             </div>
-                            // <input
-                            //   {...field}
-                            //   type="time"
-                            //   className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
-                            //     errors.appointmentTime
-                            //       ? "border-red-500"
-                            //       : "border-[#E5E5E5]"
-                            //   }`}
-                            // />
                           )}
                         />
                         {errors.appointmentTime && (
