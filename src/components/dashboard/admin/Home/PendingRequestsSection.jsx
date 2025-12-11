@@ -196,7 +196,6 @@ export default function PendingRequestsSection() {
                 className="flex-1 py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
                 leftIcon={<HiHandRaised size={16} />}
                 disabled={isProcessingThis(item._id)}
-                // onClick={() => handleReject(item._id, item.salonName)}
                 onClick={() =>
                   openModal("salonRejection", {
                     salonId: item._id,

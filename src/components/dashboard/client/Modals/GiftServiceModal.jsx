@@ -308,7 +308,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       <h4 className="text-[#581838] font-bold text-xl">
                         Who’s treating you?
                       </h4>
-                      <label className="text-[#404040] text-sm mt-3 block">
+                      <label className="text-[#404040] text-sm font-medium mt-3 block">
                         Email
                       </label>
                       <Controller
@@ -333,7 +333,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         </p>
                       )}
 
-                      <label className="text-[#404040] text-sm mt-4 block">
+                      <label className="text-[#404040] text-sm font-medium mt-4 block">
                         Write a sweet message
                       </label>
                       <Controller

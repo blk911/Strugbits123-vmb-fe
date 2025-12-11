@@ -393,13 +393,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           accept="image/*"
                           className="hidden"
                           onChange={handleLogoUpload}
-                          // onChange={(e) => {
-                          //   const file = e.target.files[0];
-                          //   if (file) {
-                          //     setValue("logo", file);
-                          //     setPreviewLogo(URL.createObjectURL(file));
-                          //   }
-                          // }}
                         />
                       </div>
                       <div>
@@ -568,10 +561,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         type="file"
                         accept=".png,.jpg,.jpeg,.pdf"
                         className="hidden"
-                        // onChange={(e) => {
-                        //   const file = e.target.files[0];
-                        //   if (file) setValue("licenseDocument", file);
-                        // }}
                         onChange={handleLicenseUpload}
                       />
                       {watch("licenseDocument") && (
@@ -620,12 +609,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           multiple
                           accept="image/*"
                           className="hidden"
-                          // onChange={(e) => {
-                          //   const files = Array.from(e.target.files);
-                          //   if (files.length > 0) {
-                          //     setValue("salonPhotos", files);
-                          //   }
-                          // }}
                           onChange={handleSalonPhotosUpload}
                         />
 

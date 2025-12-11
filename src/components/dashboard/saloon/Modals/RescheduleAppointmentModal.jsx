@@ -127,10 +127,7 @@ export default function RescheduleAppointmentModal({
   }, [isOpen]);
 
   const onAcceptAndSchedule = () => setStep(2);
-  // const onScheduleNow = () => {
-  //   closeModal();
-  //   setTimeout(() => onAccept?.(), 200);
-  // };
+
   const onScheduleNow = async (formData) => {
     if (!appointmentId) return toastError("Appointment not found");
 

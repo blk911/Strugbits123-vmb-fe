@@ -39,7 +39,6 @@ export const authApi = createApi({
         const endTime = convertTo12Hour(formData.endTime);
         const salonPhotoUrls =
           formData.salonPhotos?.map((photo) => photo.url) || [];
-        console.log("Form Data Recieved==>", formData);
         const salonOwnerData = {
           name: formData.fullName,
           email: formData.email,

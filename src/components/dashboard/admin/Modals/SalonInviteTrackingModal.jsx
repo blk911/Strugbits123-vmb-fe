@@ -1,11 +1,44 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetSalonByIdQuery } from "../../../../store/api";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../../utils/toast";
 
 export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], salonInfo = {}, clientInfo = {} } = data;
+  const salonId = salonInfo?.salonId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
+
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      onClose();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    onClose();
+    navigate(`/salon/${salonId}`);
+  };
   const status = data.status || "pending";
   const statusStyles = {
     claimed: { bg: "bg-[#4FCF0033]", text: "text-[#4FCF00]", label: "Claimed" },
@@ -71,6 +104,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
               variant="custom"
               size="custom"
               className="bg-[#FF92A54D] text-[#581838] py-[12px] px-[20px] rounded-[10px] font-medium hover:bg-[#ff92a5]/20 transition whitespace-nowrap"
+              onClick={handleViewSalon}
             >
               View Salon
             </AppButton>

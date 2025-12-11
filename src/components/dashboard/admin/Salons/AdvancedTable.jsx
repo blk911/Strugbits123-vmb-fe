@@ -15,8 +15,8 @@ export default function AdvancedTable({
   }
 
   return (
-    <div className="overflow-x-auto -mx-4 sm:mx-0">
-      <table className="w-full hidden lg:table">
+    <div className=" -mx-4 sm:mx-0">
+      <table className="w-full advanced-table-desktop">
         <thead>
           <tr className="border-b border-gray-200">
             {columns.map((col) => (
@@ -52,7 +52,7 @@ export default function AdvancedTable({
         </tbody>
       </table>
 
-      <div className="lg:hidden space-y-4 px-4 sm:px-0">
+      <div className="advanced-table-mobile space-y-4 px-4 sm:px-0">
         {data.map((row) => (
           <div
             key={row.id}

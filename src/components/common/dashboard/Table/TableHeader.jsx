@@ -1,7 +1,7 @@
 import React from "react";
 
 const TableHeader = ({ keys }) => (
-  <thead className="hidden md:table-header-group bg-[#F8F8F8] rounded-lg">
+  <thead>
     <tr>
       {keys.map((key, index) => {
         const widthClass =
@@ -22,15 +22,14 @@ const TableHeader = ({ keys }) => (
         return (
           <th
             key={key}
-            className={`
+            className={` bg-[#F8F8F8]
               text-[#FF92A5] font-medium px-2 py-2 text-left text-[13px]
               ${widthClass}
-            ${
-              noTruncate ? "whitespace-nowrap" : "whitespace-normal break-words"
-            }
-
-              ${index === 0 ? "rounded-l-lg" : ""}
-              ${index === keys.length - 1 ? "rounded-r-lg" : ""}
+              ${
+                noTruncate
+                  ? "whitespace-nowrap"
+                  : "whitespace-normal break-words"
+              }
             `}
             style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600 }}
           >
@@ -42,5 +41,4 @@ const TableHeader = ({ keys }) => (
     </tr>
   </thead>
 );
-
 export default TableHeader;

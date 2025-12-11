@@ -16,7 +16,6 @@ export default function SalonRequestModal({
   onAccept,
 }) {
   if (!isOpen) return null;
-  console.log("Data Recieved==>", data);
   const { openModal } = useDashboardModal();
   const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
   const [declineSalon, { isLoading: isDeclining }] = useRejectSalonMutation();

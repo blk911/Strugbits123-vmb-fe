@@ -90,14 +90,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
     ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
 
-  // const handleAccept = () => {
-  //   closeModal();
-  //   setTimeout(() => setShowSuccessModal(true), 200);
-  // };
-  // const handleDecline = () => {
-
-  //   closeModal();
-  // };
   const handleAccept = async () => {
     if (!giftId) return;
 

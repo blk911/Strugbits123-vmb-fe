@@ -26,7 +26,7 @@ export default function PageHeader({
           <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-[#581838]">
             {title}
           </h1>
-          <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-[#4B5563]">
+          <p className="text-[13px] md:text-[14px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-[#4B5563]">
             {description}
           </p>
         </div>

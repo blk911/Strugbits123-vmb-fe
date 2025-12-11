@@ -1,12 +1,46 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toastLoading } from "../../../../utils/toast";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useGetSalonByIdQuery } from "../../../../store/api";
 
 export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], treatSection = {} } = data;
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
+
+  const salonId = salon?.salonId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
+
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      onClose();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    onClose();
+    navigate(`/salon/${salonId}`);
+  };
   const getStatusStyle = () => {
     const status = data.gift?.status?.toLowerCase() || "pending";
     switch (status) {
@@ -36,7 +70,6 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   };
 
   const statusStyle = getStatusStyle();
-  console.log("Data==>", data);
   return (
     <div
       className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/30"
@@ -237,6 +270,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
                 variant="custom"
                 size="custom"
                 className="bg-[#FF92A54D] text-[#581838] font-medium py-3  rounded-[10px] hover:bg-[#ff92a5]/20 transition "
+                onClick={handleViewSalon}
               >
                 View Salon
               </AppButton>

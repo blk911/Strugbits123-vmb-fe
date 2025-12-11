@@ -12,8 +12,6 @@ import { useLogoutMutation } from "../../../../store/api/authApi";
 import { clearUser } from "../../../../store/features/userSlice";
 import { useUser } from "../../../../hooks/useUser";
 function UserMenu() {
-  const { role } = useSelector((state) => state.role);
-
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();
   const ref = useRef(null);
@@ -78,7 +76,11 @@ function UserMenu() {
         }}
         onClick={toggle}
       >
-        <img src={profile} alt="profile" className="h-full w-full" />
+        <img
+          src={user?.userProfile || profile}
+          alt="profile"
+          className="h-full w-full"
+        />
       </div>
 
       {open && <Dropdown items={menuItems} />}

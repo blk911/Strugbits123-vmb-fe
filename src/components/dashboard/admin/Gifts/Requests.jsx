@@ -39,7 +39,6 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     search: searchQuery,
   });
 
-  console.log("admin gifts data==>", response);
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -220,6 +219,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           avatar: userAvatar,
         },
         salon: {
+          salonId: gift.salonId?._id,
           name: gift.salonId?.salonName,
           desc: gift.salonId?.description || "Premium Beauty Services",
           email: gift.salonId?.email,
@@ -238,7 +238,6 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     const fullRow = transformedData.find((r) => r.id === row.id);
     if (fullRow?._modalData) {
       openModal("giftRequestHistory", fullRow._modalData);
-      console.log("Modal Data==>", fullRow._modalData);
     }
   };
 

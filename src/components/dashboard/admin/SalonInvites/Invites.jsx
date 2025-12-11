@@ -40,7 +40,6 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
   });
-  console.log("Invites data admin==>", allData);
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -263,6 +262,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       status: invite.status?.charAt(0).toUpperCase() + invite.status?.slice(1),
       timelineItems: mapTimeline(invite.timeline),
       salonInfo: {
+        salonId: invite.salonId,
         image: invite.salonProfilePic || "/default-salon.jpg",
         name: invite.salonName,
         desc: invite.salonDesc || "Premium Beauty Services",
@@ -311,49 +311,6 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     const row = originalRows[tab].find((r) => r.id === cleanRow.id);
     if (row?._modalData) {
       openModal("salonInviteTracking", row._modalData);
-      // openModal("salonInviteTracking", {
-      //   timelineItems: [
-      //     {
-      //       icon: <FaPaperPlane className="w-4 h-4" />,
-      //       title: "Invitation Sent",
-      //       dateBy: "01-08-2025, 10:30 AM by Bella Beauty Salon",
-      //       body: "Salon invited user to try Hair Color service with a 10% discount.",
-      //     },
-      //     {
-      //       icon: <FaRegHandPointer className="w-4 h-4" />,
-      //       titleColor: "text-[#581838]",
-      //       title: "User Responded",
-      //       dateBy: "02-08-2025, 09:00 AM",
-      //       body: "User accepted.",
-      //     },
-      //     {
-      //       icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
-      //       iconBg: "bg-[#FF92A5]",
-      //       title: "Appointment Created",
-      //       dateBy: "03-08-2025, 11:05 AM",
-      //       body: "Booking created for 06-08-2025 | 2:00 PM.",
-      //       smallTopLabel: true,
-      //     },
-      //   ],
-      //   salonInfo: {
-      //     image: SalonImage,
-      //     name: "Bella Beauty Salon",
-      //     desc: "Premium Beauty Services",
-      //     email: "bella@gmail.com",
-      //     phone: "+1 (555) 123-4567",
-      //     service: "Hair Color",
-      //     discount: "10%",
-      //     message: `Hi Juliana,
-      // I want you to experience my salon with Hair Cutting at an exclusive discount!
-      // Signup and book today.`,
-      //   },
-      //   clientInfo: {
-      //     name: "Sarah Johnson",
-      //     email: "sarah@gmail.com",
-      //     phone: "+1 (555) 123-4567",
-      //     avatar: userAvatar,
-      //   },
-      // });
     }
   };
 

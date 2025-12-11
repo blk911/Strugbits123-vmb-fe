@@ -171,7 +171,6 @@ export default function Appointments({
       : fetchingDeclined;
 
   const appointments = currentData?.data?.items || [];
-  console.log("Client Appointments===>", appointments);
   const totalPages = currentData?.data?.pages || 1;
   const transformedAppointments = appointments.map((appt) => ({
     id: appt?._id,

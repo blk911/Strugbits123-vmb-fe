@@ -50,15 +50,16 @@ export default function ServiceCard({ services, salon }) {
         {description}
       </p>
 
-      <div className="flex flex-col xl:flex-row gap-3 mt-2">
+      <div className="flex flex-col xl:flex-row justify-between gap-3 mt-2">
         <AppButton
           leftIcon={
             <FaGift className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
           }
+          fullWidth={false}
           variant="ghost-pink-light"
           size="custom"
           onClick={handleGiftClick}
-          className="py-2 sm:py-2 px-2.5 text-[15px] sm:text-[16px]  font-medium "
+          className="py-[10px] px-[15px] text-[15px] sm:text-[16px]  font-medium w-full "
         >
           Request Service
         </AppButton>
@@ -67,10 +68,11 @@ export default function ServiceCard({ services, salon }) {
           leftIcon={
             <FaRegCalendarAlt className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
           }
+          fullWidth={false}
           variant="outline-pink"
           size="custom"
           onClick={handleBookClick}
-          className="py-2 sm:py-2 px-2.5 text-[15px] sm:text-[16px]  font-medium "
+          className="py-[10px] px-[15px] text-[15px] sm:text-[16px]  font-medium w-full "
         >
           Book Now
         </AppButton>

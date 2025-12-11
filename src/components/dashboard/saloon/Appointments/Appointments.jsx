@@ -43,7 +43,6 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
   });
-  console.log("All Data==>", allData);
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -81,7 +80,6 @@ export default function Appointments({
     search: searchQuery,
     status: "reschedule-requested",
   });
-  console.log("Reschedule Requestes==>", rescheduleData);
   const {
     data: holdData,
     isLoading: loadingHold,

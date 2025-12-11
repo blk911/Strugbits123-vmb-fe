@@ -15,6 +15,7 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
+import { FaCalendar, FaClock } from "react-icons/fa";
 
 const bookingSchema = z.object({
   fullName: z.string().min(2, "Full name is required"),
@@ -309,16 +310,24 @@ export default function BookAppointmentModal({
                           name="appointmentDate"
                           control={control}
                           render={({ field }) => (
-                            <input
-                              {...field}
-                              type="date"
-                              min={new Date().toISOString().split("T")[0]}
-                              className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
-                                errors.appointmentDate
-                                  ? "border-red-500"
-                                  : "border-[#E5E5E5]"
-                              }`}
-                            />
+                            <div className="relative">
+                              <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+
+                              <input
+                                type="date"
+                                {...field}
+                                min={new Date().toISOString().split("T")[0]}
+                                className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                   transition-all cursor-pointer
+                   [&::-webkit-calendar-picker-indicator]:opacity-0
+                   [&::-webkit-calendar-picker-indicator]:absolute
+                   [&::-webkit-calendar-picker-indicator]:right-0
+                   [&::-webkit-calendar-picker-indicator]:w-full
+                   [&::-webkit-calendar-picker-indicator]:h-full`}
+                                style={{ appearance: "none" }}
+                              />
+                            </div>
                           )}
                         />
                         {errors.appointmentDate && (
@@ -336,15 +345,33 @@ export default function BookAppointmentModal({
                           name="appointmentTime"
                           control={control}
                           render={({ field }) => (
-                            <input
-                              {...field}
-                              type="time"
-                              className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
-                                errors.appointmentTime
-                                  ? "border-red-500"
-                                  : "border-[#E5E5E5]"
-                              }`}
-                            />
+                            <div className="relative">
+                              <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+
+                              <input
+                                type="time"
+                                {...field}
+                                min={new Date().toISOString().split("T")[0]}
+                                className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                   transition-all cursor-pointer
+                   [&::-webkit-calendar-picker-indicator]:opacity-0
+                   [&::-webkit-calendar-picker-indicator]:absolute
+                   [&::-webkit-calendar-picker-indicator]:right-0
+                   [&::-webkit-calendar-picker-indicator]:w-full
+                   [&::-webkit-calendar-picker-indicator]:h-full`}
+                                style={{ appearance: "none" }}
+                              />
+                            </div>
+                            // <input
+                            //   {...field}
+                            //   type="time"
+                            //   className={`cursor-pointer border rounded-[8px] px-3 py-3 text-[14px] focus:outline-none focus:border-[#FF92A5] ${
+                            //     errors.appointmentTime
+                            //       ? "border-red-500"
+                            //       : "border-[#E5E5E5]"
+                            //   }`}
+                            // />
                           )}
                         />
                         {errors.appointmentTime && (

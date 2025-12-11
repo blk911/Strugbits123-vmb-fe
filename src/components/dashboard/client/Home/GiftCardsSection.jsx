@@ -37,7 +37,6 @@ export default function GiftCardsSection() {
     sort: "newest",
     status: "pending",
   });
-  console.log("Pending Appointments Data==>", pendingData);
   useEffect(() => {
     refetchRequested();
     refetchReceived();
@@ -69,7 +68,6 @@ export default function GiftCardsSection() {
       .slice()
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
   });
-  console.log("firstPendingAppointment==>", firstPendingAppointment);
   const loading = loadingReceived || loadingRequested;
   const cards = [
     {

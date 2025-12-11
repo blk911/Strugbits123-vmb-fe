@@ -29,7 +29,7 @@ export const CellRenderers = {
 
   status: (value) => (
     <span
-      className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${
+      className={`inline-block px-2 py-1 rounded-md text-[10px] font-medium ${
         value === "Accepted"
           ? "bg-[#4FCF0033] text-[#4FCF00]"
           : value === "Pending"
@@ -43,7 +43,7 @@ export const CellRenderers = {
 
   giftStatus: (value) => (
     <span
-      className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${
+      className={`inline-block px-2 py-1 rounded-md text-[10px] font-medium ${
         value === "Accepted"
           ? "bg-[#4FCF0033] text-[#4FCF00]"
           : value === "Pending"

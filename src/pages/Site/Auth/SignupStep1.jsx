@@ -48,7 +48,6 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
       });
 
       const publicUrl = data.split("?")[0];
-      console.log("Public Url==>", publicUrl);
       setValue("userProfile", publicUrl, { shouldValidate: true });
       setValue("uploadedFileName", originalFileName);
       toastDismiss(toastId);

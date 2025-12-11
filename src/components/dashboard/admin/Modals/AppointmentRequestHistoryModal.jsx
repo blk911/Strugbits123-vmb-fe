@@ -1,250 +1,12 @@
-// import React from "react";
-// import { IoClose } from "react-icons/io5";
-// import { FaCalendarAlt, FaClock } from "react-icons/fa";
-// import AppButton from "../../../common/site/AppButton";
-
-// export default function AppointmentRequestHistoryModal({
-//   isOpen,
-//   onClose,
-//   data,
-// }) {
-//   if (!isOpen) return null;
-
-//   return (
-//     <div
-//       className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/30"
-//       onClick={onClose}
-//     >
-//       <div
-//         className="w-full max-w-[960px] max-h-[95vh] font-[Poppins] overflow-y-auto bg-[#e8e8e8] rounded-[20px] p-[30px] flex flex-col gap-8"
-//         onClick={(e) => e.stopPropagation()}
-//       >
-//         <div className="flex items-start justify-between">
-//           <h3 className="text-[#581838] font-bold text-[24px]">
-//             Appointment Request History
-//           </h3>
-//           <button
-//             onClick={onClose}
-//             className="text-[#581838] text-[28px] p-1 rounded hover:bg-white/30 transition cursor-pointer"
-//           >
-//             <IoClose />
-//           </button>
-//         </div>
-
-//         <div className="w-full border border-[#5818381A] bg-[#F2F2F2] rounded-[10px] p-5 flex flex-col md:flex-row gap-6">
-//           <div className="flex-1 bg-white border border-[#0000001A] rounded-[10px] p-5">
-//             <div className="flex justify-end mb-3">
-//               <span className="px-3 py-1 bg-[#FF950033] text-[#FF9500] text-[10px] font-semibold rounded-[5px]">
-//                 Pending
-//               </span>
-//             </div>
-
-//             <div
-//               className="h-[60vh] overflow-y-auto pr-2 no-scrollbar"
-//               style={{ scrollbarWidth: "none" }}
-//             >
-//               {data?.timelineItems?.map((item, idx) => (
-//                 <div key={idx} className="flex gap-4 mb-6">
-//                   <div className="flex flex-col items-center">
-//                     <div
-//                       className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
-//                         item.iconBg || "bg-[#FF92A54D]"
-//                       }`}
-//                       style={{ borderColor: item.iconBorderColor || "#FF92A5" }}
-//                     >
-//                       <div className="text-[#FF92A5]">{item.icon}</div>
-//                     </div>
-
-//                     {idx < data.timelineItems.length - 1 && (
-//                       <div
-//                         className={`w-0.5 mt-2 ${
-//                           item.barColor || "bg-[#FF92A54D]"
-//                         }`}
-//                         style={{ height: 50 }}
-//                       />
-//                     )}
-//                   </div>
-
-//                   <div className="flex-1 pb-2">
-//                     <h4
-//                       className="font-bold text-sm sm:text-base"
-//                       style={{ color: item.titleColor || "#1F2937" }}
-//                     >
-//                       {item.title}
-//                     </h4>
-
-//                     {item.dateBy && (
-//                       <p className="text-[#6B7280] text-xs mt-0.5">
-//                         {item.dateBy}
-//                       </p>
-//                     )}
-
-//                     {item.body && (
-//                       <p className="text-[#4B5563] text-sm mt-1">{item.body}</p>
-//                     )}
-
-//                     {item.reschedule && (
-//                       <div className="mt-3 pl-4 border-l-2 border-[#9CA3AF4D] text-sm text-[#4B5563]">
-//                         <p className="font-semibold text-[#6B7280]">
-//                           {item.reschedule.requestFrom}
-//                         </p>
-//                         <p className="mt-1 whitespace-pre-line">
-//                           {item.reschedule.requestMessage}
-//                         </p>
-//                         <p className="font-semibold text-[#6B7280] mt-4">
-//                           {item.reschedule.acceptedBy}
-//                         </p>
-//                         <p className="mt-1">{item.reschedule.newAppointment}</p>
-//                         <p>{item.reschedule.appointmentDateTime}</p>
-//                       </div>
-//                     )}
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-
-//           <div className="w-full md:w-[360px] flex flex-col gap-6">
-//             <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-4 flex flex-col gap-5">
-//               <p className="text-[#581838] font-medium text-[14px]">
-//                 Appointment Request:
-//               </p>
-
-//               <div className="flex items-center gap-4">
-//                 <img
-//                   src={data?.treatSection?.sender?.avatar}
-//                   alt="Avatar"
-//                   className="w-20 h-20 rounded-full object-cover"
-//                 />
-//                 <div>
-//                   <p className="text-[#4B5563] font-semibold text-[16px]">
-//                     {data?.treatSection?.sender?.name}
-//                   </p>
-//                   <p className="text-[#4B5563] text-[12px]">
-//                     {data?.treatSection?.sender?.email}
-//                   </p>
-//                   <p className="text-[#4B5563] text-[12px]">
-//                     {data?.treatSection?.sender?.phone}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               <p className="text-[#581838] font-medium text-[14px]">
-//                 Services:
-//               </p>
-//               <div className="border border-[#9CA3AF4D] rounded-[10px] p-3 text-[12px]">
-//                 <div className="hidden sm:grid grid-cols-3 font-medium text-black mb-2">
-//                   <p>Service</p>
-//                   <p>Duration</p>
-//                   <p>Price</p>
-//                 </div>
-
-//                 <div className="hidden sm:grid border-t border-[#D9D9D9] pt-2 grid-cols-3 text-[#4B5563]">
-//                   <p>Haircut</p>
-//                   <p>0.5 Hr</p>
-//                   <p>$40</p>
-//                 </div>
-
-//                 <div className="sm:hidden flex flex-col gap-2  pt-2 text-[#4B5563]">
-//                   <div className="flex gap-2 ">
-//                     <p className="font-medium text-black">Service:</p>
-//                     <p>Haircut</p>
-//                   </div>
-
-//                   <div className="flex gap-2 ">
-//                     <p className="font-medium text-black">Duration:</p>
-//                     <p>0.5 Hr</p>
-//                   </div>
-
-//                   <div className="flex gap-2 ">
-//                     <p className="font-medium text-black">Price:</p>
-//                     <p>$40</p>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <p className="text-left sm:text-right text-[#FF92A5] font-bold text-[13px]">
-//                 Amount Paid: $40
-//               </p>
-
-//               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px]">
-//                 <div className="flex flex-col">
-//                   <p className="font-medium text-[#404040]">Date</p>
-//                   <div className="border border-[#9CA3AF4D] rounded-[8px] p-3 flex items-center justify-between">
-//                     <div className="flex items-center gap-2">
-//                       <FaCalendarAlt className="text-[#FF92A5] shrink-0" />
-//                       <p className="text-[#00000080] text-[14px]">02-08-2025</p>
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 <div className="flex flex-col">
-//                   <p className="font-medium text-[#404040]">Time</p>
-//                   <div className="border border-[#9CA3AF4D] rounded-[8px] p-3 flex items-center justify-between">
-//                     <div className="flex items-center gap-2">
-//                       <FaClock className="text-[#FF92A5] shrink-0" />
-//                       <p className="text-[#00000080] text-[14px]">12:00 PM</p>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="flex flex-col gap-4">
-//               <h3 className="text-[#581838] font-semibold text-[18px]">
-//                 Salon Information
-//               </h3>
-
-//               <div className="flex items-center gap-4">
-//                 <img
-//                   src={data?.treatSection?.salon?.image}
-//                   alt="Salon"
-//                   className="w-15 h-15 rounded-[10px] object-cover"
-//                 />
-//                 <div>
-//                   <p className="font-semibold text-[#4B5563] text-[20px]">
-//                     {data?.treatSection?.salon?.name}
-//                   </p>
-//                   <p className="text-[#4B5563] text-[12px]">
-//                     {data?.treatSection?.salon?.desc}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               <div className="grid grid-cols-2 gap-4 text-[14px]">
-//                 <div>
-//                   <p className="font-medium text-black">Email:</p>
-//                   <p className="text-[#00000080]">
-//                     {data?.treatSection?.salon?.email}
-//                   </p>
-//                 </div>
-//                 <div>
-//                   <p className="font-medium text-black">Phone:</p>
-//                   <p className="text-[#00000080]">
-//                     {data?.treatSection?.salon?.phone}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               <AppButton
-//                 variant="custom"
-//                 size="custom"
-//                 className="bg-[#FF92A54D] text-[#581838] font-medium py-3 rounded-[10px] hover:bg-[#ff92a5]/20 transition"
-//               >
-//                 View Salon
-//               </AppButton>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import AppButton from "../../../common/site/AppButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetSalonByIdQuery } from "../../../../store/api";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../../utils/toast";
 
 export default function AppointmentRequestHistoryModal({
   isOpen,
@@ -255,8 +17,34 @@ export default function AppointmentRequestHistoryModal({
 
   const { timelineItems = [], treatSection = {}, appointment } = data;
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
+  const salonId = salon?.salonId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
-  // Dynamic status badge
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      onClose();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    onClose();
+    navigate(`/salon/${salonId}`);
+  };
   const status = appointment?.status?.toLowerCase() || "pending";
   const statusStyles = {
     pending: { bg: "bg-[#FF950033]", text: "text-[#FF9500]", label: "Pending" },
@@ -538,6 +326,7 @@ export default function AppointmentRequestHistoryModal({
                 variant="custom"
                 size="custom"
                 className="bg-[#FF92A54D] text-[#581838] font-medium py-3 rounded-[10px] hover:bg-[#ff92a5]/20 transition"
+                onClick={handleViewSalon}
               >
                 View Salon
               </AppButton>

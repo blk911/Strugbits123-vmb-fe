@@ -4,9 +4,10 @@ import { IoMailOutline } from "react-icons/io5";
 import { FaGift } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useGetWeeklyStatsQuery } from "../../../../store/api";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 export default function AdminStatsSection() {
-  const { data } = useGetWeeklyStatsQuery();
+  const { data, isLoading } = useGetWeeklyStatsQuery();
 
   const navigate = useNavigate();
   const items = [
@@ -51,16 +52,22 @@ export default function AdminStatsSection() {
             {item.icon}
           </div>
           <p className="text-[14px] text-[#4B5563] my-2">{item.label}</p>
-          <div className="flex items-start justify-between ">
-            <p className="text-[30px] font-bold text-[#581838]">{item.value}</p>
+          {isLoading ? (
+            <LoadingIndicator size="sm" />
+          ) : (
+            <div className="flex items-start justify-between ">
+              <p className="text-[30px] font-bold text-[#581838]">
+                {item.value}
+              </p>
 
-            <span
-              className="text-[#64748B] text-[14px] self-center font-medium underline cursor-pointer"
-              onClick={() => handleViewClick(item)}
-            >
-              View All
-            </span>
-          </div>
+              <span
+                className="text-[#64748B] text-[14px] self-center font-medium underline cursor-pointer"
+                onClick={() => handleViewClick(item)}
+              >
+                View All
+              </span>
+            </div>
+          )}
         </div>
       ))}
     </div>

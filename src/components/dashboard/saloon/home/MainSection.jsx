@@ -32,7 +32,6 @@ export default function MainSection() {
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const latestInvite = invitesRes?.data?.items?.[0];
   const pendingAppointments = appointmentsRes?.data?.items || [];
-  console.log("Pending Appointments==>", pendingAppointments);
   useEffect(() => {}, []);
 
   return (

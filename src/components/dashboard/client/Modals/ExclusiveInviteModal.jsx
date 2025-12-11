@@ -77,10 +77,6 @@ export default function ExclusiveInviteModal({
     setScheduleOpen(true);
   };
 
-  // const handleConfirmBooking = () => {
-  //   closeAll();
-  //   initialData?.onBookingSuccess?.();
-  // };
   const handleConfirmBooking = async () => {
     if (!inviteId) {
       toastError("Invite not found");

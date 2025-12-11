@@ -58,7 +58,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
     });
 
   const salons = salonsResponse?.data?.items || [];
-
+  console.log("Salons Filtered==>", salons);
   const {
     control,
     handleSubmit,
@@ -165,7 +165,11 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
             <Transition.Child as={Fragment}>
-              <Dialog.Panel className="relative w-full max-w-lg rounded-2xl bg-white p-6 sm:p-8 shadow-xl transition-all">
+              <Dialog.Panel
+                className={`relative w-full max-w-[408px] rounded-2xl ${
+                  isSubmitted ? "bg-white/90" : "bg-white"
+                }  p-6 sm:p-8 shadow-xl transition-all backdrop-filter backdrop-blur-sm`}
+              >
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
@@ -178,7 +182,8 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         Treat Me, Baby!
                       </h3>
                       <p className="text-[#00000080] italic text-[14px] mt-1">
-                        Get pampered — request a treat from someone you love!
+                        Get pampered — request a treat from <br /> someone you
+                        love!
                       </p>
                     </div>
 
@@ -259,6 +264,9 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                     {salon.description}
                                   </p>
                                 </div>
+                                <p className="text-xs text-gray-500">
+                                  ({salon.distance})
+                                </p>
                               </div>
                             ))
                           )}
@@ -443,7 +451,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                   <>
                     <Dialog.Title
                       as="h3"
-                      className="text-center text-[22px] font-bold text-[#FF92A5]"
+                      className="text-center text-[22px] font-bold text-[#FF92A5] "
                     >
                       Treat Request Sent!
                     </Dialog.Title>
@@ -544,10 +552,10 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       </div>
                     </div>
 
-                    <p className="text-center italic text-[#00000080] text-[13px] mt-4">
+                    <p className="text-left italic text-[#00000080] text-[13px] mt-4">
                       Copy link to share this treat request.
                     </p>
-                    <div className="mt-2 border border-[#0000001A] rounded-[10px] flex justify-between items-center px-3 py-2">
+                    <div className="mt-2 border border-[#0000001A] bg-white rounded-[10px] flex justify-between items-center px-3 py-2">
                       <span className="italic text-[14px] text-[#00000080] truncate">
                         https://yourdomain.com/gift/{gift?._id || "new-request"}
                       </span>
