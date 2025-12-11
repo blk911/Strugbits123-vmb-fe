@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PublicRoutes from "./routes/PublicRoutes";
@@ -15,7 +20,7 @@ export default function App() {
         {role === "admin" && AdminRoutes()}
         {role === "salon-owner" && SaloonRoutes()}
         {role === "customer" && ClientRoutes()}
-        <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
+        <Route path="*" element={<Navigate to="/register" replace />} />
       </Routes>
     </Router>
   );

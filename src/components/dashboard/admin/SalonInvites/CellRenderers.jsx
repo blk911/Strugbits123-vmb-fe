@@ -7,7 +7,7 @@ export const CellRenderers = {
 
   message: (value) => (
     <p
-      className="italic text-xs text-[#00000080] max-w-[340px] line-clamp-3"
+      className="italic text-xs text-black/80 max-w-[340px] line-clamp-3"
       title={value}
       style={{ fontStyle: "italic", opacity: 0.5 }}
     >

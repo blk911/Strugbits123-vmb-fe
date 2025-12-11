@@ -330,8 +330,8 @@ export default function Appointments({
             All: "All",
             Pending: "Pending",
             Scheduled: "Scheduled",
-            Reschedule: "Reschedule Requested",
-            Hold: "On Hold",
+            Reschedule: "Rescheduled",
+            Hold: "Hold",
             Confirmed: "Confirmed",
             Decline: "Declined",
           }}
