@@ -218,7 +218,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
         };
         return (
           <span
-            className={`inline-block px-4 py-1.5 rounded-full text-xs font-medium ${
+            className={`inline-block px-2 py-1.5 rounded-md text-[10px] font-medium ${
               styles[row.status] || "bg-gray-200 text-gray-600"
             }`}
           >
