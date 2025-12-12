@@ -45,7 +45,18 @@ export default function AuthForm() {
   const [signIn] = useSignInMutation();
   const [signUpCustomer] = useSignUpCustomerMutation();
   const [signUpSaloonOwner] = useSignUpSaloonOwnerMutation();
-  const [getPresignedUrls] = useGetPresignedUrlsMutation();
+
+  const getCurrentSchema = () => {
+    if (mode === "login") return loginSchema;
+    if (mode === "signup" && step === "step1") {
+      return userType === "customer" ? customerSignupSchema : salonStep1Schema;
+    }
+    if (mode === "signup" && step === "step2") {
+      return salonStep2Schema;
+    }
+    return loginSchema;
+  };
+
   const methods = useForm({
     mode: "onTouched",
     shouldUnregister: false,
@@ -56,27 +67,58 @@ export default function AuthForm() {
       workingDays: [],
       userProfile: "",
       uploadedFileName: "",
+      licenseDocName: "",
+      profilePicName: "",
     },
-    resolver: zodResolver(
-      mode === "login"
-        ? loginSchema
-        : step === "step1"
-        ? userType === "customer"
-          ? customerSignupSchema
-          : salonStep1Schema
-        : salonStep2Schema
-    ),
+    resolver: zodResolver(getCurrentSchema()),
   });
 
+  const { reset, handleSubmit, trigger, setValue, watch } = methods;
+
   useEffect(() => {
-    methods.reset();
+    const schema = getCurrentSchema();
+    methods.setSchema?.(zodResolver(schema));
+    methods.clearErrors();
+    methods.reset(methods.getValues(), {
+      keepValues: true,
+      keepDirty: false,
+      keepErrors: false,
+    });
+  }, [mode, step, userType, methods]);
+
+  useEffect(() => {
+    reset({
+      email: "",
+      password: "",
+      fullName: "",
+      phone: "",
+      address: "",
+      zipcode: "",
+      userProfile: "",
+      uploadedFileName: "",
+      confirmPassword: "",
+      saloonName: "",
+      saloonAddress: "",
+      saloonZipcode: "",
+      startTime: "",
+      endTime: "",
+      workingDays: [],
+      licenseDoc: "",
+      licenseDocName: "",
+      profilePic: "",
+      profilePicName: "",
+      description: "",
+      salonPhotos: [],
+    });
     setStep("step1");
     setUserType("customer");
-  }, [mode, methods]);
+  }, [mode, reset]);
 
   const goToStep2 = async () => {
-    const ok = await methods.trigger();
-    if (ok) setStep("step2");
+    const isValid = await trigger();
+    if (isValid) {
+      setStep("step2");
+    }
   };
 
   const handleSuccess = (apiRole) => {
@@ -93,42 +135,49 @@ export default function AuthForm() {
   };
 
   const handleSignupSuccess = (role, message) => {
-    methods.reset();
+    reset();
+    setStep("step1");
+    setUserType("customer");
     dispatch(setAuthMode("login"));
     toastSuccess(message || "Account created! Please log in.");
   };
 
   const onSubmit = async (data) => {
-    const full = methods.getValues();
     let loadingToastId;
 
     try {
       if (mode === "login") {
         loadingToastId = toastLoading("Signing in...");
         const res = await signIn({
-          email: full.email,
-          password: full.password,
+          email: data.email,
+          password: data.password,
         }).unwrap();
+
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
         dispatch(setUser(res?.data?.user));
         dispatch(setToken(res?.data?.token));
         handleSuccess(res?.data?.user?.role);
-      } else if (step === "step1" && userType === "customer") {
+      } else if (
+        mode === "signup" &&
+        step === "step1" &&
+        userType === "customer"
+      ) {
         loadingToastId = toastLoading("Creating account...");
-        const res = await signUpCustomer(full).unwrap();
+        const res = await signUpCustomer(data).unwrap();
         toastDismiss(loadingToastId);
         handleSignupSuccess("customer", res?.message);
-      } else if (step === "step2") {
+      } else if (mode === "signup" && step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
 
         const files = {
-          licenseDocument: full.licenseDoc ? [full.licenseDoc] : [],
-          profilePic: full.profilePic ? [full.profilePic] : [],
-          saloonPhotos: full.salonPhotos || [],
+          licenseDocument: data.licenseDoc ? [data.licenseDoc] : [],
+          profilePic: data.profilePic ? [data.profilePic] : [],
+          saloonPhotos: data.salonPhotos?.map((p) => p.url) || [],
         };
 
-        const formData = { ...full };
+        const formData = { ...data };
+        delete formData.salonPhotos;
 
         const res = await signUpSaloonOwner({ formData, files }).unwrap();
         toastDismiss(loadingToastId);
@@ -139,6 +188,13 @@ export default function AuthForm() {
       const message = err?.data?.message || "Something went wrong";
       toastError(message);
       console.error(err);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && mode === "signup") {
+      e.preventDefault();
+      return false;
     }
   };
 
@@ -153,7 +209,8 @@ export default function AuthForm() {
     >
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={handleKeyDown}
           className="w-[582px] space-y-4 rounded-[20px] bg-white p-6 shadow-lg"
         >
           <FormHeader mode={mode} />
@@ -164,7 +221,7 @@ export default function AuthForm() {
             <SignupStep1
               userType={userType}
               setUserType={setUserType}
-              onNext={userType === "salon" ? goToStep2 : null}
+              onNext={userType === "salon" ? goToStep2 : handleSubmit(onSubmit)}
             />
           )}
 

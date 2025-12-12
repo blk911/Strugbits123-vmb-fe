@@ -267,9 +267,10 @@ export default function Appointments({
     if (!row?._modalData) return;
 
     const data = row._modalData;
+    console.log("Data ===>", cleanRow);
     if (cleanRow?.status === "Pending") {
       openModal("scheduleAppointment", data);
-    } else if (cleanRow?.status === "Reschedule") {
+    } else if (cleanRow?.status === "Reschedule requested") {
       openModal("rescheduleAppointment", data);
     } else if (cleanRow?.status === "Scheduled") {
       // openModal("scheduleAppointment", data);

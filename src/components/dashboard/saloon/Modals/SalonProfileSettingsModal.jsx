@@ -651,30 +651,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                             </p>
                           </div>
                         ))}
-                        {/* {watch("salonPhotos")?.map((file, i) => (
-                          <div key={`new-${i}`} className="relative">
-                            <img
-                              src={URL.createObjectURL(file)}
-                              alt="preview"
-                              className="w-[80px] h-[74px] object-cover rounded-md"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updated = watch("salonPhotos").filter(
-                                  (_, idx) => idx !== i
-                                );
-                                setValue(
-                                  "salonPhotos",
-                                  updated.length > 0 ? updated : []
-                                );
-                              }}
-                              className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs"
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))} */}
                       </div>
                     </div>
                   </div>
@@ -684,7 +660,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   type="submit"
                   variant="primary"
                   className="w-full py-3 text-[16px] font-medium"
-                  disabled={isUpdating}
+                  disabled={isUpdating || uploading}
                   onClick={handleSubmit(onSubmit)}
                 >
                   Update Profile
