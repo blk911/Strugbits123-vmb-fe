@@ -89,10 +89,10 @@ export default function GiftCard({
 
   return (
     <div className="w-full  rounded-[12px] border border-[#F3F4F6] bg-white shadow-[0_4px_6px_#0000000D] p-5 flex flex-col ">
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Icon size={20} className="text-[#FF92A5] shrink-0" />
-          <span className="text-[18px] font-semibold text-[#581838]">
+          <span className="text-[15px] md:text-[18px] font-semibold text-[#581838]">
             {title}
           </span>
         </div>
