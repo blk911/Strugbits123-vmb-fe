@@ -16,7 +16,7 @@ export const CellRenderers = {
   status: (value) => {
     const styles = {
       Pending: "bg-[#FF950033] text-[#FF9500]",
-      Reschedule: "bg-[#FF92A533] text-[#FF92A5]",
+      "Reschedule requested": "bg-[#FF92A533] text-[#FF92A5]",
       Hold: "bg-[#64748B33] text-[#64748B]",
       Confirmed: "bg-[#4FCF0033] text-[#4FCF00]",
       Scheduled: "bg-[#4FCF0033] text-[#4FCF00]",
