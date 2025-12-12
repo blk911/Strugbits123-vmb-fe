@@ -190,7 +190,7 @@ export default function AddServiceModal({
                             type="button"
                             onClick={() => imgRef.current?.click()}
                             disabled={uploading}
-                            className={`absolute bottom-0 right-0 w-9 h-9 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg ${
+                            className={`absolute bottom-0 right-0 cursor-pointer w-9 h-9 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg ${
                               uploading ? "opacity-50" : ""
                             }`}
                           >
