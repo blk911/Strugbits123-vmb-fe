@@ -6,9 +6,8 @@ import {
   useRecievedGiftsQuery,
   useRequestedGiftsQuery,
 } from "../../../../store/api";
-import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 import { useEffect, useMemo } from "react";
-import { capitalizeFirst } from "../../../../utils/HelperFunctions";
+import { formatTimeAgo } from "../../../../utils/HelperFunctions";
 
 export default function GiftCardsSection() {
   const {
@@ -42,125 +41,71 @@ export default function GiftCardsSection() {
     refetchReceived();
     refetchPending();
   }, [refetchRequested, refetchReceived, refetchPending]);
-  const firstRequestedGift = useMemo(() => {
-    const items = requestedGiftsData?.data?.items;
-    if (!items || items.length === 0) return null;
 
+  const loading = loadingRequested || loadingReceived || loadingPending;
+
+  const recentRequested = useMemo(() => {
+    const items = requestedGiftsData?.data?.items || [];
     return items
       .slice()
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 2);
   }, [requestedGiftsData]);
 
-  const firstReceivedGift = useMemo(() => {
-    const items = receivedGiftsData?.data?.items;
-    if (!items || items.length === 0) return null;
-
+  const recentReceived = useMemo(() => {
+    const items = receivedGiftsData?.data?.items || [];
     return items
       .slice()
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 2);
   }, [receivedGiftsData]);
 
-  const firstPendingAppointment = useMemo(() => {
-    const items = pendingData?.data?.items;
-    if (!items || items.length === 0) return null;
-
+  const recentPendingAppointments = useMemo(() => {
+    const items = pendingData?.data?.items || [];
     return items
       .slice()
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
-  });
-  const loading = loadingReceived || loadingRequested;
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 2);
+  }, [pendingData]);
   const cards = [
     {
       id: 1,
       icon: FaPaperPlane,
       title: "My Requests",
-      hasData: !!firstRequestedGift,
-      userName: firstRequestedGift?.receiverEmail || "No requests yet",
-      packageName: firstRequestedGift
-        ? `${firstRequestedGift.services.length} service${
-            firstRequestedGift.services.length > 1 ? "s" : ""
-          } • $${firstRequestedGift.services.reduce(
-            (a, b) => a + b.servicePrice,
-            0
-          )}`
-        : null,
-      status: capitalizeFirst(firstRequestedGift?.status) || null,
-      statusColor:
-        firstRequestedGift?.status === "pending"
-          ? "#FF9500"
-          : firstRequestedGift?.status === "accepted"
-          ? "#4FCF00"
-          : "#EF4444",
-      statusBg:
-        firstRequestedGift?.status === "pending"
-          ? "#FF950033"
-          : firstRequestedGift?.status === "accepted"
-          ? "#4FCF0033"
-          : "#EF444433",
-      data: firstRequestedGift,
+      items: recentRequested,
+      emptyMessage: "No requests sent yet",
     },
     {
       id: 2,
       icon: FaGift,
       title: "Received Requests",
-      hasData: !!firstReceivedGift,
-      userName: firstReceivedGift
-        ? `From: ${firstReceivedGift.requesterId?.name || "Someone"}`
-        : "No requests yet",
-      packageName: firstReceivedGift
-        ? `${firstReceivedGift.services.length} service${
-            firstReceivedGift.services.length > 1 ? "s" : ""
-          } • $${firstReceivedGift.services.reduce(
-            (a, b) => a + b.servicePrice,
-            0
-          )}`
-        : null,
-
-      status: capitalizeFirst(firstReceivedGift?.status) || null,
-      statusColor:
-        firstReceivedGift?.status === "pending"
-          ? "#FF9500"
-          : firstReceivedGift?.status === "accepted"
-          ? "#4FCF00"
-          : "#EF4444",
-      statusBg:
-        firstReceivedGift?.status === "pending"
-          ? "#FF950033"
-          : firstReceivedGift?.status === "accepted"
-          ? "#4FCF0033"
-          : "#EF444433",
-      data: firstReceivedGift,
+      items: recentReceived,
+      emptyMessage: "No gifts received yet",
     },
     {
       id: 3,
       icon: SlCalender,
       title: "Appointments",
-      hasData: !!firstPendingAppointment,
-      userName: firstPendingAppointment?.requestedBy?.name || "Someone",
-      packageName:
-        firstPendingAppointment?.services?.map((s) => s.name).join(", ") ||
-        null,
-      status: "Pending",
-      statusColor: "#FF9500",
-      statusBg: "#FF950033",
-      data: firstPendingAppointment,
+      items: recentPendingAppointments,
+      emptyMessage: "No pending appointments",
     },
   ];
 
   return (
-    <>
-      <div className="w-full max-w-full">
-        <div
-          className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          }}
-        >
-          {cards.map((card) => (
-            <GiftCard key={card.id} {...card} isLoading={loading} />
-          ))}
-        </div>
+    <div className="w-full max-w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+        {cards.map((card) => (
+          <GiftCard
+            key={card.id}
+            icon={card.icon}
+            title={card.title}
+            items={card.items}
+            emptyMessage={card.emptyMessage}
+            isLoading={loading}
+            formatTimeAgo={formatTimeAgo}
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 }

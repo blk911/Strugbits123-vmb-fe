@@ -24,7 +24,7 @@ function convert12HourTo24Hour(time12h) {
   return `${hours.toString().padStart(2, "0")}:${minutes}`;
 }
 function formatTimeAgo(dateString) {
-  if (!dateString) return "Unknown";
+  if (!dateString) return "Recently";
 
   const now = new Date();
   const created = new Date(dateString);

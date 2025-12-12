@@ -88,9 +88,7 @@ export default function SalonDetail() {
                 <FaRegClock />
                 <span>
                   {user?.startTime && user?.endTime
-                    ? `${convertTo12Hour(user.startTime)} - ${convertTo12Hour(
-                        user.endTime
-                      )}`
+                    ? `${user.startTime} - ${user.endTime}`
                     : "09:00 AM - 05:00 PM"}
                 </span>
               </div>

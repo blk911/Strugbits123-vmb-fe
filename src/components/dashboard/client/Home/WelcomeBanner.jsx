@@ -4,7 +4,7 @@ import AppButton from "../../../common/site/AppButton";
 export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
   return (
     <div className="relative bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D]  w-full max-w-full p-4 md:p-0">
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex flex-col h-full md:flex-row items-start md:items-center justify-between gap-4">
         <div className="w-full sm:w-auto pt-4 px-0 md:px-4">
           <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-[#581838]">
             Hey {user?.name || "there"}!
@@ -36,7 +36,7 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
         </AppButton>
       </div>
 
-      <div className="relative hidden md:block absolute bottom-[-14px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px] overflow-hidden">
+      <div className="relative hidden md:block absolute bottom-[14px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px] overflow-hidden">
         <div className="shine-line"></div>
 
         <div className="relative z-10">

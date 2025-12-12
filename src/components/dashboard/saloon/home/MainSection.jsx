@@ -30,32 +30,51 @@ export default function MainSection() {
   });
 
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
-  const latestInvite = invitesRes?.data?.items?.[0];
+  const pendingInvites = invitesRes?.data?.items || [];
+  console.log("Pending Invites==>", pendingInvites);
   const pendingAppointments = appointmentsRes?.data?.items || [];
   useEffect(() => {}, []);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 flex flex-col gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <SectionWrapper className="p-4 flex flex-col gap-4">
             <Header
               icon={<FaUser className="text-[#FF92A5]" />}
               title="Invites"
               onViewAll={() => navigate("/saloninvites")}
             />
-
-            {latestInvite ? (
-              <InviteCard
-                img={latestInvite.salonProfilePic}
-                salon={latestInvite.salonName}
-                service={latestInvite.services?.serviceName}
-                statusText="Pending"
-                statusColor="#FF9500"
-                timeAgo={formatTimeAgo(latestInvite.createdAt)}
-              />
-            ) : (
+            {pendingInvites.length === 0 ? (
               <EmptyState message="No pending invites received" />
+            ) : (
+              <>
+                <InviteCard
+                  key={pendingInvites[0]._id}
+                  img={pendingInvites[0].salonProfilePic || SalonImage}
+                  salon={pendingInvites[0].salonName}
+                  service={pendingInvites[0]?.services.serviceName}
+                  statusText="Pending"
+                  statusColor="#FF9500"
+                  timeAgo={formatTimeAgo(pendingInvites[0].createdAt)}
+                  data={pendingInvites[0]}
+                />
+
+                {pendingInvites[1] && (
+                  <InviteCard
+                    key={pendingInvites[1]._id}
+                    img={pendingInvites[1].salonProfilePic || SalonImage}
+                    salon={pendingInvites[1].salonName}
+                    service={
+                      pendingInvites[1]?.services.serviceName || "No Service"
+                    }
+                    statusText="Pending"
+                    statusColor="#FF9500"
+                    timeAgo={formatTimeAgo(pendingInvites[1].createdAt)}
+                    data={pendingInvites[1]}
+                  />
+                )}
+              </>
             )}
           </SectionWrapper>
 

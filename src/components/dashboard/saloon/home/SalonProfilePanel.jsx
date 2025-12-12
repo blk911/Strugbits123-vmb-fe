@@ -71,9 +71,7 @@ export default function SalonProfilePanel() {
           <FaClock className="text-[#9CA3AF]  shrink-0" />
           <p className="text-[14px] text-[#4B5563]">
             {user?.startTime && user?.endTime
-              ? `${convertTo12Hour(user.startTime)} - ${convertTo12Hour(
-                  user.endTime
-                )}`
+              ? `${user.startTime} - ${user.endTime}`
               : "09:00 AM - 05:00 PM"}
           </p>
         </div>
