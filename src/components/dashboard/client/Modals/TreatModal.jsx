@@ -556,15 +556,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                     </p>
                     <div className="mt-2 border border-[#0000001A] bg-white rounded-[10px] flex justify-between items-center px-3 py-2">
                       <span className="italic text-[14px] text-[#00000080] truncate">
-                        https://yourdomain.com/gift/{gift?._id || "new-request"}
+                        {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                       </span>
                       <IoCopyOutline
                         onClick={() => {
                           navigator.clipboard.writeText(
-                            `https://yourdomain.com/gift/${
-                              gift?._id || "new-request"
-                            }`
+                            import.meta.env.VITE_FRONTEND_URL + `gifts`
                           );
+                          toastSuccess("Link copied!");
                         }}
                         className="text-[#581838] text-xl cursor-pointer"
                       />

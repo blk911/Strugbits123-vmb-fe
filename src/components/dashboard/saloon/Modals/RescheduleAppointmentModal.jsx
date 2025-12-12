@@ -484,7 +484,6 @@ export default function RescheduleAppointmentModal({
                               type="submit"
                               variant="primary"
                               size="custom"
-                              // onClick={onScheduleNow}
                               className="text-[16px] font-medium py-2"
                               disabled={!isValid || scheduling}
                             >

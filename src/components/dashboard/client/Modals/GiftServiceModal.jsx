@@ -447,12 +447,12 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       Copy link to share this gift request.
                       <div className="border border-[#0000001A] bg-white rounded-xl flex justify-between items-center px-4 py-3 mt-2">
                         <span className="truncate">
-                          https://yourdomain.com/gift/abc123
+                          {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                         </span>
                         <IoCopyOutline
                           onClick={() => {
                             navigator.clipboard.writeText(
-                              "https://yourdomain.com/gift/abc123"
+                              import.meta.env.VITE_FRONTEND_URL + `gifts`
                             );
                             toastSuccess("Link copied!");
                           }}

@@ -8,7 +8,7 @@ function DashboardFooter() {
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 400,
-          color: "#581838", // default text color
+          color: "#581838",
         }}
       >
         All Copyrights Reserved 2025.{" "}
