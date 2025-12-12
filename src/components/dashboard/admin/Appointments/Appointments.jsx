@@ -56,12 +56,10 @@ export default function Appointments({
           hour: "2-digit",
           minute: "2-digit",
         });
-
   const mapTimeline = (timeline = [], appt) => {
     return timeline.map((item, index) => {
       const isLast = index === timeline.length - 1;
       const tag = item.tag?.toLowerCase();
-
       const base = {
         iconBg: isLast ? "bg-[#F3F4F6]" : "bg-[#FF92A54D]",
         barColor: isLast ? "bg-[#E5E7EB]" : "bg-[#FF92A5]",
@@ -97,7 +95,6 @@ export default function Appointments({
 
         case "confirmed":
         case "user-confirmed":
-        case "scheduled":
           return {
             ...base,
             icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
@@ -109,7 +106,6 @@ export default function Appointments({
           };
 
         case "appointment-scheduled":
-        case "appointment-created":
           return {
             ...base,
             icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
@@ -130,15 +126,15 @@ export default function Appointments({
               <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
             ),
             iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
+            iconBorderColor: "#9CA3AF66",
             title: "Reschedule Requested",
             titleColor: "text-[#6B7280]",
             dateBy: "",
             body: null,
             reschedule: {
-              requestFrom:
-                "Rescheduled request from " + appt.requestedFrom.name ||
-                "Client",
+              requestFrom: `Rescheduled request from ${
+                appt.requestedFrom?.name || "Client"
+              }`,
               requestMessage: `• Message: ${
                 item.description || "Reschedule requested"
               }`,
@@ -184,6 +180,7 @@ export default function Appointments({
       }
     });
   };
+
   const transformedData = appointments.map((appt) => ({
     id: appt._id,
     clientName: appt?.requestedBy?.name || "Unknown",

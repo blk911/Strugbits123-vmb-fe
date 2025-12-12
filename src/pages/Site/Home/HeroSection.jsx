@@ -8,13 +8,13 @@ import Button from "../../../components/common/site/Button";
 function HeroSection() {
   return (
     <div
-      className="h-auto lg:h-[658px] xl:h-[700px] w-full py-[37px] px-[26px]"
+      className="h-auto lg:h-[658px] xl:h-[700px] w-full py-12 px-[26px]"
       style={{
         background: `linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), linear-gradient(180deg, #FF92A5 0%, #FFFFFF 100%)`,
       }}
     >
       <div className="flex flex-row h-full w-full justify-center gap-x-[20px]">
-        <div className="max-sm:hidden h-full flex flex-col justify-between">
+        <div className="max-lg:hidden h-full flex flex-col justify-between">
           <img
             src={pic1}
             alt=""
@@ -63,9 +63,9 @@ function HeroSection() {
             occasion shine. Salon owners <br /> can also invite each other to
             grow together on one platform.
           </p>
-          <Button text={"Share the Gift of Beauty"} />
+          <Button text={"Share the Gift of Beauty"} navigateTo={"register"} />
         </div>
-        <div className="max-sm:hidden h-full flex flex-col justify-between">
+        <div className="max-lg:hidden h-full flex flex-col justify-between">
           <img
             src={pic2}
             alt=""

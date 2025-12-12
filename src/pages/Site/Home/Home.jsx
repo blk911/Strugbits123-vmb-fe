@@ -8,7 +8,7 @@ import TopSalons from "./TopSalons";
 
 function Home() {
   return (
-    <>
+    <div className="flex flex-col gap-8">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits />
@@ -16,7 +16,7 @@ function Home() {
       <SalonChoice />
       <SalonExperience />
       <TopSalons />
-    </>
+    </div>
   );
 }
 

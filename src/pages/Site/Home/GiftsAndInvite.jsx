@@ -36,7 +36,12 @@ function Card({ img, title, desc, style, border, btnText }) {
           {desc}
         </span>
         <div className="mt-[30px]">
-          <Button text={btnText} classes={"w-max capitalize"} textclass={"text-[16px]"} />
+          <Button
+            text={btnText}
+            classes={"w-max capitalize"}
+            textclass={"text-[16px]"}
+            navigateTo={"register"}
+          />
         </div>
       </div>
     </div>
