@@ -1,325 +1,354 @@
-import React, { useState } from "react";
-import { CellRenderers } from "./CellRenderers";
+import React, { useEffect, useState } from "react";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
-import salonImg1 from "../../../../assets/salon-1.png";
-import salonImg2 from "../../../../assets/salon-2.png";
-
-import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
+import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+import { useGetSalonAppointmentsQuery } from "../../../../store/api";
+import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
 
-const salonImages = {
-  "Beauty Salon & Spa": salonImg1,
-  "Glam Studio": salonImg2,
-  "Luxe Hair & Spa": salonImg1,
-  "Elegant Nails": salonImg2,
-  "Royal Beauty": salonImg1,
-  "Urban Salon": salonImg2,
-};
+const PAGE_SIZE = 10;
 
-const createAppointmentData = () => [
-  {
-    id: 1,
-    salonName: "Beauty Salon & Spa",
-    serviceName: [
-      "Hair Color",
-      "Body Massage",
-      "Nail Painting",
-      "Facial",
-      "Spa",
-    ],
-    payersEmail: "elitejuan@gmail.com",
-    appointmentDate: "02-08-2025",
-    appointmentTime: "01:30 PM",
-    status: "Pending",
-    _modalData: {
-      salon: {
-        name: "Beauty Salon & Spa",
-        description: "Luxury beauty and wellness",
-        image: salonImages["Beauty Salon & Spa"],
-      },
-      services: [
-        { name: "Hair Color", duration: "2 Hr", price: 95 },
-        { name: "Body Massage", duration: "1 Hr", price: 80 },
-        { name: "Nail Painting", duration: "45 Min", price: 35 },
-        { name: "Facial", duration: "1 Hr", price: 110 },
-        { name: "Spa", duration: "90 Min", price: 150 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "elitejuan@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-    },
-  },
-  {
-    id: 2,
-    salonName: "Glam Studio",
-    serviceName: ["Nail Painting", "Facial", "Hair Color"],
-    payersEmail: "maria@gmail.com",
-    appointmentDate: "03-08-2025",
-    appointmentTime: "02:00 PM",
-    status: "Pending",
-    _modalData: {
-      salon: {
-        name: "Glam Studio",
-        description: "Premium Beauty Services",
-        image: salonImages["Glam Studio"],
-      },
-      services: [
-        { name: "Nail Painting", duration: "1 Hr", price: 45 },
-        { name: "Facial", duration: "75 Min", price: 120 },
-        { name: "Hair Color", duration: "2 Hr", price: 90 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "maria@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-    },
-  },
-  {
-    id: 3,
-    salonName: "Luxe Hair & Spa",
-    serviceName: ["Highlight", "Massage", "Pedicure"],
-    payersEmail: "john@gmail.com",
-    appointmentDate: "04-08-2025",
-    appointmentTime: "11:00 AM",
-    status: "Reschedule",
-    _modalData: {
-      salon: {
-        name: "Luxe Hair & Spa",
-        description: "High-end hair & spa",
-        image: salonImg1,
-      },
-      services: [
-        { name: "Highlight", duration: "3 Hr", price: 180 },
-        { name: "Massage", duration: "1 Hr", price: 90 },
-        { name: "Pedicure", duration: "1 Hr", price: 60 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "john@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-      appointment: {
-        date: "04-08-2025",
-        time: "11:00 AM",
-        message:
-          "I’d like to reschedule my booking. Please update the appointment time as per the new availability. 5pm on Wednesday 15 Oct, 2025",
-      },
-    },
-  },
-  {
-    id: 4,
-    salonName: "Elegant Nails",
-    serviceName: ["Manicure", "Spa Treatment"],
-    payersEmail: "sarah@gmail.com",
-    appointmentDate: "05-08-2025",
-    appointmentTime: "03:30 PM",
-    status: "Hold",
-    _modalData: {
-      salon: {
-        name: "Elegant Nails",
-        description: "Nail art specialists",
-        image: salonImg2,
-      },
-      services: [
-        { name: "Manicure", duration: "45 Min", price: 40 },
-        { name: "Spa Treatment", duration: "2 Hr", price: 160 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "sarah@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-      appointment: {
-        date: "05-08-2025",
-        time: "03:30 PM",
-      },
-    },
-  },
-  {
-    id: 5,
-    salonName: "Royal Beauty",
-    serviceName: ["Hair Color", "Facial", "Body Massage"],
-    payersEmail: "alex@gmail.com",
-    appointmentDate: "06-08-2025",
-    appointmentTime: "10:00 AM",
-    status: "Confirmed",
-    _modalData: {
-      salon: {
-        name: "Royal Beauty",
-        description: "Royal treatment guaranteed",
-        image: salonImg1,
-      },
-      services: [
-        { name: "Hair Color", duration: "2 Hr", price: 100 },
-        { name: "Facial", duration: "1 Hr", price: 130 },
-        { name: "Body Massage", duration: "90 Min", price: 110 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "alex@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-      appointment: {
-        date: "06-08-2025",
-        time: "10:00 AM",
-      },
-    },
-  },
-  {
-    id: 6,
-    salonName: "Urban Salon",
-    serviceName: ["Nail Art", "Hair Cut"],
-    payersEmail: "emma@gmail.com",
-    appointmentDate: "07-08-2025",
-    appointmentTime: "04:00 PM",
-    status: "Decline",
-    _modalData: {
-      salon: {
-        name: "Urban Salon",
-        description: "Modern urban vibes",
-        image: salonImg2,
-      },
-      services: [
-        { name: "Nail Art", duration: "90 Min", price: 70 },
-        { name: "Hair Cut", duration: "45 Min", price: 55 },
-      ],
-      treatTo: {
-        name: "Sarah Johnson",
-        email: "sarah@gmail.com",
-        phone: "+14 256 365470",
-        image: salonImg1,
-      },
-      treatBy: {
-        name: "Jane Doe",
-        email: "emma@gmail.com",
-        phone: "+14 785 456789",
-        image: salonImg1,
-      },
-      appointment: {
-        date: "07-08-2025",
-        time: "04:00 PM",
-      },
-    },
-  },
-];
-
-const allAppointments = createAppointmentData();
-const cleanRow = (row) => {
-  const { _modalData, ...clean } = row;
-  return clean;
-};
-const tabsForTable = {
-  All: allAppointments.map(cleanRow),
-  Pending: allAppointments.filter((a) => a.status === "Pending").map(cleanRow),
-  Reschedule: allAppointments
-    .filter((a) => a.status === "Reschedule")
-    .map(cleanRow),
-  Hold: allAppointments.filter((a) => a.status === "Hold").map(cleanRow),
-  Confirmed: allAppointments
-    .filter((a) => a.status === "Confirmed")
-    .map(cleanRow),
-  Decline: allAppointments.filter((a) => a.status === "Decline").map(cleanRow),
-};
-
-const tabOrder = [
-  "All",
-  "Pending",
-  "Reschedule",
-  "Hold",
-  "Confirmed",
-  "Decline",
-];
-
-export default function Appointments() {
-  const [directData, setDirectData] = useState(null);
+export default function Appointments({
+  searchQuery = "",
+  sortOption = "Newest",
+}) {
   const { openModal } = useDashboardModal();
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
+
+  const sortValue = sortMap[sortOption] || "newest";
+  const [activeTab, setActiveTab] = useState("All");
+
+  const [allPage, setAllPage] = useState(1);
+  const [pendingPage, setPendingPage] = useState(1);
+  const [scheduledPage, setScheduledPage] = useState(1);
+  const [reschedulePage, setReschedulePage] = useState(1);
+  const [holdPage, setHoldPage] = useState(1);
+  const [confirmedPage, setConfirmedPage] = useState(1);
+  const [declinedPage, setDeclinedPage] = useState(1);
+
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [statusModalType, setStatusModalType] = useState("hold");
+  const [modalData, setModalData] = useState(null);
 
-  const openWithData = (cleanRow) => {
-    const fullRow = allAppointments.find((r) => r.id === cleanRow.id);
-    const data = fullRow?._modalData;
-    if (!data) return;
+  const {
+    data: allData,
+    isLoading: loadingAll,
+    isFetching: fetchingAll,
+    refetch: refetchAll,
+  } = useGetSalonAppointmentsQuery({
+    page: allPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+  });
+  const {
+    data: pendingData,
+    isLoading: loadingPending,
+    isFetching: fetchingPending,
+    refetch: refetchPending,
+  } = useGetSalonAppointmentsQuery({
+    page: pendingPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "pending",
+  });
+  const {
+    data: scheduledData,
+    isLoading: loadingScheduled,
+    isFetching: fetchingScheduled,
+    refetch: refetchScheduled,
+  } = useGetSalonAppointmentsQuery({
+    page: scheduledPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "scheduled",
+  });
 
-    setDirectData(data);
-    if (cleanRow.status === "Pending") {
+  const {
+    data: rescheduleData,
+    isLoading: loadingReschedule,
+    isFetching: fetchingReschedule,
+    refetch: refetchReschedule,
+  } = useGetSalonAppointmentsQuery({
+    page: reschedulePage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "reschedule-requested",
+  });
+  const {
+    data: holdData,
+    isLoading: loadingHold,
+    isFetching: fetchingHold,
+    refetch: refetchHold,
+  } = useGetSalonAppointmentsQuery({
+    page: holdPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "hold",
+  });
+
+  const {
+    data: confirmedData,
+    isLoading: loadingConfirmed,
+    isFetching: fetchingConfirmed,
+    refetch: refetchConfirmed,
+  } = useGetSalonAppointmentsQuery({
+    page: confirmedPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "confirmed",
+  });
+
+  const {
+    data: declinedData,
+    isLoading: loadingDeclined,
+    isFetching: fetchingDeclined,
+    refetch: refetchDeclined,
+  } = useGetSalonAppointmentsQuery({
+    page: declinedPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+    status: "declined",
+  });
+
+  useEffect(() => {
+    refetchAll();
+    refetchPending();
+    refetchScheduled();
+    refetchReschedule();
+    refetchHold();
+    refetchConfirmed();
+    refetchDeclined();
+  }, [
+    refetchAll,
+    refetchPending,
+    refetchScheduled,
+    refetchReschedule,
+    refetchHold,
+    refetchConfirmed,
+    refetchDeclined,
+  ]);
+  const currentData =
+    activeTab === "All"
+      ? allData
+      : activeTab === "Pending"
+      ? pendingData
+      : activeTab === "Scheduled"
+      ? scheduledData
+      : activeTab === "Reschedule"
+      ? rescheduleData
+      : activeTab === "Hold"
+      ? holdData
+      : activeTab === "Confirmed"
+      ? confirmedData
+      : declinedData;
+
+  const isLoading =
+    activeTab === "All"
+      ? loadingAll
+      : activeTab === "Pending"
+      ? loadingPending
+      : activeTab === "Scheduled"
+      ? loadingScheduled
+      : activeTab === "Reschedule"
+      ? loadingReschedule
+      : activeTab === "Hold"
+      ? loadingHold
+      : activeTab === "Confirmed"
+      ? loadingConfirmed
+      : loadingDeclined;
+
+  const isFetching =
+    activeTab === "All"
+      ? fetchingAll
+      : activeTab === "Pending"
+      ? fetchingPending
+      : activeTab === "Scheduled"
+      ? fetchingScheduled
+      : activeTab === "Reschedule"
+      ? fetchingReschedule
+      : activeTab === "Hold"
+      ? fetchingHold
+      : activeTab === "Confirmed"
+      ? fetchingConfirmed
+      : fetchingDeclined;
+
+  const appointments = currentData?.data?.items || [];
+  const totalPages = currentData?.data?.pages || 1;
+
+  const transformedAppointments = appointments.map((appt) => ({
+    id: appt._id,
+    salonName: appt?.salon?.salonName || "Unknown Salon",
+    serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
+    payersEmail: appt?.requestedBy?.email || "N/A",
+    appointmentDate: appt.appointmentDate
+      ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
+      : "N/A",
+    appointmentTime: appt.startTime || "N/A",
+    status: appt.status
+      ? appt.status.charAt(0).toUpperCase() +
+        appt.status.slice(1).replace("-", " ")
+      : "Pending",
+    _modalData: {
+      salon: {
+        name: appt.salon?.salonName,
+        description: appt.salon?.salonDescription || "",
+        image: appt.salon?.salonImage || "/default-salon.jpg",
+      },
+      services: (appt.services || []).map((s) => ({
+        name: s.serviceName || s.name,
+        duration: s.duration ? `${s.duration} min` : "N/A",
+        price: s.price || 0,
+      })),
+      treatTo: {
+        name: appt.requestedBy.name || "Client",
+        email: appt.requestedBy.email || "N/A",
+        phone: appt.requestedBy.phone || "N/A",
+        image: appt.requestedBy.image || "/default-user.jpg",
+      },
+      treatBy: {
+        name: appt.requestedFrom.name || "Payer",
+        email: appt.requestedFrom.email || "N/A",
+        phone: appt.requestedFrom.phone || "N/A",
+        image: appt.requestedFrom.image || "/default-user.jpg",
+      },
+      appointment: {
+        id: appt._id,
+        date: appt.appointmentDate,
+        time: appt.startTime,
+        message: appt.reschduleReason || "",
+      },
+    },
+  }));
+
+  const cleanDataForTable = (data) =>
+    data.map(({ _modalData, ...rest }) => rest);
+
+  const tabs = {
+    All: cleanDataForTable(transformedAppointments),
+    Pending: cleanDataForTable(transformedAppointments),
+    Scheduled: cleanDataForTable(transformedAppointments),
+    Reschedule: cleanDataForTable(transformedAppointments),
+    Hold: cleanDataForTable(transformedAppointments),
+    Confirmed: cleanDataForTable(transformedAppointments),
+    Decline: cleanDataForTable(transformedAppointments),
+  };
+
+  const originalRows = {
+    All: transformedAppointments,
+    Pending: transformedAppointments,
+    Scheduled: transformedAppointments,
+    Reschedule: transformedAppointments,
+    Hold: transformedAppointments,
+    Confirmed: transformedAppointments,
+    Decline: transformedAppointments,
+  };
+
+  const handleRowClick = {
+    All: (cleanRow) => openWithData(cleanRow, "All"),
+    Pending: (cleanRow) => openWithData(cleanRow, "Pending"),
+    Scheduled: (cleanRow) => openWithData(cleanRow, "Scheduled"),
+    Reschedule: (cleanRow) => openWithData(cleanRow, "Reschedule"),
+    Hold: (cleanRow) => openWithData(cleanRow, "Hold"),
+    Confirmed: (cleanRow) => openWithData(cleanRow, "Confirmed"),
+    Decline: (cleanRow) => openWithData(cleanRow, "Decline"),
+  };
+
+  const openWithData = (cleanRow, tab) => {
+    const row = originalRows[tab].find((r) => r.id === cleanRow.id);
+    if (!row?._modalData) return;
+
+    const data = row._modalData;
+    if (cleanRow?.status === "Pending") {
       openModal("scheduleAppointment", data);
-    } else if (cleanRow.status === "Reschedule")
+    } else if (cleanRow?.status === "Reschedule") {
       openModal("rescheduleAppointment", data);
-    else if (["Hold", "Confirmed", "Decline"].includes(cleanRow.status)) {
+    } else if (cleanRow?.status === "Scheduled") {
+      // openModal("scheduleAppointment", data);
+    } else {
       const typeMap = {
         Hold: "hold",
         Confirmed: "confirmed",
-        Decline: "declined",
+        Declined: "declined",
       };
-      setStatusModalType(typeMap[cleanRow.status]);
+      setModalData(data);
+      setStatusModalType(typeMap[cleanRow?.status] || "hold");
       setShowStatusModal(true);
     }
   };
 
-  const handleRowClick = {
-    All: openWithData,
-    Pending: openWithData,
-    Reschedule: openWithData,
-    Confirmed: openWithData,
-    Hold: openWithData,
-    Decline: openWithData,
+  const handlePageChange = (page) => {
+    if (activeTab === "All") setAllPage(page);
+    else if (activeTab === "Pending") setPendingPage(page);
+    else if (activeTab === "Scheduled") setScheduledPage(page);
+    else if (activeTab === "Reschedule") setReschedulePage(page);
+    else if (activeTab === "Hold") setHoldPage(page);
+    else if (activeTab === "Confirmed") setConfirmedPage(page);
+    else if (activeTab === "Decline") setDeclinedPage(page);
   };
+
+  const currentPage =
+    activeTab === "All"
+      ? allPage
+      : activeTab === "Pending"
+      ? pendingPage
+      : activeTab === "Scheduled"
+      ? scheduledPage
+      : activeTab === "Reschedule"
+      ? reschedulePage
+      : activeTab === "Hold"
+      ? holdPage
+      : activeTab === "Confirmed"
+      ? confirmedPage
+      : declinedPage;
 
   return (
     <>
       <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
         <TabbedTable
-          tabs={tabsForTable}
-          tabOrder={tabOrder}
+          tabs={tabs}
+          tabOrder={[
+            "All",
+            "Pending",
+            "Scheduled",
+            "Reschedule",
+            "Hold",
+            "Confirmed",
+            "Decline",
+          ]}
           defaultTab="All"
           cellRenderers={CellRenderers}
+          tabLabelMap={{
+            All: "All",
+            Pending: "Pending",
+            Scheduled: "Scheduled",
+            Reschedule: "Rescheduled",
+            Hold: "Hold",
+            Confirmed: "Confirmed",
+            Decline: "Declined",
+          }}
+          setExternalActiveTab={setActiveTab}
           onRowClick={handleRowClick}
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          isLoading={isLoading}
+          isFetching={isFetching}
         />
       </div>
 
       <StatusAppointmentModal
         isOpen={showStatusModal}
         closeModal={() => setShowStatusModal(false)}
-        data={directData}
+        data={modalData}
         type={statusModalType}
       />
     </>

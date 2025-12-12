@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardCard from "./DashboardCard";
 
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { RiMoneyDollarCircleLine, RiFlowerLine } from "react-icons/ri";
+import { useGetDailyStatsQuery } from "../../../../store/api";
+import { useUser } from "../../../../hooks/useUser";
 
 function Overview() {
+  const { user } = useUser();
+  const { data: response, refetch } = useGetDailyStatsQuery();
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  const appointmentsCount = response?.data?.appointmentsCount || 0;
+  const servicesCount = response?.data?.totalServicesCount || 0;
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 font-[Poppins] items-start">
       <div className="flex flex-col gap-2 ">
@@ -13,7 +24,7 @@ function Overview() {
         </h1>
 
         <h2 className="text-[35px] font-semibold text-[#FF92A5] leading-tight">
-          Bella Beauty Salon
+          {user?.salonName || "Salon"}
         </h2>
 
         <p className="text-[16px] text-[#4B5563]">
@@ -23,13 +34,13 @@ function Overview() {
 
       <DashboardCard
         title="Today's Appointments"
-        value="24"
+        value={appointmentsCount}
         icon={<FaRegCalendarAlt className="text-[#FF92A5] w-[18px] h-[18px]" />}
       />
 
       <DashboardCard
         title="Today's Revenue"
-        value="$1,245"
+        value="$0"
         icon={
           <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
         }
@@ -37,7 +48,7 @@ function Overview() {
 
       <DashboardCard
         title="Total Services"
-        value="12"
+        value={servicesCount}
         icon={<RiFlowerLine className="text-[#FF92A5] w-[20px] h-[20px]" />}
       />
     </div>

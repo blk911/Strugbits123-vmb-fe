@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "./Table";
-
+import Pagination from "./Pagination";
+import LoadingIndicator from "../../LoadingIndicator/LoadingIndicator";
 export default function TabbedTable({
   tabs,
   tabOrder,
@@ -11,6 +12,11 @@ export default function TabbedTable({
   setExternalActiveTab,
   activeTab: controlledActiveTab,
   onRowClick,
+  currentPage,
+  totalPages,
+  onPageChange,
+  isLoading,
+  isFetching,
 }) {
   const urlActive = location?.state?.activeTab;
   const initial = urlActive || defaultTab || tabOrder[0];
@@ -47,11 +53,33 @@ export default function TabbedTable({
         ))}
       </div>
 
-      <Table
+      {/* <Table
         data={tabs[currentTab] ?? []}
         cellRenderers={cellRenderers}
         onRowClick={onRowClick?.[currentTab]}
-      />
+      /> */}
+      {isLoading ? (
+        <div className="flex justify-center">
+          <LoadingIndicator />
+        </div>
+      ) : (
+        <>
+          <Table
+            data={tabs[currentTab] ?? []}
+            cellRenderers={cellRenderers || {}}
+            onRowClick={onRowClick?.[currentTab]}
+          />
+
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+              isFetching={isFetching}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 }

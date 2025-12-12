@@ -1,22 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import SaloonRoutes from "./routes/SaloonRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
+import AuthProvider from "./utils/AuthProvider";
 
 export default function App() {
   const role = useSelector((state) => state.role.role);
   return (
     <Router>
-      <Routes>
-        {PublicRoutes()}
-        {role === "admin" && AdminRoutes()}
-        {role === "salonOwner" && SaloonRoutes()}
-        {role === "customer" && ClientRoutes()}
-        <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          {PublicRoutes()}
+          {role === "admin" && AdminRoutes()}
+          {role === "salon-owner" && SaloonRoutes()}
+          {role === "customer" && ClientRoutes()}
+          <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }

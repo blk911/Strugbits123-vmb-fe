@@ -10,9 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../../store/api/authApi";
 import { clearUser } from "../../../../store/features/userSlice";
+import { useUser } from "../../../../hooks/useUser";
 function UserMenu() {
-  const { role } = useSelector((state) => state.role);
-
   const [open, setOpen] = useState(false);
   const { openModal } = useDashboardModal();
   const ref = useRef(null);
@@ -20,6 +19,7 @@ function UserMenu() {
   const toggle = () => setOpen((prev) => !prev);
   const navigate = useNavigate();
   const [logout, { isLoading }] = useLogoutMutation();
+  const { user } = useUser();
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
@@ -47,14 +47,9 @@ function UserMenu() {
   const menuItems = [
     {
       label: "Profile Setting",
-      onClick: () =>
-        role == "admin"
-          ? openModal("editAdminProfile")
-          : openModal("profileSettings", {
-              fullName: "John Doe",
-              email: "john.doe@example.com",
-              phone: "+1 555 123 4567",
-            }),
+      onClick: () => {
+        openModal("profileSettings", user);
+      },
     },
     {
       label: "Change Password",
@@ -77,7 +72,11 @@ function UserMenu() {
         }}
         onClick={toggle}
       >
-        <img src={profile} alt="profile" className="h-full w-full" />
+        <img
+          src={user?.userProfile || profile}
+          alt="profile"
+          className="h-full w-full"
+        />
       </div>
 
       {open && <Dropdown items={menuItems} />}

@@ -5,20 +5,28 @@ import { useSelector } from "react-redux";
 
 function DashboardSidebar() {
   const { role } = useSelector((state) => state.role);
-  const items = menus[role] || [];
+  const roleMap = {
+    "salon-owner": "salonOwner",
+    customer: "customer",
+    admin: "admin",
+  };
+
+  const items = menus[roleMap[role]] || [];
 
   return (
-    <div className="h-full bg-white flex flex-col ">
-      <div className="flex flex-col gap-y-[10px] px-[20px] py-[30px]">
+    <div className="h-full bg-white flex flex-col border bt-[1px] border-[#E5E7EB] ">
+      <div className="flex flex-col gap-y-[10px] px-[16px] lg:px-[20px] py-[30px]">
         {items.map((item, idx) => (
           <NavLink
             to={item.path}
             key={idx}
             end
             className={({ isActive }) =>
-              `flex  items-center max-[1540px]:flex-col flex-row gap-2 py-[12px] sm:pl-[12px] sm:pr-[20px]
+              `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[8px] sm:px-[4px]
    rounded-[14px] transition-all duration-200
-   ${isActive ? "text-[#FF92A5]" : "bg-white text-[#581838]"} text-center `
+   ${
+     isActive ? "bg-[#FF92A5] text-white" : "bg-white text-[#581838]"
+   } text-center `
             }
             style={{
               fontFamily: "Poppins, sans-serif",
@@ -29,13 +37,13 @@ function DashboardSidebar() {
               <>
                 <span
                   className={`flex  items-center justify-center flex-shrink-0 rounded-full w-9 h-9
-    ${isActive ? "bg-white text-[#FF92A5]" : "bg-[#FCECEF] text-[#581838]"}
+
   `}
                 >
                   {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
 
-                <span className="flex-1 max-[1540px]:text-center text-left text-wrap  text-[10px] md:text-[14px] xl:text-[16px]  break-words ">
+                <span className=" max-[1100px]:text-center text-left text-wrap  text-[10px] sm:text-[12px]  xl:text-[14px]   break-all max-sm:hidden ">
                   {item.name}
                 </span>
               </>

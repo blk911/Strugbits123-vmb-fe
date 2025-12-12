@@ -12,9 +12,9 @@ export default function SalonRoutes() {
   return (
     <Route element={<DashboardLayout />}>
       <Route
-        path="/salonOwner"
+        path="/salon-owner"
         element={
-          <ProtectedRoute allowedRoles={["salonOwner"]}>
+          <ProtectedRoute allowedRoles={["salon-owner"]}>
             <DashboardHome />
           </ProtectedRoute>
         }

@@ -1,6 +1,11 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toastLoading } from "../../../../utils/toast";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useGetSalonByIdQuery } from "../../../../store/api";
 
 export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
@@ -8,6 +13,63 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   const { timelineItems = [], treatSection = {} } = data;
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
 
+  const salonId = salon?.salonId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
+
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      onClose();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    onClose();
+    navigate(`/salon/${salonId}`);
+  };
+  const getStatusStyle = () => {
+    const status = data.gift?.status?.toLowerCase() || "pending";
+    switch (status) {
+      case "accepted":
+      case "paid":
+        return {
+          bg: "bg-[#4FCF0033]",
+          text: "text-[#4FCF00]",
+          label: "Accepted",
+        };
+      case "pending":
+        return {
+          bg: "bg-[#FF950033]",
+          text: "text-[#FF9500]",
+          label: "Pending",
+        };
+      case "declined":
+      case "rejected":
+        return {
+          bg: "bg-[#DC262633]",
+          text: "text-[#DC2626]",
+          label: "Declined",
+        };
+      default:
+        return { bg: "bg-gray-200", text: "text-gray-600", label: "Unknown" };
+    }
+  };
+
+  const statusStyle = getStatusStyle();
   return (
     <div
       className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/30"
@@ -36,8 +98,10 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
         <div className="w-full border border-[#5818381A] bg-[#F2F2F2] rounded-[10px] p-4 sm:p-5 flex flex-col md:flex-row gap-6">
           <div className="flex-1 bg-white border border-[#0000001A] rounded-[10px] p-4 sm:p-5 overflow-hidden">
             <div className="flex justify-end mb-3">
-              <span className="px-3 py-1 bg-[#4FCF0033] text-[#4FCF00] text-xs font-semibold rounded-md">
-                Active
+              <span
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold ${statusStyle.bg} ${statusStyle.text}`}
+              >
+                {statusStyle.label}
               </span>
             </div>
 
@@ -94,11 +158,11 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
                         <p className="mt-1 whitespace-pre-line">
                           {item.reschedule.requestMessage}
                         </p>
-                        <p className="font-semibold text-[#6B7280] mt-4">
+                        {/* <p className="font-semibold text-[#6B7280] mt-4">
                           {item.reschedule.acceptedBy}
                         </p>
                         <p className="mt-1">{item.reschedule.newAppointment}</p>
-                        <p>{item.reschedule.appointmentDateTime}</p>
+                        <p>{item.reschedule.appointmentDateTime}</p> */}
                       </div>
                     )}
                   </div>
@@ -206,6 +270,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
                 variant="custom"
                 size="custom"
                 className="bg-[#FF92A54D] text-[#581838] font-medium py-3  rounded-[10px] hover:bg-[#ff92a5]/20 transition "
+                onClick={handleViewSalon}
               >
                 View Salon
               </AppButton>

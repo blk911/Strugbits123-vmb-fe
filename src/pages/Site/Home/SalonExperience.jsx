@@ -41,11 +41,13 @@ function SalonExperience() {
               text="List Your Salon Now"
               classes={"bg-[#FFFFFF] text-[#581838] w-max"}
               textclass={"text-[16px]"}
+              navigateTo={"register"}
             />
             <Button
               text="Gift Your First Service"
               classes={"bg-[#FFFFFF] text-[#581838] w-max"}
               textclass={"text-[16px]"}
+              navigateTo={"register"}
             />
           </div>
         </div>

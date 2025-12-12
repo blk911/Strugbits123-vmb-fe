@@ -34,7 +34,8 @@ export default function DeclineDirectModal({ isOpen, onClose, data }) {
                   You Declined Booking Request
                 </h2>
                 <p className="text-[#00000080] text-[14px]">
-                  The salon has been notified about your decision.
+                  You’ve declined this booking request. The salon has been
+                  notified about your decision.
                 </p>
               </div>
 

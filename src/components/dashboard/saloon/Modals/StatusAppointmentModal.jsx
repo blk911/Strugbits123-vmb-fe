@@ -74,13 +74,14 @@ export default function StatusAppointmentModal({
         <img
           src={left.image || ""}
           alt={left.name}
-          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0"
+          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
         />
         <div>
           <p className="font-semibold text-[14px] text-[#4B5563]">
             {left.name}
           </p>
           <p className="text-[12px] text-[#4B5563]">{left.email}</p>
+
           {left.phone && (
             <p className="text-[12px] text-[#4B5563]">{left.phone}</p>
           )}
@@ -91,13 +92,14 @@ export default function StatusAppointmentModal({
         <img
           src={right.image || ""}
           alt={right.name}
-          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0"
+          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
         />
         <div>
           <p className="font-semibold text-[14px] text-[#581838]">
             {right.name}
           </p>
           <p className="text-[12px] text-[#4B5563]">{right.email}</p>
+
           {right.phone && (
             <p className="text-[12px] text-[#4B5563]">{right.phone}</p>
           )}
@@ -186,6 +188,14 @@ export default function StatusAppointmentModal({
       );
     }
 
+    if (type === "declined") {
+      return (
+        <>
+          <TreatBlock left={merged.treatTo} right={merged.treatBy} />
+          <ServicesBlock />
+        </>
+      );
+    }
     return (
       <>
         <TreatBlock left={merged.treatTo} right={merged.treatBy} />

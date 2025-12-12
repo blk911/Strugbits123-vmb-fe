@@ -18,13 +18,14 @@ export const CellRenderers = {
       Pending: "bg-[#FF950033] text-[#FF9500]",
       Reschedule: "bg-[#FF92A533] text-[#FF92A5]",
       Hold: "bg-[#64748B33] text-[#64748B]",
+      Scheduled: "bg-[#4FCF0033] text-[#4FCF00]",
       Confirmed: "bg-[#4FCF0033] text-[#4FCF00]",
       Decline: "bg-[#DC262633] text-[#DC2626]",
     };
 
     return (
       <span
-        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium whitespace-nowrap ${
+        className={`inline-block px-1.5 text-wrap break-all py-0.5 rounded text-[10px] font-medium  ${
           styles[value] || "bg-red-100 text-red-800"
         }`}
       >

@@ -3,6 +3,20 @@ import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import {
+  useAcceptInviteMutation,
+  useGetSalonByIdQuery,
+} from "../../../../store/api";
+import { useDispatch } from "react-redux";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../utils/toast";
+import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 
 export default function ExclusiveInviteModal({
   isOpen,
@@ -13,13 +27,41 @@ export default function ExclusiveInviteModal({
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-
+  const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
   const salon = initialData;
-  const services = salon?.services || [];
+  const services = Array.isArray(salon?.services) ? salon.services : [];
+
   const discountPercent = salon?.discount || 0;
-
+  const salonId = salon?.salonId;
+  const inviteId = salon?.inviteId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
   useEffect(() => setInviteOpen(isOpen), [isOpen]);
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      closeModal();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    closeModal();
+    navigate(`/salon/${salonId}`);
+  };
   const closeAll = () => {
     setInviteOpen(false);
     setScheduleOpen(false);
@@ -35,11 +77,39 @@ export default function ExclusiveInviteModal({
     setScheduleOpen(true);
   };
 
-  const handleConfirmBooking = () => {
-    closeAll();
-    initialData?.onBookingSuccess?.();
-  };
+  const handleConfirmBooking = async () => {
+    if (!inviteId) {
+      toastError("Invite not found");
+      return;
+    }
 
+    if (!selectedDate || !selectedTime) {
+      toastError("Please select date and time");
+      return;
+    }
+
+    const loadingToast = toastLoading("Confirming your appointment...");
+
+    try {
+      await acceptInvite({
+        id: inviteId,
+        data: {
+          appointmentDate: selectedDate,
+          startTime: convertTo12Hour(selectedTime),
+        },
+      }).unwrap();
+
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment booked successfully!");
+
+      closeAll();
+      initialData?.onBookingSuccess?.();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to book appointment");
+      console.error("Accept invite failed:", err);
+    }
+  };
   return (
     <>
       <Transition appear show={inviteOpen} as={Fragment}>
@@ -73,7 +143,7 @@ export default function ExclusiveInviteModal({
               >
                 <Dialog.Panel
                   style={{ background: "#FFF2F4" }}
-                  className="relative w-full max-w-[480px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
+                  className="relative w-full max-w-[448px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
                 >
                   <IoClose
                     onClick={closeAll}
@@ -87,10 +157,10 @@ export default function ExclusiveInviteModal({
                       Salon Invite!
                     </h3>
                     <p className="text-[#00000080] text-[14px] mt-3">
-                      {salon?.name} has invited you to enjoy their services with
-                      a special discount just for you. <br /> Review the offer
-                      details below and confirm your booking to claim your
-                      discount.
+                      {salon?.name} Salon has invited you to enjoy their
+                      services with a special discount just for you. <br />{" "}
+                      Review the offer details below and confirm your booking to
+                      claim your discount.
                     </p>
                   </div>
 
@@ -100,18 +170,21 @@ export default function ExclusiveInviteModal({
                         <img
                           src={salon?.image}
                           alt={salon?.name}
-                          className="w-10 h-10 rounded-lg object-cover border"
+                          className="w-10 h-10 rounded-lg object-cover border border-gray-200"
                         />
                         <div>
                           <div className="font-semibold text-[#4B5563]">
                             {salon?.name}
                           </div>
                           <div className="text-sm text-[#4B5563]">
-                            Premium Beauty Services
+                            {salon?.description}
                           </div>
                         </div>
                       </div>
-                      <button className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded">
+                      <button
+                        className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                        onClick={handleViewSalon}
+                      >
                         View Salon
                       </button>
                     </div>
@@ -120,25 +193,29 @@ export default function ExclusiveInviteModal({
                       <h4 className="font-medium text-[#581838]">
                         Exclusive Offer
                       </h4>
-                      <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm">
-                        <div className="grid grid-cols-3 font-medium text-[#000]">
+                      <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
+                        <div className="flex justify-between text-[12px]  font-medium text-[#000]">
                           <div>Service</div>
                           <div>Duration</div>
                           <div>Price</div>
                         </div>
-                        {services.map((s) => (
+                        {services.map((s, i) => (
                           <div
-                            key={s.id}
-                            className="grid grid-cols-3 text-[#4B5563] mt-2"
+                            key={i}
+                            className={`flex justify-between text-[#4B5563] mt-2 ${
+                              i === services?.length - 1
+                                ? ""
+                                : "border-b border-[#D9D9D9]"
+                            }`}
                           >
                             <div>{s.name}</div>
-                            <div>{s.duration} min</div>
+                            <div>{s.duration}</div>
                             <div>${s.price}</div>
                           </div>
                         ))}
                       </div>
                       <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
-                        <div>Discount: {discountPercent}%</div>
+                        <div>Discount (%): &nbsp; {discountPercent}%</div>
                         <div>
                           Price After Discount: ${finalPrice.toFixed(2)}
                         </div>
@@ -146,20 +223,22 @@ export default function ExclusiveInviteModal({
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-2">
                     <AppButton
                       leftIcon={<FaTimes />}
-                      variant="primary"
+                      size="custom"
+                      variant="custom"
                       onClick={closeAll}
-                      className="flex-1"
+                      className="text-[10px] text-[12px] text-white bg-[#FF92A5] hover:bg-[#FF92A5] px-[20px] py-[15px] rounded-[8px]"
                     >
                       Maybe Later
                     </AppButton>
                     <AppButton
                       leftIcon={<FaCheck />}
-                      variant="outline-dark"
+                      variant="custom"
+                      size="custom"
                       onClick={handleAccept}
-                      className="flex-1"
+                      className="border border-[#581838] text-[12px] text-[#581838] bg-white hover:bg-white px-[20px] py-[15px] rounded-[8px]"
                     >
                       Accept & Book Now
                     </AppButton>
@@ -257,6 +336,7 @@ export default function ExclusiveInviteModal({
                           type="date"
                           value={selectedDate}
                           onChange={(e) => setSelectedDate(e.target.value)}
+                          min={new Date().toISOString().split("T")[0]}
                           className="border border-[#E5E5E5] rounded-lg px-4 py-3"
                         />
                         <input
@@ -272,9 +352,10 @@ export default function ExclusiveInviteModal({
                   <AppButton
                     variant="primary"
                     onClick={handleConfirmBooking}
+                    disabled={accepting || !selectedDate || !selectedTime}
                     className="text-lg py-3"
                   >
-                    Pay Now
+                    {accepting ? "Booking..." : "Pay Now"}
                   </AppButton>
                 </Dialog.Panel>
               </Transition.Child>

@@ -1,22 +1,33 @@
-import { salons as salonsData } from "../../../components/dashboard/client/Home/mockData";
 import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 
 import AppButton from "../../../components/common/site/AppButton";
 import ServicesSection from "../../../components/dashboard/saloon/SalonDetail/ServicesSection";
 import { useDashboardModal } from "../../ModalProvider";
+import { useUser } from "../../../hooks/useUser";
+import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
+import { convertTo12Hour } from "../../../utils/HelperFunctions";
 
 export default function SalonDetail() {
+  const { user, loading } = useUser();
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingIndicator />
+      </div>
+    );
+  }
+
+  if (!user) return null;
   const { openModal } = useDashboardModal();
-  const salon = salonsData[0];
 
   return (
     <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
       <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative">
           <AutoCarousel
-            images={salon?.images}
-            heightClass="h-[180px] sm:h-[220px] md:h-[260px] rounded-tl-xl rounded-tr-xl"
+            images={user?.salonPhotos}
+            heightClass="h-[180px] sm:h-[220px] md:h-[192px] rounded-tl-xl rounded-tr-xl"
           />
 
           <div
@@ -33,8 +44,8 @@ export default function SalonDetail() {
       "
           >
             <img
-              src={salon?.image}
-              alt={salon?.name}
+              src={user?.profilePic}
+              alt={user?.salonName}
               className="w-full h-full object-cover"
             />
           </div>
@@ -44,10 +55,10 @@ export default function SalonDetail() {
           <div className="flex flex-col px-3 sm:px-6 md:px-8 text-center sm:text-left w-full lg:w-[70%]">
             <div className="sm:pl-[150px] md:pl-[160px]">
               <h1 className="text-[#581838] font-bold text-[20px] sm:text-[26px] md:text-[30px] leading-tight">
-                {salon?.name}
+                {user?.salonName}
               </h1>
               <p className="text-[#4B5563] text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
-                Where beauty meets luxury ✨
+                {user?.description || "Where beauty meets luxury ✨"}
               </p>
             </div>
 
@@ -63,29 +74,35 @@ export default function SalonDetail() {
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt />
                 <span>
-                  {salon?.address} | {salon?.distance?.toFixed(1)} miles
+                  {user?.salonAddress} |
+                  {/* {salon?.distance?.toFixed(1)} miles */}
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
                 <FaPhoneAlt />
-                <span>{salon?.phone}</span>
+                <span>{user?.phoneNumber}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <FaRegClock />
-                <span>{salon?.hours}</span>
+                <span>
+                  {user?.startTime && user?.endTime
+                    ? `${user.startTime} - ${user.endTime}`
+                    : "09:00 AM - 05:00 PM"}
+                </span>
               </div>
 
               <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838] whitespace-nowrap">
-                Mon–Thu–Fri
+                {user?.workingDays.map((day) => day.slice(0, 3)).join("-") ||
+                  "Mon - Thu - Fri"}
               </div>
 
               <AppButton
                 leftIcon={<FaEdit />}
                 variant="primary"
                 className="w-[180px] md:w-[200px] h-[40px] block lg:hidden "
-                onClick={() => openModal("salonprofileSettings", { salon })}
+                onClick={() => openModal("salonprofileSettings")}
               >
                 Edit Salon Profile
               </AppButton>
@@ -97,7 +114,7 @@ export default function SalonDetail() {
               leftIcon={<FaEdit />}
               variant="primary"
               className="w-[180px] md:w-[200px] h-[40px]  "
-              onClick={() => openModal("salonprofileSettings", { salon })}
+              onClick={() => openModal("salonprofileSettings")}
             >
               Edit Salon Profile
             </AppButton>
@@ -105,7 +122,7 @@ export default function SalonDetail() {
         </div>
       </div>
 
-      <ServicesSection services={salon?.services} salon={salon} />
+      <ServicesSection />
     </div>
   );
 }

@@ -63,7 +63,11 @@ function SalonCard({ img, label, title, listItems, btnText, classes = "" }) {
           {title}
         </span>
         <List items={listItems} />
-        <Button text={btnText} classes={"!bg-white mt-[30px] w-max"} />
+        <Button
+          text={btnText}
+          classes={"!bg-white mt-[30px] w-max"}
+          navigateTo={"register"}
+        />
       </div>
     </div>
   );

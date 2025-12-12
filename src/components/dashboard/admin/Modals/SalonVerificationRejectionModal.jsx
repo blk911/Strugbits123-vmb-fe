@@ -1,17 +1,72 @@
-import React, { useState, useRef, useEffect } from "react";
-import { IoClose } from "react-icons/io5";
-import CustomCheckbox from "../../../common/site/CustomCheckbox";
-import { IoChevronDown } from "react-icons/io5";
+import React, { useRef, useEffect } from "react";
+import { IoClose, IoChevronDown } from "react-icons/io5";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
 import AppButton from "../../../common/site/AppButton";
-import { useDashboardModal } from "../../../../pages/ModalProvider";
-export default function SalonVerificationRejectionModal({ isOpen, onClose }) {
-  const [selectedReasons, setSelectedReasons] = useState({});
-  const [otherReason, setOtherReason] = useState("");
-  const [openSection, setOpenSection] = useState(null);
+import CustomCheckbox from "../../../common/site/CustomCheckbox";
+import { useHoldSalonMutation } from "../../../../store/api";
+import { toastSuccess, toastError } from "../../../../utils/toast";
+
+const holdReasonSchema = z
+  .object({
+    reasons: z.array(z.string()).min(1, "Please select at least one reason"),
+    otherReason: z.string().optional(),
+  })
+  .refine(
+    (data) =>
+      data.reasons.length > 0 ||
+      (data.otherReason && data.otherReason.trim() !== ""),
+    {
+      message: "Please select at least one reason or write your own.",
+      path: ["otherReason"],
+    }
+  );
+
+export default function SalonVerificationRejectionModal({
+  isOpen,
+  onClose,
+  salonId,
+  salonName = "Salon",
+}) {
   const dropdownRef = useRef(null);
-  const { openModal } = useDashboardModal();
-  const toggleReason = (key) => {
-    setSelectedReasons((prev) => ({ ...prev, [key]: !prev[key] }));
+  const [openSection, setOpenSection] = React.useState(null);
+
+  const [holdSalon, { isLoading }] = useHoldSalonMutation();
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: zodResolver(holdReasonSchema),
+    mode: "onChange",
+    defaultValues: {
+      reasons: [],
+      otherReason: "",
+    },
+  });
+
+  React.useEffect(() => {
+    if (isOpen) {
+      reset({ reasons: [], otherReason: "" });
+      setOpenSection(null);
+    }
+  }, [isOpen, reset]);
+
+  const selectedReasons = watch("reasons");
+  const otherReason = watch("otherReason");
+
+  const toggleReason = (reason) => {
+    const current = selectedReasons || [];
+    const updated = current.includes(reason)
+      ? current.filter((r) => r !== reason)
+      : [...current, reason];
+    setValue("reasons", updated, { shouldValidate: true });
   };
 
   const sections = [
@@ -51,6 +106,31 @@ export default function SalonVerificationRejectionModal({ isOpen, onClose }) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  const onSubmit = async (data) => {
+    if (!salonId) {
+      toastError("Salon ID is missing.");
+      return;
+    }
+
+    const allReasons = [
+      ...data.reasons,
+      ...(data.otherReason.trim() ? [data.otherReason.trim()] : []),
+    ];
+    const reasonText = allReasons.join(" | ");
+
+    try {
+      await holdSalon({
+        id: salonId,
+        reason: reasonText,
+      }).unwrap();
+
+      toastSuccess(`"${salonName}" has been put on hold.`);
+      onClose();
+    } catch (err) {
+      toastError(err?.data?.message || "Failed to hold salon.");
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -65,80 +145,94 @@ export default function SalonVerificationRejectionModal({ isOpen, onClose }) {
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#581838] text-[22px] cursor-pointer"
+          className="absolute top-4 right-4 text-[#581838] text-[22px] cursor-pointer hover:opacity-70"
         >
           <IoClose />
         </button>
 
         <h2 className="text-center text-[22px] font-bold text-[#FF92A5] mt-2">
-          Salon Verification Rejection
+          Salon Hold Rejection
         </h2>
 
         <p className="text-center text-[14px] text-[#00000080] mt-2 leading-[20px]">
-          You are about to reject this salon’s verification request. Choose a
+          You are about to hold this salon’s verification request. Choose a
           reason from the list below.
         </p>
 
-        <div className="flex flex-col gap-4 mt-6">
-          {sections.map((section, index) => (
-            <div key={index} className="flex flex-col">
-              <button
-                onClick={() =>
-                  setOpenSection(openSection === index ? null : index)
-                }
-                className="flex justify-between items-center bg-[#F8F8F8] px-4 py-3 rounded-[8px] border border-[#E5E5E5] cursor-pointer"
-              >
-                <span className="text-[14px] text-[#404040] font-medium">
-                  {section.title}
-                </span>
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+          <div className="flex flex-col gap-4">
+            {sections.map((section, index) => (
+              <div key={index} className="flex flex-col">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenSection(openSection === index ? null : index)
+                  }
+                  className="flex justify-between items-center bg-[#F8F8F8] px-4 py-3 rounded-[8px] border border-[#E5E5E5] cursor-pointer hover:bg-[#f0f0f0] transition"
+                >
+                  <span className="text-[14px] text-[#404040] font-medium">
+                    {section.title}
+                  </span>
+                  <IoChevronDown
+                    className={`text-[#581838] transition-transform duration-300 ${
+                      openSection === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-                <IoChevronDown
-                  className={`transition-transform duration-300 ${
-                    openSection === index ? "rotate-180" : "rotate-0"
+                <div
+                  className={`transition-all duration-300 overflow-hidden ${
+                    openSection === index ? "max-h-[500px] mt-2" : "max-h-0"
                   }`}
-                />
-              </button>
-
-              <div
-                className={`transition-all overflow-hidden ${
-                  openSection === index ? "max-h-[400px] mt-2" : "max-h-0"
-                }`}
-              >
-                <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 flex flex-col gap-2">
-                  {section.reasons.map((reason, i) => (
-                    <CustomCheckbox
-                      key={i}
-                      label={reason}
-                      checked={selectedReasons[reason] || false}
-                      onChange={() => toggleReason(reason)}
-                    />
-                  ))}
+                >
+                  <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 flex flex-col gap-2">
+                    {section.reasons.map((reason) => (
+                      <CustomCheckbox
+                        key={reason}
+                        label={reason}
+                        checked={selectedReasons.includes(reason)}
+                        onChange={() => toggleReason(reason)}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
+            ))}
+
+            <div className="flex flex-col gap-2 mt-2">
+              <label className="text-[14px] text-[#404040] font-medium">
+                Write your reason (optional)
+              </label>
+              <Controller
+                name="otherReason"
+                control={control}
+                render={({ field }) => (
+                  <textarea
+                    {...field}
+                    className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 text-[13px] resize-none min-h-[90px] focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
+                    placeholder="Add any additional details..."
+                  />
+                )}
+              />
+              {errors.otherReason && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.otherReason.message}
+                </p>
+              )}
             </div>
-          ))}
-
-          <div className="flex flex-col gap-2 mt-2">
-            <label className="text-[14px] text-[#404040] font-medium">
-              Write your reason (optional)
-            </label>
-            <textarea
-              value={otherReason}
-              onChange={(e) => setOtherReason(e.target.value)}
-              className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 text-[12px] italic text-[#00000080] min-h-[90px] resize-none"
-              placeholder="Type here..."
-            />
           </div>
-        </div>
 
-        <AppButton
-          variant="primary"
-          size="custom"
-          className="text-[16px] font-medium  py-2 mt-4"
-          onClick={() => openModal("rejectionSent")}
-        >
-          Confirm Rejection
-        </AppButton>
+          <AppButton
+            type="submit"
+            variant="primary"
+            size="custom"
+            className="w-full text-[16px] font-medium py-3 mt-6"
+            isLoading={isLoading}
+            disabled={isLoading || !isValid}
+          >
+            {isLoading ? "Putting on Hold..." : "Confirm Hold"}
+          </AppButton>
+        </form>
       </div>
     </div>
   );

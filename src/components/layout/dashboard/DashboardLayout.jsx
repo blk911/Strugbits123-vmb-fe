@@ -20,6 +20,7 @@ import {
   OfferExpiredModal,
   ProfileSettingsModal,
   ChangePasswordModal,
+  RescheduleDirectModal,
 } from "../../dashboard/client/Modals";
 import {
   RescheduleAppointmentModal,
@@ -29,7 +30,12 @@ import {
   AddServiceModal,
   DeleteConfirmModal,
 } from "../../dashboard/saloon/Modals";
-import { ConfirmConfirmation } from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
+import {
+  ConfirmConfirmation,
+  DeclineConfirmation,
+  HoldConfirmation,
+  RescheduleSentConfirmation,
+} from "../../dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 import {
   AppointmentRequestHistoryModal,
   GiftRequestHistoryModal,
@@ -73,6 +79,24 @@ function DashboardModals() {
   };
   return (
     <>
+      <DeclineConfirmation
+        open={activeModal === "declineAppointmentClient"}
+        onClose={closeModal}
+      />
+      <HoldConfirmation
+        open={activeModal === "holdAppointmentClient"}
+        onClose={closeModal}
+      />
+
+      <RescheduleSentConfirmation
+        open={activeModal === "rescheduleSent"}
+        onClose={closeModal}
+      />
+      <RescheduleDirectModal
+        isOpen={activeModal === "rescheduleAppointmentClient"}
+        onClose={closeModal}
+        data={modalData}
+      />
       <AppointmentRequestHistoryModal
         isOpen={activeModal === "appointmentRequestHistory"}
         onClose={closeModal}
@@ -95,6 +119,8 @@ function DashboardModals() {
       <SalonVerificationRejectionModal
         isOpen={activeModal === "salonRejection"}
         onClose={closeModal}
+        salonId={modalData?.salonId}
+        salonName={modalData?.salonName}
       />
       <SalonRequestModal
         isOpen={activeModal === "salonRequest"}
@@ -105,6 +131,7 @@ function DashboardModals() {
       <DeleteConfirmModal
         isOpen={activeModal === "delete"}
         closeModal={closeModal}
+        id={modalData}
       />
       <AddServiceModal
         isOpen={activeModal === "addService"}
@@ -114,7 +141,6 @@ function DashboardModals() {
       <SalonProfileSettingsModal
         isOpen={activeModal === "salonprofileSettings"}
         closeModal={closeModal}
-        salon={modalData?.salon}
       />
       <SendTreatModal
         isOpen={activeModal === "sendTreat"}
@@ -198,10 +224,6 @@ function DashboardModals() {
         closeModal={closeModal}
         initialData={modalData}
       />
-      <BookAppointmentModal
-        isOpen={activeModal === "bookAppointment"}
-        closeModal={closeModal}
-      />
     </>
   );
 }
@@ -241,7 +263,12 @@ function DashboardLayout() {
         >
           <DashboardHeader toggleSidebar={toggleSidebar} />
 
-          <main className="flex-1 overflow-y-auto bg-[#EFEFEF] ">
+          <main
+            className="flex-1 overflow-y-auto bg-[#EFEFEF] no-scrollbar"
+            style={{
+              scrollbarWidth: "none",
+            }}
+          >
             <Outlet />
           </main>
 

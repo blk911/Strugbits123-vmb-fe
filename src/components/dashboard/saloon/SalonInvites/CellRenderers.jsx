@@ -2,12 +2,12 @@ import React from "react";
 
 export const CellRenderers = {
   salonEmail: (value) => (
-    <span className="text-sm font-medium text-[#00000080]">{value}</span>
+    <span className="text-sm font-medium text-[#4B5563]">{value}</span>
   ),
 
   message: (value) => (
     <p
-      className="italic text-xs text-[#00000080] max-w-[340px] line-clamp-3"
+      className="italic text-[12px] text-black/92 max-w-[340px] line-clamp-3"
       title={value}
       style={{ fontStyle: "italic", opacity: 0.5 }}
     >
@@ -17,14 +17,14 @@ export const CellRenderers = {
 
   serviceName: (options) => (
     <div className="flex flex-wrap gap-1 text-xs">
-      {options.map((option, index) => (
-        <span
-          key={index}
-          className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
-        >
-          {option}
-        </span>
-      ))}
+      {/* {options.map((option, index) => ( */}
+      <span
+        // key={index}
+        className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+      >
+        {options}
+      </span>
+      {/* ))} */}
     </div>
   ),
 
@@ -40,13 +40,13 @@ export const CellRenderers = {
 
   status: (value) => {
     const styles = {
-      Accepted: "bg-[#4FCF0033] text-[#4FCF00]",
+      Claimed: "bg-[#4FCF0033] text-[#4FCF00]",
       Pending: "bg-[#FF950033] text-[#FF9500]",
     };
 
     return (
       <span
-        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
+        className={`inline-block px-3 py-1 rounded-full text-[10px] font-semibold whitespace-nowrap ${
           styles[value] || "bg-[#64748B33] text-[#64748B]"
         }`}
       >

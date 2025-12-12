@@ -7,8 +7,11 @@ import WelcomeBanner from "../../../components/dashboard/client/Home/WelcomeBann
 import SalonSection from "../../../components/dashboard/client/Home/SalonSection";
 import { useDashboardModal } from "../../ModalProvider";
 import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
+import { useNavigate } from "react-router-dom";
+
 const DashboardHome = () => {
   const { user, loading } = useUser();
+  const navigate = useNavigate();
   const { openModal } = useDashboardModal();
   if (loading) {
     return (
@@ -20,10 +23,15 @@ const DashboardHome = () => {
 
   if (!user) return null;
   return (
-    <div className="flex flex-col  bg-[#EFEFEF] p-2 sm:p-7 font-[Poppins] gap-8">
+    <div
+      className="h-full flex flex-col  bg-[#EFEFEF] mb-6 p-2 sm:p-7 font-[Poppins] gap-8 no-scrollbar"
+      style={{
+        scrollbarWidth: "none",
+      }}
+    >
       <WelcomeBanner
         user={user}
-        onInviteClick={() => {}}
+        onInviteClick={() => navigate("/saloninvites")}
         onGiftClick={() => {
           openModal("treat");
         }}

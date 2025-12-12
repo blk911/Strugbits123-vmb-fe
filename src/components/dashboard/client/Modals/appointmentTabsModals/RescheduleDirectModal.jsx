@@ -3,6 +3,14 @@ import { Fragment, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../../common/site/AppButton";
 import AppointmentDetailsSection from "./AppointmentDetailsSection";
+import { useDashboardModal } from "../../../../../pages/ModalProvider";
+import { useRequestAppointmentReschedulingMutation } from "../../../../../store/api";
+import {
+  toastDismiss,
+  toastError,
+  toastLoading,
+  toastSuccess,
+} from "../../../../../utils/toast";
 
 export default function RescheduleDirectModal({
   isOpen,
@@ -13,12 +21,40 @@ export default function RescheduleDirectModal({
   const [reasonText, setReasonText] = useState(
     "I’d like to reschedule my booking. Please update the appointment time as per the new availability."
   );
+  const [requestReschedule, { isLoading }] =
+    useRequestAppointmentReschedulingMutation();
 
+  const appointmentId = data?.appointment?.id;
+  const { openModal } = useDashboardModal();
   if (!isOpen || !data) return null;
 
-  const handleSubmit = () => {
-    onClose();
-    setTimeout(() => onRescheduleSent?.(), 200);
+  const handleSubmit = async () => {
+    if (!appointmentId) {
+      toastError("Appointment ID not found");
+      return;
+    }
+
+    if (!reasonText.trim()) {
+      toastError("Please write a reason for rescheduling");
+      return;
+    }
+
+    const loadingToast = toastLoading("Sending reschedule request...");
+
+    try {
+      await requestReschedule({
+        id: appointmentId,
+        data: { reason: reasonText.trim() },
+      }).unwrap();
+
+      toastDismiss(loadingToast);
+      toastSuccess("Reschedule request sent successfully!");
+      openModal("rescheduleSent");
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to send reschedule request");
+      console.error("Reschedule failed:", err);
+    }
   };
 
   return (
@@ -86,8 +122,9 @@ export default function RescheduleDirectModal({
                     size="custom"
                     onClick={handleSubmit}
                     className="w-full py-[15px] text-[14px] font-semibold"
+                    disabled={isLoading || !reasonText.trim() === ""}
                   >
-                    Request Reschedule Now
+                    {isLoading ? "Sending..." : "Request Reschedule Now"}
                   </AppButton>
                 </Dialog.Panel>
               </Transition.Child>

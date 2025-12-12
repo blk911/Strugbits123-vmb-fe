@@ -3,172 +3,175 @@ import { useLocation } from "react-router-dom";
 import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
+import {
+  useRequestedGiftsQuery,
+  useRecievedGiftsQuery,
+} from "../../../../store/api";
 
-import salonImg1 from "../../../../assets/salon-1.png";
-import salonImg2 from "../../../../assets/salon-2.png";
-import userAvatar from "../../../../assets/user_icon.png";
+const PAGE_SIZE = 10;
 
-const myRequestsData = [
-  {
-    id: 1,
-    payersEmail: "elitejuan@gmail.com",
-    salonName: "Bella Beauty Salon 1",
-    serviceName: ["Hair Color", "HydraFacial Deluxe", "Balayage Highlights"],
-    requestDate: "02-08-2025",
-    status: "Accepted",
-
-    _modalData: {
-      selectedSalon: "Bella Beauty Salon 1",
-      selectedSalonImage: salonImg1,
-      services: [
-        { name: "Hair Color", duration: 120, price: 95 },
-        { name: "HydraFacial Deluxe", duration: 60, price: 120 },
-        { name: "Balayage Highlights", duration: 180, price: 190 },
-      ],
-      email: "elitejuan@gmail.com",
-      message:
-        "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
-    },
-  },
-  {
-    id: 2,
-    payersEmail: "maria@gmail.com",
-    salonName: "Glam Studio",
-    serviceName: ["Luxury Manicure & Pedicure", "Lash Lift & Tint"],
-    requestDate: "03-08-2025",
-    status: "Pending",
-    _modalData: {
-      selectedSalon: "Glam Studio",
-      selectedSalonImage: salonImg2,
-      services: [
-        { name: "Luxury Manicure & Pedicure", duration: 90, price: 85 },
-        { name: "Lash Lift & Tint", duration: 60, price: 75 },
-      ],
-      email: "maria@gmail.com",
-      message: "Pleaseeee treat me to this? I deserve it after this week!",
-    },
-  },
-];
-
-const receivedRequestsData = [
-  {
-    id: 1,
-    senderEmail: "elitejuan@gmail.com",
-    giftedServices: ["Full Head Color", "Keratin Treatment"],
-    dateReceived: "02-08-2025",
-    price: "$355",
-    paidPrice: "$320",
-    giftStatus: "Accepted",
-    _modalData: {
-      salon: {
-        name: "Bella Beauty Salon 1",
-        image: salonImg1,
-        description: "Where beauty meets luxury",
-      },
-      services: [
-        { name: "Full Head Color", duration: 120, price: 105 },
-        { name: "Keratin Smoothing Treatment", duration: 150, price: 250 },
-      ],
-      sender: {
-        name: "Juan",
-        email: "elitejuan@gmail.com",
-        avatar: userAvatar,
-        message:
-          "Hey love! Can you treat me to this? I miss you so much and deserve a little pamper day!",
-      },
-    },
-  },
-  {
-    id: 2,
-    senderEmail: "maria@gmail.com",
-    giftedServices: ["Classic Haircut & Style", "Anti-Aging Facial"],
-    dateReceived: "03-08-2025",
-    price: "$205",
-    paidPrice: "$180",
-    giftStatus: "Rejected",
-    _modalData: {
-      salon: {
-        name: "Glam Studio",
-        image: salonImg2,
-        description: "Premium Beauty Services",
-      },
-      services: [
-        { name: "Classic Haircut & Style", duration: 45, price: 65 },
-        { name: "Anti-Aging Facial", duration: 75, price: 140 },
-      ],
-      sender: {
-        name: "Maria",
-        email: "maria@gmail.com",
-        avatar: userAvatar,
-        message: "Pretty please? I’ve been so stressed lately",
-      },
-    },
-  },
-];
-
-const cleanDataForTable = (data) => data.map(({ _modalData, ...rest }) => rest);
-
-const tabs = {
-  myRequests: cleanDataForTable(myRequestsData),
-  receivedRequests: cleanDataForTable(receivedRequestsData),
-};
-
-const originalRows = {
-  myRequests: myRequestsData,
-  receivedRequests: receivedRequestsData,
-};
-
-const tabOrder = ["myRequests", "receivedRequests"];
-const labelMap = {
-  myRequests: "My Requests",
-  receivedRequests: "Received Requests",
-};
-
-export default function Requests() {
+export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab ?? "myRequests"
-  );
   const { openModal } = useDashboardModal();
+
+  const [activeTab, setActiveTab] = useState(
+    location.state?.activeTab || "myRequests"
+  );
+
+  const [myRequestsPage, setMyRequestsPage] = useState(1);
+  const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
+  const sortMap = {
+    Newest: "newest",
+    Oldest: "oldest",
+  };
+
+  const sortValue = sortMap[sortOption] || "newest";
+  const {
+    data: requestedData,
+    isLoading: loadingRequested,
+    isFetching: fetchingRequested,
+  } = useRequestedGiftsQuery({
+    page: myRequestsPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+  });
+
+  const {
+    data: receivedData,
+    isLoading: loadingReceived,
+    isFetching: fetchingReceived,
+  } = useRecievedGiftsQuery({
+    page: receivedRequestsPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+  });
+  const myRequestsData = (requestedData?.data?.items || []).map((gift) => ({
+    id: gift._id,
+    payersEmail: gift.receiverEmail,
+    salonName: gift.salonId?.salonName || "Unknown Salon",
+    serviceName: gift.services.map((s) => s.serviceName || s.name),
+    requestDate: new Date(gift.createdAt).toLocaleDateString("en-GB"),
+    status: gift.status.charAt(0).toUpperCase() + gift.status.slice(1),
+    _modalData: {
+      isSubmitted: true,
+      gift,
+      selectedSalon: gift.salonId?.salonName,
+      selectedServices: gift.services.map((s) => s.serviceName || s.name),
+      email: gift.receiverEmail,
+      message: gift.message || "No message",
+    },
+  }));
+
+  const receivedRequestsData = (receivedData?.data?.items || []).map(
+    (gift) => ({
+      id: gift._id,
+      senderEmail: gift.requesterId?.email || "Unknown",
+      giftedServices: gift.services.map((s) => s.serviceName || s.name),
+      dateReceived: new Date(gift.createdAt).toLocaleDateString("en-GB"),
+      price: `$${gift.services.reduce(
+        (sum, s) => sum + Number(s.servicePrice || 0),
+        0
+      )}`,
+      paidPrice: gift.isPaid
+        ? `$${gift.services.reduce(
+            (sum, s) => sum + Number(s.servicePrice || 0),
+            0
+          )}`
+        : "-",
+      giftStatus: gift.isPaid
+        ? "Redeemed"
+        : gift.status === "pending"
+        ? "Pending"
+        : "Declined",
+      _modalData: {
+        gift,
+        salon: {
+          name: gift.salonId?.salonName,
+          description: gift.salonId?.description,
+          image: gift.salonId?.profilePic,
+        },
+        services: gift.services.map((s) => ({
+          name: s.serviceName || s.name,
+          duration: `${s.serviceDuration} min`,
+          price: s.servicePrice,
+        })),
+        sender: {
+          name: gift.requesterId?.name || "Someone",
+          email: gift.requesterId?.email,
+          message: gift.message,
+        },
+      },
+    })
+  );
+
+  const cleanDataForTable = (data) =>
+    data.map(({ _modalData, ...rest }) => rest);
+
+  const tabs = {
+    myRequests: cleanDataForTable(myRequestsData),
+    receivedRequests: cleanDataForTable(receivedRequestsData),
+  };
+
+  const originalRows = {
+    myRequests: myRequestsData,
+    receivedRequests: receivedRequestsData,
+  };
+
+  const totalPages = {
+    myRequests: requestedData?.data?.pages || 1,
+    receivedRequests: receivedData?.data?.pages || 1,
+  };
 
   const handleRowClick = {
     myRequests: (cleanRow) => {
       const row = originalRows.myRequests.find((r) => r.id === cleanRow.id);
-      const d = row._modalData;
-      openModal("treat", {
-        isSubmitted: true,
-        selectedSalon: "Bella Beauty Salon",
-        selectedServices: ["Haircuts", "Hydrafacial"],
-        email: "mike.davis@example.com",
-        message:
-          "Hey babe! Can you treat me to this? I've been working so hard lately. Love you!",
-      });
+      if (row?._modalData) {
+        openModal("treat", row._modalData);
+      }
     },
-
     receivedRequests: (cleanRow) => {
       const row = originalRows.receivedRequests.find(
         (r) => r.id === cleanRow.id
       );
-      const d = row._modalData;
-      openModal("treatRequest", {
-        salon: d.salon,
-        services: d.services,
-        sender: d.sender,
-      });
+      if (row?._modalData) {
+        openModal("treatRequest", row._modalData);
+      }
     },
   };
+
+  const handlePageChange = (tab, page) => {
+    if (tab === "myRequests") setMyRequestsPage(page);
+    if (tab === "receivedRequests") setReceivedRequestsPage(page);
+  };
+
+  const isLoading =
+    activeTab === "myRequests" ? loadingRequested : loadingReceived;
+  const isFetching =
+    activeTab === "myRequests" ? fetchingRequested : fetchingReceived;
 
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
       <TabbedTable
         tabs={tabs}
-        tabOrder={tabOrder}
+        tabOrder={["myRequests", "receivedRequests"]}
         defaultTab="myRequests"
         cellRenderers={CellRenderers}
-        tabLabelMap={labelMap}
+        tabLabelMap={{
+          myRequests: "My Requests",
+          receivedRequests: "Received Requests",
+        }}
         location={location}
         setExternalActiveTab={setActiveTab}
         onRowClick={handleRowClick}
+        currentPage={
+          activeTab === "myRequests" ? myRequestsPage : receivedRequestsPage
+        }
+        totalPages={totalPages[activeTab]}
+        onPageChange={(page) => handlePageChange(activeTab, page)}
+        isLoading={isLoading}
+        isFetching={isFetching}
       />
     </div>
   );

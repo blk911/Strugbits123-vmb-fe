@@ -1,12 +1,66 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetSalonByIdQuery } from "../../../../store/api";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../../utils/toast";
 
 export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], salonInfo = {}, clientInfo = {} } = data;
+  const salonId = salonInfo?.salonId;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      onClose();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    onClose();
+    navigate(`/salon/${salonId}`);
+  };
+  const status = data.status || "pending";
+  const statusStyles = {
+    claimed: { bg: "bg-[#4FCF0033]", text: "text-[#4FCF00]", label: "Claimed" },
+    accepted: {
+      bg: "bg-[#4FCF0033]",
+      text: "text-[#4FCF00]",
+      label: "Claimed",
+    },
+    pending: { bg: "bg-[#FF950033]", text: "text-[#FF9500]", label: "Pending" },
+    unclaimed: {
+      bg: "bg-[#DC262633]",
+      text: "text-[#DC2626]",
+      label: "Unclaimed",
+    },
+    default: {
+      bg: "bg-gray-200",
+      text: "text-gray-600",
+      label: status.charAt(0).toUpperCase() + status.slice(1),
+    },
+  };
+  const currentStyle =
+    statusStyles[status.toLowerCase()] || statusStyles.default;
   return (
     <div
       className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/30"
@@ -50,6 +104,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
               variant="custom"
               size="custom"
               className="bg-[#FF92A54D] text-[#581838] py-[12px] px-[20px] rounded-[10px] font-medium hover:bg-[#ff92a5]/20 transition whitespace-nowrap"
+              onClick={handleViewSalon}
             >
               View Salon
             </AppButton>
@@ -58,8 +113,10 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="flex-1 bg-white border border-[#0000001A] rounded-[10px] p-4 sm:p-5">
               <div className="flex justify-end">
-                <span className="px-2 py-1 bg-[#4FCF0033] text-[#4FCF00] text-[10px] font-semibold rounded">
-                  Accepted
+                <span
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold ${currentStyle.bg} ${currentStyle.text}`}
+                >
+                  {currentStyle.label}
                 </span>
               </div>
 
@@ -133,12 +190,16 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                     </p>
                   </div>
                   <div>
-                    <p className="font-medium">Phone:</p>
-                    <p className="text-[#00000080] text-[16px]">
-                      {salonInfo.phone}
-                    </p>
+                    {salonInfo?.phone && (
+                      <>
+                        <p className="font-medium">Phone:</p>
+                        <p className="text-[#00000080] text-[16px]">
+                          {salonInfo.phone}
+                        </p>
+                      </>
+                    )}
                   </div>
-                  <div>
+                  <div className={`${salonInfo?.phone === "" && "col-span-2"}`}>
                     <p className="font-medium">Service:</p>
                     <p className="text-[#00000080] text-[16px]">
                       {salonInfo.service}
@@ -173,20 +234,27 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                   />
 
                   <div className="text-sm">
-                    <p className="font-medium text-[#000000]">Full Name</p>
-                    <p className="text-[#00000080] mb-2 text-[16px]">
-                      {clientInfo.name}
-                    </p>
+                    {clientInfo.name && (
+                      <>
+                        <p className="font-medium text-[#000000]">Full Name</p>
+                        <p className="text-[#00000080] mb-2 text-[16px]">
+                          {clientInfo.name}
+                        </p>
+                      </>
+                    )}
 
                     <p className="font-medium text-[#000000]">Email</p>
                     <p className="text-[#00000080] mb-2 text-[16px] break-all">
                       {clientInfo.email}
                     </p>
-
-                    <p className="font-medium text-[#000000]">Phone</p>
-                    <p className="text-[#00000080] text-[16px]">
-                      {clientInfo.phone}
-                    </p>
+                    {clientInfo?.phone && (
+                      <>
+                        <p className="font-medium text-[#000000]">Phone</p>
+                        <p className="text-[#00000080] text-[16px]">
+                          {clientInfo.phone}
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

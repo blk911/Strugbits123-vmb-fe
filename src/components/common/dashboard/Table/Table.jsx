@@ -9,10 +9,10 @@ const Table = ({ data, cellRenderers, onRowClick }) => {
   const keys = Object.keys(data[0]).filter((key) => key !== "id");
 
   return (
-    <div className="w-full overflow-hidden ">
-      <table className="w-full table-fixed text-sm bg-white">
+    <div className="w-full overflow-x-auto">
+      <table className="w-full table-fixed text-sm bg-white custom-table ">
         <TableHeader keys={keys} />
-        <tbody className="block md:table-row-group">
+        <tbody>
           {data.map((row) => (
             <TableRow
               key={row.id}
@@ -27,5 +27,4 @@ const Table = ({ data, cellRenderers, onRowClick }) => {
     </div>
   );
 };
-
 export default Table;

@@ -2,14 +2,47 @@ import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 import declineGif from "../../../../assets/declineGif.gif";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetSalonByIdQuery } from "../../../../store/api";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../../utils/toast";
 export default function OfferExpiredModal({ isOpen, closeModal, data }) {
   const salon = data;
-  const services = salon?.services || [];
+  const services = Array.isArray(salon?.services) ? salon.services : [];
+
   const discountPercent = salon?.discount || 0;
 
   const subtotal = services.reduce((sum, s) => sum + s.price, 0);
   const finalPrice = subtotal - (subtotal * discountPercent) / 100;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const salonId = salon?.salonId;
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salonId, {
+    skip: !isOpen || !salonId,
+  });
+  const handleViewSalon = () => {
+    if (!salonId) return;
 
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      closeModal();
+      navigate(`/salon/${salonId}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    closeModal();
+    navigate(`/salon/${salonId}`);
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -72,19 +105,22 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                       <img
                         src={salon?.image}
                         alt={salon?.name}
-                        className="w-10 h-10 rounded-lg object-cover border"
+                        className="w-10 h-10 rounded-lg object-cover border border-gray-200"
                       />
                       <div>
                         <div className="font-semibold text-[#4B5563]">
                           {salon?.name}
                         </div>
                         <div className="text-sm text-[#4B5563]">
-                          Premium Beauty Services
+                          {salon?.description}
                         </div>
                       </div>
                     </div>
 
-                    <button className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded">
+                    <button
+                      className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                      onClick={handleViewSalon}
+                    >
                       View Salon
                     </button>
                   </div>
@@ -94,27 +130,30 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                       Exclusive Offer
                     </h4>
 
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm">
-                      <div className="grid grid-cols-3 font-medium text-[#000]">
+                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
+                      <div className="flex justify-between text-[12px]  font-medium text-[#000]">
                         <div>Service</div>
                         <div>Duration</div>
                         <div>Price</div>
                       </div>
-
-                      {services.map((s) => (
+                      {services.map((s, i) => (
                         <div
-                          key={s.id}
-                          className="grid grid-cols-3 text-[#4B5563] mt-2"
+                          key={i}
+                          className={`flex justify-between text-[#4B5563] mt-2 ${
+                            i === services?.length - 1
+                              ? ""
+                              : "border-b border-[#D9D9D9]"
+                          }`}
                         >
                           <div>{s.name}</div>
-                          <div>{s.duration} min</div>
+                          <div>{s.duration}</div>
                           <div>${s.price}</div>
                         </div>
                       ))}
                     </div>
 
                     <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
-                      <div>Discount: {discountPercent}%</div>
+                      <div>Discount (%): &nbsp; {discountPercent}%</div>
                       <div>Price After Discount: ${finalPrice.toFixed(2)}</div>
                     </div>
                   </div>
