@@ -2,12 +2,12 @@ import React from "react";
 
 export const CellRenderers = {
   salonEmail: (value) => (
-    <span className="text-sm font-medium text-[#00000080]">{value}</span>
+    <span className="text-sm font-medium text-[#4B5563]">{value}</span>
   ),
 
   message: (value) => (
     <p
-      className="italic text-[12px] text-[#00000080] max-w-[340px] line-clamp-3"
+      className="italic text-[12px] text-black/92 max-w-[340px] line-clamp-3"
       title={value}
       style={{ fontStyle: "italic", opacity: 0.5 }}
     >

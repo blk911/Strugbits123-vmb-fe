@@ -3,7 +3,7 @@ import React from "react";
 const TableRow = ({ row, keys, cellRenderers, onRowClick }) => (
   <tr
     onClick={() => onRowClick?.(row)}
-    className="cursor-pointer border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px] "
+    className="cursor-pointer text-[#4B5563] border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px] "
   >
     {keys.map((key, index) => {
       let cellValue = cellRenderers[key]
