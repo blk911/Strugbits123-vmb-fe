@@ -183,7 +183,7 @@ export default function GiftCard({
 
                 <div className="text-center">
                   <p
-                    className="font-semibold text-[10px] rounded-[4px] px-2 py-[2px]"
+                    className="font-semibold text-[10px] rounded-[5px] p-[5px]"
                     style={{ color: statusColor, backgroundColor: statusBg }}
                   >
                     {status}

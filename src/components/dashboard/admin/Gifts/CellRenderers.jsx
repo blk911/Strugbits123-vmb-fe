@@ -4,7 +4,7 @@ export const CellRenderers = {
       {services.map((service, index) => (
         <span
           key={index}
-          className="px-2 py-1 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+          className="px-1.5 py-0.5  bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
         >
           {service}
         </span>
@@ -21,7 +21,7 @@ export const CellRenderers = {
 
     return (
       <span
-        className={`inline-block px-3 py-1.5 rounded-md text-xs font-medium text-center min-w-[80px] ${
+        className={`inline-block p-[5px] rounded-[5px] text-[10px] font-medium  text-center ${
           styles[status] || "bg-gray-200 text-gray-700"
         }`}
       >

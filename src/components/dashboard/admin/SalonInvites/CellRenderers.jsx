@@ -30,7 +30,7 @@ export const CellRenderers = {
 
   discount: (value) => (
     <span className="inline-block px-2.5 py-1 bg-[#FF92A533] text-[#FF92A5] rounded-md text-sm font-semibold">
-      {value}%
+      {value}
     </span>
   ),
 
@@ -47,7 +47,7 @@ export const CellRenderers = {
 
     return (
       <span
-        className={`inline-block px-3 py-1.5 rounded-md text-xs font-medium min-w-[82px] text-center ${
+        className={`inline-block p-[5px] rounded-[5px] text-[10px] font-medium  text-center ${
           statusStyles[status] || "bg-gray-200 text-gray-700"
         }`}
       >

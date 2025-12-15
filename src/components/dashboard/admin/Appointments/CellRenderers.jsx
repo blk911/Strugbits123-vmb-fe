@@ -16,15 +16,16 @@ export const CellRenderers = {
   status: (value) => {
     const styles = {
       Pending: "bg-[#FF950033] text-[#FF9500]",
-      Reschedule: "bg-[#DC262633] text-[#DC2626]",
+      "Reschedule requested": "bg-[#FF92A533] text-[#FF92A5]",
       Hold: "bg-[#64748B33] text-[#64748B]",
+      Scheduled: "bg-[#4FCF0033] text-[#4FCF00]",
       Confirmed: "bg-[#4FCF0033] text-[#4FCF00]",
       Decline: "bg-[#DC262633] text-[#DC2626]",
     };
 
     return (
       <span
-        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium text-wrap break-all  ${
+        className={`inline-block p-[5px] rounded-[5px] text-[10px] font-medium text-wrap break-all  ${
           styles[value] || "bg-red-100 text-red-800"
         }`}
       >
