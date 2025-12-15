@@ -11,14 +11,31 @@ export default function InputWithIcon({
   name,
   error,
   className,
+  ...rest
 }) {
   const [showPassword, setShowPassword] = useState(false);
-
   const isPassword = type === "password";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const fieldProps =
+    register && name
+      ? register(name, {
+          onChange: (e) => {
+            let value = e.target.value;
+
+            if (value.startsWith(" ")) {
+              value = value.trimStart();
+              e.target.value = value;
+            }
+
+            const originalOnChange = register(name).onChange;
+            if (originalOnChange) originalOnChange(e);
+          },
+        })
+      : {};
 
   return (
     <div className="w-full">
@@ -38,7 +55,7 @@ export default function InputWithIcon({
 
         <input
           type={isPassword && showPassword ? "text" : type}
-          {...(register && name && register(name))}
+          {...fieldProps}
           placeholder={placeholder}
           className={twMerge(
             `w-full border rounded-md py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none transition-all`,
@@ -46,6 +63,7 @@ export default function InputWithIcon({
             error ? "border-red-500" : "border-gray-300",
             className
           )}
+          {...rest}
         />
 
         {isPassword && (
@@ -56,9 +74,9 @@ export default function InputWithIcon({
             tabIndex={-1}
           >
             {showPassword ? (
-              <FaEyeSlash className="w-5 h-5" />
-            ) : (
               <FaEye className="w-5 h-5" />
+            ) : (
+              <FaEyeSlash className="w-5 h-5" />
             )}
           </button>
         )}

@@ -195,9 +195,21 @@ export default function BookAppointmentModal({
                       <Controller
                         name="fullName"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <input
                             {...field}
+                            value={value || ""}
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+
+                              e.target.value = newValue;
+
+                              onChange(newValue);
+                            }}
                             type="text"
                             placeholder="Enter your full name"
                             className={`border rounded-[8px] px-3 py-3 text-[16px] focus:outline-none focus:border-[#FF92A5] ${

@@ -15,7 +15,7 @@ export default function LoginForm() {
       <InputWithIcon
         label="Email Address"
         icon={FaEnvelope}
-        type="email"
+        type="text"
         placeholder="Enter your email"
         name="email"
         register={register}

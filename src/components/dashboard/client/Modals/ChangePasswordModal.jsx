@@ -49,7 +49,63 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
       toastError(err?.data?.message || "Failed to change password.");
     }
   };
-
+  const PasswordInput = ({ label, name, register, errors, show, setShow }) => {
+    return (
+      <div className="flex flex-col gap-1">
+        <label className="text-[#404040] text-[14px] font-medium">
+          {label}
+        </label>
+        <div className="relative">
+          <input
+            type={show ? "text" : "password"}
+            {...register(name, {
+              required: label.includes("Current")
+                ? "Current password is required"
+                : label.includes("New")
+                ? "New password is required"
+                : "Please confirm your new password",
+              minLength:
+                name === "newPassword"
+                  ? {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    }
+                  : undefined,
+              validate:
+                name === "confirmPassword"
+                  ? (value) =>
+                      value === watch("newPassword") || "Passwords do not match"
+                  : undefined,
+            })}
+            onChange={(e) => {
+              let value = e.target.value;
+              if (value.startsWith(" ")) {
+                value = value.trimStart();
+                e.target.value = value;
+              }
+              const event = {
+                ...e,
+                target: { ...e.target, value },
+              };
+              register(name).onChange(event);
+            }}
+            className="w-full border border-[#E5E5E5] rounded-[8px] py-[10px] pl-2 pr-12 text-sm focus:outline-none focus:border-[#581838] transition"
+            placeholder={`Enter ${label.toLowerCase()}`}
+          />
+          <button
+            type="button"
+            onClick={() => setShow(!show)}
+            className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition"
+          >
+            {show ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
+          </button>
+        </div>
+        {errors[name] && (
+          <p className="text-red-500 text-xs mt-1">{errors[name].message}</p>
+        )}
+      </div>
+    );
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -96,107 +152,32 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
                   className="flex flex-col gap-6"
                 >
                   <div className="bg-white border border-[#0000001A] rounded-[20px] p-[20px] flex flex-col gap-6">
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        Current Password
-                      </label>
-                      <div className="relative">
-                        <input
-                          type={showCurrent ? "text" : "password"}
-                          {...register("currentPassword", {
-                            required: "Current password is required",
-                          })}
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-[10px] pl-2 pr-12 text-sm focus:outline-none focus:border-[#581838] transition"
-                          placeholder="Enter current password"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowCurrent(!showCurrent)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition"
-                        >
-                          {showCurrent ? (
-                            <FaEyeSlash size={18} />
-                          ) : (
-                            <FaEye size={18} />
-                          )}
-                        </button>
-                      </div>
-                      {errors.currentPassword && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors.currentPassword.message}
-                        </p>
-                      )}
-                    </div>
+                    <PasswordInput
+                      label="Current Password"
+                      name="currentPassword"
+                      register={register}
+                      errors={errors}
+                      show={showCurrent}
+                      setShow={setShowCurrent}
+                    />
 
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        New Password
-                      </label>
-                      <div className="relative">
-                        <input
-                          type={showNew ? "text" : "password"}
-                          {...register("newPassword", {
-                            required: "New password is required",
-                            minLength: {
-                              value: 6,
-                              message: "Password must be at least 6 characters",
-                            },
-                          })}
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-[10px] pl-2  pr-12 text-sm focus:outline-none focus:border-[#581838] transition"
-                          placeholder="Enter new password"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowNew(!showNew)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition"
-                        >
-                          {showNew ? (
-                            <FaEyeSlash size={18} />
-                          ) : (
-                            <FaEye size={18} />
-                          )}
-                        </button>
-                      </div>
-                      {errors.newPassword && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors.newPassword.message}
-                        </p>
-                      )}
-                    </div>
+                    <PasswordInput
+                      label="New Password"
+                      name="newPassword"
+                      register={register}
+                      errors={errors}
+                      show={showNew}
+                      setShow={setShowNew}
+                    />
 
-                    <div className="flex flex-col gap-1">
-                      <label className="text-[#404040] text-[14px] font-medium">
-                        Re-type New Password
-                      </label>
-                      <div className="relative">
-                        <input
-                          type={showConfirm ? "text" : "password"}
-                          {...register("confirmPassword", {
-                            required: "Please confirm your new password",
-                            validate: (value) =>
-                              value === newPassword || "Passwords do not match",
-                          })}
-                          className="w-full border border-[#E5E5E5] rounded-[8px] py-[10px] pl-2  pr-12 text-sm focus:outline-none focus:border-[#581838] transition"
-                          placeholder="Re-type new password"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowConfirm(!showConfirm)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition"
-                        >
-                          {showConfirm ? (
-                            <FaEyeSlash size={18} />
-                          ) : (
-                            <FaEye size={18} />
-                          )}
-                        </button>
-                      </div>
-                      {errors.confirmPassword && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors.confirmPassword.message}
-                        </p>
-                      )}
-                    </div>
+                    <PasswordInput
+                      label="Re-type New Password"
+                      name="confirmPassword"
+                      register={register}
+                      errors={errors}
+                      show={showConfirm}
+                      setShow={setShowConfirm}
+                    />
                   </div>
 
                   {isError && (
