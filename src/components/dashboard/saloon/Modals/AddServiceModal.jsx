@@ -173,6 +173,11 @@ export default function AddServiceModal({
                   <Controller
                     name="serviceImage"
                     control={control}
+                    rules={{
+                      required: isEditMode
+                        ? false
+                        : "Service image is required",
+                    }}
                     render={({ field }) => (
                       <div className="flex items-center gap-5">
                         <div className="relative">
@@ -216,7 +221,11 @@ export default function AddServiceModal({
                       </div>
                     )}
                   />
-
+                  {errors.serviceImage && (
+                    <p className="text-red-500 text-xs mt-2 ml-1">
+                      {errors.serviceImage.message}
+                    </p>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       Service Name *
