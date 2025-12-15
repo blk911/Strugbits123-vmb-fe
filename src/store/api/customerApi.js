@@ -58,7 +58,7 @@ export const customerApi = createApi({
 });
 
 export const {
-  useGetMeQuery,
+  useLazyGetMeQuery,
   useUpdateMeMutation,
   useUpdateSalonProfileMutation,
   useGetAllSalonsQuery,

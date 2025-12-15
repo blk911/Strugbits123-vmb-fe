@@ -56,7 +56,6 @@ export default function GiftCard({
     }
 
     if (title === "Appointments" && item) {
-      console.log("Item==>", item);
       openModal("appointmentScheduled", {
         salon: {
           name: item?.salon?.salonName,
