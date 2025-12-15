@@ -54,6 +54,14 @@ export const customerApi = createApi({
         url: `/get-daily-stats/`,
       }),
     }),
+
+    subscribeNewsletter: builder.mutation({
+      query: (email) => ({
+        url: "/subscribe-newletter",
+        method: "POST",
+        body: { email },
+      }),
+    }),
   }),
 });
 
@@ -64,4 +72,5 @@ export const {
   useGetAllSalonsQuery,
   useGetSalonByIdQuery,
   useGetDailyStatsQuery,
+  useSubscribeNewsletterMutation,
 } = customerApi;
