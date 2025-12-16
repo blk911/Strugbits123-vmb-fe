@@ -32,8 +32,6 @@ export default function MainSection() {
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
   const pendingAppointments = appointmentsRes?.data?.items || [];
-  console.log("pending appointents==>", pendingAppointments);
-  console.log("pending invites==>", pendingInvites);
   useEffect(() => {}, []);
 
   return (

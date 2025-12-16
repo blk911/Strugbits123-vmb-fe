@@ -261,12 +261,10 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => docRef.current.click()}
-              // disabled={uploading}
-              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
-                uploading
-                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                  : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
-              }`}
+              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition
+    
+                   bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]
+              `}
             >
               <FaFileAlt /> Upload
             </button>
@@ -318,11 +316,10 @@ export default function SalonStep2({ onBack }) {
               type="button"
               onClick={() => picRef.current.click()}
               // disabled={uploading}
-              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
-                uploading
-                  ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                  : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
-              }`}
+              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition 
+        \
+                  bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]
+              `}
             >
               <FaFileImage /> Upload
             </button>
