@@ -164,7 +164,7 @@ export default function SalonStep2({ onBack }) {
   return (
     <div className="w-full space-y-4 font-[Poppins,sans-serif]">
       <InputWithIcon
-        label="Saloon Name"
+        label="Salon Name"
         icon={FaUser}
         name="saloonName"
         register={register}
@@ -173,7 +173,7 @@ export default function SalonStep2({ onBack }) {
       <div className="flex gap-3">
         <div className="w-[68%]">
           <InputWithIcon
-            label="Saloon Address"
+            label="Salon Address"
             icon={FaMapMarkerAlt}
             name="saloonAddress"
             register={register}
