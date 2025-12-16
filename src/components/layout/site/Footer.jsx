@@ -4,7 +4,14 @@ import facebook from "../../../assets/icons/facebook.png";
 import instagram from "../../../assets/icons/insta.png";
 import twitter from "../../../assets/icons/twitter.png";
 import linkedin from "../../../assets/icons/linkedin.png";
-
+import { useForm } from "react-hook-form";
+import { useSubscribeNewsletterMutation } from "../../../store/api";
+import {
+  toastSuccess,
+  toastError,
+  toastLoading,
+  toastDismiss,
+} from "../../../utils/toast";
 function FooterColumn({ title, items }) {
   return (
     <div className="flex flex-col items-start ">
@@ -34,6 +41,29 @@ function FooterColumn({ title, items }) {
 }
 
 function Footer() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [subscribeNewsletter, { isLoading }] = useSubscribeNewsletterMutation();
+  const onSubmit = async (data) => {
+    const toastId = toastLoading("Subscribing...");
+
+    try {
+      await subscribeNewsletter(data.email).unwrap();
+      toastDismiss(toastId);
+      toastSuccess("Thank you for subscribing!");
+      reset();
+    } catch (err) {
+      toastDismiss(toastId);
+      const message =
+        err?.data?.message || "Failed to subscribe. Please try again.";
+      toastError(message);
+      console.error("Subscription error:", err);
+    }
+  };
   return (
     <footer className="bg-[#581838] px-[50px] pt-[40px] pb-[20px] flex flex-col items-center">
       <div className=" grid w-[100%] lg:w-[100%] xl:w-[80%]  max-sm:w-full gap-y-[20px] grid-cols-1 sm:grid-cols-3 lg:grid-cols-[1fr_100px_100px_100px_100px_200px] xl:grid-cols-6 gap-x-[40px] items-start">
@@ -90,46 +120,62 @@ function Footer() {
           >
             Subscribe our newsletter
           </span>
-          <form className="flex items-center mt-2">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex items-center mt-2"
+          >
             <input
               type="email"
               placeholder="Your email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
               className="rounded-full px-4 py-2 xl:w-[289px] max-xl:w-auto h-[46px] outline-none bg-white text-[#581838] text-[14px] font-poppins"
-              style={{
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 400,
-              }}
+              disabled={isLoading}
             />
             <button
               type="submit"
-              className="ml-[-40px] bg-[#FF92A5] rounded-full w-[32px] h-[32px] flex items-center justify-center"
+              disabled={isLoading}
+              className="ml-[-40px] bg-[#FF92A5] cursor-pointer rounded-full w-[32px] h-[32px] flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed transition"
             >
-              <svg
-                width="19"
-                height="18"
-                viewBox="0 0 19 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.639987 15.3004L2.57999 8.59037L0.639987 1.88037C0.399987 1.06037 1.23999 0.33037 2.01999 0.70037L17.12 7.69037C17.89 8.05037 17.89 9.15037 17.12 9.50037L2.01999 16.4904C1.23999 16.8504 0.399987 16.1304 0.639987 15.3004Z"
-                  stroke="white"
-                  stroke-width="1.2"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M2.57996 8.59082H7.36996"
-                  stroke="white"
-                  stroke-width="1.2"
-                  stroke-miterlimit="10"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              {isLoading ? (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <svg
+                  width="19"
+                  height="18"
+                  viewBox="0 0 19 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0.639987 15.3004L2.57999 8.59037L0.639987 1.88037C0.399987 1.06037 1.23999 0.33037 2.01999 0.70037L17.12 7.69037C17.89 8.05037 17.89 9.15037 17.12 9.50037L2.01999 16.4904C1.23999 16.8504 0.399987 16.1304 0.639987 15.3004Z"
+                    stroke="white"
+                    strokeWidth="1.2"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2.57996 8.59082H7.36996"
+                    stroke="white"
+                    strokeWidth="1.2"
+                    strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
             </button>
           </form>
+
+          {errors.email && (
+            <p className="text-red-400 text-xs mt-2">{errors.email.message}</p>
+          )}
         </div>
       </div>
       <hr className="w-full border-t border-[#FFFFFF] opacity-30 my-8" />

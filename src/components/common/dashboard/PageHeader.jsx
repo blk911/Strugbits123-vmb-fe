@@ -35,7 +35,11 @@ export default function PageHeader({
           <input
             type="text"
             placeholder={searchPlaceholder}
-            onChange={(e) => onSearch && onSearch(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value.trimStart();
+              e.target.value = value;
+              onSearch && onSearch(value);
+            }}
             className="w-full border border-[#9CA3AF4D] bg-[#F8F8F8] rounded-[10px] px-4 py-2 text-[#4B5563] text-[15px] placeholder-[#9CA3AF] outline-none focus:ring-2 focus:ring-[#FF92A5]/30 transition-all"
           />
         </div>

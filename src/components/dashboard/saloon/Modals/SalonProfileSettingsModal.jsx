@@ -28,6 +28,8 @@ import {
   toastError,
   toastDismiss,
 } from "../../../../utils/toast";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../../store/features/userSlice";
 const days = [
   "Monday",
   "Tuesday",
@@ -82,7 +84,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const logoRef = useRef();
   const docRef = useRef();
   const photosRef = useRef();
-
+  const dispatch = useDispatch();
   const [previewLogo, setPreviewLogo] = useState(null);
   const [existingPhotos, setExistingPhotos] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -263,6 +265,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       };
 
       const res = await updateMe(payload).unwrap();
+      dispatch(setUser(res.data));
       toast.success(res?.message || "Profile updated successfully!");
       closeModal();
     } catch (err) {

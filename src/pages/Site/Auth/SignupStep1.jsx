@@ -97,7 +97,6 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
       <InputWithIcon
         label="Email"
         icon={FaEnvelope}
-        type="email"
         name="email"
         register={register}
         error={errors.email}

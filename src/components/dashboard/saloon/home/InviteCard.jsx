@@ -22,7 +22,7 @@ export default function InviteCard({
 
       <div className="flex flex-col items-center sm:items-end sm:ml-auto mt-1 sm:mt-0">
         <div
-          className="px-2 py-1 rounded text-[10px] font-semibold"
+          className="rounded-[5px] p-[5px] text-[10px] font-semibold"
           style={{
             backgroundColor: `${statusColor}33`,
             color: statusColor,

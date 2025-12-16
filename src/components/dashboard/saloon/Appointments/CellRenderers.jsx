@@ -25,7 +25,7 @@ export const CellRenderers = {
 
     return (
       <span
-        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium break-all text-wrap ${
+        className={`inline-block p-[5px] rounded-[5px] text-[10px] font-medium break-all text-wrap ${
           styles[value] || "bg-red-100 text-red-800"
         }`}
       >

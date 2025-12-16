@@ -314,11 +314,23 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       <Controller
                         name="email"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <input
                             {...field}
-                            type="email"
+                            value={value || ""}
+                            type="text"
                             placeholder="Enter email..."
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+
+                              e.target.value = newValue;
+
+                              onChange(newValue);
+                            }}
                             className={`w-full border rounded-lg px-4 py-3 text-sm mt-1 focus:outline-none focus:border-[#FF92A5] ${
                               errors.email
                                 ? "border-red-500"

@@ -10,21 +10,20 @@ import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import SaloonRoutes from "./routes/SaloonRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
-import AuthProvider from "./utils/AuthProvider";
+import { useUser } from "./hooks/useUser";
 
 export default function App() {
   const role = useSelector((state) => state.role.role);
+
   return (
     <Router>
-      <AuthProvider>
-        <Routes>
-          {PublicRoutes()}
-          {role === "admin" && AdminRoutes()}
-          {role === "salon-owner" && SaloonRoutes()}
-          {role === "customer" && ClientRoutes()}
-          <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
-        </Routes>
-      </AuthProvider>
+      <Routes>
+        {PublicRoutes()}
+        {role === "admin" && AdminRoutes()}
+        {role === "salon-owner" && SaloonRoutes()}
+        {role === "customer" && ClientRoutes()}
+        <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
+      </Routes>
     </Router>
   );
 }

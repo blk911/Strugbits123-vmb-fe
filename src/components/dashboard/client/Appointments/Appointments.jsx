@@ -181,9 +181,10 @@ export default function Appointments({
       ? new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
     appointmentTime: appt?.startTime || "N/A",
-    status:
-      appt?.status?.charAt(0).toUpperCase() + appt?.status?.slice(1) ||
-      "Pending",
+    status: appt.status
+      ? appt.status.charAt(0).toUpperCase() +
+        appt.status.slice(1).replace("-", " ")
+      : "Pending",
     _modalData: {
       salon: {
         name: appt?.salon?.salonName,

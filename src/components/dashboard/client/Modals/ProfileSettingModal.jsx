@@ -13,12 +13,14 @@ import {
   toastError,
   toastDismiss,
 } from "../../../../utils/toast";
+import { setUser } from "../../../../store/features/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
   const [updateMe, { isLoading: isUpdating }] = useUpdateMeMutation();
   const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   const [previewImage, setPreviewImage] = useState(user?.userProfile || "");
-
+  const dispatch = useDispatch();
   const imgRef = useRef();
 
   const {
@@ -86,6 +88,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
       };
 
       const res = await updateMe(payload).unwrap();
+      dispatch(setUser(res?.data));
       toastSuccess(res?.message || "Profile updated successfully!");
       closeModal();
     } catch (err) {

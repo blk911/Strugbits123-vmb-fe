@@ -31,8 +31,9 @@ export default function MainSection() {
 
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
-  console.log("Pending Invites==>", pendingInvites);
   const pendingAppointments = appointmentsRes?.data?.items || [];
+  console.log("pending appointents==>", pendingAppointments);
+  console.log("pending invites==>", pendingInvites);
   useEffect(() => {}, []);
 
   return (
@@ -51,7 +52,7 @@ export default function MainSection() {
               <>
                 <InviteCard
                   key={pendingInvites[0]._id}
-                  img={pendingInvites[0].salonProfilePic || SalonImage}
+                  img={pendingInvites[0]?.salonProfilePic || SalonImage}
                   salon={pendingInvites[0].salonName}
                   service={pendingInvites[0]?.services.serviceName}
                   statusText="Pending"
@@ -63,7 +64,7 @@ export default function MainSection() {
                 {pendingInvites[1] && (
                   <InviteCard
                     key={pendingInvites[1]._id}
-                    img={pendingInvites[1].salonProfilePic || SalonImage}
+                    img={pendingInvites[1]?.salonProfilePic || SalonImage}
                     salon={pendingInvites[1].salonName}
                     service={
                       pendingInvites[1]?.services.serviceName || "No Service"
@@ -91,7 +92,7 @@ export default function MainSection() {
               <>
                 <AppointmentCard
                   key={pendingAppointments[0]._id}
-                  icon={pendingAppointments[0].salonImage || SalonImage}
+                  icon={pendingAppointments[0].salon.salonImage || SalonImage}
                   from={pendingAppointments[0].requestedFrom?.name || "Client"}
                   service={pendingAppointments[0].services
                     ?.map((s) => s.name)
@@ -112,7 +113,7 @@ export default function MainSection() {
                 {pendingAppointments[1] && (
                   <AppointmentCard
                     key={pendingAppointments[1]._id}
-                    icon={pendingAppointments[1].salonImage}
+                    icon={pendingAppointments[1].salon.salonImage || SalonImage}
                     from={
                       pendingAppointments[1].requestedFrom?.name || "Client"
                     }

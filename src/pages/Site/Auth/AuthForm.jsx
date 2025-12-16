@@ -18,7 +18,6 @@ import {
 } from "../../../utils/authSchemas";
 
 import {
-  useGetPresignedUrlsMutation,
   useSignInMutation,
   useSignUpCustomerMutation,
   useSignUpSaloonOwnerMutation,
@@ -34,6 +33,7 @@ import {
   toastDismiss,
 } from "../../../utils/toast";
 import { setToken, setUser } from "../../../store/features/userSlice";
+import { useLazyGetMeQuery } from "../../../store/api";
 
 export default function AuthForm() {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ export default function AuthForm() {
   const mode = useSelector((s) => s.auth.mode);
   const [step, setStep] = useState("step1");
   const [userType, setUserType] = useState("customer");
-
+  const [triggerGetMe, { isLoading: isFetchingMe }] = useLazyGetMeQuery();
   const [signIn] = useSignInMutation();
   const [signUpCustomer] = useSignUpCustomerMutation();
   const [signUpSaloonOwner] = useSignUpSaloonOwnerMutation();
@@ -87,29 +87,39 @@ export default function AuthForm() {
   }, [mode, step, userType, methods]);
 
   useEffect(() => {
-    reset({
-      email: "",
-      password: "",
-      fullName: "",
-      phone: "",
-      address: "",
-      zipcode: "",
-      userProfile: "",
-      uploadedFileName: "",
-      confirmPassword: "",
-      saloonName: "",
-      saloonAddress: "",
-      saloonZipcode: "",
-      startTime: "",
-      endTime: "",
-      workingDays: [],
-      licenseDoc: "",
-      licenseDocName: "",
-      profilePic: "",
-      profilePicName: "",
-      description: "",
-      salonPhotos: [],
-    });
+    reset(
+      {
+        email: "",
+        password: "",
+        fullName: "",
+        phone: "",
+        address: "",
+        zipcode: "",
+        userProfile: "",
+        uploadedFileName: "",
+        confirmPassword: "",
+        saloonName: "",
+        saloonAddress: "",
+        saloonZipcode: "",
+        startTime: "",
+        endTime: "",
+        workingDays: [],
+        licenseDoc: "",
+        licenseDocName: "",
+        profilePic: "",
+        profilePicName: "",
+        description: "",
+        salonPhotos: [],
+      },
+      {
+        keepErrors: false,
+        keepDirty: false,
+        keepTouched: false,
+        keepIsSubmitted: false,
+        keepSubmitCount: false,
+        keepValues: false,
+      }
+    );
     setStep("step1");
     setUserType("customer");
   }, [mode, reset]);
@@ -121,17 +131,28 @@ export default function AuthForm() {
     }
   };
 
-  const handleSuccess = (apiRole) => {
+  const handleSuccess = async (apiRole) => {
     dispatch(setRole(apiRole));
-    const target =
-      apiRole === "customer"
-        ? "/client"
-        : apiRole === "salon-owner"
-        ? "/salon-owner"
-        : apiRole === "admin"
-        ? "/admin"
-        : "/";
-    navigate(target, { replace: true });
+    try {
+      const meRes = await triggerGetMe().unwrap();
+      dispatch(setUser(meRes.data));
+
+      const target =
+        apiRole === "customer"
+          ? "/client"
+          : apiRole === "salon-owner"
+          ? "/salon-owner"
+          : apiRole === "admin"
+          ? "/admin"
+          : "/";
+
+      navigate(target, { replace: true });
+    } catch (err) {
+      console.error("Failed to fetch user profile:", err);
+      dispatch(setRole(null));
+      dispatch(setUser(null));
+      navigate("/register", { replace: true });
+    }
   };
 
   const handleSignupSuccess = (role, message) => {
@@ -155,7 +176,6 @@ export default function AuthForm() {
 
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
-        dispatch(setUser(res?.data?.user));
         dispatch(setToken(res?.data?.token));
         handleSuccess(res?.data?.user?.role);
       } else if (
@@ -208,27 +228,30 @@ export default function AuthForm() {
       }}
     >
       <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          onKeyDown={handleKeyDown}
-          className="w-[582px] space-y-4 rounded-[20px] bg-white p-6 shadow-lg"
-        >
+        <div className="w-[582px] flex-flex-col bg-white rounded-[20px] p-6 shadow-lg">
           <FormHeader mode={mode} />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={handleKeyDown}
+            className=" space-y-4 rounded-[20px] bg-white p-6 "
+          >
+            {mode === "login" && <LoginForm />}
 
-          {mode === "login" && <LoginForm />}
+            {mode === "signup" && step === "step1" && (
+              <SignupStep1
+                userType={userType}
+                setUserType={setUserType}
+                onNext={
+                  userType === "salon" ? goToStep2 : handleSubmit(onSubmit)
+                }
+              />
+            )}
 
-          {mode === "signup" && step === "step1" && (
-            <SignupStep1
-              userType={userType}
-              setUserType={setUserType}
-              onNext={userType === "salon" ? goToStep2 : handleSubmit(onSubmit)}
-            />
-          )}
-
-          {mode === "signup" && step === "step2" && (
-            <SalonStep2 onBack={() => setStep("step1")} />
-          )}
-        </form>
+            {mode === "signup" && step === "step2" && (
+              <SalonStep2 onBack={() => setStep("step1")} />
+            )}
+          </form>
+        </div>
       </FormProvider>
     </div>
   );
