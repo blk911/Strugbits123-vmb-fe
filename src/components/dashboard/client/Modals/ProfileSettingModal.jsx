@@ -76,7 +76,14 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
       console.error(err);
     }
   };
-
+  const preventLeadingSpace = (originalOnChange) => (e) => {
+    let value = e.target.value;
+    if (value.startsWith(" ")) {
+      value = value.trimStart();
+      e.target.value = value;
+    }
+    originalOnChange(e);
+  };
   const onSubmit = async (data) => {
     try {
       const payload = {
@@ -188,6 +195,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           {...register("fullName", {
                             required: "Full name is required",
                           })}
+                          onChange={preventLeadingSpace(
+                            register("fullName").onChange
+                          )}
                           className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
                           placeholder="Enter full name"
                         />
@@ -203,7 +213,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           Email
                         </label>
                         <input
-                          type="email"
+                          type="text"
                           {...register("email", {
                             required: "Email is required",
                             pattern: {
@@ -212,6 +222,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                               message: "Please enter a valid email address",
                             },
                           })}
+                          onChange={preventLeadingSpace(
+                            register("email").onChange
+                          )}
                           className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
                           placeholder="Enter email"
                         />
@@ -228,10 +241,24 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                         </label>
                         <input
                           type="tel"
-                          {...register("phone")}
+                          {...register("phone", {
+                            required: "Phone number is required",
+                            pattern: {
+                              value: /^[0-9]{10}$/,
+                              message: "Please enter a valid phone number",
+                            },
+                          })}
+                          onChange={preventLeadingSpace(
+                            register("phone").onChange
+                          )}
                           className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
-                          placeholder="Enter phone number (optional)"
+                          placeholder="Enter phone number"
                         />
+                        {errors.phone && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.phone.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>

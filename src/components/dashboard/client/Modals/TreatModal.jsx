@@ -224,7 +224,16 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                             type="text"
                             placeholder="Search salons..."
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => {
+                              let value = e.target.value;
+
+                              if (value.startsWith(" ")) {
+                                value = value.trimStart();
+                                e.target.value = value;
+                              }
+
+                              setSearchTerm(value);
+                            }}
                             className="w-full px-4 py-3 border-b border-[#E5E5E5] focus:outline-none"
                             autoFocus
                           />
@@ -393,11 +402,23 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       <Controller
                         name="email"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <input
                             {...field}
-                            type="email"
+                            value={value || ""}
+                            type="text"
                             placeholder="Enter email..."
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+
+                              e.target.value = newValue;
+
+                              onChange(newValue);
+                            }}
                             className={`w-full border rounded-[8px] px-3 py-2 text-sm mt-1 focus:outline-none focus:border-[#FF92A5] ${
                               errors.email
                                 ? "border-red-500"
@@ -420,11 +441,23 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       <Controller
                         name="message"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <textarea
                             {...field}
+                            value={value || ""}
                             rows={3}
                             placeholder="Type your message..."
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+
+                              e.target.value = newValue;
+
+                              onChange(newValue);
+                            }}
                             className="w-full border border-[#E5E5E5] rounded-[8px] p-3 text-sm mt-1 resize-none focus:outline-none focus:border-[#FF92A5]"
                           />
                         )}

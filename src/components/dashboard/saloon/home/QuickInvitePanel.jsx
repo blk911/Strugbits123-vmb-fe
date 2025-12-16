@@ -49,8 +49,18 @@ export default function QuickInvitePanel() {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div>
           <input
-            type="email"
+            type="text"
             {...register("email")}
+            onChange={(e) => {
+              let value = e.target.value;
+
+              if (value.startsWith(" ")) {
+                value = value.trimStart();
+                e.target.value = value;
+              }
+
+              register("email").onChange(e);
+            }}
             className={`w-full border rounded-[8px] px-3 py-2 text-[14px] focus:outline-none transition-colors ${
               errors.email
                 ? "border-red-500 focus:border-red-500"

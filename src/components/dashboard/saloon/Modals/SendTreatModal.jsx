@@ -187,10 +187,19 @@ export default function SendTreatModal({
                       <Controller
                         name="firstName"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <input
                             {...field}
+                            value={value || ""}
                             placeholder="First Name"
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+                              e.target.value = newValue;
+                              onChange(newValue);
+                            }}
                             className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-[#FF92A5] ${
                               errors.firstName
                                 ? "border-red-500"
@@ -212,10 +221,19 @@ export default function SendTreatModal({
                       <Controller
                         name="lastName"
                         control={control}
-                        render={({ field }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <input
                             {...field}
+                            value={value || ""}
                             placeholder="Last Name"
+                            onChange={(e) => {
+                              let newValue = e.target.value;
+                              if (newValue.startsWith(" ")) {
+                                newValue = newValue.trimStart();
+                              }
+                              e.target.value = newValue;
+                              onChange(newValue);
+                            }}
                             className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-[#FF92A5] ${
                               errors.lastName
                                 ? "border-red-500"
@@ -357,11 +375,20 @@ export default function SendTreatModal({
                     <Controller
                       name="message"
                       control={control}
-                      render={({ field }) => (
+                      render={({ field: { onChange, value, ...field } }) => (
                         <textarea
                           {...field}
+                          value={value || ""}
                           rows={4}
                           placeholder="Type your message..."
+                          onChange={(e) => {
+                            let newValue = e.target.value;
+                            if (newValue.startsWith(" ")) {
+                              newValue = newValue.trimStart();
+                            }
+                            e.target.value = newValue;
+                            onChange(newValue);
+                          }}
                           className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3 mt-1 text-[12px] italic text-[#00000080] resize-none outline-none focus:border-[#FF92A5]"
                         />
                       )}
