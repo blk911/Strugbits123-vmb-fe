@@ -327,6 +327,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         {...register("fullName")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("fullName").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.fullName && (
@@ -341,8 +349,16 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         Email
                       </label>
                       <input
-                        type="email"
+                        type="text"
                         {...register("email")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("email").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.email && (
@@ -358,6 +374,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         {...register("phone")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("phone").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.phone && (
@@ -418,6 +442,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         {...register("salonName")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("salonName").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
                       />
                       {errors.salonName && (
@@ -433,6 +465,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         {...register("address")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("address").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
                       />
                       {errors.address && (
@@ -447,6 +487,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         {...register("zipcode")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("zipcode").onChange(e);
+                        }}
                         className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
                       />
                       {errors.zipcode && (
@@ -579,6 +627,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <textarea
                         {...register("description")}
+                        onChange={(e) => {
+                          let value = e.target.value;
+                          if (value.startsWith(" ")) {
+                            value = value.trimStart();
+                            e.target.value = value;
+                          }
+                          register("description").onChange(e);
+                        }}
                         rows={4}
                         className="w-full border border-[#E5E5E5] bg-white rounded-lg p-3"
                       />

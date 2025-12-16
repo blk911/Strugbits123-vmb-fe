@@ -20,22 +20,20 @@ export default function InputWithIcon({
     setShowPassword(!showPassword);
   };
 
-  const fieldProps =
-    register && name
-      ? register(name, {
-          onChange: (e) => {
-            let value = e.target.value;
+  const fieldProps = register && name ? register(name) : {};
 
-            if (value.startsWith(" ")) {
-              value = value.trimStart();
-              e.target.value = value;
-            }
+  const handleChange = (e) => {
+    let value = e.target.value;
 
-            const originalOnChange = register(name).onChange;
-            if (originalOnChange) originalOnChange(e);
-          },
-        })
-      : {};
+    if (value.startsWith(" ")) {
+      value = value.trimStart();
+      e.target.value = value;
+    }
+
+    if (fieldProps.onChange) {
+      fieldProps.onChange(e);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -56,6 +54,7 @@ export default function InputWithIcon({
         <input
           type={isPassword && showPassword ? "text" : type}
           {...fieldProps}
+          onChange={handleChange}
           placeholder={placeholder}
           className={twMerge(
             `w-full border rounded-md py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none transition-all`,

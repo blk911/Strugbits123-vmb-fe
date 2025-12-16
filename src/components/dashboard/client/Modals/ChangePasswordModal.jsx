@@ -50,6 +50,12 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
     }
   };
   const PasswordInput = ({ label, name, register, errors, show, setShow }) => {
+    let autoCompleteValue = "new-password";
+
+    if (label.includes("Current")) {
+      autoCompleteValue = "current-password";
+    }
+
     return (
       <div className="flex flex-col gap-1">
         <label className="text-[#404040] text-[14px] font-medium">
@@ -58,6 +64,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
         <div className="relative">
           <input
             type={show ? "text" : "password"}
+            autoComplete={autoCompleteValue}
             {...register(name, {
               required: label.includes("Current")
                 ? "Current password is required"

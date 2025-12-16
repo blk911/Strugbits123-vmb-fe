@@ -23,6 +23,7 @@ import {
   toastError,
   toastDismiss,
 } from "../../../utils/toast";
+
 const days = [
   "Monday",
   "Tuesday",
@@ -46,17 +47,20 @@ export default function SalonStep2({ onBack }) {
   const docRef = useRef();
   const picRef = useRef();
   const photosRef = useRef();
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (detailsRef.current && !detailsRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
         detailsRef.current.removeAttribute("open");
       }
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
   const handleDayToggle = (day) => {
     const updated = selectedDays.includes(day)
       ? selectedDays.filter((d) => d !== day)
@@ -64,10 +68,9 @@ export default function SalonStep2({ onBack }) {
     setSelectedDays(updated);
     setValue("workingDays", updated, { shouldValidate: true });
   };
+
   const uploadFile = async (file, folder = "salon") => {
     if (!file) return null;
-
-    const toastId = toastLoading("Uploading...");
 
     try {
       const fileName = `${folder}/${Date.now()}_${file.name.replace(
@@ -86,12 +89,8 @@ export default function SalonStep2({ onBack }) {
       });
 
       const publicUrl = (data.uploadUrl || data).split("?")[0];
-      toastDismiss(toastId);
-      toastSuccess("Uploaded successfully!");
       return { url: publicUrl, name: file.name };
     } catch (err) {
-      toastDismiss(toastId);
-      toastError("Upload failed");
       console.error(err);
       return null;
     }
@@ -101,10 +100,16 @@ export default function SalonStep2({ onBack }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const toastId = toastLoading("Uploading license...");
     const result = await uploadFile(file, "licenses");
+    toastDismiss(toastId);
+
     if (result) {
       setValue("licenseDoc", result.url, { shouldValidate: true });
       setValue("licenseDocName", result.name);
+      toastSuccess("License uploaded!");
+    } else {
+      toastError("Failed to upload license");
     }
   };
 
@@ -112,10 +117,16 @@ export default function SalonStep2({ onBack }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const toastId = toastLoading("Uploading profile picture...");
     const result = await uploadFile(file, "profiles");
+    toastDismiss(toastId);
+
     if (result) {
       setValue("profilePic", result.url, { shouldValidate: true });
       setValue("profilePicName", result.name);
+      toastSuccess("Profile picture uploaded!");
+    } else {
+      toastError("Failed to upload profile picture");
     }
   };
 
@@ -123,20 +134,25 @@ export default function SalonStep2({ onBack }) {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    const toastId = toastLoading(`Uploading ${files.length} photo(s)...`);
+    const toastId = toastLoading(`Uploading ${files.length} salon photo(s)...`);
     const uploaded = [];
 
     for (const file of files) {
       const result = await uploadFile(file, "salon-photos");
-      if (result) uploaded.push({ url: result.url, name: result.name });
+      if (result) uploaded.push(result);
     }
 
     const current = watch("salonPhotos") || [];
     setValue("salonPhotos", [...current, ...uploaded], {
       shouldValidate: true,
     });
+
     toastDismiss(toastId);
-    if (uploaded.length === files.length) toastSuccess("All photos uploaded!");
+    if (uploaded.length === files.length) {
+      toastSuccess(`All ${files.length} photos uploaded!`);
+    } else {
+      toastError("Some photos failed to upload");
+    }
   };
 
   const removeSalonPhoto = (index) => {
@@ -144,6 +160,7 @@ export default function SalonStep2({ onBack }) {
     const updated = current.filter((_, i) => i !== index);
     setValue("salonPhotos", updated, { shouldValidate: true });
   };
+
   return (
     <div className="w-full space-y-4 font-[Poppins,sans-serif]">
       <InputWithIcon
@@ -184,23 +201,33 @@ export default function SalonStep2({ onBack }) {
         <TimeInput label="Start Time" name="startTime" />
         <TimeInput label="End Time" name="endTime" />
 
-        <div className="relative">
+        <div className="relative" ref={detailsRef}>
           <label className="block text-[#374151] text-[14px] font-semibold mb-1">
             Working Days
           </label>
+
           <div className="relative">
-            <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5]" />
-            <RiArrowDropDownLine className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 text-[24px]" />
-            <details
-              ref={detailsRef}
-              className="group w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-10 cursor-pointer"
+            <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] z-10" />
+
+            <div
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-1 cursor-pointer flex justify-between items-center"
             >
-              <summary className="list-none  text-gray-600 text-[14px]">
+              <span className="text-gray-600 text-[14px]">
                 {selectedDays.length > 0
                   ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
                   : "Select Days"}
-              </summary>
-              <div className="absolute left-0 mt-4 w-full bg-white border rounded-lg shadow-md p-3 z-10">
+              </span>
+
+              <RiArrowDropDownLine
+                className={`text-gray-600 text-[24px] transition-transform duration-200 ${
+                  isDropdownOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+
+            {isDropdownOpen && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-md z-50 p-3 max-h-60 overflow-y-auto">
                 {days.map((day) => (
                   <CustomCheckbox
                     key={day}
@@ -210,7 +237,7 @@ export default function SalonStep2({ onBack }) {
                   />
                 ))}
               </div>
-            </details>
+            )}
           </div>
           {errors.workingDays && (
             <p className="text-xs text-red-600 mt-1">
@@ -234,14 +261,14 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => docRef.current.click()}
-              disabled={uploading}
+              // disabled={uploading}
               className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
                 uploading
                   ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                   : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
               }`}
             >
-              <FaFileAlt /> {uploading ? "Uploading..." : "Upload"}
+              <FaFileAlt /> Upload
             </button>
           </div>
           <input
@@ -290,14 +317,14 @@ export default function SalonStep2({ onBack }) {
             <button
               type="button"
               onClick={() => picRef.current.click()}
-              disabled={uploading}
-              className={` cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
+              // disabled={uploading}
+              className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition ${
                 uploading
                   ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                   : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
               }`}
             >
-              <FaFileImage /> {uploading ? "Uploading..." : "Upload"}
+              <FaFileImage /> Upload
             </button>
           </div>
           <input
@@ -324,7 +351,7 @@ export default function SalonStep2({ onBack }) {
             Upload Salon Photos
           </label>
 
-          <div className="flex flex-wrap md:flex-nowrap items-start gap-2 sm:gap-3 w-full">
+          <div className="flex items-start gap-3">
             <button
               type="button"
               onClick={() => photosRef.current.click()}
@@ -338,7 +365,7 @@ export default function SalonStep2({ onBack }) {
                 alt="Upload"
                 className="w-5 h-5 sm:w-6 sm:h-6 mb-1 cursor-pointer"
               />
-              <span className="text-[8px] sm:text-[9px] leading-tight font-medium text-center ">
+              <span className="text-[8px] sm:text-[9px] leading-tight font-medium text-center">
                 Upload Salon <br /> Photos
               </span>
             </button>
@@ -351,7 +378,6 @@ export default function SalonStep2({ onBack }) {
               accept="image/*"
               onChange={handleSalonPhotosUpload}
             />
-
             <div className="flex flex-wrap gap-2 sm:gap-3">
               {watch("salonPhotos")?.map((photo, index) => (
                 <div key={index} className="relative flex-shrink-0">
@@ -373,12 +399,45 @@ export default function SalonStep2({ onBack }) {
                 </div>
               ))}
             </div>
-            {errors.salonPhotos && (
-              <p className="text-xs text-red-600 mt-2">
-                {errors.salonPhotos.message}
-              </p>
-            )}
+            {/* <div className="flex-1 overflow-x-auto md:overflow-x-auto overflow-x-hidden">
+              <div
+                className="
+      grid grid-cols-3 gap-2
+      sm:grid-cols-4 sm:gap-3
+      md:flex md:gap-3 md:min-w-max
+    "
+              >
+                {watch("salonPhotos")?.map((photo, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={photo.url}
+                      alt={`Salon photo ${index + 1}`}
+                      className="
+            w-full aspect-[80/74]
+            md:w-[80px] md:h-[74px]
+            object-cover rounded-md border
+          "
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => removeSalonPhoto(index)}
+                      className="absolute cursor-pointer -top-0 -right-1 bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
+                    >
+                      ×
+                    </button>
+
+                  </div>
+                ))}
+              </div>
+            </div> */}
           </div>
+
+          {errors.salonPhotos && (
+            <p className="text-xs text-red-600 mt-2">
+              {errors.salonPhotos.message}
+            </p>
+          )}
         </div>
       </div>
 

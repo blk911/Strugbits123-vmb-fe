@@ -125,7 +125,7 @@ function Footer() {
             className="flex items-center mt-2"
           >
             <input
-              type="email"
+              type="text"
               placeholder="Your email"
               {...register("email", {
                 required: "Email is required",
@@ -134,6 +134,16 @@ function Footer() {
                   message: "Invalid email address",
                 },
               })}
+              onChange={(e) => {
+                let value = e.target.value;
+
+                if (value.startsWith(" ")) {
+                  value = value.trimStart();
+                  e.target.value = value;
+                }
+
+                register("email").onChange(e);
+              }}
               className="rounded-full px-4 py-2 xl:w-[289px] max-xl:w-auto h-[46px] outline-none bg-white text-[#581838] text-[14px] font-poppins"
               disabled={isLoading}
             />

@@ -417,10 +417,7 @@ export default function RescheduleAppointmentModal({
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Date
                                 </label>
-                                {/* <input
-                                  type="date"
-                                  className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
-                                /> */}
+
                                 <Controller
                                   name="appointmentDate"
                                   control={control}
@@ -450,10 +447,7 @@ export default function RescheduleAppointmentModal({
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
-                                {/* <input
-                                  type="time"
-                                  className="w-full border border-[#E5E5E5] bg-white rounded-[8px] p-3"
-                                /> */}
+
                                 <Controller
                                   name="appointmentTime"
                                   control={control}

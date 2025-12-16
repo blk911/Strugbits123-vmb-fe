@@ -164,6 +164,7 @@ export default function AuthForm() {
   };
 
   const onSubmit = async (data) => {
+    const full = methods.getValues();
     let loadingToastId;
 
     try {
@@ -184,20 +185,19 @@ export default function AuthForm() {
         userType === "customer"
       ) {
         loadingToastId = toastLoading("Creating account...");
-        const res = await signUpCustomer(data).unwrap();
+        const res = await signUpCustomer(full).unwrap();
         toastDismiss(loadingToastId);
         handleSignupSuccess("customer", res?.message);
       } else if (mode === "signup" && step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
 
         const files = {
-          licenseDocument: data.licenseDoc ? [data.licenseDoc] : [],
-          profilePic: data.profilePic ? [data.profilePic] : [],
-          saloonPhotos: data.salonPhotos?.map((p) => p.url) || [],
+          licenseDocument: full.licenseDoc ? [full.licenseDoc] : [],
+          profilePic: full.profilePic ? [full.profilePic] : [],
+          saloonPhotos: full.salonPhotos?.map((p) => p.url) || [],
         };
 
-        const formData = { ...data };
-        delete formData.salonPhotos;
+        const formData = { ...full };
 
         const res = await signUpSaloonOwner({ formData, files }).unwrap();
         toastDismiss(loadingToastId);
@@ -228,7 +228,7 @@ export default function AuthForm() {
       }}
     >
       <FormProvider {...methods}>
-        <div className="w-[582px] flex-flex-col bg-white rounded-[20px] p-6 shadow-lg">
+        <div className="max-w-[582px] w-full flex-flex-col bg-white rounded-[20px] p-6 shadow-lg">
           <FormHeader mode={mode} />
           <form
             onSubmit={handleSubmit(onSubmit)}

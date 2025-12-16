@@ -234,7 +234,17 @@ export default function AddServiceModal({
                       {...register("serviceName", {
                         required: "Service name is required",
                       })}
-                      className="mt-1 w-full px-4 py-3 bg-white  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                      onChange={(e) => {
+                        let value = e.target.value;
+
+                        if (value.startsWith(" ")) {
+                          value = value.trimStart();
+                          e.target.value = value;
+                        }
+
+                        register("serviceName").onChange(e);
+                      }}
+                      className="mt-1 w-full px-4 py-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
                       placeholder="e.g. Classic Haircut"
                     />
                     {errors.serviceName && (
@@ -342,7 +352,17 @@ export default function AddServiceModal({
                     <textarea
                       rows={4}
                       {...register("description")}
-                      className="mt-1 bg-white w-full px-4 py-3  border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg "
+                      onChange={(e) => {
+                        let value = e.target.value;
+
+                        if (value.startsWith(" ")) {
+                          value = value.trimStart();
+                          e.target.value = value;
+                        }
+
+                        register("description").onChange(e);
+                      }}
+                      className="mt-1 bg-white w-full px-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg"
                       placeholder="Describe your service..."
                     />
                   </div>
