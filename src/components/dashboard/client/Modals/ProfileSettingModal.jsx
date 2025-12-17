@@ -38,7 +38,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
         email: user.email || "",
         phone: user.phoneNumber || "",
       });
-      setPreviewImage(user.userProfile || "");
+      setPreviewImage(user.userProfile || user?.profilePic || "");
     }
   }, [isOpen, user, reset]);
 

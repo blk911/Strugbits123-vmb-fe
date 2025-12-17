@@ -50,7 +50,7 @@ export const authApi = createApi({
           salonName: formData.saloonName,
           salonAddress: formData.saloonAddress,
           salonZipcode: formData.saloonZipcode,
-          phoneNumber: formData.phone,
+          salonphoneNumber: formData.salonPhone,
           startTime: startTime,
           endTime: endTime,
           workingDays: formData.workingDays,

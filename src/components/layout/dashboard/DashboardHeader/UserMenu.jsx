@@ -73,7 +73,7 @@ function UserMenu() {
         onClick={toggle}
       >
         <img
-          src={user?.userProfile || profile}
+          src={user?.userProfile || user?.profilePic || profile}
           alt="profile"
           className="h-full w-full"
         />

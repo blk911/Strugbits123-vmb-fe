@@ -192,9 +192,9 @@ export default function SalonStep2({ onBack }) {
       <InputWithIcon
         label="Phone Number"
         icon={FaPhoneAlt}
-        name="phone"
+        name="salonPhone"
         register={register}
-        error={errors.phone}
+        error={errors.salonPhone}
       />
 
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">

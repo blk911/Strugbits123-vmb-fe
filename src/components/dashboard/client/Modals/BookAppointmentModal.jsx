@@ -18,7 +18,10 @@ import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 
 const bookingSchema = z.object({
-  fullName: z.string().min(2, "Full name is required"),
+  fullName: z
+    .string()
+    .min(2, "Full name is required")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid name"),
   selectedServices: z
     .array(z.string())
     .min(1, "Please select at least one service"),
