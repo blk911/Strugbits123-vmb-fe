@@ -89,7 +89,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
   const totalPrice = Array.isArray(info.services)
     ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
-
+  const vmbFee = totalPrice * 0.1;
   const handleAccept = async () => {
     if (!giftId) return;
 
@@ -233,9 +233,12 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         ))}
                       </div>
 
-                      <div className="flex justify-end mt-3">
+                      <div className="flex flex-col items-end mt-3">
                         <p className="text-[#FF92A5] font-bold text-[18px] text-right sm:text-left">
-                          Total Price: ${totalPrice}
+                          VMB FEE: ${vmbFee}
+                        </p>
+                        <p className="text-[#FF92A5] font-bold text-[18px] text-right sm:text-left">
+                          Total Price: ${totalPrice + vmbFee}
                         </p>
                       </div>
                     </div>

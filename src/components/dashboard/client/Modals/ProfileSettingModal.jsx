@@ -214,6 +214,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                         </label>
                         <input
                           type="text"
+                          readOnly
                           {...register("email", {
                             required: "Email is required",
                             pattern: {

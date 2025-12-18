@@ -15,7 +15,7 @@ function DashboardSidebar() {
 
   return (
     <div className="h-full bg-white flex flex-col border bt-[1px] border-[#E5E7EB] ">
-      <div className="flex flex-col gap-y-[10px] px-[16px] lg:px-[20px] py-[30px]">
+      <div className="flex flex-col gap-y-[10px] px-[8px]  py-[30px]">
         {items.map((item, idx) => (
           <NavLink
             to={item.path}

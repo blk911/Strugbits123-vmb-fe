@@ -46,7 +46,7 @@ function UserMenu() {
   };
   const menuItems = [
     {
-      label: "Profile Setting",
+      label: "Profile Settings",
       onClick: () => {
         openModal("profileSettings", user);
       },

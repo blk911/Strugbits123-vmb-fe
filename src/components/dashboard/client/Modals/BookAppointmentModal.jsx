@@ -312,7 +312,10 @@ export default function BookAppointmentModal({
                           );
                         })}
                         <div className="flex justify-end font-bold text-[#581838] mt-3">
-                          Total: ${totalPrice.toFixed(2)}
+                          VMB FEE: $2.50
+                        </div>
+                        <div className="flex justify-end font-bold text-[#581838] mt-3">
+                          Total: ${(totalPrice + 2.5).toFixed(2)}
                         </div>
                       </div>
                     )}

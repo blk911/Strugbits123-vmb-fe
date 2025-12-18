@@ -8,7 +8,7 @@ import { useUser } from "../../../../hooks/useUser";
 
 function Overview() {
   const { user } = useUser();
-  const { data: response, refetch } = useGetDailyStatsQuery();
+  const { data: response, refetch, isLoading } = useGetDailyStatsQuery();
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -36,6 +36,7 @@ function Overview() {
         title="Today's Appointments"
         value={appointmentsCount}
         icon={<FaRegCalendarAlt className="text-[#FF92A5] w-[18px] h-[18px]" />}
+        isLoading={isLoading}
       />
 
       <DashboardCard
@@ -44,12 +45,14 @@ function Overview() {
         icon={
           <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
         }
+        isLoading={isLoading}
       />
 
       <DashboardCard
         title="Total Services"
         value={servicesCount}
         icon={<RiFlowerLine className="text-[#FF92A5] w-[20px] h-[20px]" />}
+        isLoading={isLoading}
       />
     </div>
   );

@@ -350,6 +350,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       </label>
                       <input
                         type="text"
+                        readOnly
                         {...register("email")}
                         onChange={(e) => {
                           let value = e.target.value;

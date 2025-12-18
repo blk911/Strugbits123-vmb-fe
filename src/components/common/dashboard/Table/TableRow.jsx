@@ -1,9 +1,17 @@
 import React from "react";
 
-const TableRow = ({ row, keys, cellRenderers, onRowClick }) => (
+const TableRow = ({
+  row,
+  keys,
+  cellRenderers,
+  onRowClick,
+  showPointer = true,
+}) => (
   <tr
     onClick={() => onRowClick?.(row)}
-    className="cursor-pointer text-[#4B5563] font-medium border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px] "
+    className={`${
+      showPointer ? "cursor-pointer" : ""
+    }  text-[#4B5563] font-medium border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px]`}
   >
     {keys.map((key, index) => {
       let cellValue = cellRenderers[key]
