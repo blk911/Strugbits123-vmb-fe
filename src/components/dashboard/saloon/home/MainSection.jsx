@@ -182,7 +182,7 @@ function Header({ icon, title, onViewAll }) {
 
 function EmptyState({ message }) {
   return (
-    <div className="text-center py-8 text-gray-500">
+    <div className="text-center py-6 text-gray-500">
       <p className="text-[14px]">{message}</p>
     </div>
   );

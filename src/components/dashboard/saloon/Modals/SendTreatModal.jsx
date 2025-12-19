@@ -17,8 +17,14 @@ import {
 } from "../../../../utils/toast";
 
 const inviteSchema = z.object({
-  firstName: z.string().min(2, "First name is required"),
-  lastName: z.string().min(2, "Last name is required"),
+  firstName: z
+    .string()
+    .min(2, "First name is required")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid name"),
+  lastName: z
+    .string()
+    .min(2, "Last name is required")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid name"),
   email: z.string().email("Please enter a valid email"),
   serviceId: z.string({ required_error: "Please select a service" }),
   discountPercentage: z
