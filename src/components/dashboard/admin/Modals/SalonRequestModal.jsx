@@ -19,17 +19,6 @@ export default function SalonRequestModal({
   const { openModal } = useDashboardModal();
   const [approveSalon, { isLoading: isApproving }] = useApproveSalonMutation();
   const [declineSalon, { isLoading: isDeclining }] = useRejectSalonMutation();
-  function convertTo12Hour(time) {
-    if (!time) return "";
-
-    let [hour, minute] = time.split(":");
-    hour = parseInt(hour);
-
-    const ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12;
-
-    return `${hour}:${minute} ${ampm}`;
-  }
 
   const handleDecline = async () => {
     if (!data?._id) {
@@ -129,9 +118,7 @@ export default function SalonRequestModal({
                     {/* {data?.startTime + " - " + data?.endTime ||
                       "09:00 AM - 05:00 PM"} */}
                     {data?.startTime && data?.endTime
-                      ? `${convertTo12Hour(data.startTime)} - ${convertTo12Hour(
-                          data.endTime
-                        )}`
+                      ? data.startTime + " - " + data.endTime
                       : "09:00 AM - 05:00 PM"}
                   </p>
                 </div>

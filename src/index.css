@@ -102,7 +102,7 @@
   }
 
   .custom-table tr {
-    @apply table-row hover:bg-gray-50 transition-colors cursor-pointer;
+    @apply table-row hover:bg-gray-50 transition-colors ;
   }
 
   .custom-table th,

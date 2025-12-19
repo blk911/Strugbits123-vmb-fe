@@ -17,6 +17,7 @@ export default function TabbedTable({
   onPageChange,
   isLoading,
   isFetching,
+  showPointer,
 }) {
   const urlActive = location?.state?.activeTab;
   const initial = urlActive || defaultTab || tabOrder[0];
@@ -68,6 +69,7 @@ export default function TabbedTable({
             data={tabs[currentTab] ?? []}
             cellRenderers={cellRenderers || {}}
             onRowClick={onRowClick?.[currentTab]}
+            showPointer={showPointer}
           />
 
           {totalPages > 1 && (

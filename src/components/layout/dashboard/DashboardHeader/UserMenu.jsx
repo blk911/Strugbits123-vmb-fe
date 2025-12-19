@@ -46,7 +46,7 @@ function UserMenu() {
   };
   const menuItems = [
     {
-      label: "Profile Setting",
+      label: "Profile Settings",
       onClick: () => {
         openModal("profileSettings", user);
       },
@@ -73,7 +73,7 @@ function UserMenu() {
         onClick={toggle}
       >
         <img
-          src={user?.userProfile || profile}
+          src={user?.userProfile || user?.profilePic || profile}
           alt="profile"
           className="h-full w-full"
         />

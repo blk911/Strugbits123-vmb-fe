@@ -18,7 +18,10 @@ import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 
 const bookingSchema = z.object({
-  fullName: z.string().min(2, "Full name is required"),
+  fullName: z
+    .string()
+    .min(2, "Full name is required")
+    .regex(/^[a-zA-Z\s'-]+$/, "Invalid name"),
   selectedServices: z
     .array(z.string())
     .min(1, "Please select at least one service"),
@@ -309,7 +312,10 @@ export default function BookAppointmentModal({
                           );
                         })}
                         <div className="flex justify-end font-bold text-[#581838] mt-3">
-                          Total: ${totalPrice.toFixed(2)}
+                          VMB FEE: $2.50
+                        </div>
+                        <div className="flex justify-end font-bold text-[#581838] mt-3">
+                          Total: ${(totalPrice + 2.5).toFixed(2)}
                         </div>
                       </div>
                     )}

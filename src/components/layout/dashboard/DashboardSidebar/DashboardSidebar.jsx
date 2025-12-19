@@ -2,20 +2,24 @@ import React from "react";
 import { menus } from "../../../../config/menuConfig";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useUser } from "../../../../hooks/useUser";
 
 function DashboardSidebar() {
   const { role } = useSelector((state) => state.role);
+  const { user } = useUser();
   const roleMap = {
     "salon-owner": "salonOwner",
     customer: "customer",
     admin: "admin",
   };
 
-  const items = menus[roleMap[role]] || [];
-
+  let items = menus[roleMap[role]] || [];
+  if (role === "salon-owner" && user?.status === "hold") {
+    items = items.filter((item) => item.name === "Dashboard");
+  }
   return (
     <div className="h-full bg-white flex flex-col border bt-[1px] border-[#E5E7EB] ">
-      <div className="flex flex-col gap-y-[10px] px-[16px] lg:px-[20px] py-[30px]">
+      <div className="flex flex-col gap-y-[10px] px-[8px]  py-[30px]">
         {items.map((item, idx) => (
           <NavLink
             to={item.path}

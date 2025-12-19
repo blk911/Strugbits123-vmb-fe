@@ -4,7 +4,7 @@ import { IoFilter } from "react-icons/io5";
 export default function PageHeader({
   title,
   description,
-  searchPlaceholder = "Search (salon, service)",
+  searchPlaceholder = "Search ",
   onSearch,
   onSort,
   defaultSort = "Newest",

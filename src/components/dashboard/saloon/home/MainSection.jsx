@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
@@ -15,127 +15,109 @@ import {
 } from "../../../../store/api";
 import { formatTimeAgo } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
+
+const renderCardSection = ({
+  title,
+  icon,
+  items,
+  isLoading,
+  emptyMessage,
+  CardComponent,
+  navigateTo,
+  getCardProps,
+}) => (
+  <SectionWrapper className="p-4 flex flex-col gap-4">
+    <Header icon={icon} title={title} onViewAll={() => navigate(navigateTo)} />
+
+    {isLoading ? (
+      <div className="flex justify-center py-6">
+        <LoadingIndicator size="sm" />
+      </div>
+    ) : items.length === 0 ? (
+      <EmptyState message={emptyMessage} />
+    ) : (
+      <div className="flex flex-col gap-4">
+        {items.slice(0, 2).map((item) => (
+          <CardComponent
+            key={item._id}
+            {...getCardProps(item)}
+            isLoading={false}
+          />
+        ))}
+      </div>
+    )}
+  </SectionWrapper>
+);
+
 export default function MainSection() {
   const navigate = useNavigate();
 
   const { data: servicesRes, isLoading: loadingServices } =
     useGetServicesQuery();
-  const { data: invitesRes } = useGetSalonInvitesQuery({
-    status: "pending",
-    sort: "newest",
-  });
-  const { data: appointmentsRes } = useGetSalonAppointmentsQuery({
-    status: "pending",
-    sort: "newest",
-  });
+  const { data: invitesRes, isLoading: loadingInvites } =
+    useGetSalonInvitesQuery({
+      status: "pending",
+      sort: "newest",
+    });
+  const { data: appointmentsRes, isLoading: loadingAppointments } =
+    useGetSalonAppointmentsQuery({
+      status: "pending",
+      sort: "newest",
+    });
 
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
   const pendingAppointments = appointmentsRes?.data?.items || [];
-  console.log("pending appointents==>", pendingAppointments);
-  console.log("pending invites==>", pendingInvites);
-  useEffect(() => {}, []);
+
+  const getInviteProps = (item) => ({
+    img: item?.salonProfilePic || SalonImage,
+    salon: item.salonName,
+    service: item?.services?.serviceName || "No Service",
+    statusText: "Pending",
+    statusColor: "#FF9500",
+    timeAgo: formatTimeAgo(item.createdAt),
+    data: item,
+  });
+
+  const getAppointmentProps = (item) => ({
+    icon: item.salon?.salonImage || SalonImage,
+    from: item.requestedFrom?.name || "Client",
+    service: item.services?.map((s) => s.name).join(", ") || "No Service",
+    price: `$${
+      item.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0
+    }`,
+    statusText: "Pending",
+    statusColor: "#FF9500",
+    timeAgo: formatTimeAgo(item.appointmentDate || item.createdAt),
+    data: item,
+  });
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          <SectionWrapper className="p-4 flex flex-col gap-4">
-            <Header
-              icon={<FaUser className="text-[#FF92A5]" />}
-              title="Invites"
-              onViewAll={() => navigate("/saloninvites")}
-            />
-            {pendingInvites.length === 0 ? (
-              <EmptyState message="No pending invites received" />
-            ) : (
-              <>
-                <InviteCard
-                  key={pendingInvites[0]._id}
-                  img={pendingInvites[0]?.salonProfilePic || SalonImage}
-                  salon={pendingInvites[0].salonName}
-                  service={pendingInvites[0]?.services.serviceName}
-                  statusText="Pending"
-                  statusColor="#FF9500"
-                  timeAgo={formatTimeAgo(pendingInvites[0].createdAt)}
-                  data={pendingInvites[0]}
-                />
+          {renderCardSection({
+            title: "Invites",
+            icon: <FaUser className="text-[#FF92A5]" />,
+            items: pendingInvites,
+            isLoading: loadingInvites,
+            emptyMessage: "No pending invites received",
+            CardComponent: InviteCard,
+            navigateTo: "/saloninvites",
+            getCardProps: getInviteProps,
+          })}
 
-                {pendingInvites[1] && (
-                  <InviteCard
-                    key={pendingInvites[1]._id}
-                    img={pendingInvites[1]?.salonProfilePic || SalonImage}
-                    salon={pendingInvites[1].salonName}
-                    service={
-                      pendingInvites[1]?.services.serviceName || "No Service"
-                    }
-                    statusText="Pending"
-                    statusColor="#FF9500"
-                    timeAgo={formatTimeAgo(pendingInvites[1].createdAt)}
-                    data={pendingInvites[1]}
-                  />
-                )}
-              </>
-            )}
-          </SectionWrapper>
-
-          <SectionWrapper className="p-4 flex flex-col gap-4">
-            <Header
-              icon={<FaCalendarAlt className="text-[#FF92A5]" />}
-              title="Pending Appointments"
-              onViewAll={() => navigate("/appointments")}
-            />
-
-            {pendingAppointments.length === 0 ? (
-              <EmptyState message="No appointments to show" />
-            ) : (
-              <>
-                <AppointmentCard
-                  key={pendingAppointments[0]._id}
-                  icon={pendingAppointments[0].salon.salonImage || SalonImage}
-                  from={pendingAppointments[0].requestedFrom?.name || "Client"}
-                  service={pendingAppointments[0].services
-                    ?.map((s) => s.name)
-                    .join(", ")}
-                  price={`$${pendingAppointments[0].services?.reduce(
-                    (sum, s) => sum + (s.price || 0),
-                    0
-                  )}`}
-                  statusText="Pending"
-                  statusColor="#FF9500"
-                  timeAgo={formatTimeAgo(
-                    pendingAppointments[0].appointmentDate ||
-                      pendingAppointments[0].createdAt
-                  )}
-                  data={pendingAppointments[0]}
-                />
-
-                {pendingAppointments[1] && (
-                  <AppointmentCard
-                    key={pendingAppointments[1]._id}
-                    icon={pendingAppointments[1].salon.salonImage || SalonImage}
-                    from={
-                      pendingAppointments[1].requestedFrom?.name || "Client"
-                    }
-                    service={pendingAppointments[1].services
-                      ?.map((s) => s.name)
-                      .join(", ")}
-                    price={`$${pendingAppointments[1].services?.reduce(
-                      (sum, s) => sum + (s.price || 0),
-                      0
-                    )}`}
-                    statusText="Pending"
-                    statusColor="#FF9500"
-                    timeAgo={formatTimeAgo(
-                      pendingAppointments[1].appointmentDate ||
-                        pendingAppointments[1].createdAt
-                    )}
-                    data={pendingAppointments[1]}
-                  />
-                )}
-              </>
-            )}
-          </SectionWrapper>
+          {renderCardSection({
+            title: "Pending Appointments",
+            icon: <FaCalendarAlt className="text-[#FF92A5]" />,
+            items: pendingAppointments,
+            isLoading: loadingAppointments,
+            emptyMessage: "No appointments to show",
+            CardComponent: AppointmentCard,
+            navigateTo: "/appointments",
+            getCardProps: getAppointmentProps,
+          })}
         </div>
 
         <SectionWrapper className="p-6 flex flex-col gap-6">
@@ -151,13 +133,15 @@ export default function MainSection() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-6">
-            {loadingServices ? (
-              <p className="text-gray-500 col-span-2 text-center">
-                Loading services...
-              </p>
-            ) : services.length > 0 ? (
-              services.map((service) => (
+          {loadingServices ? (
+            <div className="flex justify-center py-6">
+              <LoadingIndicator />
+            </div>
+          ) : services.length === 0 ? (
+            <p className="text-gray-500 text-center">No services added yet</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-6">
+              {services.map((service) => (
                 <ServiceCard
                   key={service._id}
                   img={service.serviceImage}
@@ -165,13 +149,9 @@ export default function MainSection() {
                   desc={service.description}
                   price={service.servicePrice}
                 />
-              ))
-            ) : (
-              <p className="text-gray-500 col-span-2 text-center">
-                No services added yet
-              </p>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </SectionWrapper>
       </div>
 
@@ -202,7 +182,7 @@ function Header({ icon, title, onViewAll }) {
 
 function EmptyState({ message }) {
   return (
-    <div className="text-center py-8 text-gray-500">
+    <div className="text-center py-6 text-gray-500">
       <p className="text-[14px]">{message}</p>
     </div>
   );

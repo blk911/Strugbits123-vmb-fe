@@ -135,10 +135,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const handleRowClick = {
-    All: () => {},
-    Pending: () => {},
-    Claimed: () => {},
-    Unclaimed: () => {},
+    All: null,
+    Pending: null,
+    Claimed: null,
+    Unclaimed: null,
   };
 
   const handlePageChange = (page) => {
@@ -178,6 +178,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         onPageChange={handlePageChange}
         isLoading={isLoading}
         isFetching={isFetching}
+        showPointer={false}
       />
     </div>
   );

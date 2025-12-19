@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-const password = z.string().min(6, "Password must be at least 6 characters");
+const nameRegex = /^[a-zA-Z\s'-]+$/;
+const phoneRegex = /^\d{10,15}$/;
 
 export const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -9,11 +10,20 @@ export const loginSchema = z.object({
 
 export const customerSignupSchema = z
   .object({
-    fullName: z.string().min(1, "Name is required"),
+    fullName: z
+      .string()
+      .min(1, "Name is required")
+      .regex(nameRegex, "Invalid name"),
     email: z.string().email("Invalid email"),
-    address: z.string().min(5, "Enter a valid address"),
+    address: z
+      .string()
+      .min(5, "Enter a valid address")
+      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
     zipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
-    phone: z.string().min(10, "Valid phone number required"),
+    phone: z
+      .string()
+      .min(10, "Valid phone number required")
+      .regex(phoneRegex, "Invalid phone number"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     userProfile: z.string().min(1, "Profile picture is required"),
     confirmPassword: z.string().min(1, "Confirm password is required"),
@@ -32,10 +42,19 @@ const timeToMinutes = (time24) => {
 
 export const salonStep2Schema = z
   .object({
-    saloonName: z.string().min(2, "Salon name required"),
-    saloonAddress: z.string().min(5, "Enter salon address"),
+    saloonName: z
+      .string()
+      .min(2, "Salon name required")
+      .regex(nameRegex, "Invalid salon name"),
+    saloonAddress: z
+      .string()
+      .min(5, "Enter salon address")
+      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
     saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
-    phone: z.string().min(10, "Valid phone number required"),
+    salonPhone: z
+      .string()
+      .min(10, "Valid phone number required")
+      .regex(phoneRegex, "Invalid phone number"),
 
     startTime: z.string().min(1, "Select start time"),
     endTime: z.string().min(1, "Select end time"),

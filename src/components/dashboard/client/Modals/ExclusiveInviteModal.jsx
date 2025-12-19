@@ -43,7 +43,14 @@ export default function ExclusiveInviteModal({
   } = useGetSalonByIdQuery(salonId, {
     skip: !isOpen || !salonId,
   });
-  useEffect(() => setInviteOpen(isOpen), [isOpen]);
+  // useEffect(() => setInviteOpen(isOpen), [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedDate("");
+      setSelectedTime("");
+      setInviteOpen(isOpen);
+    }
+  }, [isOpen]);
   const handleViewSalon = () => {
     if (!salonId) return;
 
@@ -315,7 +322,7 @@ export default function ExclusiveInviteModal({
                             className="grid grid-cols-3 text-[#4B5563] mt-2"
                           >
                             <div>{s.name}</div>
-                            <div>{s.duration} min</div>
+                            <div>{s.duration} </div>
                             <div>${s.price}</div>
                           </div>
                         ))}

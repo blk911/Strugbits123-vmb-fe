@@ -2,7 +2,7 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-const Table = ({ data, cellRenderers, onRowClick }) => {
+const Table = ({ data, cellRenderers, onRowClick, showPointer }) => {
   if (!data || data.length === 0)
     return <p className="p-4 text-gray-500 text-center">No data available</p>;
 
@@ -20,6 +20,7 @@ const Table = ({ data, cellRenderers, onRowClick }) => {
               keys={keys}
               cellRenderers={cellRenderers || {}}
               onRowClick={onRowClick}
+              showPointer={showPointer}
             />
           ))}
         </tbody>

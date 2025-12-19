@@ -233,6 +233,10 @@ export default function AddServiceModal({
                     <input
                       {...register("serviceName", {
                         required: "Service name is required",
+                        pattern: {
+                          value: /^[A-Za-z\s]+$/i,
+                          message: "Service name must contain only letters",
+                        },
                       })}
                       onChange={(e) => {
                         let value = e.target.value;

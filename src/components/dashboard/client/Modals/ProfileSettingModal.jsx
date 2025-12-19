@@ -38,7 +38,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
         email: user.email || "",
         phone: user.phoneNumber || "",
       });
-      setPreviewImage(user.userProfile || "");
+      setPreviewImage(user.userProfile || user?.profilePic || "");
     }
   }, [isOpen, user, reset]);
 
@@ -194,6 +194,10 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           type="text"
                           {...register("fullName", {
                             required: "Full name is required",
+                            pattern: {
+                              value: /^[a-zA-Z\s'-]+$/,
+                              message: "Invalid name",
+                            },
                           })}
                           onChange={preventLeadingSpace(
                             register("fullName").onChange
@@ -214,6 +218,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                         </label>
                         <input
                           type="text"
+                          readOnly
                           {...register("email", {
                             required: "Email is required",
                             pattern: {
