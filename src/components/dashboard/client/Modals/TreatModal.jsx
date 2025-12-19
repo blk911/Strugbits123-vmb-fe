@@ -34,6 +34,7 @@ const createSchema = (hasServices) =>
     message: z
       .string()
       .min(5, "Message must be at least 5 characters")
+      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid message")
       .optional(),
   });
 

@@ -17,6 +17,8 @@ import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator"
 import {
   useGetUploadUrlMutation,
   useUpdateSalonProfileMutation,
+  useUpdateSalonApplicationStatusMutation,
+  useLogoutMutation,
 } from "../../../../store/api";
 import {
   convert12HourTo24Hour,
@@ -29,7 +31,10 @@ import {
   toastDismiss,
 } from "../../../../utils/toast";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../../store/features/userSlice";
+import { clearUser, setUser } from "../../../../store/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import { clearRole } from "../../../../store/features/roleSlice";
+import { setAuthMode } from "../../../../store/features/authSlice";
 const days = [
   "Monday",
   "Tuesday",
@@ -42,17 +47,28 @@ const days = [
 
 const salonProfileSchema = z
   .object({
-    fullName: z.string().min(2, "Full name must be at least 2 characters"),
+    fullName: z
+      .string()
+      .min(2, "Full name must be at least 2 characters")
+      .regex(/^[a-zA-Z\s]+$/, "Invalid name"),
     email: z.string().email("Invalid email address"),
-    salonName: z.string().min(2, "Salon name is required"),
-    address: z.string().min(5, "Address is required"),
+    salonName: z
+      .string()
+      .min(2, "Salon name is required")
+      .regex(/^[a-zA-Z\s]+$/, "Invalid salon name"),
+    address: z
+      .string()
+      .min(5, "Address is required")
+      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
     zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
     phone: z
       .string()
-      .regex(/^[\d\s\-\+\(\)]+$/, "Invalid phone number")
+      .regex(/^\d{10,15}$/, "Invalid phone number")
       .optional()
       .or(z.literal("")),
-    description: z.string().optional(),
+    description: z
+      .string()
+      .min(10, "Description must be at least 10 characters"),
     startTime: z
       .string()
       .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
@@ -79,14 +95,18 @@ const salonProfileSchema = z
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
-  const [updateMe, { isLoading: isUpdating }] = useUpdateSalonProfileMutation();
+  const [updateMe, { isLoading: isUpdatingProfile }] =
+    useUpdateSalonProfileMutation();
+  const navigate = useNavigate();
+  const [logout] = useLogoutMutation();
+  const [updateApplicationStatus, { isLoading: isResubmitting }] =
+    useUpdateSalonApplicationStatusMutation();
   const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   const logoRef = useRef();
   const docRef = useRef();
   const photosRef = useRef();
   const dispatch = useDispatch();
   const [previewLogo, setPreviewLogo] = useState(null);
-  const [existingPhotos, setExistingPhotos] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -140,7 +160,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
 
       reset(formData);
       setPreviewLogo(user.profilePic || defaultSalonImg);
-      setExistingPhotos(user.salonPhotos || []);
     }
   }, [isOpen, user, reset]);
 
@@ -161,10 +180,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       : [...current, day];
     setValue("selectedDays", updated, { shouldValidate: true });
   };
+
   const uploadFile = async (file, folder = "salon") => {
     if (!file) return null;
-
-    const toastId = toastLoading("Uploading...");
 
     try {
       const fileName = `${folder}/${Date.now()}_${file.name.replace(
@@ -183,11 +201,8 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       });
 
       const publicUrl = (data.uploadUrl || data).split("?")[0];
-      toastDismiss(toastId);
-      toastSuccess("Uploaded!");
       return { url: publicUrl, name: file.name };
     } catch (err) {
-      toastDismiss(toastId);
       toastError("Upload failed");
       console.error(err);
       return null;
@@ -198,10 +213,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const toastId = toastLoading("Uploading logo...");
     const result = await uploadFile(file, "profiles");
+    toastDismiss(toastId);
+
     if (result) {
       setValue("logo", result.url, { shouldValidate: true });
       setPreviewLogo(result.url);
+      toastSuccess("Logo uploaded!");
     }
   };
 
@@ -209,10 +228,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const toastId = toastLoading("Uploading document...");
     const result = await uploadFile(file, "licenses");
+    toastDismiss(toastId);
+
     if (result) {
       setValue("licenseDocument", result.url, { shouldValidate: true });
       setValue("licenseDocName", result.name);
+      toastSuccess("Document uploaded!");
     }
   };
 
@@ -221,19 +244,31 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
     if (files.length === 0) return;
 
     const toastId = toastLoading(`Uploading ${files.length} photo(s)...`);
+
     const uploaded = [];
+    let successCount = 0;
 
     for (const file of files) {
       const result = await uploadFile(file, "salon-photos");
-      if (result) uploaded.push(result);
+      if (result) {
+        uploaded.push(result);
+        successCount++;
+      }
     }
 
-    const current = watch("salonPhotos") || [];
-    setValue("salonPhotos", [...current, ...uploaded], {
-      shouldValidate: true,
-    });
+    if (uploaded.length > 0) {
+      const current = watch("salonPhotos") || [];
+      setValue("salonPhotos", [...current, ...uploaded], {
+        shouldValidate: true,
+      });
+    }
+
     toastDismiss(toastId);
-    toastSuccess("Photos uploaded!");
+    if (successCount > 0) {
+      toastSuccess(`${successCount} photo(s) uploaded successfully!`);
+    } else {
+      toastError("Failed to upload photos");
+    }
   };
 
   const removeSalonPhoto = (index) => {
@@ -243,36 +278,82 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       shouldValidate: true,
     });
   };
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const startTime = convertTo12Hour(data.startTime);
+  //     const endTime = convertTo12Hour(data.endTime);
+  //     const payload = {
+  //       name: data.fullName,
+  //       email: data.email,
+  //       phoneNumber: data.phone || null,
+  //       salonName: data.salonName,
+  //       salonAddress: data.address,
+  //       zipcode: data.zipcode,
+  //       description: data.description,
+  //       startTime: startTime,
+  //       endTime: endTime,
+  //       workingDays: data.selectedDays,
+
+  //       profilePic: data.logo || null,
+  //       licenseDocument: data.licenseDocument || null,
+  //       salonPhotos: data.salonPhotos?.map((p) => p.url) || [],
+  //     };
+
+  //     const res = await updateMe(payload).unwrap();
+  //     dispatch(setUser(res.data));
+  //     toast.success(res?.message || "Profile updated successfully!");
+  //     closeModal();
+  //   } catch (err) {
+  //     toast.error(err?.data?.message || "Failed to update profile.");
+  //   }
+  // };
   const onSubmit = async (data) => {
+    const startTime = convertTo12Hour(data.startTime);
+    const endTime = convertTo12Hour(data.endTime);
+
+    const payload = {
+      name: data.fullName,
+      email: data.email,
+      phoneNumber: data.phone || null,
+      salonName: data.salonName,
+      salonAddress: data.address,
+      zipcode: data.zipcode,
+      description: data.description,
+      startTime: startTime,
+      endTime: endTime,
+      workingDays: data.selectedDays,
+      profilePic: data.logo || null,
+      licenseDocument: data.licenseDocument || null,
+      salonPhotos: data.salonPhotos?.map((p) => p.url) || [],
+    };
+
     try {
-      const startTime = convertTo12Hour(data.startTime);
-      const endTime = convertTo12Hour(data.endTime);
-      const payload = {
-        name: data.fullName,
-        email: data.email,
-        phoneNumber: data.phone || null,
-        salonName: data.salonName,
-        salonAddress: data.address,
-        zipcode: data.zipcode,
-        description: data.description,
-        startTime: startTime,
-        endTime: endTime,
-        workingDays: data.selectedDays,
+      if (user?.status === "hold") {
+        const res = await updateApplicationStatus(user._id).unwrap();
+        await updateMe(payload).unwrap();
 
-        profilePic: data.logo || null,
-        licenseDocument: data.licenseDocument || null,
-        salonPhotos: data.salonPhotos?.map((p) => p.url) || [],
-      };
+        dispatch(setUser({ ...user, status: "pending" }));
 
-      const res = await updateMe(payload).unwrap();
-      dispatch(setUser(res.data));
-      toast.success(res?.message || "Profile updated successfully!");
+        toast.success(
+          res?.message ||
+            "Application resubmitted successfully! Awaiting approval."
+        );
+        await logout().unwrap();
+        dispatch(clearRole());
+        dispatch(clearUser());
+        dispatch(setAuthMode("login"));
+        navigate("/register");
+      } else {
+        const res = await updateMe(payload).unwrap();
+        dispatch(setUser(res.data));
+        toast.success(res?.message || "Profile updated successfully!");
+      }
       closeModal();
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to update profile.");
+      toast.error(err?.data?.message || "Failed to submit. Please try again.");
+      console.error(err);
     }
   };
-
   if (userLoading) {
     return (
       <div className="flex items-center min-h-screen">
@@ -282,7 +363,8 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   }
 
   if (!user) return null;
-
+  const isHold = user?.status === "hold";
+  const isSubmitting = isHold ? isResubmitting : isUpdatingProfile;
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -570,7 +652,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           <RiArrowDropDownLine className="text-[24px]" />
                         </div>
                         {isDropdownOpen && (
-                          <div className="absolute w-full mt-2 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                          <div className="absolute w-full mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto p-3">
                             {days.map((day) => (
                               <CustomCheckbox
                                 key={day}
@@ -588,39 +670,71 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         </p>
                       )}
                     </div>
-
-                    <div>
-                      <div className="flex flex-col sm:flex-row justify-between mb-2 gap-2">
-                        <div>
-                          <label className="block text-[#374151] text-[16px] font-semibold">
-                            Upload Licensed Document
-                          </label>
-                          <span className="text-xs italic text-[#00000080]">
-                            (png, jpeg, pdf)
-                          </span>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => docRef.current.click()}
-                          className="bg-[#FF92A54D] text-[#FF92A5] px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-[#FF92A580]"
-                        >
-                          <FaFileAlt /> Upload
-                        </button>
+                    <div className="flex flex-col sm:flex-row justify-between mb-2 gap-2">
+                      <div>
+                        <label className="block text-[#374151] text-[16px] font-semibold">
+                          View License Document
+                        </label>
+                        {watch("licenseDocument") && (
+                          <p className="text-sm text-[#581838] mt-1 break-all">
+                            Uploaded:{" "}
+                            {decodeURIComponent(
+                              watch("licenseDocument")
+                                .split("/")
+                                .pop()
+                                .split("?")[0]
+                                .replace(/^\d+_/, "")
+                            )}
+                          </p>
+                        )}
                       </div>
-                      <input
-                        ref={docRef}
-                        type="file"
-                        accept=".png,.jpg,.jpeg,.pdf"
-                        className="hidden"
-                        onChange={handleLicenseUpload}
-                      />
-                      {watch("licenseDocument") && (
-                        <p className="text-sm text-[#581838] mt-1">
-                          Selected: {watch("licenseDocName")}
-                        </p>
-                      )}
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          watch("licenseDocument") &&
+                          window.open(watch("licenseDocument"), "_blank")
+                        }
+                        disabled={!watch("licenseDocument")}
+                        className="bg-[#FF92A54D] text-[#FF92A5] px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-[#FF92A580]"
+                      >
+                        <FaFileAlt /> View
+                      </button>
                     </div>
+                    {isHold && (
+                      <div>
+                        <div className="flex flex-col sm:flex-row justify-between mb-2 gap-2">
+                          <div>
+                            <label className="block text-[#374151] text-[16px] font-semibold">
+                              Upload Licensed Document
+                            </label>
+                            <span className="text-xs italic text-[#00000080]">
+                              (png, jpeg, pdf)
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => docRef.current.click()}
+                            className="bg-[#FF92A54D] text-[#FF92A5] px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-[#FF92A580]"
+                          >
+                            <FaFileAlt /> Upload
+                          </button>
+                        </div>
+                        <input
+                          ref={docRef}
+                          type="file"
+                          accept=".png,.jpg,.jpeg,.pdf"
+                          className="hidden"
+                          onChange={handleLicenseUpload}
+                        />
+                        {watch("licenseDocument") && (
+                          <p className="text-sm text-[#581838] mt-1">
+                            Selected: {watch("licenseDocName")}
+                          </p>
+                        )}
+                      </div>
+                    )}
 
                     <div>
                       <label className="block text-[#404040] font-medium mb-2">
@@ -639,6 +753,11 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         rows={4}
                         className="w-full border border-[#E5E5E5] bg-white rounded-lg p-3"
                       />
+                      {errors.description && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.description.message}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -672,26 +791,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           onChange={handleSalonPhotosUpload}
                         />
 
-                        {existingPhotos.map((url, i) => (
-                          <div key={`existing-${i}`} className="relative">
-                            <img
-                              src={url}
-                              alt="salon"
-                              className="w-[80px] h-[74px] object-cover rounded-md"
-                            />
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setExistingPhotos((prev) =>
-                                  prev.filter((_, idx) => idx !== i)
-                                )
-                              }
-                              className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs"
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
                         {watch("salonPhotos")?.map((photo, i) => (
                           <div key={i} className="relative">
                             <img
@@ -711,19 +810,27 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                             </p>
                           </div>
                         ))}
+                        {errors.salonPhotos && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.salonPhotos.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
                 </form>
-
                 <AppButton
                   type="submit"
                   variant="primary"
                   className="w-full py-3 text-[16px] font-medium"
-                  disabled={isUpdating || uploading}
+                  disabled={isSubmitting || uploading}
                   onClick={handleSubmit(onSubmit)}
                 >
-                  Update Profile
+                  {isSubmitting
+                    ? "Submitting..."
+                    : isHold
+                    ? "Resubmit Application"
+                    : "Update Profile"}
                 </AppButton>
               </Dialog.Panel>
             </Transition.Child>

@@ -17,7 +17,7 @@ function Overview() {
   const servicesCount = response?.data?.totalServicesCount || 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 font-[Poppins] items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-[Poppins] items-start">
       <div className="flex flex-col gap-2 ">
         <h1 className="text-[18px] font-semibold text-[#581838]">
           Welcome back!
@@ -31,29 +31,34 @@ function Overview() {
           Manage your salon efficiently
         </p>
       </div>
+      {!(user?.status === "hold") && (
+        <>
+          <DashboardCard
+            title="Today's Appointments"
+            value={appointmentsCount}
+            icon={
+              <FaRegCalendarAlt className="text-[#FF92A5] w-[18px] h-[18px]" />
+            }
+            isLoading={isLoading}
+          />
+          {/* 
+        <DashboardCard
+          title="Today's Revenue"
+          value="$0"
+          icon={
+            <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
+          }
+          isLoading={isLoading}
+        /> */}
 
-      <DashboardCard
-        title="Today's Appointments"
-        value={appointmentsCount}
-        icon={<FaRegCalendarAlt className="text-[#FF92A5] w-[18px] h-[18px]" />}
-        isLoading={isLoading}
-      />
-
-      <DashboardCard
-        title="Today's Revenue"
-        value="$0"
-        icon={
-          <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
-        }
-        isLoading={isLoading}
-      />
-
-      <DashboardCard
-        title="Total Services"
-        value={servicesCount}
-        icon={<RiFlowerLine className="text-[#FF92A5] w-[20px] h-[20px]" />}
-        isLoading={isLoading}
-      />
+          <DashboardCard
+            title="Total Services"
+            value={servicesCount}
+            icon={<RiFlowerLine className="text-[#FF92A5] w-[20px] h-[20px]" />}
+            isLoading={isLoading}
+          />
+        </>
+      )}
     </div>
   );
 }

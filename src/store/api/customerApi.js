@@ -62,6 +62,13 @@ export const customerApi = createApi({
         body: { email },
       }),
     }),
+
+    updateSalonApplicationStatus: builder.mutation({
+      query: (id) => ({
+        url: `/update-salon-application-status/${id}`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -73,4 +80,5 @@ export const {
   useGetSalonByIdQuery,
   useGetDailyStatsQuery,
   useSubscribeNewsletterMutation,
+  useUpdateSalonApplicationStatusMutation,
 } = customerApi;

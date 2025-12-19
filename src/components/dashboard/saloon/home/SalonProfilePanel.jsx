@@ -12,7 +12,6 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { salons as salonsData } from "../../client/Home/mockData";
 import { useUser } from "../../../../hooks/useUser";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
-import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 
 export default function SalonProfilePanel() {
   const { openModal } = useDashboardModal();
