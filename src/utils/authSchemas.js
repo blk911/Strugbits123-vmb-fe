@@ -40,54 +40,68 @@ const timeToMinutes = (time24) => {
   return hours * 60 + minutes;
 };
 
-export const salonStep2Schema = z
-  .object({
-    saloonName: z
-      .string()
-      .min(2, "Salon name required")
-      .regex(nameRegex, "Invalid salon name"),
-    saloonAddress: z
-      .string()
-      .min(5, "Enter salon address")
-      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
-    saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
-    salonPhone: z
-      .string()
-      .min(10, "Valid phone number required")
-      .regex(phoneRegex, "Invalid phone number"),
+export const salonStep2Schema = z.object({
+  saloonName: z
+    .string()
+    .min(2, "Salon name required")
+    .regex(nameRegex, "Invalid salon name"),
+  saloonAddress: z
+    .string()
+    .min(5, "Enter salon address")
+    .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
+  saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
+  salonPhone: z
+    .string()
+    .min(10, "Valid phone number required")
+    .regex(phoneRegex, "Invalid phone number"),
 
-    startTime: z.string().min(1, "Select start time"),
-    endTime: z.string().min(1, "Select end time"),
+  startTime: z.string().min(1, "Select start time"),
+  endTime: z.string().min(1, "Select end time"),
 
-    workingDays: z.array(z.string()).min(1, "Select at least one day"),
+  workingDays: z.array(z.string()).min(1, "Select at least one day"),
 
-    licenseDoc: z
-      .string()
-      .url("Invalid document URL")
-      .min(1, "License document required"),
-    profilePic: z
-      .string()
-      .url("Invalid image URL")
-      .min(1, "Profile picture required"),
-    description: z
-      .string()
-      .min(10, "Description must be at least 10 characters"),
-    salonPhotos: z
-      .array(
-        z.object({
-          url: z.string().url(),
-          name: z.string(),
-        })
-      )
-      .min(1, "At least one salon photo is required"),
-  })
-  .refine(
-    (data) => {
-      if (!data.startTime || !data.endTime) return true;
-      return timeToMinutes(data.endTime) > timeToMinutes(data.startTime);
-    },
-    {
-      message: "End time must be after start time",
-      path: ["endTime"],
-    }
-  );
+  licenseDoc: z
+    .string()
+    .url("Invalid document URL")
+    .min(1, "License document required"),
+  profilePic: z
+    .string()
+    .url("Invalid image URL")
+    .min(1, "Profile picture required"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  salonPhotos: z
+    .array(
+      z.object({
+        url: z.string().url(),
+        name: z.string(),
+      })
+    )
+    .min(1, "At least one salon photo is required"),
+});
+// .refine
+// (data) => {
+//   if (!data.startTime || !data.endTime) return true;
+//   return timeToMinutes(data.endTime) > timeToMinutes(data.startTime);
+// },
+// {
+//   message: "End time must be after start time",
+//   path: ["endTime"],
+// }
+
+// (data) => {
+//   if (!data.startTime || !data.endTime) return true;
+
+//   const startMinutes = timeToMinutes(data.startTime);
+//   const endMinutes = timeToMinutes(data.endTime);
+
+//   if (endMinutes < startMinutes) {
+//     return true;
+//   }
+
+//   return endMinutes > startMinutes;
+// },
+// {
+//   message: "End time must be after start time (or next day if overnight)",
+//   path: ["endTime"],
+// }
+// ();

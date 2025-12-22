@@ -1,7 +1,7 @@
 import React from "react";
-import pic1 from "../../../assets/dashboard-1.png";
+import salonDashboardImg from "../../../assets/salon_owner_dashboard.png";
 import Button from "../../../components/common/site/Button";
-
+import customerDashboardImg from "../../../assets/customer_dashboard.png";
 function List({ items }) {
   return (
     <ul className="list-disc pl-5" style={{ color: "#777777" }}>
@@ -84,7 +84,7 @@ function SalonChoice() {
   return (
     <div className="w-full flex flex-col justify-center items-center py-[60px] sm:py-[150px] sm:gap-y-[150px] gap-y-[50px] sm:px-[50px] px-[10px] ">
       <SalonCard
-        img={pic1}
+        img={salonDashboardImg}
         label="Salon Owners"
         title="Grow Your Salon Business with Us"
         listItems={salonOwnerList}
@@ -92,7 +92,7 @@ function SalonChoice() {
         classes="max-md:flex-col max-md:w-full "
       />
       <SalonCard
-        img={pic1}
+        img={customerDashboardImg}
         label="For Customers"
         title="Your Beauty. Your Choice. Anytime, Anywhere."
         listItems={[

@@ -5,6 +5,7 @@ import GiftHistory from "./Gifts/GiftHistory";
 import SalonDetail from "./SalonDetail/SalonDetail";
 import SalonInvites from "./SalonInvites/SalonInvites";
 import Salons from "./Salons/Salons";
+import BookingSuccess from "./BookingSuccess/BookingSuccess";
 export {
   DashboardHome,
   AppointmentHistory,
@@ -12,4 +13,5 @@ export {
   SalonDetail,
   SalonInvites,
   Salons,
+  BookingSuccess,
 };

@@ -22,7 +22,7 @@ function Header() {
         </div>
         <div className="hidden lg:block">
           <ul className="flex items-center gap-[20px] text-[#4B5563]">
-            <li>
+            {/* <li>
               <a href="" className="text-[#4B5563]">
                 Salon Owner
               </a>
@@ -41,7 +41,7 @@ function Header() {
               <a href="" className="text-[#4B5563]">
                 Contact
               </a>
-            </li>
+            </li> */}
             <li>
               <Button
                 text={"Register Your Salon Today"}
@@ -54,7 +54,7 @@ function Header() {
       {menuOpen && (
         <div className="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center">
           <ul className="flex flex-col gap-8 text-2xl text-[#4B5563]">
-            <li>
+            {/* <li>
               <a href="" className="text-[#4B5563]">
                 Salon Owner
               </a>
@@ -73,7 +73,7 @@ function Header() {
               <a href="" className="text-[#4B5563]">
                 Contact
               </a>
-            </li>
+            </li> */}
             <li>
               <Button text={"Register Your Salon Today"} />
             </li>

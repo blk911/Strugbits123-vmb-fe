@@ -11,6 +11,7 @@ import successGif from "../../../../assets/successGif.gif";
 import AppButton from "../../../common/site/AppButton";
 import {
   useAcceptGiftMutation,
+  useCreateCheckoutSessionMutation,
   useGetSalonByIdQuery,
   useRejectGiftMutation,
 } from "../../../../store/api";
@@ -59,6 +60,8 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
   });
   const [acceptGift, { isLoading: accepting }] = useAcceptGiftMutation();
   const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();
+  const [createCheckoutSession, { isLoading: isRedirecting }] =
+    useCreateCheckoutSessionMutation();
   const handleViewSalon = () => {
     if (!salonId) return;
 
@@ -90,26 +93,73 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
     ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
   const vmbFee = totalPrice * 0.1;
-  const handleAccept = async () => {
-    if (!giftId) return;
+  // const handleAccept = async () => {
+  //   if (!giftId) return;
 
-    const loadingToast = toastLoading("Processing your payment...");
+  //   const loadingToast = toastLoading("Processing your payment...");
+  //   try {
+  //     await acceptGift({
+  //       id: giftId,
+  //       data: gift,
+  //     }).unwrap();
+
+  //     toastDismiss(loadingToast);
+  //     toastSuccess("Payment successful! Treat accepted.");
+  //     closeModal();
+  //     setTimeout(() => setShowSuccessModal(true), 300);
+  //   } catch (err) {
+  //     toastDismiss(loadingToast);
+  //     toastError(err?.data?.message || "Failed to accept gift");
+  //   }
+  // };
+  const handleAccept = async () => {
+    console.log("Info==>", info);
+    if (!giftId || !salonId || !info.services || info.services.length === 0) {
+      toastError("Invalid gift request data");
+      return;
+    }
+
+    const serviceTotal = info.services.reduce(
+      (acc, s) => acc + (s.price || 0),
+      0
+    );
+    const vmbFee = serviceTotal * 0.1;
+    const totalAmount = serviceTotal + vmbFee;
+
+    const serviceIds = info.gift.services.map((s) => s._id).filter(Boolean);
+
+    if (serviceIds.length === 0) {
+      toastError("No valid services found");
+      return;
+    }
+
+    const payload = {
+      salonId,
+      services: serviceIds,
+      clientName: info.sender.name || "Gift Recipient",
+      paymentAmount: Number(totalAmount.toFixed(2)),
+      giftId: giftId,
+      receiverEmail: info.gift.receiverEmail,
+    };
+
+    const loadingToast = toastLoading("Redirecting to secure payment...");
+
     try {
-      await acceptGift({
-        id: giftId,
-        data: gift,
-      }).unwrap();
+      const response = await createCheckoutSession(payload).unwrap();
 
       toastDismiss(loadingToast);
-      toastSuccess("Payment successful! Treat accepted.");
-      closeModal();
-      setTimeout(() => setShowSuccessModal(true), 300);
+
+      if (response.success && response.data?.url) {
+        window.location.href = response.data.url;
+      } else {
+        toastError("Failed to start payment");
+      }
     } catch (err) {
       toastDismiss(loadingToast);
-      toastError(err?.data?.message || "Failed to accept gift");
+      toastError(err?.data?.message || "Payment could not be initiated");
+      console.error("Stripe checkout error:", err);
     }
   };
-
   const handleDecline = async () => {
     if (!giftId) return;
 
@@ -235,9 +285,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
 
                       <div className="flex flex-col items-end mt-3">
                         <p className="text-[#FF92A5] font-bold text-[18px] text-right sm:text-left">
-                          VMB FEE: ${vmbFee}
-                        </p>
-                        <p className="text-[#FF92A5] font-bold text-[18px] text-right sm:text-left">
                           Total Price: ${totalPrice + vmbFee}
                         </p>
                       </div>
@@ -287,11 +334,13 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         leftIcon={<FaCheck className="text-[14px]" />}
                         variant="outline-dark"
                         size="custom"
-                        disabled={accepting}
+                        // disabled={accepting}
+                        disabled={isRedirecting}
                         onClick={handleAccept}
                         className="text-[14px] font-medium px-5 py-[15px]"
                       >
-                        {accepting ? "Processing..." : "Accept & Pay"}
+                        {/* {accepting ? "Processing..." : "Accept & Pay"} */}
+                        {isRedirecting ? "Redirecting..." : "Accept & Pay"}
                       </AppButton>
                     </div>
                   )}
