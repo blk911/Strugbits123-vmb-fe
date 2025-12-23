@@ -792,7 +792,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   type="submit"
                   variant="primary"
                   className="w-full py-3 text-[16px] font-medium"
-                  disabled={isSubmitting || uploading}
+                  disabled={isSubmitting}
                   onClick={handleSubmit(onSubmit)}
                 >
                   {isSubmitting

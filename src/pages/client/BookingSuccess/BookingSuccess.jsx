@@ -1,16 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
 import successGif from "../../../assets/successGif.gif";
 
 import { useCreateAppointmentAfterPaymentMutation } from "../../../store/api";
 import { toastError } from "../../../utils/toast";
-
+import { FaRegClock, FaRegCalendarAlt } from "react-icons/fa";
+import AppButton from "../../../components/common/site/AppButton";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
 export default function BookingSuccess() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const sessionId = searchParams.get("session_id");
 
+  const hasCalledRef = useRef(false);
   const [createAppointmentAfterPayment, { isLoading }] =
     useCreateAppointmentAfterPaymentMutation();
 
@@ -18,12 +22,9 @@ export default function BookingSuccess() {
   const [details, setDetails] = useState(null);
 
   useEffect(() => {
-    if (!sessionId) {
-      setStatus("error");
-      toastError("Invalid payment session");
-      return;
-    }
+    if (!sessionId || hasCalledRef.current) return;
 
+    hasCalledRef.current = true;
     const verifyPayment = async () => {
       try {
         const response = await createAppointmentAfterPayment({
@@ -44,9 +45,9 @@ export default function BookingSuccess() {
 
   if (status === "verifying") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 mx-auto mb-6"></div>
+      <div className="min-h-screen bg-[#FFF5F7] flex items-center justify-center">
+        <div className=" flex flex-col items-center justify-center gap-2 text-center">
+          <LoadingIndicator />
           <p className="text-xl font-medium text-gray-700">
             Verifying your payment...
           </p>
@@ -57,7 +58,7 @@ export default function BookingSuccess() {
 
   if (status === "error") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[#FFF5F7] flex items-center justify-center px-4">
         <div className="bg-white rounded-2xl shadow-xl p-10 max-w-md w-full text-center">
           <div className="text-red-500 text-6xl mb-4">✕</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-3">
@@ -89,134 +90,144 @@ export default function BookingSuccess() {
     : totalAmount + 2.5;
   const salon = details?.Salon || {};
   const appointmentDate = details?.appointmentDate;
-  // ? format(new Date(details.appointmentDate), "EEEE, MMMM d, yyyy")
-  //   convertTo12Hour(details.appointmentDate)
-  // : null;
   const appointmentTime = details?.startTime || null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50 py-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-10 text-center">
+    <div className="min-h-screen bg-[#FFF5F7] py-12 px-4 font-[Poppins]">
+      <div className="max-w-[547px] mx-auto">
+        <div className="bg-white flex flex-col gap-4 p-6 rounded-3xl shadow-2xl overflow-hidden">
+          <div className="py-2 text-center">
             <img
               src={successGif}
               alt="Success"
-              className="w-32 h-32 mx-auto mb-6 rounded-full border-4 border-white shadow-lg"
+              className="w-32 h-32 mx-auto mb-6"
             />
-            <h1 className="text-4xl font-bold text-white mb-3">
-              {isGift ? "Treat Paid Successfully! 🎁" : "Appointment Booked!"}
+            <h1 className="text-[24px] font-bold text-[#581838] mb-3">
+              {isGift ? "Treat Paid Successfully!" : "Appointment Booked"}
             </h1>
-            <p className="text-pink-100 text-lg">
+            <p className="text-[#4B5563] text-[12px]">
               {isGift
                 ? "Your friend will be thrilled! The treat is now confirmed."
                 : "Your booking is confirmed. We’ve sent details to the salon."}
             </p>
           </div>
+          <div className="flex justify-center items-center ">
+            <div className="flex flex-col relative max-w-[467px] w-full bg-[#FF92A533] border border-[#9CA3AF4D] rounded-[10px] px-[20px] py-[15px]">
+              <div className="absolute -left-[10px] top-1/2 -translate-y-1/2 w-[20px] h-[20px] bg-white rounded-full" />
+              <div className="absolute -right-[10px] top-1/2 -translate-y-1/2 w-[20px] h-[20px] bg-white rounded-full" />
+              {/* <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 px-[20px] pointer-events-none">
+                <div className="border-t border-dashed border-[#00000033]" />
+              </div> */}
+              <div className="min-h-[237px]">
+                <div className="flex gap-1 items-center mb-4">
+                  <img
+                    src={salon.image || salon.profilePic}
+                    alt={salon.name}
+                    className="w-[60px] h-[60px] rounded-[10px] border border-[#FFFFFFB2] shadow-[0_4px_6px_#0000000D]"
+                  />
 
-          <div className="p-10">
-            <div className="flex items-center gap-5 mb-8 p-6 bg-gray-50 rounded-2xl">
-              <img
-                src={salon.image || salon.profilePic || "/default-salon.jpg"}
-                alt={salon.name}
-                className="w-20 h-20 rounded-xl object-cover shadow-md"
-              />
-              <div>
-                <h3 className="text-2xl font-bold text-gray-800">
-                  {salon.name || salon.salonName}
-                </h3>
-                <p className="text-gray-600">
-                  {salon.description || "Premium Beauty Services"}
+                  <div className="ml-1">
+                    <p className="text-[#4B5563] text-[14px] sm:text-[16px] md:text-[20px] font-semibold">
+                      {salon.name}
+                    </p>
+                    <p className="text-[#4B5563] text-[12px]">
+                      {salon.description || "Premium Beauty Services"}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-black text-[14px] font-medium mb-3">
+                  Booked Services
                 </p>
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                Services Booked
-              </h3>
-              <div className="space-y-4">
-                {services.map((service, i) => (
-                  <div
-                    key={i}
-                    className="flex justify-between items-center p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl"
-                  >
+                {services.map((service) => (
+                  <div className="bg-white rounded-[10px] p-[10px] flex justify-between items-center mb-4">
                     <div>
-                      <p className="font-medium text-gray-800">
+                      <p className="text-[#581838] text-[14px] font-medium">
                         {service.name || service.serviceName}
                       </p>
-                      {service.duration && (
-                        <p className="text-sm text-gray-600">
-                          {service.duration} min
-                        </p>
-                      )}
+                      <div className="flex items-center gap-2 text-[#00000080] text-[12px]">
+                        <FaRegClock />
+                        <span> {service.duration} min</span>
+                      </div>
                     </div>
-                    <p className="text-xl font-bold text-pink-600">
+
+                    <p className="text-[#581838] text-[16px] font-semibold">
                       ${service.price || service.servicePrice}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
+              <div className="border-t border-dashed border-[#00000033] pt-3">
+                {!isGift && (appointmentDate || appointmentTime) && (
+                  <>
+                    <p className="text-black text-[14px]  mb-3 font-medium   ">
+                      Appointment Details
+                    </p>
+                    <div className="border border-[#00000033] rounded-[10px] p-[15px] flex gap-[20px] mb-4">
+                      <div className="w-1/2">
+                        <p className="text-black text-[12px] font-medium mb-1">
+                          Booking Date
+                        </p>
+                        <div className="flex items-center gap-2 text-[#00000080] text-[12px]">
+                          <FaRegCalendarAlt />
+                          <span>{appointmentDate}</span>
+                        </div>
+                      </div>
 
-            {!isGift && (appointmentDate || appointmentTime) && (
-              <div className="mb-8 p-6 bg-blue-50 rounded-2xl border border-blue-200">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                  Appointment Details
-                </h3>
-                {appointmentDate && (
-                  <p className="text-lg text-gray-700">📅 {appointmentDate}</p>
+                      <div className="w-1/2">
+                        <p className="text-black text-[12px] font-medium mb-1">
+                          Booking Time
+                        </p>
+                        <div className="flex items-center gap-2 text-[#00000080] text-[12px]">
+                          <FaRegClock />
+                          <span>{appointmentTime}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 )}
-                {appointmentTime && (
-                  <p className="text-lg text-gray-700 mt-2">
-                    🕒 {appointmentTime}
+
+                <div className="border-2 bg-white border-dashed border-[#581838] rounded-[10px] p-[9px] space-y-[10px]">
+                  <p className="text-black text-[14px] font-medium">
+                    Payment Summary
                   </p>
-                )}
-              </div>
-            )}
 
-            <div className="bg-gray-900 text-white rounded-2xl p-6">
-              <h3 className="text-xl font-semibold mb-5">Payment Summary</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>
-                    $
-                    {services
-                      .reduce(
-                        (sum, s) =>
-                          sum + (Number(s.price || s.servicePrice) || 0),
-                        0
-                      )
-                      .toFixed(2)}
-                  </span>
-                </div>
-                {/* <div className="flex justify-between text-pink-300">
-                  <span>VMB {isGift ? "Gift Fee (10%)" : "Platform Fee"}</span>
-                  <span>
-                    ${" "}
-                    {isGift ? (totalAmount * 0.1).toFixed(2) : (2.5).toFixed(2)}
-                  </span>
-                </div> */}
-                <div className="border-t border-gray-700 pt-4">
-                  <div className="flex justify-between text-2xl font-bold">
-                    <span>Total Paid</span>
-                    <span className="text-pink-400">
+                  <div className="flex justify-between text-[12px] font-medium text-[#00000080]">
+                    <span>Sub Total:</span>
+                    <span>
+                      {" "}
+                      {services
+                        .reduce(
+                          (sum, s) =>
+                            sum + (Number(s.price || s.servicePrice) || 0),
+                          0
+                        )
+                        .toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-black text-[14px] font-medium">
+                      Total Paid:
+                    </span>
+                    <span className="text-[#FF92A5] text-[16px] font-semibold">
                       ${amountPaid.toFixed(2)}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="mt-10 text-center">
-              <button
-                onClick={() => navigate("/client")}
-                className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-lg py-4 px-10 rounded-full shadow-lg transition transform hover:scale-105"
-              >
-                Back to Dashboard
-              </button>
-            </div>
+          <div className="text-center px-[20px]">
+            <AppButton
+              onClick={() => navigate("/client")}
+              variant="outline-dark"
+              leftIcon={<FaArrowLeftLong size={16} />}
+              className="text-[12px] sm:text-[16px]"
+            >
+              Back to Dashboard
+            </AppButton>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CellRenderers } from "./CellRenderers";
 import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
@@ -30,6 +30,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     data: requestedData,
     isLoading: loadingRequested,
     isFetching: fetchingRequested,
+    refetch: refetchRequested,
   } = useRequestedGiftsQuery({
     page: myRequestsPage,
     limit: PAGE_SIZE,
@@ -41,12 +42,18 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     data: receivedData,
     isLoading: loadingReceived,
     isFetching: fetchingReceived,
+    refetch: refetchReceived,
   } = useRecievedGiftsQuery({
     page: receivedRequestsPage,
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
   });
+
+  useEffect(() => {
+    refetchRequested();
+    refetchReceived();
+  }, [refetchReceived, refetchRequested]);
   const myRequestsData = (requestedData?.data?.items || []).map((gift) => ({
     id: gift._id,
     payersEmail: gift.receiverEmail,
