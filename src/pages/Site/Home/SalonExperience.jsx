@@ -1,6 +1,6 @@
 import React from "react";
 import pic1 from "../../../assets/salon-experience.png";
-import pic2 from "../../../assets/dashboard-1.png";
+import pic2 from "../../../assets/admin_dashboard.png";
 import Button from "../../../components/common/site/Button";
 
 function SalonExperience() {
@@ -23,7 +23,7 @@ function SalonExperience() {
         backgroundImage: `url(${pic1})`,
       }}
     >
-      <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-end items-center lg:gap-x-[50px] xl:gap-x-[145px]">
+      <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-center items-center lg:gap-x-[50px] xl:gap-x-[145px]">
         <div className="flex flex-col w-full lg:w-[506px]">
           <h4
             className="max-xl:text-[35px] xl:text-[40px] text-[#FFFFFF] mb-[10px]"

@@ -17,39 +17,6 @@ import { formatTimeAgo } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
-const renderCardSection = ({
-  title,
-  icon,
-  items,
-  isLoading,
-  emptyMessage,
-  CardComponent,
-  navigateTo,
-  getCardProps,
-}) => (
-  <SectionWrapper className="p-4 flex flex-col gap-4">
-    <Header icon={icon} title={title} onViewAll={() => navigate(navigateTo)} />
-
-    {isLoading ? (
-      <div className="flex justify-center py-6">
-        <LoadingIndicator size="sm" />
-      </div>
-    ) : items.length === 0 ? (
-      <EmptyState message={emptyMessage} />
-    ) : (
-      <div className="flex flex-col gap-4">
-        {items.slice(0, 2).map((item) => (
-          <CardComponent
-            key={item._id}
-            {...getCardProps(item)}
-            isLoading={false}
-          />
-        ))}
-      </div>
-    )}
-  </SectionWrapper>
-);
-
 export default function MainSection() {
   const navigate = useNavigate();
 
@@ -92,7 +59,42 @@ export default function MainSection() {
     timeAgo: formatTimeAgo(item.appointmentDate || item.createdAt),
     data: item,
   });
+  const renderCardSection = ({
+    title,
+    icon,
+    items,
+    isLoading,
+    emptyMessage,
+    CardComponent,
+    navigateTo,
+    getCardProps,
+  }) => (
+    <SectionWrapper className="p-4 flex flex-col gap-4">
+      <Header
+        icon={icon}
+        title={title}
+        onViewAll={() => navigate(navigateTo)}
+      />
 
+      {isLoading ? (
+        <div className="flex justify-center py-6">
+          <LoadingIndicator size="sm" />
+        </div>
+      ) : items.length === 0 ? (
+        <EmptyState message={emptyMessage} />
+      ) : (
+        <div className="flex flex-col gap-4">
+          {items.slice(0, 2).map((item) => (
+            <CardComponent
+              key={item._id}
+              {...getCardProps(item)}
+              isLoading={false}
+            />
+          ))}
+        </div>
+      )}
+    </SectionWrapper>
+  );
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <div className="lg:col-span-3 flex flex-col gap-6">

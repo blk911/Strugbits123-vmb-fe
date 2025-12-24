@@ -3,11 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import img1 from "../../../assets/salon-1.png";
-import img2 from "../../../assets/salon-2.png";
-import img3 from "../../../assets/salon-3.png";
-import img4 from "../../../assets/salon-4.png";
-import img5 from "../../../assets/salon-5.png";
+import { useGetAllSalonsQuery } from "../../../store/api";
 
 function Arrow({ onClick, direction }) {
   const posClass = direction === "left" ? "left-[10%]" : "right-[10%]";
@@ -49,36 +45,26 @@ function Arrow({ onClick, direction }) {
   );
 }
 
-function SalonCard({ img }) {
+function SalonCard({ salon }) {
+  const imageUrl =
+    salon.profilePic || "https://via.placeholder.com/340x200?text=No+Image";
+
   return (
-    <div className="bg-white rounded-[16px] border border-[#F3EAF0] overflow-hidden w-auto xl:max-w-[340px]  flex flex-col">
-      <img src={img} alt="Salon" className="w-full h-[200px] object-cover" />
-      <div className="p-[16px] flex flex-col ">
+    <div className="bg-white rounded-[16px] border border-[#F3EAF0] overflow-hidden w-auto xl:max-w-[340px] flex flex-col">
+      <img
+        src={imageUrl}
+        alt={salon.salonName}
+        className="w-full h-[200px] object-cover"
+      />
+      <div className="p-[16px] flex flex-col">
         <span
-          className="text-[#581838] text-[22px] font-semibold  "
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-            fontStyle: "medium",
-            letterSpacing: "0%",
-          }}
+          className="text-[#581838] text-[22px] font-semibold"
+          style={{ fontFamily: "Poppins, sans-serif", fontWeight: 500 }}
         >
-          Salon Name
+          {salon.salonName || "Unnamed Salon"}
         </span>
-        <div
-          className="flex mt-[5px] mb-[10px] gap-x-4 text-[16px] font-[Poppins] text-[#777777]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-            fontStyle: "normal",
-            letterSpacing: "0%",
-          }}
-        >
-          <span>Service #1</span>
-          <span>Service #2</span>
-          <span>Service #3</span>
-        </div>
-        <div className="flex items-center gap-2 text-[#777] text-[15px] font-[Poppins]">
+
+        <div className="flex items-center gap-2 text-[#777] text-[15px] mt-3">
           <svg
             width="16"
             height="16"
@@ -86,7 +72,7 @@ function SalonCard({ img }) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g clip-path="url(#clip0_86_333)">
+            <g clipPath="url(#clip0_86_333)">
               <path
                 d="M5.9786 0C9.06408 0.0049819 11.5988 2.24248 11.9597 5.22352C12.1407 6.72183 11.6985 8.06881 10.9011 9.29997C9.54794 11.3893 8.14746 13.4493 6.75896 15.5161C6.32241 16.1663 5.67705 16.1607 5.23735 15.5055C3.85516 13.4468 2.46982 11.3899 1.10971 9.3174C0.429656 8.28117 0.0050953 7.13969 4.85119e-05 5.89234C-0.0119376 2.98603 2.19856 0.483867 5.11308 0.0548009C5.41714 0.0099638 5.71995 0.00809559 5.97797 0H5.9786ZM6.02339 0.772818C5.67642 0.771572 5.33198 0.794613 4.98817 0.851905C2.73415 1.23115 0.849801 3.38084 0.784193 5.6364C0.750758 6.78722 1.08637 7.8384 1.70334 8.78808C3.05966 10.8749 4.45636 12.9361 5.83035 15.0111C6.00762 15.2789 6.09089 15.1319 6.20066 14.9669C7.50147 13.0177 8.80732 11.0717 10.105 9.11999C10.7005 8.22388 11.1459 7.25676 11.2096 6.17569C11.3831 3.23575 9.01614 0.785272 6.02339 0.772818Z"
                 fill="#FFA1C3"
@@ -104,15 +90,12 @@ function SalonCard({ img }) {
           </svg>
 
           <span
-            className="lg:text-[12px] xl:text-[14px] font-normal text-center"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 400,
-              fontStyle: "normal",
-              letterSpacing: "0%",
-            }}
+            className="lg:text-[12px] xl:text-[14px] font-normal"
+            style={{ fontFamily: "Inter, sans-serif" }}
           >
-            Address: lorem st, 785, ipsum, LI.
+            {salon.salonAddress
+              ? `${salon.salonAddress}, ${salon.salonZipcode}`
+              : "Address not available"}
           </span>
         </div>
       </div>
@@ -120,19 +103,21 @@ function SalonCard({ img }) {
   );
 }
 
-const images = [img1, img2, img3, img4, img5, img2, img3];
-
 export default function SalonSlider() {
+  const { data, isLoading, isError, error } = useGetAllSalonsQuery();
+
+  const salons = data?.data?.items || [];
+
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: salons.length > 1,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "0px",
-    nextArrow: <Arrow direction="right" />,
-    prevArrow: <Arrow direction="left" />,
+    nextArrow: salons.length > 5 ? <Arrow direction="right" /> : null,
+    prevArrow: salons.length > 5 ? <Arrow direction="left" /> : null,
     responsive: [
       { breakpoint: 1694, settings: { slidesToShow: 4, centerMode: false } },
       { breakpoint: 1412, settings: { slidesToShow: 3, centerMode: false } },
@@ -140,6 +125,30 @@ export default function SalonSlider() {
       { breakpoint: 600, settings: { slidesToShow: 1, centerMode: false } },
     ],
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-20 text-center text-[#581838] text-2xl">
+        Loading salons...
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full py-20 text-center text-red-600 text-xl">
+        Error loading salons: {error?.message || "Something went wrong"}
+      </div>
+    );
+  }
+
+  if (salons.length === 0) {
+    return (
+      <div className="w-full py-20 text-center text-[#777777] text-2xl font-medium">
+        No Salons to Show
+      </div>
+    );
+  }
 
   return (
     <div className="w-full px-[10px] py-8 relative">
@@ -159,10 +168,9 @@ export default function SalonSlider() {
       />
 
       <Slider {...settings}>
-        {images.map((img, idx) => (
-          <div key={idx} className="px-2">
-            {" "}
-            <SalonCard img={img} />
+        {salons.map((salon) => (
+          <div key={salon._id} className="px-2">
+            <SalonCard salon={salon} />
           </div>
         ))}
       </Slider>

@@ -1,6 +1,6 @@
 import { FaChartLine, FaCalendarDays } from "react-icons/fa6";
-import { PiOfficeChairFill } from "react-icons/pi";
-import { LiaDollarSignSolid } from "react-icons/lia";
+import { MdPayments } from "react-icons/md";
+
 import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
@@ -31,6 +31,11 @@ export const menus = {
       name: "Appointments",
       path: "/appointments",
       icon: <FaCalendarDays className="h-5 w-5" />,
+    },
+    {
+      name: "Payouts",
+      path: "/payouts",
+      icon: <MdPayments className="h-5 w-5" />,
     },
   ],
   salonOwner: [

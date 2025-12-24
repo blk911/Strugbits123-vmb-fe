@@ -7,7 +7,10 @@ import * as z from "zod";
 import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import successGif from "../../../../assets/successGif.gif";
-import { useCreateAppointmentMutation } from "../../../../store/api";
+import {
+  useCreateAppointmentMutation,
+  useCreateCheckoutSessionMutation,
+} from "../../../../store/api";
 import {
   toastDismiss,
   toastError,
@@ -51,8 +54,10 @@ export default function BookAppointmentModal({
 
   const salon = initialData?.salon;
   const prefilledService = initialData?.service;
-  const [createAppointment, { isLoading: booking }] =
-    useCreateAppointmentMutation();
+  const [createCheckoutSession, { isLoading: isRedirecting }] =
+    useCreateCheckoutSessionMutation();
+  // const [createAppointment, { isLoading: booking }] =
+  //   useCreateAppointmentMutation();
   const {
     control,
     handleSubmit,
@@ -103,6 +108,7 @@ export default function BookAppointmentModal({
     const svc = getServiceByName(name);
     return sum + (svc ? Number(svc.servicePrice) : 0);
   }, 0);
+  const total = totalPrice + 2.5;
   const handleConfirm = async (data) => {
     if (!salon?._id) {
       toastError("Salon not found");
@@ -123,21 +129,36 @@ export default function BookAppointmentModal({
       clientName: data.fullName,
       appointmentDate: data.appointmentDate,
       startTime: convertTo12Hour(data.appointmentTime),
-      payment: totalPrice,
+      paymentAmount: total,
     };
 
     const loadingToast = toastLoading("Creating your appointment...");
 
+    // try {
+    //   await createAppointment(payload).unwrap();
+    //   toastDismiss(loadingToast);
+    //   toastSuccess("Appointment booked successfully!");
+    //   closeModal();
+    //   setTimeout(() => setShowSuccessModal(true), 300);
+    // } catch (err) {
+    //   toastDismiss(loadingToast);
+    //   toastError(err?.data?.message || "Failed to book appointment");
+    //   console.error("Booking failed:", err);
+    // }
     try {
-      await createAppointment(payload).unwrap();
+      const response = await createCheckoutSession(payload).unwrap();
+
       toastDismiss(loadingToast);
-      toastSuccess("Appointment booked successfully!");
-      closeModal();
-      setTimeout(() => setShowSuccessModal(true), 300);
+
+      if (response.success && response.data?.url) {
+        window.location.href = response.data.url;
+      } else {
+        toastError("Failed to initialize payment");
+      }
     } catch (err) {
       toastDismiss(loadingToast);
-      toastError(err?.data?.message || "Failed to book appointment");
-      console.error("Booking failed:", err);
+      toastError(err?.data?.message || "Payment failed. Please try again.");
+      console.error("Checkout error:", err);
     }
   };
 
@@ -311,11 +332,9 @@ export default function BookAppointmentModal({
                             </div>
                           );
                         })}
+
                         <div className="flex justify-end font-bold text-[#581838] mt-3">
-                          VMB FEE: $2.50
-                        </div>
-                        <div className="flex justify-end font-bold text-[#581838] mt-3">
-                          Total: ${(totalPrice + 2.5).toFixed(2)}
+                          Total: ${total.toFixed(2)}
                         </div>
                       </div>
                     )}
@@ -394,10 +413,12 @@ export default function BookAppointmentModal({
                       type="submit"
                       variant="primary"
                       size="custom"
-                      disabled={!isValid || booking}
+                      // disabled={!isValid || booking}
+                      disabled={!isValid || isRedirecting}
                       className="text-[16px] py-3 w-full"
                     >
-                      {booking ? "Booking..." : "Confirm & Pay"}
+                      {/* {booking ? "Booking..." : "Confirm & Pay"} */}
+                      {isRedirecting ? "Redirecting..." : "Confirm & Pay"}
                     </AppButton>
                   </form>
                 </Dialog.Panel>

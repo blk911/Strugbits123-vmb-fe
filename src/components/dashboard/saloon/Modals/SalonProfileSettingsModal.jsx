@@ -45,53 +45,50 @@ const days = [
   "Sunday",
 ];
 
-const salonProfileSchema = z
-  .object({
-    fullName: z
-      .string()
-      .min(2, "Full name must be at least 2 characters")
-      .regex(/^[a-zA-Z\s]+$/, "Invalid name"),
-    email: z.string().email("Invalid email address"),
-    salonName: z
-      .string()
-      .min(2, "Salon name is required")
-      .regex(/^[a-zA-Z\s]+$/, "Invalid salon name"),
-    address: z
-      .string()
-      .min(5, "Address is required")
-      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
-    zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
-    phone: z
-      .string()
-      .regex(/^\d{10,15}$/, "Invalid phone number")
-      .optional()
-      .or(z.literal("")),
-    description: z
-      .string()
-      .min(10, "Description must be at least 10 characters"),
-    startTime: z
-      .string()
-      .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
-    endTime: z
-      .string()
-      .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
-    selectedDays: z.array(z.string()).min(1, "Select at least one working day"),
-    logo: z.string().url().optional().or(z.literal("")),
-    licenseDocument: z.string().url().optional().or(z.literal("")),
-    salonPhotos: z
-      .array(z.object({ url: z.string().url(), name: z.string() }))
-      .min(1, "At least one salon photo is required"),
-  })
-  .refine(
-    (data) => {
-      if (!data.startTime || !data.endTime) return true;
-      return data.endTime > data.startTime;
-    },
-    {
-      message: "End time must be after start time",
-      path: ["endTime"],
-    }
-  );
+const salonProfileSchema = z.object({
+  fullName: z
+    .string()
+    .min(2, "Full name must be at least 2 characters")
+    .regex(/^[a-zA-Z\s]+$/, "Invalid name"),
+  email: z.string().email("Invalid email address"),
+  salonName: z
+    .string()
+    .min(2, "Salon name is required")
+    .regex(/^[a-zA-Z\s]+$/, "Invalid salon name"),
+  address: z
+    .string()
+    .min(5, "Address is required")
+    .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
+  zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
+  phone: z
+    .string()
+    .regex(/^\d{10,15}$/, "Invalid phone number")
+    .optional()
+    .or(z.literal("")),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  startTime: z
+    .string()
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+  endTime: z
+    .string()
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+  selectedDays: z.array(z.string()).min(1, "Select at least one working day"),
+  logo: z.string().url().optional().or(z.literal("")),
+  licenseDocument: z.string().url().optional().or(z.literal("")),
+  salonPhotos: z
+    .array(z.object({ url: z.string().url(), name: z.string() }))
+    .min(1, "At least one salon photo is required"),
+});
+// .refine(
+//   (data) => {
+//     if (!data.startTime || !data.endTime) return true;
+//     return data.endTime > data.startTime;
+//   },
+//   {
+//     message: "End time must be after start time",
+//     path: ["endTime"],
+//   }
+// );
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
@@ -278,35 +275,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
       shouldValidate: true,
     });
   };
-  // const onSubmit = async (data) => {
-  //   try {
-  //     const startTime = convertTo12Hour(data.startTime);
-  //     const endTime = convertTo12Hour(data.endTime);
-  //     const payload = {
-  //       name: data.fullName,
-  //       email: data.email,
-  //       phoneNumber: data.phone || null,
-  //       salonName: data.salonName,
-  //       salonAddress: data.address,
-  //       zipcode: data.zipcode,
-  //       description: data.description,
-  //       startTime: startTime,
-  //       endTime: endTime,
-  //       workingDays: data.selectedDays,
 
-  //       profilePic: data.logo || null,
-  //       licenseDocument: data.licenseDocument || null,
-  //       salonPhotos: data.salonPhotos?.map((p) => p.url) || [],
-  //     };
-
-  //     const res = await updateMe(payload).unwrap();
-  //     dispatch(setUser(res.data));
-  //     toast.success(res?.message || "Profile updated successfully!");
-  //     closeModal();
-  //   } catch (err) {
-  //     toast.error(err?.data?.message || "Failed to update profile.");
-  //   }
-  // };
   const onSubmit = async (data) => {
     const startTime = convertTo12Hour(data.startTime);
     const endTime = convertTo12Hour(data.endTime);
@@ -823,7 +792,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   type="submit"
                   variant="primary"
                   className="w-full py-3 text-[16px] font-medium"
-                  disabled={isSubmitting || uploading}
+                  disabled={isSubmitting}
                   onClick={handleSubmit(onSubmit)}
                 >
                   {isSubmitting

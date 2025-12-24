@@ -1,7 +1,7 @@
 import React from "react";
 import SalonSlider from "../../../components/common/site/Slider";
 
-function  TopSalons() {
+function TopSalons() {
   return (
     <div className="w-full flex flex-col items-center sm:mt-[100px] sm:mb-[150px] mt-[50px] px-[10px]">
       <h3
@@ -11,7 +11,7 @@ function  TopSalons() {
           fontWeight: 600,
         }}
       >
-        Top Salons
+        Salons
       </h3>
       <SalonSlider />
     </div>

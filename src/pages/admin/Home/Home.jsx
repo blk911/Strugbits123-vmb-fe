@@ -4,7 +4,7 @@ import PendingRequestsSection from "../../../components/dashboard/admin/Home/Pen
 
 function Home() {
   return (
-    <div className="flex flex-col  bg-[#EFEFEF] p-2 sm:p-7 font-[Poppins] gap-8">
+    <div className="flex flex-col  bg-[#EFEFEF] p-4 font-[Poppins] gap-8">
       <AdminStatsSection />
       <PendingRequestsSection />
     </div>

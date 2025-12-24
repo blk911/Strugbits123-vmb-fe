@@ -5,7 +5,7 @@ import pic3 from "../../../assets/logos/platform-logo-3.png";
 
 function Card({ img, title, desc }) {
   return (
-    <div className="max-xl:max-w-[274px] xl:w-[400px] flex flex-col justify-center items-center">
+    <div className="max-xl:max-w-[274px] xl:w-[360px] flex flex-col justify-center items-center">
       <img src={img} alt="" className="w-[60px] h-[60px]" />
       <span
         className="max-xl:text-[20px] xl:text-[25px] text-[#581838] mt-[24px] mb-[10px]"
