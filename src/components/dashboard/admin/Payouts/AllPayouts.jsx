@@ -12,6 +12,10 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
+import { useGetSalonByIdQuery } from "../../../../store/api";
 
 const PAGE_SIZE = 10;
 
@@ -22,7 +26,9 @@ export default function AllPayouts({
   const [activeTab, setActiveTab] = useState("All");
   const [page, setPage] = useState(1);
   const [processingId, setProcessingId] = useState(null);
-
+  const [selectedSalonId, setSelectedSalonId] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
 
@@ -47,13 +53,26 @@ export default function AllPayouts({
 
   const [markAsPaid] = useMarkAsPaidMutation();
 
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess: salonSuccess,
+  } = useGetSalonByIdQuery(selectedSalonId, {
+    skip: !selectedSalonId,
+  });
+  useEffect(() => {
+    if (salonSuccess && salonResponse?.data && selectedSalonId) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      toastDismiss();
+      navigate(`/salon/${selectedSalonId}`);
+    }
+  }, [salonSuccess, salonResponse, selectedSalonId, dispatch, navigate]);
   useEffect(() => {
     refetch();
   }, [refetch]);
 
   const payouts = payoutsData?.data?.items || [];
   const totalPages = payoutsData?.data?.pages || 1;
-
   const transformedData = payouts.map((payout) => ({
     id: payout._id,
     salonImage: payout.salon?.profilePic || "/default-salon.jpg",
@@ -178,7 +197,19 @@ export default function AllPayouts({
       },
     },
   ];
+  const handleRowClick = (row) => {
+    const payoutItem = payouts.find((p) => p._id === row.id);
+    if (!payoutItem?.salon?._id) {
+      toastError("Salon ID not available");
+      return;
+    }
 
+    const salonId = payoutItem.salon._id.toString();
+
+    toastLoading("Loading salon details...");
+
+    setSelectedSalonId(salonId);
+  };
   const handleMarkAsPaid = async (earningId) => {
     setProcessingId(earningId);
     const loadingToast = toastLoading("Marking payout as paid...");
@@ -231,7 +262,11 @@ export default function AllPayouts({
             </div>
           ) : (
             <>
-              <AdvancedTable data={transformedData} columns={columns} />
+              <AdvancedTable
+                data={transformedData}
+                columns={columns}
+                onRowClick={handleRowClick}
+              />
 
               {totalPages > 1 && (
                 <div className="mt-6 pt-6 border-t border-gray-200">

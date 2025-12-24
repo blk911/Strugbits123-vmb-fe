@@ -113,7 +113,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
   //   }
   // };
   const handleAccept = async () => {
-    console.log("Info==>", info);
     if (!giftId || !salonId || !info.services || info.services.length === 0) {
       toastError("Invalid gift request data");
       return;
