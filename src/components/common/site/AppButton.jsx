@@ -1,6 +1,4 @@
-import React from "react";
 import clsx from "clsx";
-import { FaGift, FaCheck, FaTimes, FaRegCalendarAlt } from "react-icons/fa";
 
 export default function AppButton({
   variant = "primary",
@@ -12,6 +10,7 @@ export default function AppButton({
   onClick,
   disabled = false,
   className = "",
+  rightIcon = null,
   ...props
 }) {
   const baseClasses =
@@ -89,6 +88,7 @@ export default function AppButton({
     >
       {leftIcon && <span>{leftIcon}</span>}
       {children}
+      {rightIcon && <span>{rightIcon}</span>}
     </button>
   );
 }

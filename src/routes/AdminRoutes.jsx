@@ -5,6 +5,7 @@ import {
   Home as AdminHome,
   AppointmentHistory,
   GiftHistory,
+  Payouts,
   SalonInvites,
   Salons,
 } from "../pages/admin";
@@ -26,6 +27,7 @@ export default function AdminRoutes() {
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/saloninvites" element={<SalonInvites />} />
+      <Route path="/payouts" element={<Payouts />} />
     </Route>
   );
 }

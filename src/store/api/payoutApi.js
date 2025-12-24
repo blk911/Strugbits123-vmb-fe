@@ -1,0 +1,35 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+
+export const payoutApi = createApi({
+  reducerPath: "payoutApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl:
+      import.meta.env.VITE_BACKEND_URL + "payout" || "http://localhost:5000/",
+    credentials: "include",
+  }),
+  tagTypes: ["Payout"],
+  endpoints: (builder) => ({
+    getAllPayouts: builder.query({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        status = "",
+      }) => ({
+        url: "/get-all-payouts",
+        params: { page, limit, sort, search, status: status || undefined },
+      }),
+      providesTags: ["Payout"],
+    }),
+    markAsPaid: builder.mutation({
+      query: (earningId) => ({
+        url: `/mark-as-paid/${earningId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Payout"],
+    }),
+  }),
+});
+
+export const { useGetAllPayoutsQuery, useMarkAsPaidMutation } = payoutApi;

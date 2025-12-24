@@ -10,6 +10,7 @@ import { inviteApi } from "./api/inviteApi";
 import { awsApi } from "./api/awsApi";
 import { paymentApi } from "./api/paymentApi";
 import { appointmentApi } from "./api/appointmentApi";
+import { payoutApi } from "./api/payoutApi";
 import authReducer from "./features/authSlice";
 import userReducer from "./features/userSlice";
 import selectedSalonReducer from "./features/selectedSalonSlice";
@@ -28,6 +29,7 @@ export const store = configureStore({
     [appointmentApi.reducerPath]: appointmentApi.reducer,
     [awsApi.reducerPath]: awsApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
+    [payoutApi.reducerPath]: payoutApi.reducer,
     role: roleReducer,
   },
 
@@ -41,5 +43,6 @@ export const store = configureStore({
       .concat(inviteApi.middleware)
       .concat(awsApi.middleware)
       .concat(appointmentApi.middleware)
-      .concat(paymentApi.middleware),
+      .concat(paymentApi.middleware)
+      .concat(payoutApi.middleware),
 });

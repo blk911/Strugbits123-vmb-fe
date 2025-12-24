@@ -65,7 +65,7 @@ export default function AdvancedTable({
               </span>
               <div className="flex items-center gap-3">
                 <img
-                  src={row.image}
+                  src={row.image || row.salonImage}
                   alt={row.salonName}
                   className="w-11 h-11 rounded-lg object-cover border border-gray-200 flex-shrink-0"
                 />

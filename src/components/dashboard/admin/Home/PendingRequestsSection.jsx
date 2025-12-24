@@ -220,7 +220,7 @@ export default function PendingRequestsSection() {
         ))}
       </div>
 
-      <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#E5E7EB]">
+      <div className="flex flex-col  sm:flex-row items-center justify-between gap-3 mt-4 pt-4 border-t border-[#E5E7EB]">
         <div className="text-sm text-[#6B7280]">
           Page <b>{currentPage}</b> of <b>{totalPages}</b>
         </div>
@@ -240,7 +240,7 @@ export default function PendingRequestsSection() {
           <AppButton
             variant="custom"
             size="custom"
-            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50"
+            className="px-4 py-2 text-[10px] sm:text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50 flex items-center gap-1 "
             rightIcon={<FiChevronRight size={16} />}
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages || isFetching}

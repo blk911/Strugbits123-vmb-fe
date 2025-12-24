@@ -34,34 +34,41 @@ export default function AdminStatsSection() {
     navigate(item?.path);
   };
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 font-[Poppins] items-start">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-[30px] font-bold text-[#581838]">
+    <div
+      className="grid gap-6 font-[Poppins] items-start
+    grid-cols-1
+    [@media(min-width:400px)]:grid-cols-[repeat(auto-fit,minmax(220px,1fr))]
+    lg:grid-cols-4"
+    >
+      <div className="flex flex-col w-full gap-2 ">
+        <h1 className="text-[26px] sm:text-[30px] font-bold text-[#581838]">
           Admin <br /> Dashboard
         </h1>
-        <p className="text-[14px] text-[#4B5563]">
+        <p className="text-[12px] sm:text-[14px] text-[#4B5563]">
           Manage your salon efficiently
         </p>
       </div>
       {items.map((item, idx) => (
         <div
-          className="bg-white shadow-[0_4px_6px_#0000000D] rounded-[10px] p-5 flex flex-col gap-1 "
+          className="min-w-0 bg-white shadow-[0_4px_6px_#0000000D] rounded-[10px] p-3 sm:p-5 flex flex-col gap-1 "
           key={idx}
         >
-          <div className="flex items-center bg-[#FF92A54D]  rounded-[8px] w-[45px] h-[45px] justify-center">
+          <div className="flex items-center bg-[#FF92A54D]  rounded-[8px] w-[35px] sm:w-[45px]  h-[35px] sm:h-[45px] justify-center">
             {item.icon}
           </div>
-          <p className="text-[14px] text-[#4B5563] my-2">{item.label}</p>
+          <p className="text-[12px] sm:text-[14px] text-[#4B5563] my-2">
+            {item.label}
+          </p>
           {isLoading ? (
             <LoadingIndicator size="sm" />
           ) : (
             <div className="flex items-start justify-between ">
-              <p className="text-[30px] font-bold text-[#581838]">
+              <p className="text-[26px] sm:text-[30px] font-bold text-[#581838]">
                 {item.value}
               </p>
 
               <span
-                className="text-[#64748B] text-[14px] self-center font-medium cursor-pointer pb-[2px] border-b border-[#64748B]"
+                className="text-[#64748B] text-[12px] sm:text-[14px] self-center font-medium cursor-pointer pb-[2px] border-b border-[#64748B]"
                 onClick={() => handleViewClick(item)}
               >
                 View All
