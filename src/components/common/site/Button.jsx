@@ -1,9 +1,17 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-export default function Button({ text, classes, textclass, navigateTo }) {
+import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
+export default function Button({ text, classes, textclass, navigateTo, type }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <button
-      onClick={() => navigate(navigateTo)}
+      onClick={() => {
+        // console.log("Type==>", type);
+        dispatch(setAuthType(type));
+        dispatch(setAuthMode("signup"));
+        navigate(navigateTo);
+      }}
       className={`animated-btn flex items-center gap-2 pl-[15px] pr-[5px] py-[8px]
         rounded-full border-2 border-[#7a2c3a] text-[#7a2c3a]
         font-medium text-lg relative  overflow-hidden

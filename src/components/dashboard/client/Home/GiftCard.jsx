@@ -115,7 +115,9 @@ export default function GiftCard({
         <div className="space-y-3 flex-1">
           {items.map((item, index) => {
             const userName =
-              title === "My Requests"
+              title === "Appointments"
+                ? item.salon?.salonName || "Unknown"
+                : title === "My Requests"
                 ? item.receiverEmail || "Unknown"
                 : title === "Received Requests"
                 ? `From: ${item.requesterId?.name || "Someone"}`
@@ -162,10 +164,12 @@ export default function GiftCard({
                   <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0">
                     <img
                       src={
-                        item.salonId?.profilePic ||
-                        item.requestedBy?.image ||
-                        item.salonImage ||
-                        defaultUser
+                        title === "Appointments"
+                          ? item?.salon?.salonImage
+                          : item.salonId?.profilePic ||
+                            item.requestedBy?.image ||
+                            item.salonImage ||
+                            defaultUser
                       }
                       alt="User"
                       className="w-full h-full object-cover"

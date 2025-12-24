@@ -62,7 +62,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
       const prefilledEmail = initialData.email || "";
       const prefilledMessage =
         initialData.message ||
-        `Hi! I’d love to gift you a special treat at ${salon.salonName}. Enjoy!`;
+        `Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕`;
       const prefilledServiceName = prefilledService?.serviceName;
       const defaultServices = prefilledServiceName
         ? [prefilledServiceName]
@@ -80,9 +80,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
       reset({
         selectedServices: [],
         email: "",
-        message: salon
-          ? `Hi! I’d love to gift you a special treat at ${salon.salonName}. Enjoy!`
-          : "",
+        message: "",
       });
       setIsSubmitted(false);
     }
@@ -356,7 +354,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                             {...field}
                             rows={3}
                             placeholder="Type your message..."
-                            className="w-full border border-[#E5E5E5] rounded-lg p-4 text-sm mt-1 resize-none focus:outline-none focus:border-[#FF92A5]"
+                            className="w-full border border-[#E5E5E5] rounded-lg p-4 text-sm text-[#00000080] mt-1 resize-none focus:outline-none focus:border-[#FF92A5]"
                           />
                         )}
                       />

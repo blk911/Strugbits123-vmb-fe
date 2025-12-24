@@ -39,8 +39,9 @@ export default function AuthForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const mode = useSelector((s) => s.auth.mode);
+  const type = useSelector((s) => s.auth.type);
   const [step, setStep] = useState("step1");
-  const [userType, setUserType] = useState("customer");
+  const [userType, setUserType] = useState(type || "customer");
   const [triggerGetMe, { isLoading: isFetchingMe }] = useLazyGetMeQuery();
   const [signIn] = useSignInMutation();
   const [signUpCustomer] = useSignUpCustomerMutation();
@@ -121,7 +122,7 @@ export default function AuthForm() {
       }
     );
     setStep("step1");
-    setUserType("customer");
+    // setUserType("customer");
   }, [mode, reset]);
 
   const goToStep2 = async () => {

@@ -67,6 +67,7 @@ function SalonCard({ img, label, title, listItems, btnText, classes = "" }) {
           text={btnText}
           classes={"!bg-white mt-[30px] w-max"}
           navigateTo={"register"}
+          type={label === "Salon Owners" ? "salon" : "customer"}
         />
       </div>
     </div>
