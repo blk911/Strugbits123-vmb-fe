@@ -127,8 +127,8 @@ export default function BookAppointmentModal({
       salonId: salon._id,
       services: serviceIds,
       clientName: data.fullName,
-      appointmentDate: data.appointmentDate,
-      startTime: convertTo12Hour(data.appointmentTime),
+      appointmentDate: data?.appointmentDate,
+      startTime: convertTo12Hour(data?.appointmentTime),
       paymentAmount: total,
     };
 

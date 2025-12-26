@@ -46,7 +46,18 @@ export default function StatusAppointmentModal({
     (s, it) => s + (it.price || 0),
     0
   );
+  const appointmentType = data?.appointment?.type;
+  let finalTotal;
 
+  if (appointmentType === "invite") {
+    finalTotal = totalPrice;
+  } else if (appointmentType === "booking") {
+    finalTotal = totalPrice + 2.5;
+  } else if (appointmentType === "gift") {
+    finalTotal = totalPrice + totalPrice * 0.1;
+  } else {
+    finalTotal = totalPrice;
+  }
   const copy = {
     hold: {
       title: "Appointment Request on Hold",
@@ -137,7 +148,7 @@ export default function StatusAppointmentModal({
 
       <div className="flex justify-end">
         <p className="text-[#FF92A5] font-bold text-[13px]">
-          Amount Paid: ${totalPrice}
+          Amount Paid: ${finalTotal.toFixed(2)}
         </p>
       </div>
     </div>

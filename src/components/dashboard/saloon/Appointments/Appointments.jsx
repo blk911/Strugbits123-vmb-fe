@@ -183,7 +183,6 @@ export default function Appointments({
 
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
-
   const transformedAppointments = appointments.map((appt) => ({
     id: appt._id,
     salonName: appt?.salon?.salonName || "Unknown Salon",
@@ -225,6 +224,8 @@ export default function Appointments({
         date: appt.appointmentDate,
         time: appt.startTime,
         message: appt.reschduleReason || "",
+        status: appt.status,
+        type: appt.type,
       },
     },
   }));

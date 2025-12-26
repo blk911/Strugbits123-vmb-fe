@@ -46,6 +46,8 @@ export default function AppointmentCard({
             date: data?.appointmentDate,
             time: data?.startTime,
             message: data?.reschduleReason || "",
+            status: data?.status,
+            type: data?.type,
           },
         });
       }}
