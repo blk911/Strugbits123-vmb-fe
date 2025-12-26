@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import logo from "../../../assets/logo.png";
 import Button from "../../common/site/Button";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <nav className="w-full h-[109px] bg-white py-[20px] px-[50px]">
       <div className="flex flex-row justify-between items-center">
-        <img src={logo} alt="Logo" className="h-[69px] w-[108px]" />
+        <img
+          src={logo}
+          alt="Logo"
+          className="h-[69px] w-[108px] cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <div className="lg:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}

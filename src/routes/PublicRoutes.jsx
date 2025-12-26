@@ -13,7 +13,7 @@ export default function PublicRoutes() {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/salonselected/:id" element={<SalonDetail />} />
+        <Route path="/salon-detail/:id" element={<SalonDetail />} />
       </Route>
       <Route>
         <Route path="/forget-password" element={<ForgetPassword />} />
