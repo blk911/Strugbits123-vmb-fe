@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedSalon } from "../../../store/features/selectedSalonSlice";
 import { toastLoading } from "../../../utils/toast";
+import { useUser } from "../../../hooks/useUser";
 
 function Arrow({ onClick, direction }) {
   const posClass = direction === "left" ? "left-[10%]" : "right-[10%]";
@@ -54,6 +55,7 @@ function SalonCard({ salon }) {
     salon.profilePic || "https://via.placeholder.com/340x200?text=No+Image";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useUser();
   const {
     data: salonResponse,
     isLoading: loadingSalon,
@@ -66,7 +68,11 @@ function SalonCard({ salon }) {
 
     if (isSuccess && salonResponse?.data) {
       dispatch(setSelectedSalon(salonResponse.data));
-      navigate(`/salonselected/${salon._id}`);
+      if (user.role === "customer") {
+        navigate(`/salon/${salon._id}`);
+      } else {
+        navigate(`/salonselected/${salon._id}`);
+      }
       return;
     }
 
