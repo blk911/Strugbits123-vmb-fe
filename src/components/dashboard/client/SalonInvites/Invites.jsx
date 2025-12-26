@@ -18,12 +18,24 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const sortValue = sortMap[sortOption] || "newest";
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
-  const [activeTab, setActiveTab] = useState("Pending");
+  const [activeTab, setActiveTab] = useState("All");
 
+  const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
   const [claimedPage, setClaimedPage] = useState(1);
   const [unclaimedPage, setUnclaimedPage] = useState(1);
 
+  const {
+    data: allData,
+    isLoading: loadingAll,
+    isFetching: fetchingAll,
+    refetch: refetchAll,
+  } = useGetUserInvitesQuery({
+    page: allPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+  });
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -63,24 +75,31 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   });
 
   useEffect(() => {
+    refetchAll();
     refetchClaimed();
     refetchPending();
     refetchUnclaimed();
-  }, [refetchClaimed, refetchPending, refetchUnclaimed]);
+  }, [refetchAll, refetchClaimed, refetchPending, refetchUnclaimed]);
   const currentData =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? allData
+      : activeTab === "Pending"
       ? pendingData
       : activeTab === "Claimed"
       ? claimedData
       : unclaimedData;
   const isLoading =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? loadingAll
+      : activeTab === "Pending"
       ? loadingPending
       : activeTab === "Claimed"
       ? loadingClaimed
       : loadingUnclaimed;
   const isFetching =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? fetchingAll
+      : activeTab === "Pending"
       ? fetchingPending
       : activeTab === "Claimed"
       ? fetchingClaimed
@@ -124,18 +143,21 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     data.map(({ _modalData, ...rest }) => rest);
 
   const tabs = {
+    All: cleanDataForTable(transformedData),
     Pending: cleanDataForTable(transformedData),
     Claimed: cleanDataForTable(transformedData),
     Unclaimed: cleanDataForTable(transformedData),
   };
 
   const originalRows = {
+    All: transformedData,
     Pending: transformedData,
     Claimed: transformedData,
     Unclaimed: transformedData,
   };
 
   const handleRowClick = {
+    All: (cleanRow) => openWithData(cleanRow, "All"),
     Pending: (cleanRow) => {
       const row = originalRows.Pending.find((r) => r.id === cleanRow.id);
       if (row?._modalData) openModal("exclusiveInvite", row._modalData);
@@ -149,15 +171,31 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       if (row?._modalData) openModal("offerExpired", row._modalData);
     },
   };
+  const openWithData = (cleanRow, tab) => {
+    const row = originalRows[tab].find((r) => r.id === cleanRow.id);
+    if (!row?._modalData) return;
 
+    const status = cleanRow.status;
+
+    if (status === "Pending") {
+      openModal("exclusiveInvite", row._modalData);
+    } else if (status === "Claimed") {
+      openModal("offerClaimed", row._modalData);
+    } else if (status === "Unclaimed") {
+      openModal("offerExpired", row._modalData);
+    }
+  };
   const handlePageChange = (page) => {
+    if (activeTab === "All") setAllPage(page);
     if (activeTab === "Pending") setPendingPage(page);
     if (activeTab === "Claimed") setClaimedPage(page);
     if (activeTab === "Unclaimed") setUnclaimedPage(page);
   };
 
   const currentPage =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? allPage
+      : activeTab === "Pending"
       ? pendingPage
       : activeTab === "Claimed"
       ? claimedPage
@@ -168,8 +206,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
         <TabbedTable
           tabs={tabs}
-          tabOrder={["Pending", "Claimed", "Unclaimed"]}
-          defaultTab="Pending"
+          tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}
+          defaultTab="All"
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
           setExternalActiveTab={setActiveTab}

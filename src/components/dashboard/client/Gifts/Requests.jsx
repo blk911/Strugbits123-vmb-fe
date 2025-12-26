@@ -82,10 +82,17 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
         0
       )}`,
       paidPrice: gift.isPaid
-        ? `$${gift.services.reduce(
-            (sum, s) => sum + Number(s.servicePrice || 0),
-            0
-          )}`
+        ? `$${
+            gift.services.reduce(
+              (sum, s) => sum + Number(s.servicePrice || 0),
+              0
+            ) *
+              0.1 +
+            gift.services.reduce(
+              (sum, s) => sum + Number(s.servicePrice || 0),
+              0
+            )
+          } `
         : "-",
       giftStatus: gift.isPaid
         ? "Redeemed"

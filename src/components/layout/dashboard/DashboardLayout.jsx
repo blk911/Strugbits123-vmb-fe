@@ -44,6 +44,7 @@ import {
   SalonRequestModal,
   SalonVerificationRejectionModal,
 } from "../../dashboard/admin/Modals";
+import RescheduleRequestModal from "../../dashboard/client/Modals/RescheduledModal";
 
 function DashboardModals() {
   const { activeModal, modalData, closeModal } = useDashboardModal();
@@ -79,6 +80,11 @@ function DashboardModals() {
   };
   return (
     <>
+      <RescheduleRequestModal
+        isOpen={activeModal === "rescheduleRequestSent"}
+        onClose={closeModal}
+        data={modalData}
+      />
       <DeclineConfirmation
         open={activeModal === "declineAppointmentClient"}
         onClose={closeModal}

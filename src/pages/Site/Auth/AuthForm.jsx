@@ -34,18 +34,21 @@ import {
 } from "../../../utils/toast";
 import { setToken, setUser } from "../../../store/features/userSlice";
 import { useLazyGetMeQuery } from "../../../store/api";
+import { ConfirmConfirmation } from "../../../components/dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 
 export default function AuthForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const mode = useSelector((s) => s.auth.mode);
+  const type = useSelector((s) => s.auth.type);
   const [step, setStep] = useState("step1");
-  const [userType, setUserType] = useState("customer");
+  const [userType, setUserType] = useState(type || "customer");
   const [triggerGetMe, { isLoading: isFetchingMe }] = useLazyGetMeQuery();
   const [signIn] = useSignInMutation();
   const [signUpCustomer] = useSignUpCustomerMutation();
   const [signUpSaloonOwner] = useSignUpSaloonOwnerMutation();
-
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isConfirmationModalData, setIsConfirmationModalData] = useState({});
   const getCurrentSchema = () => {
     if (mode === "login") return loginSchema;
     if (mode === "signup" && step === "step1") {
@@ -121,7 +124,7 @@ export default function AuthForm() {
       }
     );
     setStep("step1");
-    setUserType("customer");
+    // setUserType("customer");
   }, [mode, reset]);
 
   const goToStep2 = async () => {
@@ -160,7 +163,9 @@ export default function AuthForm() {
     setStep("step1");
     setUserType("customer");
     dispatch(setAuthMode("login"));
-    toastSuccess(message || "Account created! Please log in.");
+    // toastSuccess(message || "Account created! Please log in.");
+    setIsConfirmationModalData({ title: "Account created!", message });
+    setIsConfirmationModalOpen(true);
   };
 
   const onSubmit = async (data) => {
@@ -187,7 +192,17 @@ export default function AuthForm() {
         loadingToastId = toastLoading("Creating account...");
         const res = await signUpCustomer(full).unwrap();
         toastDismiss(loadingToastId);
-        handleSignupSuccess("customer", res?.message);
+        toastSuccess(res?.message || "Account created! Please log in.");
+        loadingToastId = toastLoading("Signing in...");
+        const resSignin = await signIn({
+          email: data.email,
+          password: data.password,
+        }).unwrap();
+
+        toastDismiss(loadingToastId);
+        toastSuccess("Welcome back!");
+        dispatch(setToken(resSignin?.data?.token));
+        handleSuccess(resSignin?.data?.user?.role);
       } else if (mode === "signup" && step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
 
@@ -253,6 +268,12 @@ export default function AuthForm() {
           </form>
         </div>
       </FormProvider>
+      <ConfirmConfirmation
+        open={isConfirmationModalOpen}
+        onClose={() => setIsConfirmationModalOpen(false)}
+        title={isConfirmationModalData?.title}
+        subtitle={isConfirmationModalData?.message}
+      />
     </div>
   );
 }

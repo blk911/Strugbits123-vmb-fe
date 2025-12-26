@@ -6,6 +6,13 @@ export const adminApi = createApi({
     baseUrl:
       import.meta.env.VITE_BACKEND_URL + "admin" || "http://localhost:5000/",
     credentials: "include",
+    // prepareHeaders: (headers, { getState }) => {
+    //   const token = getState().auth.token;
+    //   if (token) {
+    //     headers.set("authorization", `Bearer ${token}`);
+    //   }
+    //   return headers;
+    // },
   }),
   tagTypes: ["Salon"],
   endpoints: (builder) => ({

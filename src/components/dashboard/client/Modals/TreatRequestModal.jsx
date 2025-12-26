@@ -131,7 +131,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       toastError("No valid services found");
       return;
     }
-
     const payload = {
       salonId,
       services: serviceIds,
@@ -139,6 +138,8 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       paymentAmount: Number(totalAmount.toFixed(2)),
       giftId: giftId,
       receiverEmail: info.gift.receiverEmail,
+      requesterEmail: info.sender.email,
+      requesterId: info?.gift?.requesterId?._id,
     };
 
     const loadingToast = toastLoading("Redirecting to secure payment...");

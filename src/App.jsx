@@ -22,7 +22,7 @@ export default function App() {
         {role === "admin" && AdminRoutes()}
         {role === "salon-owner" && SaloonRoutes()}
         {role === "customer" && ClientRoutes()}
-        <Route path="*" element={<h1>Unauthorized 🚫</h1>} />
+        <Route path="*" element={<Navigate to="/register" replace />} />
       </Routes>
     </Router>
   );

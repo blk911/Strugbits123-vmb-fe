@@ -76,11 +76,38 @@ export default function SendTreatModal({
       email: prefilledEmail,
       serviceId: "",
       discountPercentage: 0,
-      message: `Hi! I’d love to gift you a special treat at our salon. Enjoy!`,
+      message: ``,
     },
   });
 
   const selectedServiceId = watch("serviceId");
+  const firstName = watch("firstName");
+  useEffect(() => {
+    if (isOpen && services.length > 0) {
+      const firstService = services[0];
+
+      setValue("serviceId", firstService._id, { shouldValidate: true });
+
+      const generateMessage = () => {
+        const serviceName = firstService.serviceName;
+        const name = firstName.trim() || "{FirstName}";
+        return `Hi ${name},\nI want you to experience my salon with ${serviceName} at an exclusive discount!\nSignup and book today.`;
+      };
+
+      setValue("message", generateMessage());
+    }
+  }, [isOpen, services, setValue]);
+
+  useEffect(() => {
+    if (selectedServiceId && firstName) {
+      const selectedService = services.find((s) => s._id === selectedServiceId);
+      if (selectedService) {
+        const name = firstName.trim() || "{FirstName}";
+        const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nSignup and book today.`;
+        setValue("message", message);
+      }
+    }
+  }, [firstName, selectedServiceId, services, setValue]);
 
   useEffect(() => {
     if (isOpen) {
@@ -90,12 +117,11 @@ export default function SendTreatModal({
         email: prefilledEmail,
         serviceId: "",
         discountPercentage: 0,
-        message: `Hi! I’d love to gift you a special treat at our salon. Enjoy!`,
+        message: "",
       });
       setPage(1);
     }
   }, [isOpen, prefilledEmail, reset]);
-
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
       setPage(newPage);
@@ -284,11 +310,15 @@ export default function SendTreatModal({
                                 type="radio"
                                 name="service"
                                 checked={selectedServiceId === srv._id}
-                                onChange={() =>
+                                onChange={() => {
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
-                                  })
-                                }
+                                  });
+                                  const name =
+                                    watch("firstName").trim() || "${FirstName}";
+                                  const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!\nSignup and book today.`;
+                                  setValue("message", message);
+                                }}
                                 className="w-4 h-4 text-[#581838]"
                                 style={{ accentColor: "#581838" }}
                               />

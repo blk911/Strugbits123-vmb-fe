@@ -3,7 +3,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useGetAllSalonsQuery } from "../../../store/api";
+import { useGetAllSalonsQuery, useGetSalonByIdQuery } from "../../../store/api";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSelectedSalon } from "../../../store/features/selectedSalonSlice";
+import { toastLoading } from "../../../utils/toast";
 
 function Arrow({ onClick, direction }) {
   const posClass = direction === "left" ? "left-[10%]" : "right-[10%]";
@@ -48,9 +52,37 @@ function Arrow({ onClick, direction }) {
 function SalonCard({ salon }) {
   const imageUrl =
     salon.profilePic || "https://via.placeholder.com/340x200?text=No+Image";
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    data: salonResponse,
+    isLoading: loadingSalon,
+    isSuccess,
+  } = useGetSalonByIdQuery(salon._id, {
+    skip: !salon._id,
+  });
+  const handleViewSalon = () => {
+    if (!salon._id) return;
+
+    if (isSuccess && salonResponse?.data) {
+      dispatch(setSelectedSalon(salonResponse.data));
+      navigate(`/salonselected/${salon._id}`);
+      return;
+    }
+
+    if (loadingSalon) {
+      toastLoading("Loading salon details...");
+      return;
+    }
+
+    navigate(`/salon/${salon._id}`);
+  };
 
   return (
-    <div className="bg-white rounded-[16px] border border-[#F3EAF0] overflow-hidden w-auto xl:max-w-[340px] flex flex-col">
+    <div
+      className="bg-white rounded-[16px] border border-[#F3EAF0] overflow-hidden w-auto xl:max-w-[340px] flex flex-col cursor-pointer"
+      onClick={handleViewSalon}
+    >
       <img
         src={imageUrl}
         alt={salon.salonName}
