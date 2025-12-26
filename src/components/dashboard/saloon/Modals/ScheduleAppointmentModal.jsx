@@ -34,6 +34,7 @@ export default function ScheduleAppointmentModal({
     useDeclineAppointmentMutation();
   const [scheduleAppointment, { isLoading: scheduling }] =
     useScheduleAppointmentMutation();
+
   const data = initialData || {
     salon: {
       name: "Luxe Beauty Salon",
@@ -65,6 +66,18 @@ export default function ScheduleAppointmentModal({
     0
   );
 
+  const type = data?.appointment?.type;
+  let finalTotal;
+
+  if (type === "invite") {
+    finalTotal = totalPrice;
+  } else if (type === "booking") {
+    finalTotal = totalPrice + 2.5;
+  } else if (type === "gift") {
+    finalTotal = totalPrice + totalPrice * 0.1;
+  } else {
+    finalTotal = totalPrice;
+  }
   const containerRef = useRef(null);
   const step1Ref = useRef(null);
   const step2Ref = useRef(null);
@@ -287,7 +300,7 @@ export default function ScheduleAppointmentModal({
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                Amount Paid: ${totalPrice}
+                                Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
                           </div>

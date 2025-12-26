@@ -30,7 +30,7 @@ export default function BookingSuccess() {
         const response = await createAppointmentAfterPayment({
           sessionId,
         }).unwrap();
-        setDetails(response.data.appointment);
+        setDetails(response?.data?.appointment);
         setStatus("success");
       } catch (err) {
         console.error(err);

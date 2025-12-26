@@ -5,7 +5,7 @@ import { IoClose, IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
 export default function RescheduleRequestModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
   const total = data.services.reduce((s, it) => s + it.price, 0);
-  const type = data.appointment.type;
+  const type = data?.appointment?.type;
 
   let finalTotal;
 

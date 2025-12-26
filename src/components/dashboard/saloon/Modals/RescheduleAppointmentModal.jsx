@@ -85,7 +85,18 @@ export default function RescheduleAppointmentModal({
     (s, it) => s + (it.price || 0),
     0
   );
+  const type = data?.appointment?.type;
+  let finalTotal;
 
+  if (type === "invite") {
+    finalTotal = totalPrice;
+  } else if (type === "booking") {
+    finalTotal = totalPrice + 2.5;
+  } else if (type === "gift") {
+    finalTotal = totalPrice + totalPrice * 0.1;
+  } else {
+    finalTotal = totalPrice;
+  }
   const containerRef = useRef(null);
   const step1Ref = useRef(null);
   const step2Ref = useRef(null);
@@ -136,8 +147,8 @@ export default function RescheduleAppointmentModal({
       await scheduleAppointment({
         id: appointmentId,
         data: {
-          appointmentDate: formData.appointmentDate,
-          startTime: convertTo12Hour(formData.appointmentTime),
+          appointmentDate: formData?.appointmentDate,
+          startTime: convertTo12Hour(formData?.appointmentTime),
         },
       }).unwrap();
 
@@ -270,7 +281,7 @@ export default function RescheduleAppointmentModal({
                                     <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
                                       <FaCalendarAlt className="text-[#581838]" />
                                       <span className="text-[14px] text-[#404040]">
-                                        {data.appointment?.date}
+                                        {data?.appointment?.date}
                                       </span>
                                     </div>
                                   </div>
@@ -282,7 +293,7 @@ export default function RescheduleAppointmentModal({
                                     <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
                                       <FaClock className="text-[#581838]" />
                                       <span className="text-[14px] text-[#404040]">
-                                        {data.appointment?.time}
+                                        {data?.appointment?.time}
                                       </span>
                                     </div>
                                   </div>
@@ -297,7 +308,7 @@ export default function RescheduleAppointmentModal({
 
                             <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-[12px]">
                               <p className="text-[12px] italic text-[#00000080] leading-[18px]">
-                                {data.appointment?.message ||
+                                {data?.appointment?.message ||
                                   "No reason provided."}
                               </p>
                             </div>
@@ -334,7 +345,7 @@ export default function RescheduleAppointmentModal({
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                Amount Paid: ${totalPrice}
+                                Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
                           </div>

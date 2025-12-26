@@ -71,6 +71,9 @@ export default function GiftCard({
           date: item?.appointmentDate,
           time: item?.startTime,
           id: item?._id,
+          status: item?.status,
+          type: item?.type,
+          rescheduleReason: item?.reschduleReason || "",
         },
       });
     }
@@ -151,7 +154,7 @@ export default function GiftCard({
             const statusBg = `${statusColor}33`;
 
             const timeAgo = formatTimeAgo(
-              item.createdAt || item.appointmentDate
+              item.createdAt || item.timeline[0].timestamp
             );
 
             return (

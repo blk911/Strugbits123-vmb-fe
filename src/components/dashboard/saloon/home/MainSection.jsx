@@ -43,7 +43,7 @@ export default function MainSection() {
     service: item?.services?.serviceName || "No Service",
     statusText: "Pending",
     statusColor: "#FF9500",
-    timeAgo: formatTimeAgo(item.createdAt),
+    timeAgo: formatTimeAgo(item.createdAt || item.createdAt),
     data: item,
   });
 
@@ -56,7 +56,7 @@ export default function MainSection() {
     }`,
     statusText: "Pending",
     statusColor: "#FF9500",
-    timeAgo: formatTimeAgo(item.appointmentDate || item.createdAt),
+    timeAgo: formatTimeAgo(item?.timeline[0]?.timestamp || item.createdAt),
     data: item,
   });
   const renderCardSection = ({

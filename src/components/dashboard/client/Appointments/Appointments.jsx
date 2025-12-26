@@ -310,7 +310,7 @@ export default function Appointments({
       setDirectData(row._modalData);
       setShowConfirm(true);
     } else if (status === "Scheduled") {
-      openModal("rescheduleAppointmentClient", row._modalData);
+      openModal("appointmentScheduled", row._modalData);
     } else if (status === "Declined") {
       setDirectData(row._modalData);
       setShowDecline(true);

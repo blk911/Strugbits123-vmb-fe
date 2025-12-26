@@ -2,8 +2,8 @@ import { IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
 
 export default function AppointmentDetailsSection({ data }) {
   const total = data.services.reduce((s, it) => s + it.price, 0);
-  const type = data.appointment.type;
-  const status = data.appointment.status;
+  const type = data?.appointment?.type;
+  const status = data?.appointment?.status;
   let finalTotal;
 
   if (type === "invite") {
@@ -76,7 +76,7 @@ export default function AppointmentDetailsSection({ data }) {
               </p>
               <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
                 <IoCalendarOutline />
-                <span>{data.appointment.date}</span>
+                <span>{data?.appointment?.date}</span>
               </div>
             </div>
             <div className="flex-1">
@@ -85,7 +85,7 @@ export default function AppointmentDetailsSection({ data }) {
               </p>
               <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
                 <IoTimeOutline />
-                <span>{data.appointment.time}</span>
+                <span>{data?.appointment?.time}</span>
               </div>
             </div>
           </div>
