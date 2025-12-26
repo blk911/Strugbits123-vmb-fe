@@ -4,7 +4,8 @@ import { useSelectedSalon } from "../../../hooks/useSelectedSalon";
 import LoadingIndicator from "../../../components/common/LoadingIndicator/LoadingIndicator";
 import { useEffect } from "react";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
-import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { BsClockFill } from "react-icons/bs";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
 export default function SalonDetail() {
   const { id } = useParams();
@@ -68,16 +69,14 @@ export default function SalonDetail() {
           <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 text-[11px] sm:text-[13px] text-[#00000080] mt-3 sm:mt-4 sm:pl-[160px]">
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt />
-              <span>
-                {salon.salonAddress} | {salon.distance}
-              </span>
+              <span>{salon.salonAddress}</span>
             </div>
             <div className="flex items-center gap-2">
               <FaPhoneAlt />
               <span>{salon.phoneNumber}</span>
             </div>
             <div className="flex items-center gap-2">
-              <FaRegClock />
+              <BsClockFill />
               <span>
                 {salon.startTime} - {salon.endTime}
               </span>

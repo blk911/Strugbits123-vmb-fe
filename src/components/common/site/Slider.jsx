@@ -65,13 +65,14 @@ function SalonCard({ salon }) {
   });
   const handleViewSalon = () => {
     if (!salon._id) return;
-
     if (isSuccess && salonResponse?.data) {
       dispatch(setSelectedSalon(salonResponse.data));
-      if (user.role === "customer") {
+      if (user?.role === "customer" || user?.role === "admin") {
         navigate(`/salon/${salon._id}`);
+      } else if (user?._id === salon._id) {
+        navigate(`/salondetail`);
       } else {
-        navigate(`/salonselected/${salon._id}`);
+        navigate(`/salon-detail/${salon._id}`);
       }
       return;
     }
