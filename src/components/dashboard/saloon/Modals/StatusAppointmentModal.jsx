@@ -59,6 +59,10 @@ export default function StatusAppointmentModal({
     finalTotal = totalPrice;
   }
   const copy = {
+    scheduled: {
+      title: "Appointment Scheduled",
+      subtitle: "Appointment has been successfully scheduled!",
+    },
     hold: {
       title: "Appointment Request on Hold",
       subtitle:
@@ -198,7 +202,15 @@ export default function StatusAppointmentModal({
         </>
       );
     }
-
+    if (type === "scheduled") {
+      return (
+        <>
+          <AppointmentDetailsBlock />
+          <ServicesBlock />
+          <TreatBlock left={merged.treatTo} right={merged.treatBy} />
+        </>
+      );
+    }
     if (type === "declined") {
       return (
         <>

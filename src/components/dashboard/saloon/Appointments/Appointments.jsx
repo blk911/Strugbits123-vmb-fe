@@ -272,10 +272,9 @@ export default function Appointments({
       openModal("scheduleAppointment", data);
     } else if (cleanRow?.status === "Reschedule requested") {
       openModal("rescheduleAppointment", data);
-    } else if (cleanRow?.status === "Scheduled") {
-      // openModal("scheduleAppointment", data);
     } else {
       const typeMap = {
+        Scheduled: "scheduled",
         Hold: "hold",
         Confirmed: "confirmed",
         Declined: "declined",
