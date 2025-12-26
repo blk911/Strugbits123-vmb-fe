@@ -56,7 +56,7 @@ export default function ExclusiveInviteModal({
 
     if (isSuccess && salonResponse?.data) {
       dispatch(setSelectedSalon(salonResponse.data));
-      closeModal();
+      closeAll();
       navigate(`/salon/${salonId}`);
       return;
     }
@@ -66,7 +66,7 @@ export default function ExclusiveInviteModal({
       return;
     }
 
-    closeModal();
+    closeAll();
     navigate(`/salon/${salonId}`);
   };
   const closeAll = () => {
@@ -103,6 +103,9 @@ export default function ExclusiveInviteModal({
         data: {
           appointmentDate: selectedDate,
           startTime: convertTo12Hour(selectedTime),
+          payment: {
+            amount: finalPrice,
+          },
         },
       }).unwrap();
 

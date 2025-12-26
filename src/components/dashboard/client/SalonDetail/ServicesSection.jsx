@@ -1,5 +1,7 @@
 import { useState } from "react";
 import ServiceCard from "./ServiceCard";
+import { useUser } from "../../../../hooks/useUser";
+import ServiceCardAnonymous from "./ServiceCardUnAuthenticated";
 
 export default function ServicesSection({ services = [], salon }) {
   const perPage = 9;
@@ -7,7 +9,7 @@ export default function ServicesSection({ services = [], salon }) {
   const total = Math.ceil(services.length / perPage);
   const start = (page - 1) * perPage;
   const current = services.slice(start, start + perPage);
-
+  const { user } = useUser();
   return (
     <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full">
       <div className="mb-6 flex items-center justify-between">
@@ -16,9 +18,13 @@ export default function ServicesSection({ services = [], salon }) {
 
       {current.length === 0 && <p className="text-center">No services found</p>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {current.map((svc) => (
-          <ServiceCard key={svc._id} services={svc} salon={salon} />
-        ))}
+        {current.map((svc) =>
+          user ? (
+            <ServiceCard key={svc._id} services={svc} salon={salon} />
+          ) : (
+            <ServiceCardAnonymous key={svc._id} services={svc} salon={salon} />
+          )
+        )}
       </div>
       {current.length > 0 && (
         <div className="flex  justify-center items-center gap-3 mt-8">

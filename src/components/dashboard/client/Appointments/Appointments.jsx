@@ -11,6 +11,7 @@ import {
 import RescheduleDirectModal from "../Modals/appointmentTabsModals/RescheduleDirectModal";
 import HoldDirectModal from "../Modals/appointmentTabsModals/HoldDirectModal";
 import DeclineDirectModal from "../Modals/appointmentTabsModals/DeclineDirectModal";
+import ConfirmDirectModal from "../Modals/appointmentTabsModals/ConfirmDirectModal";
 
 const PAGE_SIZE = 10;
 
@@ -25,8 +26,9 @@ export default function Appointments({
   };
 
   const sortValue = sortMap[sortOption] || "newest";
-  const [activeTab, setActiveTab] = useState("Pending");
+  const [activeTab, setActiveTab] = useState("All");
 
+  const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
   const [reschedulePage, setReschedulePage] = useState(1);
   const [holdPage, setHoldPage] = useState(1);
@@ -36,11 +38,23 @@ export default function Appointments({
   const [showReschedule, setShowReschedule] = useState(false);
   const [showHold, setShowHold] = useState(false);
   const [showDecline, setShowDecline] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [showConfirmSuccess, setShowConfirmSuccess] = useState(false);
   const [showDeclineSuccess, setShowDeclineSuccess] = useState(false);
   const [showRescheduleSent, setShowRescheduleSent] = useState(false);
   const [directData, setDirectData] = useState(null);
 
+  const {
+    data: allData,
+    isLoading: loadingAll,
+    isFetching: fetchingAll,
+    refetch: refetchAll,
+  } = useGetUserAppointmentsQuery({
+    page: allPage,
+    limit: PAGE_SIZE,
+    sort: sortValue,
+    search: searchQuery,
+  });
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -123,6 +137,7 @@ export default function Appointments({
     refetchPending();
     refetchReschedule();
     refetchScheduled();
+    refetchAll();
   }, [
     refetchConfirmed,
     refetchDeclined,
@@ -130,9 +145,12 @@ export default function Appointments({
     refetchPending,
     refetchReschedule,
     refetchScheduled,
+    refetchAll,
   ]);
   const currentData =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? allData
+      : activeTab === "Pending"
       ? pendingData
       : activeTab === "Reschedule"
       ? rescheduleData
@@ -145,7 +163,9 @@ export default function Appointments({
       : declinedData;
 
   const isLoading =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? loadingAll
+      : activeTab === "Pending"
       ? loadingPending
       : activeTab === "Reschedule"
       ? loadingReschedule
@@ -158,7 +178,9 @@ export default function Appointments({
       : loadingDeclined;
 
   const isFetching =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? fetchingAll
+      : activeTab === "Pending"
       ? fetchingPending
       : activeTab === "Reschedule"
       ? fetchingReschedule
@@ -200,6 +222,9 @@ export default function Appointments({
         date: appt.appointmentDate,
         time: appt.startTime,
         id: appt._id,
+        status: appt.status,
+        type: appt.type,
+        rescheduleReason: appt.reschduleReason || "",
       },
     },
   }));
@@ -208,6 +233,7 @@ export default function Appointments({
     data.map(({ _modalData, ...rest }) => rest);
 
   const tabs = {
+    All: cleanDataForTable(transformedAppointments),
     Pending: cleanDataForTable(transformedAppointments),
     Reschedule: cleanDataForTable(transformedAppointments),
     Hold: cleanDataForTable(transformedAppointments),
@@ -217,6 +243,7 @@ export default function Appointments({
   };
 
   const originalRows = {
+    All: transformedAppointments,
     Pending: transformedAppointments,
     Reschedule: transformedAppointments,
     Hold: transformedAppointments,
@@ -226,6 +253,7 @@ export default function Appointments({
   };
 
   const handleRowClick = {
+    All: (cleanRow) => openWithData(cleanRow, "All"),
     Pending: (cleanRow) => {
       const row = originalRows.Pending.find((r) => r.id === cleanRow.id);
       if (row?._modalData) openModal("appointmentScheduled", row._modalData);
@@ -233,8 +261,9 @@ export default function Appointments({
     Reschedule: (cleanRow) => {
       const row = originalRows.Reschedule.find((r) => r.id === cleanRow.id);
       if (row?._modalData) {
-        setDirectData(row._modalData);
-        setShowReschedule(true);
+        openModal("rescheduleRequestSent", row._modalData);
+        // setDirectData(row._modalData);
+        // setShowReschedule(true);
       }
     },
     Hold: (cleanRow) => {
@@ -244,14 +273,16 @@ export default function Appointments({
         setShowHold(true);
       }
     },
-    // Confirmed: (cleanRow) => {
-    //   const row = originalRows.Confirmed.find((r) => r.id === cleanRow.id);
-    //   if (row?._modalData) openModal("appointmentScheduled", row._modalData);
-    // },
+    Confirmed: (cleanRow) => {
+      const row = originalRows.Decline.find((r) => r.id === cleanRow.id);
+      if (row?._modalData) {
+        setDirectData(row._modalData);
+        setShowConfirm(true);
+      }
+    },
     Scheduled: (cleanRow) => {
       const row = originalRows.Scheduled.find((r) => r.id === cleanRow.id);
-      if (row?._modalData)
-        openModal("rescheduleAppointmentClient", row._modalData);
+      if (row?._modalData) openModal("appointmentScheduled", row._modalData);
     },
     Decline: (cleanRow) => {
       const row = originalRows.Decline.find((r) => r.id === cleanRow.id);
@@ -261,7 +292,30 @@ export default function Appointments({
       }
     },
   };
+  const openWithData = (cleanRow, tab) => {
+    const row = originalRows[tab].find((r) => r.id === cleanRow.id);
+    if (!row?._modalData) return;
 
+    const status = cleanRow.status;
+
+    if (status === "Pending") {
+      openModal("appointmentScheduled", row._modalData);
+    } else if (status === "Reschedule requested") {
+      setDirectData(row._modalData);
+      setShowReschedule(true);
+    } else if (status === "Hold") {
+      setDirectData(row._modalData);
+      setShowHold(true);
+    } else if (status === "Confirmed") {
+      setDirectData(row._modalData);
+      setShowConfirm(true);
+    } else if (status === "Scheduled") {
+      openModal("rescheduleAppointmentClient", row._modalData);
+    } else if (status === "Declined") {
+      setDirectData(row._modalData);
+      setShowDecline(true);
+    }
+  };
   const handlePageChange = (page) => {
     if (activeTab === "Pending") setPendingPage(page);
     if (activeTab === "Reschedule") setReschedulePage(page);
@@ -272,7 +326,9 @@ export default function Appointments({
   };
 
   const currentPage =
-    activeTab === "Pending"
+    activeTab === "All"
+      ? allPage
+      : activeTab === "Pending"
       ? pendingPage
       : activeTab === "Reschedule"
       ? reschedulePage
@@ -290,6 +346,7 @@ export default function Appointments({
         <TabbedTable
           tabs={tabs}
           tabOrder={[
+            "All",
             "Pending",
             "Reschedule",
             "Hold",
@@ -297,7 +354,7 @@ export default function Appointments({
             "Scheduled",
             "Decline",
           ]}
-          defaultTab="Pending"
+          defaultTab="All"
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
           setExternalActiveTab={setActiveTab}
@@ -308,7 +365,11 @@ export default function Appointments({
           isFetching={isFetching}
         />
       </div>
-
+      <ConfirmDirectModal
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        data={directData}
+      />
       <RescheduleDirectModal
         isOpen={showReschedule}
         onClose={() => setShowReschedule(false)}

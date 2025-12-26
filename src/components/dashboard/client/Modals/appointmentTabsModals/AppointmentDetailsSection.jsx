@@ -2,7 +2,19 @@ import { IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
 
 export default function AppointmentDetailsSection({ data }) {
   const total = data.services.reduce((s, it) => s + it.price, 0);
+  const type = data.appointment.type;
+  const status = data.appointment.status;
+  let finalTotal;
 
+  if (type === "invite") {
+    finalTotal = total;
+  } else if (type === "booking") {
+    finalTotal = total + 2.5;
+  } else if (type === "gift") {
+    finalTotal = total + total * 0.1;
+  } else {
+    finalTotal = total;
+  }
   return (
     <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 flex flex-col gap-4">
       <div className="border border-[#0000001A] rounded-[10px] p-3 flex items-center gap-3">
@@ -48,32 +60,37 @@ export default function AppointmentDetailsSection({ data }) {
         </div>
         <div className="flex justify-end">
           <p className="text-[#FF92A5] font-bold text-[13px]">
-            Amount Paid: ${total}
+            Amount Paid: ${finalTotal.toFixed(2)}
           </p>
         </div>
       </div>
-
-      <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
-        <p className="text-[#581838] font-medium text-[14px]">
-          Appointment Details
-        </p>
-        <div className="flex flex-col sm:flex-row justify-between gap-4">
-          <div className="flex-1">
-            <p className="text-[#404040] text-[14px] font-medium mb-1">Date</p>
-            <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-              <IoCalendarOutline />
-              <span>{data.appointment.date}</span>
+      {status !== "declined" && (
+        <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+          <p className="text-[#581838] font-medium text-[14px]">
+            Appointment Details
+          </p>
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
+            <div className="flex-1">
+              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                Date
+              </p>
+              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+                <IoCalendarOutline />
+                <span>{data.appointment.date}</span>
+              </div>
             </div>
-          </div>
-          <div className="flex-1">
-            <p className="text-[#404040] text-[14px] font-medium mb-1">Time</p>
-            <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-              <IoTimeOutline />
-              <span>{data.appointment.time}</span>
+            <div className="flex-1">
+              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                Time
+              </p>
+              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+                <IoTimeOutline />
+                <span>{data.appointment.time}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,6 @@ export default function Button({ text, classes, textclass, navigateTo, type }) {
   return (
     <button
       onClick={() => {
-        // console.log("Type==>", type);
         dispatch(setAuthType(type));
         dispatch(setAuthMode("signup"));
         navigate(navigateTo);

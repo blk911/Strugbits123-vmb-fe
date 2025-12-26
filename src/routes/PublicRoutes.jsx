@@ -5,6 +5,7 @@ import About from "../pages/Site/About/About";
 import AuthForm from "../pages/Site/Auth/AuthForm";
 import ForgetPassword from "../pages/Site/Auth/ForgetPassword";
 import ResetPassword from "../pages/Site/Auth/ResetPassword";
+import { SalonDetail } from "../pages/client";
 
 export default function PublicRoutes() {
   return (
@@ -12,6 +13,7 @@ export default function PublicRoutes() {
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/salonselected/:id" element={<SalonDetail />} />
       </Route>
       <Route>
         <Route path="/forget-password" element={<ForgetPassword />} />

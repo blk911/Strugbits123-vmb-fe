@@ -30,6 +30,7 @@ export default function AppointmentScheduledModal({
     }
   }
   const mock = initialData || {};
+
   const appointmentId = initialData?.appointment?.id;
 
   const [holdAppointment, { isLoading: holding }] =
@@ -39,7 +40,7 @@ export default function AppointmentScheduledModal({
   const [confirmAppointment, { isLoading: confirming }] =
     useConfirmAppointmentMutation();
   const totalPrice = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
-
+  const status = mock?.appointment?.status;
   const { openModal } = useDashboardModal();
 
   const openHold = async () => {
@@ -132,12 +133,15 @@ export default function AppointmentScheduledModal({
 
                   <div className="flex flex-col items-center text-center">
                     <h2 className="text-[#581838] font-bold text-[22px]">
-                      Great News! <br /> Your appointment is Scheduled.
+                      Great News! <br />
+                      {status === "pending"
+                        ? "Your Treat Request is Fullfilled."
+                        : "Your Appointment is Scheduled."}
                     </h2>
                     <p className="text-[#00000080] text-[14px] mt-2 leading-[20px]">
-                      The salon has successfully scheduled your appointment.
-                      Please review the details below and confirm your
-                      appointment.
+                      {status === "pending"
+                        ? "Your treat request has been successfully fulfilled. The salon has been notified and will schedule your appointment."
+                        : "The salon has successfully scheduled your appointment. Please review the details below and confirm your appointment."}
                     </p>
                   </div>
 
@@ -192,79 +196,82 @@ export default function AppointmentScheduledModal({
 
                       <div className="flex justify-end">
                         <p className="text-[#FF92A5] font-bold text-[13px]">
-                          Amount Paid: ${totalPrice}
+                          Amount Paid: ${totalPrice + totalPrice * 0.1}
                         </p>
                       </div>
                     </div>
-
-                    <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
-                      <p className="text-[#581838] font-medium text-[14px]">
-                        Appointment Details
-                      </p>
-
-                      <div className="flex flex-col sm:flex-row justify-between gap-4 w-full">
-                        <div className="flex-1">
-                          <p className="text-[#404040] text-[14px] font-medium mb-1">
-                            Date
+                    {status !== "pending" && (
+                      <>
+                        <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+                          <p className="text-[#581838] font-medium text-[14px]">
+                            Appointment Details
                           </p>
-                          <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-                            <IoCalendarOutline className="text-[#00000080]" />
-                            <span>{mock?.appointment?.date}</span>
+
+                          <div className="flex flex-col sm:flex-row justify-between gap-4 w-full">
+                            <div className="flex-1">
+                              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                                Date
+                              </p>
+                              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+                                <IoCalendarOutline className="text-[#00000080]" />
+                                <span>{mock?.appointment?.date}</span>
+                              </div>
+                            </div>
+
+                            <div className="flex-1">
+                              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                                Time
+                              </p>
+                              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+                                <IoTimeOutline className="text-[#00000080]" />
+                                <span>{mock?.appointment?.time}</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="flex-1">
-                          <p className="text-[#404040] text-[14px] font-medium mb-1">
-                            Time
-                          </p>
-                          <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-                            <IoTimeOutline className="text-[#00000080]" />
-                            <span>{mock?.appointment?.time}</span>
-                          </div>
+                        <div className="grid grid-cols-2 gap-3 w-full sm:grid-cols-2">
+                          <AppButton
+                            variant="outline-dark"
+                            size="custom"
+                            onClick={openHold}
+                            className="py-[15px] px-[20px] text-[14px]"
+                            disabled={holding}
+                          >
+                            {holding ? "Holding..." : "Hold"}
+                          </AppButton>
+
+                          <AppButton
+                            variant="outline-dark"
+                            size="custom"
+                            onClick={openReschedule}
+                            className="py-[15px] px-[20px] text-[14px]"
+                          >
+                            Reschedule
+                          </AppButton>
+
+                          <AppButton
+                            variant="outline-dark"
+                            size="custom"
+                            onClick={openDecline}
+                            className="py-[15px] px-[20px] text-[14px]"
+                            disabled={declining}
+                          >
+                            {declining ? "Declining..." : "Decline"}
+                          </AppButton>
+
+                          <AppButton
+                            variant="primary"
+                            size="custom"
+                            onClick={openConfirm}
+                            className="py-[15px] px-[20px] text-[14px]"
+                            disabled={confirming}
+                          >
+                            {confirming ? "Confirming..." : "Accept"}
+                          </AppButton>
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 w-full sm:grid-cols-2">
-                      <AppButton
-                        variant="outline-dark"
-                        size="custom"
-                        onClick={openHold}
-                        className="py-[15px] px-[20px] text-[14px]"
-                        disabled={holding}
-                      >
-                        {holding ? "Holding..." : "Hold"}
-                      </AppButton>
-
-                      <AppButton
-                        variant="outline-dark"
-                        size="custom"
-                        onClick={openReschedule}
-                        className="py-[15px] px-[20px] text-[14px]"
-                      >
-                        Reschedule
-                      </AppButton>
-
-                      <AppButton
-                        variant="outline-dark"
-                        size="custom"
-                        onClick={openDecline}
-                        className="py-[15px] px-[20px] text-[14px]"
-                        disabled={declining}
-                      >
-                        {declining ? "Declining..." : "Decline"}
-                      </AppButton>
-
-                      <AppButton
-                        variant="primary"
-                        size="custom"
-                        onClick={openConfirm}
-                        className="py-[15px] px-[20px] text-[14px]"
-                        disabled={confirming}
-                      >
-                        {confirming ? "Confirming..." : "Accept"}
-                      </AppButton>
-                    </div>
+                      </>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

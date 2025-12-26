@@ -131,7 +131,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       toastError("No valid services found");
       return;
     }
-    console.log("Info==>", info);
     const payload = {
       salonId,
       services: serviceIds,

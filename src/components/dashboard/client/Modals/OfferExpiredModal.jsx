@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
-import declineGif from "../../../../assets/declineGif.gif";
+import declineGif from "../../../../assets/expired.gif";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useGetSalonByIdQuery } from "../../../../store/api";
@@ -85,11 +85,11 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                 <div className="text-center mt-3 flex flex-col items-center">
                   <img
                     src={declineGif}
-                    className="w-[138px] h-[138px]"
+                    className="w-[212px] h-[212px]"
                     alt="Offer Expired"
                   />
 
-                  <h3 className="text-[#FF92A5] font-bold text-[22px] mt-4">
+                  <h3 className="text-[#FF92A5] font-bold text-[22px] mt-[-24px]">
                     Offer Time’s Up!
                   </h3>
 
