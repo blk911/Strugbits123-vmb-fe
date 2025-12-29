@@ -198,7 +198,12 @@ export default function Appointments({
     id: appt?._id,
     salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
-    payersEmail: appt?.type === "booking" ? appt?.requestedBy?.email : appt?.requestedFrom?.email || "N/A",
+   payersEmail: 
+  ["booking", "invite"].includes(appt?.type)
+    ? appt?.requestedBy?.email ?? "N/A"
+    : appt?.type === "gift"
+      ? appt?.requestedFrom?.email ?? "N/A"
+      : "N/A",
     appointmentDate: appt?.appointmentDate
       ? new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
