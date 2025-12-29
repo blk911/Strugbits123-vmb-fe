@@ -255,7 +255,7 @@ function DashboardLayout() {
             <img src={logo} alt="Logo" className="h-[50px]" />
           </div>
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
             <DashboardSidebar />
           </div>
         </aside>

@@ -67,7 +67,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] font-[Poppins] overflow-y-auto bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
+        className="w-full max-w-[960px] max-h-[95vh] font-[Poppins] overflow-y-auto custom-scrollbar bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">

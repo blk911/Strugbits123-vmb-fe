@@ -85,7 +85,7 @@ export default function HoldDirectModal({
           onClose={onClose}
         >
           <div className="fixed inset-0 bg-black/30" />
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4">
               <Dialog.Panel className="relative w-full max-w-[460px] rounded-[20px] border border-[#5818381A] bg-[#FFF2F4] p-[30px] shadow-xl flex flex-col gap-[23px]">
                 <IoClose

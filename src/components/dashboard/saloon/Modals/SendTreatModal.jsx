@@ -166,10 +166,10 @@ export default function SendTreatModal({
           <div className="fixed inset-0 bg-black/30 backdrop-blur-[4px]" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child as={Fragment}>
-              <Dialog.Panel className="relative w-full max-w-[616px] rounded-[10px] bg-[#FFFFFFE5] p-[30px] shadow-lg flex flex-col gap-[12px] max-h-[90vh] overflow-y-auto">
+              <Dialog.Panel className="relative w-full max-w-[616px] rounded-[10px] bg-[#FFFFFFE5] p-[30px] shadow-lg flex flex-col gap-[12px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer hover:opacity-70"

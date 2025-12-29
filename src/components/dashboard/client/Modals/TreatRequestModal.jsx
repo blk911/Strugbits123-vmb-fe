@@ -199,7 +199,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
             <div className="fixed inset-0 bg-black/30" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
               <Transition.Child
                 as={Fragment}
@@ -261,7 +261,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         Requested Services
                       </h3>
 
-                      <div className="flex flex-col gap-3 max-h-[150px] overflow-y-auto no-scrollbar">
+                      <div className="flex flex-col gap-3 max-h-[150px]  max-h-28 overflow-y-auto custom-scrollbar">
                         {info.services.map((srv, i) => (
                           <div
                             key={i}

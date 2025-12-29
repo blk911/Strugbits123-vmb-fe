@@ -61,7 +61,7 @@ export default function SalonRequestModal({
       onClick={closeModal}
     >
       <div
-        className="bg-[#e8e8e8] w-full max-w-[600px] max-h-[90vh] overflow-y-auto rounded-[10px] p-[30px] flex flex-col gap-[32px] font-[Poppins]"
+        className="bg-[#e8e8e8] w-full max-w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-[10px] p-[30px] flex flex-col gap-[32px] font-[Poppins]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center">

@@ -141,7 +141,7 @@ export default function SalonVerificationRejectionModal({
       <div
         ref={dropdownRef}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-[450px] rounded-[12px] p-6 font-[Poppins] shadow-lg relative max-h-[90vh] overflow-y-auto"
+        className="bg-white w-full max-w-[450px] rounded-[12px] p-6 font-[Poppins] shadow-lg relative max-h-[90vh] overflow-y-auto custom-scrollbar"
       >
         <button
           onClick={onClose}

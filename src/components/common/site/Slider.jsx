@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import { FiMapPin } from "react-icons/fi";
 import { useGetAllSalonsQuery, useGetSalonByIdQuery } from "../../../store/api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -97,14 +97,14 @@ function SalonCard({ salon }) {
       />
       <div className="p-[16px] flex flex-col">
         <span
-          className="text-[#581838] text-[22px] font-semibold"
+          className="text-[#581838] text-[22px] font-semibold line-clamp-2 min-h-[56px]"
           style={{ fontFamily: "Poppins, sans-serif", fontWeight: 500 }}
         >
           {salon.salonName || "Unnamed Salon"}
         </span>
 
         <div className="flex items-center gap-2 text-[#777] text-[15px] mt-3">
-          <svg
+          {/* <svg
             width="16"
             height="16"
             viewBox="0 0 12 16"
@@ -126,10 +126,11 @@ function SalonCard({ salon }) {
                 <rect width="12" height="16" fill="white" />
               </clipPath>
             </defs>
-          </svg>
+          </svg> */}
+<FiMapPin className="text-[#FFA1C3] text-[18px] flex-shrink-0" />
 
           <span
-            className="lg:text-[12px] xl:text-[14px] font-normal"
+            className="lg:text-[12px] xl:text-[14px] font-normal line-clamp-2 "
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             {salon.salonAddress

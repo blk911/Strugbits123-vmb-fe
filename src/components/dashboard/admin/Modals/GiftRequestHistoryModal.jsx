@@ -76,7 +76,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] font-[Poppins] max-h-[95vh] overflow-y-auto bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
+        className="w-full max-w-[960px] font-[Poppins] max-h-[95vh] overflow-y-auto custom-scrollbar bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

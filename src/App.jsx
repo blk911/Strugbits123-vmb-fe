@@ -10,13 +10,14 @@ import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import SaloonRoutes from "./routes/SaloonRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
-import { useUser } from "./hooks/useUser";
+import ScrollToTop from "./components/common/site/ScrollToTop";
 
 export default function App() {
   const role = useSelector((state) => state.role.role);
 
   return (
     <Router>
+        <ScrollToTop />
       <Routes>
         {PublicRoutes()}
         {role === "admin" && AdminRoutes()}

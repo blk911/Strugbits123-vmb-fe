@@ -74,13 +74,11 @@ export default function AllPayouts({
   const payouts = payoutsData?.data?.items || [];
   const totalPages = payoutsData?.data?.pages || 1;
   const transformedData = payouts.map((payout) => ({
-    id: payout._id,
+ id: `${payout.salon._id}-${payout.payoutDate ? new Date(payout.payoutDate).toISOString() : 'pending'}`,
+    salonId: payout.salon._id.toString(),
     salonImage: payout.salon?.profilePic || "/default-salon.jpg",
     salonName: payout.salon?.salonName || "Unknown Salon",
     salonEmail: payout.salon?.email || "N/A",
-    source:
-      payout.sourceType.charAt(0).toUpperCase() + payout.sourceType.slice(1),
-    services: payout.services,
     subtotal: payout.subtotal,
     vmbFee: payout.vmbFee,
     totalCharged: payout.totalCharged,
@@ -88,7 +86,6 @@ export default function AllPayouts({
     payoutDate: payout.payoutDate
       ? new Date(payout.payoutDate).toLocaleDateString("en-GB")
       : "N/A",
-    customerName: payout.customerName,
   }));
 
   const columns = [
@@ -110,20 +107,6 @@ export default function AllPayouts({
               {row.salonEmail}
             </p>
           </div>
-        </div>
-      ),
-    },
-    { key: "source", header: "Source" },
-    {
-      key: "services",
-      header: "Services",
-      render: (row) => (
-        <div className="max-w-xs">
-          {row.services.map((s, i) => (
-            <div key={i} className="text-sm">
-              {s.serviceName} - ${s.servicePrice}
-            </div>
-          ))}
         </div>
       ),
     },
@@ -178,16 +161,16 @@ export default function AllPayouts({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              if (isPending) handleMarkAsPaid(row.id);
+              if (isPending) handleMarkAsPaid(row.salonId);
             }}
-            disabled={!isPending || processingId === row.id}
+            disabled={!isPending || processingId === row.salonId}
             className={`px-4 py-2 rounded-lg text-[10px] sm:text-sm font-medium transition ${
               isPending
                 ? "bg-[#FF92A5] hover:bg-[#FF92A5]/60 text-white cursor-pointer"
                 : "bg-gray-300 text-gray-600 cursor-not-allowed"
-            } ${processingId === row.id ? "opacity-70" : ""}`}
+            } ${processingId === row.salonId ? "opacity-70" : ""}`}
           >
-            {processingId === row.id
+            {processingId === row.salonId
               ? "Processing..."
               : isPending
               ? "Mark as Paid"
@@ -198,23 +181,20 @@ export default function AllPayouts({
     },
   ];
   const handleRowClick = (row) => {
-    const payoutItem = payouts.find((p) => p._id === row.id);
-    if (!payoutItem?.salon?._id) {
+    if (!row.salonId) {
       toastError("Salon ID not available");
       return;
     }
 
-    const salonId = payoutItem.salon._id.toString();
-
     toastLoading("Loading salon details...");
 
-    setSelectedSalonId(salonId);
+    setSelectedSalonId(row.salonId);
   };
-  const handleMarkAsPaid = async (earningId) => {
-    setProcessingId(earningId);
+  const handleMarkAsPaid = async (salonId) => {
+    setProcessingId(salonId);
     const loadingToast = toastLoading("Marking payout as paid...");
     try {
-      await markAsPaid(earningId).unwrap();
+      await markAsPaid(salonId).unwrap();
       toastDismiss(loadingToast);
       toastSuccess("Payout marked as paid successfully!");
     } catch (err) {

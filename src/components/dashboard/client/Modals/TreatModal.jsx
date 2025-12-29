@@ -34,7 +34,6 @@ const createSchema = (hasServices) =>
     message: z
       .string()
       .min(5, "Message must be at least 5 characters")
-      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid message")
       .optional(),
   });
 
@@ -74,7 +73,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
       salonId: "",
       selectedServices: [],
       email: "",
-      message: "",
+      message: "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
     },
   });
 
@@ -100,12 +99,34 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
         salonId: "",
         selectedServices: [],
         email: "",
-        message: "",
+        message: "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
       });
       setIsSubmitted(false);
       setSubmittedData(null);
     }
   }, [isOpen, gift, reset]);
+useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        salonDropdownRef.current &&
+        !salonDropdownRef.current.contains(event.target)
+      ) {
+        setSalonDropdownOpen(false);
+      }
+      if (
+        serviceDropdownRef.current &&
+        !serviceDropdownRef.current.contains(event.target)
+      ) {
+        setServiceDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const getServiceByName = (name) =>
     selectedSalon?.services?.find((s) => s.serviceName === name);
   const totalPrice = selectedServices.reduce((sum, name) => {
@@ -164,7 +185,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
           <div className="fixed inset-0 bg-black/30" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
             <Transition.Child as={Fragment}>
               <Dialog.Panel
@@ -222,7 +243,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         )}
                       />
                       {salonDropdownOpen && (
-                        <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto">
+                        <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar">
                           <input
                             type="text"
                             placeholder="Search salons..."
@@ -260,7 +281,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                   setSalonDropdownOpen(false);
                                   setSearchTerm("");
                                 }}
-                                className="px-4 py-3 hover:bg-[#FFF4F6] cursor-pointer flex items-center gap-3"
+                                className="px-4 py-3 hover:bg-[#FFF4F6] border-1  border-[#E5E5E5] cursor-pointer flex items-center gap-3"
                               >
                                 <img
                                   src={salon.profilePic || "/default-salon.jpg"}
@@ -268,16 +289,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                   className="w-10 h-10 rounded-md object-cover"
                                 />
                                 <div>
-                                  <p className="font-medium">
+                                  <p className="font-medium line-clamp-2">
                                     {salon.salonName}
                                   </p>
                                   <p className="text-xs text-gray-500">
-                                    {salon.description}
+                                    ({salon.distance})
                                   </p>
                                 </div>
-                                <p className="text-xs text-gray-500">
-                                  ({salon.distance})
-                                </p>
+                             
                               </div>
                             ))
                           )}
@@ -340,7 +359,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         </div>
 
                         {serviceDropdownOpen && (
-                          <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto p-3">
+                          <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar p-3">
                             {selectedSalon.services.length === 0 ? (
                               <p className="text-center text-gray-500 py-4">
                                 No services available
@@ -374,7 +393,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                     )}
 
                     {selectedServices.length > 0 && (
-                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 ">
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-28 overflow-y-auto custom-scrollbar">
                         <div className="flex justify-between text-xs font-medium mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
@@ -523,7 +542,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         </div>
                       </div>
 
-                      <div className="mt-3 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2">
+                      <div className="mt-3 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2 max-h-28 overflow-y-auto custom-scrollbar">
                         <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
                           <span>Service:</span>
                           <span>Duration:</span>
