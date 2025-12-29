@@ -6,6 +6,7 @@ import SalonDetail from "./SalonDetail/SalonDetail";
 import SalonInvites from "./SalonInvites/SalonInvites";
 import Salons from "./Salons/Salons";
 import BookingSuccess from "./BookingSuccess/BookingSuccess";
+import BookingCancel from "./BookingCancel/BookingCancel";
 export {
   DashboardHome,
   AppointmentHistory,
@@ -14,4 +15,5 @@ export {
   SalonInvites,
   Salons,
   BookingSuccess,
+  BookingCancel
 };

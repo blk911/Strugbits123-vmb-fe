@@ -39,7 +39,6 @@ const createSchema = (hasServices) =>
 
 export default function TreatModal({ isOpen, closeModal, initialData }) {
   const gift = initialData?.gift;
-
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [salonDropdownOpen, setSalonDropdownOpen] = useState(false);
@@ -503,18 +502,37 @@ useEffect(() => {
                   </form>
                 ) : (
                   <>
-                    <Dialog.Title
-                      as="h3"
-                      className="text-center text-[22px] font-bold text-[#FF92A5] "
-                    >
-                      Treat Request Sent!
-                    </Dialog.Title>
-                    <p className="text-center text-[#00000080] text-[14px] mt-2">
-                      Your request has been shared successfully.
-                      <br /> Wait for payment confirmation.
-                      <br /> We’ve notified the user about your treat. <br />
-                      You’ll be updated soon.
-                    </p>
+           <Dialog.Title
+  as="h3"
+  className="text-center text-[22px] font-bold text-[#FF92A5]"
+>
+  {gift?.status === "accepted"
+    ? "Treat Confirmed!"
+    : "Treat Request Sent!"}
+</Dialog.Title>
+
+<p className="text-center text-[#00000080] text-[14px] mt-2">
+  {gift?.status === "accepted" ? (
+    <>
+      Payment has been completed successfully.
+      <br />
+      The salon has been notified and your treat is confirmed.
+    
+      Enjoy the experience!
+    </>
+  ) : (
+    <>
+      Your request has been shared successfully.
+      <br />
+      Wait for payment confirmation.
+      <br />
+      We’ve notified the user about your treat.
+      <br />
+      You’ll be updated soon.
+    </>
+  )}
+</p>
+
 
                     <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">
                       <div className="flex items-center gap-3">

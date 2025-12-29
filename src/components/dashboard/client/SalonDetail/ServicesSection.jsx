@@ -17,7 +17,7 @@ export default function ServicesSection({ services = [], salon }) {
       </div>
 
       {current.length === 0 && <p className="text-center">No services found</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
         {current.map((svc) =>
           user?.role === "customer" || user?.role === "admin" ? (
             <ServiceCard key={svc._id} services={svc} salon={salon} />

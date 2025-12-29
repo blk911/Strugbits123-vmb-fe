@@ -8,7 +8,6 @@ import {
   GiftHistory,
   AppointmentHistory,
   SalonInvites,
-  BookingSuccess,
 } from "../pages/client";
 
 export default function ClientRoutes() {
@@ -25,7 +24,7 @@ export default function ClientRoutes() {
       <Route path="/salon/:id" element={<SalonDetail />} />
 
       <Route path="/salons" element={<Salons />} />
-      <Route path="/booking-success" element={<BookingSuccess />} />
+     
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/saloninvites" element={<SalonInvites />} />

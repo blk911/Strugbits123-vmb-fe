@@ -51,7 +51,6 @@ export default function BookAppointmentModal({
   const dropdownRef = useRef(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
   const salon = initialData?.salon;
   const prefilledService = initialData?.service;
   const [createCheckoutSession, { isLoading: isRedirecting }] =

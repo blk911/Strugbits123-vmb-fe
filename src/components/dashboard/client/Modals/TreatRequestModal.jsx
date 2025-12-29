@@ -58,7 +58,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
   } = useGetSalonByIdQuery(salonId, {
     skip: !isOpen || !salonId,
   });
-  const [acceptGift, { isLoading: accepting }] = useAcceptGiftMutation();
   const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
@@ -223,11 +222,10 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       className="w-[77px] h-[76px] object-cover "
                     />
                     <h2 className="text-[#581838] font-bold text-[22px] mt-3 text-center">
-                      You’ve a Treat Request!
+                     {gift.status === "accepted" ? "Treat Confirmed!": "You’ve a Treat Request!"} 
                     </h2>
                     <p className="text-[#00000080] text-[12px] text-center mt-2">
-                      A friend wants you to treat them! Check the details below
-                      and complete the payment to confirm.
+                      {gift.status === "accepted" ? "Your payment was successful. The salon has been notified and the treat is confirmed.":"A friend wants you to treat them! Check the details below and complete the payment to confirm."}
                     </p>
                   </div>
 

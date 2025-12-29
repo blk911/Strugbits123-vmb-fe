@@ -75,7 +75,7 @@ export default function SendTreatModal({
       lastName: "",
       email: prefilledEmail,
       serviceId: "",
-      discountPercentage: 0,
+      discountPercentage: services[0]?.serviceDiscount,
       message: ``,
     },
   });
@@ -102,6 +102,9 @@ export default function SendTreatModal({
     if (selectedServiceId && firstName) {
       const selectedService = services.find((s) => s._id === selectedServiceId);
       if (selectedService) {
+        setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
+        shouldValidate: true,
+      });
         const name = firstName.trim() || "{FirstName}";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nSignup and book today.`;
         setValue("message", message);
@@ -116,7 +119,7 @@ export default function SendTreatModal({
         lastName: "",
         email: prefilledEmail,
         serviceId: "",
-        discountPercentage: 0,
+        discountPercentage: services[0].serviceDiscount,
         message: "",
       });
       setPage(1);
@@ -314,6 +317,7 @@ export default function SendTreatModal({
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
+                                 setValue("discountPercentage", srv?.serviceDiscount ?? 0, {shouldValidate: true,});
                                   const name =
                                     watch("firstName").trim() || "${FirstName}";
                                   const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!\nSignup and book today.`;
@@ -437,7 +441,6 @@ export default function SendTreatModal({
                     size="custom"
                     className="w-full text-[16px] font-medium py-3"
                     disabled={!isValid || isSubmitting}
-                    isLoading={isSubmitting}
                   >
                     {isSubmitting ? "Sending Invite..." : "Invite Now"}
                   </AppButton>

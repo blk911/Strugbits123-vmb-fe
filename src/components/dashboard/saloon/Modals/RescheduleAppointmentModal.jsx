@@ -413,7 +413,7 @@ export default function RescheduleAppointmentModal({
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                Amount Paid: ${totalPrice}
+                                   Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
                           </div>

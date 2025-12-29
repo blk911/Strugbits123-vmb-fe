@@ -14,30 +14,41 @@ export default function ServiceCard({ service }) {
   };
 
   return (
-    <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 hover:shadow-md transition-all duration-300">
-      <div className="relative w-full">
+    <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 h-full hover:shadow-md transition-all duration-300">
+        <div className="relative w-full h-[200px] shrink-0">
         <img
           src={service?.serviceImage}
           alt={service?.serviceName}
-          className="w-full h-[180px] sm:h-[200px] md:h-[220px] object-cover rounded-md"
+          className="w-full h-full object-cover rounded-md"
         />
-        <div className="absolute top-3 right-3 bg-white text-[#6B7280] text-[12px] sm:text-[13px] px-3 py-[4px] rounded-[8px] shadow-sm">
-          {service?.serviceDuration} min
+        <div
+          className="absolute top-3 right-3 bg-white text-[#6B7280]
+                     text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm"
+        >
+         {service?.serviceDuration} min
         </div>
       </div>
+ 
+      <div className="flex justify-between items-start min-h-[48px] gap-2">
+          <h4
+            className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+                       leading-[22px] line-clamp-2 max-w-[70%]"
+          >
+           {service?.serviceName}
+          </h4>
 
-      <div className="flex items-start justify-between flex-wrap gap-2">
-        <h4 className="text-[#581838] font-semibold text-[16px] sm:text-[18px] leading-[22px] sm:leading-[24px]">
-          {service?.serviceName}
-        </h4>
-        <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
-          ${service?.servicePrice}
-        </span>
-      </div>
+          <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+             ${service?.servicePrice}
+          </span>
+        </div>
 
-      <p className="text-[#4B5563] text-[14px] leading-[18px] sm:text-[15px]">
-        {service?.description}
-      </p>
+        <p
+          className="text-[#4B5563] text-[14px] sm:text-[15px]
+                     leading-[18px] line-clamp-2 min-h-[36px]"
+        >
+          {  service?.description || "\u00A0"}
+        </p>
+
 
       <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
         <AppButton

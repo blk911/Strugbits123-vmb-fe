@@ -30,7 +30,6 @@ export default function AppointmentScheduledModal({
     }
   }
   const mock = initialData || {};
-
   const appointmentId = initialData?.appointment?.id;
 
   const [holdAppointment, { isLoading: holding }] =
@@ -39,7 +38,19 @@ export default function AppointmentScheduledModal({
     useDeclineAppointmentMutation();
   const [confirmAppointment, { isLoading: confirming }] =
     useConfirmAppointmentMutation();
-  const totalPrice = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
+  const total = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
+      const type = mock?.appointment?.type;
+  let finalTotal;
+
+  if (type === "invite") {
+    finalTotal = total;
+  } else if (type === "booking") {
+    finalTotal = total + 2.5;
+  } else if (type === "gift") {
+    finalTotal = total + total * 0.1;
+  } else {
+    finalTotal = total;
+  }
   const status = mock?.appointment?.status;
   const { openModal } = useDashboardModal();
 
@@ -196,7 +207,7 @@ export default function AppointmentScheduledModal({
 
                       <div className="flex justify-end">
                         <p className="text-[#FF92A5] font-bold text-[13px]">
-                          Amount Paid: ${totalPrice + totalPrice * 0.1}
+                          Amount Paid: ${finalTotal}
                         </p>
                       </div>
                     </div>
