@@ -341,7 +341,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
         className="relative z-50 font-[Poppins]"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 overflow-y-auto bg-black/30">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-black/30">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -352,7 +352,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-[#E8E8E8] p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-[#E8E8E8] p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <div className="flex justify-between items-center">
                   <h2 className="text-[#581838] font-bold text-[24px]">
                     Profile Settings
@@ -621,7 +621,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           <RiArrowDropDownLine className="text-[24px]" />
                         </div>
                         {isDropdownOpen && (
-                          <div className="absolute w-full mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto p-3">
+                          <div className="absolute w-full  mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto custom-scrollbar p-3">
                             {days.map((day) => (
                               <CustomCheckbox
                                 key={day}

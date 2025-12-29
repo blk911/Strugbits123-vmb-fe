@@ -168,7 +168,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
           <div className="fixed inset-0 bg-black/30" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child as={Fragment}>
               <Dialog.Panel
@@ -220,7 +220,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         onClick={() =>
                           setServiceDropdownOpen(!serviceDropdownOpen)
                         }
-                        className="w-full mt-2 border border-[#E5E5E5] rounded-lg py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer flex-wrap gap-2 min-h-[48px] bg-white"
+                        className="w-full mt-2 border border-[#E5E5E5] rounded-lg py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer flex-wrap gap-2 min-h-[48px] bg-white  max-h-28 overflow-y-auto custom-scrollbar"
                       >
                         {selectedServices.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
@@ -256,7 +256,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       </div>
 
                       {serviceDropdownOpen && salon?.services && (
-                        <div className="absolute w-full bg-white border border-[#E5E5E5] rounded-lg mt-2 p-4 z-10 shadow-xl max-h-60 overflow-y-auto">
+                        <div className="absolute w-full bg-white border border-[#E5E5E5] rounded-lg mt-2 p-4 z-10 shadow-xl max-h-60 overflow-y-auto custom-scrollbar">
                           {salon.services.map((svc) => (
                             <CustomCheckbox
                               key={svc._id}
@@ -277,7 +277,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                     </div>
 
                     {selectedServices.length > 0 && (
-                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-32 overflow-y-auto custom-scrollbar">
                         <div className="flex justify-between text-xs font-medium mb-2">
                           <span>Service</span>
                           <span>Duration</span>

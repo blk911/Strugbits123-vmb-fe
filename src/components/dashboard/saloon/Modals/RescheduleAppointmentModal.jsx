@@ -181,7 +181,7 @@ export default function RescheduleAppointmentModal({
             <div className="fixed inset-0 bg-black/30" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6 ">
               <Transition.Child
                 as={Fragment}
@@ -319,7 +319,7 @@ export default function RescheduleAppointmentModal({
                               Services:
                             </p>
 
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]">
+                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]  max-h-32 overflow-y-auto custom-scrollbar">
                               <div className="flex justify-between text-[12px] font-medium text-black">
                                 <span>Service</span>
                                 <div className="flex gap-8">

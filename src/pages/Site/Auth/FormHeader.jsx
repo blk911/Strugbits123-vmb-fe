@@ -3,14 +3,21 @@ import logo from "../../../assets/logo.png";
 import Button from "../../../components/common/dashboard/Button";
 import { useDispatch } from "react-redux";
 import { setAuthMode } from "../../../store/features/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function FormHeader({ mode }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col  items-center gap-4 py-2">
-      <div className="w-[162px] h-[104px]">
-        <img src={logo} alt="logo" className="h-full w-full" />
+      <div className="w-[162px] h-[104px] my-3">
+        <img
+          src={logo}
+          alt="logo"
+          className="h-full w-full cursor-pointer"
+          onClick={() => navigate("/")}
+        />
       </div>
 
       <div className="w-max bg-[#FF92A566] rounded-xl flex gap-x-[10px] p-[7px]">

@@ -74,7 +74,7 @@ export default function SalonDetail() {
               <div className="flex items-center gap-2">
                 <FaMapMarkerAlt />
                 <span>
-                  {user?.salonAddress} |
+                  {user?.salonAddress}
                   {/* {salon?.distance?.toFixed(1)} miles */}
                 </span>
               </div>

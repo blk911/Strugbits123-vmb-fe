@@ -77,6 +77,22 @@ export default function BookAppointmentModal({
   });
 
   const selectedServices = watch("selectedServices") || [];
+useEffect(() => {
+  const handleClickOutside = (event) => {
+  
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setDropdownOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
 
   useEffect(() => {
     if (isOpen && salon) {
@@ -174,7 +190,7 @@ export default function BookAppointmentModal({
             <div className="fixed inset-0 bg-black/30" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
               <Transition.Child as={Fragment}>
                 <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-white p-10 shadow-xl flex flex-col gap-8">
@@ -257,7 +273,7 @@ export default function BookAppointmentModal({
                       </label>
                       <div
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]"
+                        className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]  max-h-28 overflow-y-auto custom-scrollbar"
                       >
                         {selectedServices.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
@@ -293,7 +309,7 @@ export default function BookAppointmentModal({
                       {dropdownOpen && salon?.services && (
                         <div
                           ref={dropdownRef}
-                          className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto"
+                          className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto custom-scrollbar"
                         >
                           {salon.services.map((s) => (
                             <CustomCheckbox
@@ -313,7 +329,7 @@ export default function BookAppointmentModal({
                     </div>
 
                     {selectedServices.length > 0 && (
-                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
+                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4  max-h-32 overflow-y-auto custom-scrollbar">
                         <div className="flex justify-between text-xs font-medium mb-2">
                           <span>Service</span>
                           <span>Duration</span>

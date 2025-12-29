@@ -7,15 +7,15 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <nav className="w-full h-[109px] bg-white py-[20px] px-[50px]">
-      <div className="flex flex-row justify-between items-center">
+    <nav className="w-full bg-white py-[20px] px-[50px]">
+      <div className="flex gap-2 flex-col sm:flex-row justify-between items-center">
         <img
           src={logo}
           alt="Logo"
           className="h-[69px] w-[108px] cursor-pointer"
           onClick={() => navigate("/")}
         />
-        <div className="lg:hidden">
+        {/* <div className="lg:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="flex flex-col justify-center items-center w-12 h-12 rounded focus:outline-none"
@@ -25,8 +25,8 @@ function Header() {
             <span className="block w-8 h-1 bg-[#7a2c3a] mb-2 rounded"></span>
             <span className="block w-8 h-1 bg-[#7a2c3a] rounded"></span>
           </button>
-        </div>
-        <div className="hidden lg:block">
+        </div> */}
+        <div >
           <ul className="flex items-center gap-[20px] text-[#4B5563]">
             {/* <li>
               <a href="" className="text-[#4B5563]">
@@ -52,6 +52,7 @@ function Header() {
               <Button
                 text={"Register Your Salon Today"}
                 navigateTo={"register"}
+                type={"salon"}
               />
             </li>
           </ul>

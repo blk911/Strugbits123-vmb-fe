@@ -33,7 +33,7 @@ export default function AppointmentDetailsSection({ data }) {
 
       <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
         <h3 className="text-[#581838] text-[14px] font-medium">Services:</h3>
-        <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]">
+        <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]  max-h-32 overflow-y-auto custom-scrollbar">
           <div className="flex justify-between text-[12px] font-medium text-black">
             <span>Service</span>
             <div className="flex gap-8">

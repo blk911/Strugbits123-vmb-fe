@@ -227,7 +227,7 @@ export default function SalonStep2({ onBack }) {
             </div>
 
             {isDropdownOpen && (
-              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-md z-50 p-3 max-h-60 overflow-y-auto">
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-md z-50 p-3 max-h-60 overflow-y-auto custom-scrollbar">
                 {days.map((day) => (
                   <CustomCheckbox
                     key={day}

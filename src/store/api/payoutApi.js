@@ -23,8 +23,8 @@ export const payoutApi = createApi({
       providesTags: ["Payout"],
     }),
     markAsPaid: builder.mutation({
-      query: (earningId) => ({
-        url: `/mark-as-paid/${earningId}`,
+      query: (salonId) => ({
+        url: `/mark-as-paid/${salonId}`,
         method: "PATCH",
       }),
       invalidatesTags: ["Payout"],
