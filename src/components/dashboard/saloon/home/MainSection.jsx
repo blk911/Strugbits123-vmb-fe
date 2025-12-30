@@ -32,11 +32,30 @@ export default function MainSection() {
       status: "pending",
       sort: "newest",
     });
-
+const { data: rescheduleRes, isLoading: loadingReschedule } =
+    useGetSalonAppointmentsQuery({
+      status: "reschedule-requested",
+      sort: "newest",
+    });
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
   const pendingAppointments = appointmentsRes?.data?.items || [];
+const rescheduleAppointments = rescheduleRes?.data?.items || [];
 
+let selectedAppointments = [];
+  if (pendingAppointments.length > 0) {
+    selectedAppointments.push(pendingAppointments[0]);
+  }
+  if (rescheduleAppointments.length > 0) {
+    selectedAppointments.push(rescheduleAppointments[0]);
+  }
+  if (selectedAppointments.length < 2) {
+    if (pendingAppointments.length > 1 && selectedAppointments.length < 2) {
+      selectedAppointments.push(pendingAppointments[1]);
+    } else if (rescheduleAppointments.length > 1 && selectedAppointments.length < 2) {
+      selectedAppointments.push(rescheduleAppointments[1]);
+    }
+  }
   const getInviteProps = (item) => ({
     img: item?.salonProfilePic || SalonImage,
     salon: item.salonName,
@@ -54,8 +73,8 @@ export default function MainSection() {
     price: `$${
       item.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0
     }`,
-    statusText: "Pending",
-    statusColor: "#FF9500",
+statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
+    statusColor: item.status === "pending" ? "#FF9500" : "#FF92A5",
     timeAgo: formatTimeAgo(item?.timeline[0]?.timestamp || item.createdAt),
     data: item,
   });
@@ -113,8 +132,8 @@ export default function MainSection() {
           {renderCardSection({
             title: "Pending Appointments",
             icon: <FaCalendarAlt className="text-[#FF92A5]" />,
-            items: pendingAppointments,
-            isLoading: loadingAppointments,
+            items: selectedAppointments,
+            isLoading: loadingAppointments || loadingReschedule,
             emptyMessage: "No appointments to show",
             CardComponent: AppointmentCard,
             navigateTo: "/appointments",

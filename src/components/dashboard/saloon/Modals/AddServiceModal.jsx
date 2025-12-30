@@ -38,7 +38,7 @@ export default function AddServiceModal({
   const [updateService, { isLoading: isUpdating }] = useUpdateServiceMutation();
   const [getUploadUrl, { isLoading: uploading }] = useGetUploadUrlMutation();
   const isLoading = isCreating || isUpdating;
-  const isEditMode = !!initialData;
+  const isEditMode = !!initialData?.salonId;
   const imgRef = useRef();
 
   const {
@@ -161,7 +161,7 @@ export default function AddServiceModal({
               <Dialog.Panel className="w-full max-w-[480px] rounded-[12px] bg-[#e8e8e8] p-[30px] shadow-xl">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-[24px] font-bold text-[#581838]">
-                    {initialData ? "Edit Service" : "Add Service"}
+                    {initialData?.salonId ? "Edit Service" : "Add Service"}
                   </h2>
                   <IoClose
                     onClick={closeModal}
@@ -379,7 +379,7 @@ export default function AddServiceModal({
                   >
                     {isLoading
                       ? "Saving Service..."
-                      : initialData
+                      : initialData?.salonId
                       ? "Update Service"
                       : "Add Service"}
                   </AppButton>

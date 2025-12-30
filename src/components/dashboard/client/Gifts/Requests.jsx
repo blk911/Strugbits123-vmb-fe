@@ -95,7 +95,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           } `
         : "-",
       giftStatus: gift.isPaid
-        ? "Redeemed"
+        ? "Accepted"
         : gift.status === "pending"
         ? "Pending"
         : "Declined",

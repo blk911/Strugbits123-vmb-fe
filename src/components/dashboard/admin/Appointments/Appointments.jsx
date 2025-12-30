@@ -69,7 +69,6 @@ export default function Appointments({
       switch (tag) {
         case "requested":
         case "appointment-created":
-        case "scheduled":
           return {
             ...base,
             icon: <FaPaperPlane className="w-4 h-4" />,
@@ -105,7 +104,7 @@ export default function Appointments({
             smallTopLabel: true,
           };
 
-        case "appointment-scheduled":
+        case "scheduled":
           return {
             ...base,
             icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,

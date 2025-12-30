@@ -1,9 +1,11 @@
+
 import { FaGift, FaRegCalendarAlt } from "react-icons/fa";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import AppButton from "../../../common/site/AppButton";
 
 export default function ServiceCard({ services, salon }) {
   const { openModal } = useDashboardModal();
+
   const {
     _id,
     serviceName,
@@ -12,70 +14,91 @@ export default function ServiceCard({ services, salon }) {
     servicePrice,
     description,
   } = services;
+
   const handleGiftClick = () => {
     openModal("giftService", {
       salon,
       service: { _id, serviceName, serviceDuration, servicePrice },
     });
   };
+
   const handleBookClick = () => {
     openModal("bookAppointment", {
       salon,
       service: { _id, serviceName, serviceDuration, servicePrice },
     });
   };
+
   return (
-    <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 hover:shadow-md transition-all duration-300">
-      <div className="relative w-full">
+    <div
+      className="border border-[#58183880] rounded-[12px] p-4 sm:p-5
+                 flex flex-col h-full hover:shadow-md transition-all duration-300"
+    >
+      <div className="relative w-full h-[200px] shrink-0">
         <img
           src={serviceImage}
           alt={serviceName}
-          className="w-full h-[180px] sm:h-[200px] md:h-[220px] object-cover rounded-md"
+          className="w-full h-full object-cover rounded-md"
         />
-        <div className="absolute top-3 right-3 bg-white text-[#6B7280] text-[12px] sm:text-[13px] px-3 py-[4px] rounded-[8px] shadow-sm">
+        <div
+          className="absolute top-3 right-3 bg-white text-[#6B7280]
+                     text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm"
+        >
           {serviceDuration} min
         </div>
       </div>
 
-      <div className="flex items-start justify-between flex-wrap gap-2">
-        <h4 className="text-[#581838] font-semibold text-[16px] sm:text-[18px] leading-[22px] sm:leading-[24px]">
-          {serviceName}
-        </h4>
-        <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
-          ${servicePrice}
-        </span>
-      </div>
+      <div className="flex flex-col flex-1 mt-4 gap-2">
+        <div className="flex justify-between items-start min-h-[48px] gap-2">
+          <h4
+            className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+                       leading-[22px] line-clamp-2 max-w-[70%]"
+          >
+            {serviceName}
+          </h4>
 
-      <p className="text-[#4B5563] text-[14px] leading-[18px] sm:text-[15px]">
-        {description}
-      </p>
+          <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+            ${servicePrice}
+          </span>
+        </div>
 
-      <div className="flex flex-col xl:flex-row justify-between gap-3 mt-2">
-        <AppButton
-          leftIcon={
-            <FaGift className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
-          }
-          fullWidth={false}
-          variant="ghost-pink-light"
-          size="custom"
-          onClick={handleGiftClick}
-          className="py-[10px] px-[15px] text-[15px] sm:text-[16px]  font-medium w-full "
+        <p
+          className="text-[#4B5563] text-[14px] sm:text-[15px]
+                     leading-[18px] line-clamp-2 min-h-[36px]"
         >
-          Request Service
-        </AppButton>
+          {description || "\u00A0"}
+        </p>
 
-        <AppButton
-          leftIcon={
-            <FaRegCalendarAlt className="text-[#FF92A5] text-[18px] sm:text-[20px] flex-shrink-0" />
-          }
-          fullWidth={false}
-          variant="outline-pink"
-          size="custom"
-          onClick={handleBookClick}
-          className="py-[10px] px-[15px] text-[15px] sm:text-[16px]  font-medium w-full "
-        >
-          Book Now
-        </AppButton>
+        <div className="flex-1" />
+
+        <div className="w-full flex flex-col md:flex-row gap-2">
+          <div className="w-full md:w-[60%]">
+
+          <AppButton
+            leftIcon={<FaGift className="text-[#FF92A5] text-[18px]" />}
+            variant="ghost-pink-light"
+            size="custom"
+            onClick={handleGiftClick}
+            className="py-[10px] px-[12px] text-[14px] font-medium 
+                       whitespace-nowrap  "
+          >
+            Request Service
+          </AppButton>
+          </div>
+<div className="w-full md:w-[40%]">
+
+          <AppButton
+            leftIcon={<FaRegCalendarAlt className="text-[#FF92A5] text-[18px]" />}
+            variant="outline-pink"
+            size="custom"
+            onClick={handleBookClick}
+            className="py-[10px] px-[12px] text-[14px] font-medium 
+                       whitespace-nowrap "
+          >
+            Book Now
+          </AppButton>
+</div>
+        </div>
       </div>
     </div>
   );

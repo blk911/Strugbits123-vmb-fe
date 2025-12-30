@@ -45,9 +45,26 @@ export const customerApi = createApi({
       }),
     }),
     getSalonById: builder.query({
-      query: (id) => ({
-        url: `/get-salon-by-id/${id}`,
-      }),
+      // query: ( id ) => ({
+      //   url: `/get-salon-by-id/${id}`,
+      // }),
+  //     query: ({ id, userLat, userLng }) => ({
+  //   url: `/get-salon-by-id/${id}`,
+  //   params: {
+  //     ...(userLat !== undefined && { userLat }),
+  //     ...(userLng !== undefined && { userLng }),
+  //   },
+  // }),
+  query: (params) => {
+    const { id, userLat, userLng } = params;
+    const queryParams = new URLSearchParams();
+    if (userLat !== undefined) queryParams.append('userLat', userLat);
+    if (userLng !== undefined) queryParams.append('userLng', userLng);
+    const queryString = queryParams.toString();
+    return {
+      url: `/get-salon-by-id/${id}${queryString ? `?${queryString}` : ''}`,
+    };
+  },
     }),
     getDailyStats: builder.query({
       query: () => ({

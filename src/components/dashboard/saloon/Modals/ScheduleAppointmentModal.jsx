@@ -300,7 +300,7 @@ export default function ScheduleAppointmentModal({
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                Amount Paid: ${finalTotal.toFixed(2)}
+                                     Amount Paid: ${finalTotal}
                               </p>
                             </div>
                           </div>
@@ -343,7 +343,7 @@ export default function ScheduleAppointmentModal({
                               Services:
                             </p>
 
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]">
+                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-32 overflow-y-auto custom-scrollbar">
                               <div className="flex justify-between text-[12px] font-medium text-black">
                                 <span>Service</span>
                                 <div className="flex gap-8">
@@ -369,7 +369,7 @@ export default function ScheduleAppointmentModal({
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                Amount Paid: ${totalPrice}
+                                Amount Paid: ${finalTotal}
                               </p>
                             </div>
                           </div>

@@ -74,7 +74,7 @@ export default function AllPayouts({
   const payouts = payoutsData?.data?.items || [];
   const totalPages = payoutsData?.data?.pages || 1;
   const transformedData = payouts.map((payout) => ({
- id: `${payout.salon._id}-${payout.payoutDate ? new Date(payout.payoutDate).toISOString() : 'pending'}`,
+    id: `${payout.salon._id}-${crypto.randomUUID()}-${payout.payoutDate ? new Date(payout.payoutDate).toISOString() : 'pending'+crypto.randomUUID()}`,
     salonId: payout.salon._id.toString(),
     salonImage: payout.salon?.profilePic || "/default-salon.jpg",
     salonName: payout.salon?.salonName || "Unknown Salon",

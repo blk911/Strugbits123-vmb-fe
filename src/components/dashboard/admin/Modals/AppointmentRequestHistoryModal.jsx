@@ -16,7 +16,21 @@ export default function AppointmentRequestHistoryModal({
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], treatSection = {}, appointment } = data;
+
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
+      const type = appointment?.type;
+const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
+  let finalTotal;
+
+  if (type === "invite") {
+    finalTotal = total;
+  } else if (type === "booking") {
+    finalTotal = total + 2.5;
+  } else if (type === "gift") {
+    finalTotal = total + total * 0.1;
+  } else {
+    finalTotal = total;
+  }
   const salonId = salon?.salonId;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -210,7 +224,7 @@ export default function AppointmentRequestHistoryModal({
                 Services:
               </p>
 
-              <div className="border border-[#9CA3AF4D] rounded-[10px] p-3 text-[12px]">
+              <div className="border border-[#9CA3AF4D] rounded-[10px] p-3 text-[12px] max-h-32 overflow-y-auto custom-scrollbar">
                 {salon.serviceRequested ? (
                   <div className="flex flex-col gap-3">
                     <div className="hidden sm:flex justify-between text-[12px] font-medium text-[#000] px-1">
@@ -260,7 +274,7 @@ export default function AppointmentRequestHistoryModal({
               </div>
               <p className="text-left sm:text-right text-[#FF92A5] font-bold text-[13px]">
                 Amount Paid: $
-                {salon?.serviceRequested.reduce((a, b) => a + b.price, 0)}
+                {finalTotal}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px]">

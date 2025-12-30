@@ -35,7 +35,7 @@ const inviteSchema = z.object({
   message: z.string().optional(),
 });
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 80;
 
 export default function SendTreatModal({
   isOpen,
@@ -59,7 +59,7 @@ export default function SendTreatModal({
   const services = response?.data?.items || [];
   const currentPage = response?.data?.page || 1;
   const totalPages = response?.data?.pages || 1;
-
+const filteredservices=services?.filter((service) => service.salonId !== null);
   const {
     control,
     handleSubmit,
@@ -75,7 +75,7 @@ export default function SendTreatModal({
       lastName: "",
       email: prefilledEmail,
       serviceId: "",
-      discountPercentage: 0,
+      discountPercentage: services[0]?.serviceDiscount || 10,
       message: ``,
     },
   });
@@ -102,6 +102,9 @@ export default function SendTreatModal({
     if (selectedServiceId && firstName) {
       const selectedService = services.find((s) => s._id === selectedServiceId);
       if (selectedService) {
+        setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
+        shouldValidate: true,
+      });
         const name = firstName.trim() || "{FirstName}";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nSignup and book today.`;
         setValue("message", message);
@@ -116,7 +119,7 @@ export default function SendTreatModal({
         lastName: "",
         email: prefilledEmail,
         serviceId: "",
-        discountPercentage: 0,
+        discountPercentage: services[0].serviceDiscount || 10,
         message: "",
       });
       setPage(1);
@@ -298,10 +301,9 @@ export default function SendTreatModal({
                     ) : (
                       <>
                         <div
-                          className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto no-scrollbar"
-                          style={{ scrollbarWidth: "none" }}
+                          className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-44 overflow-y-auto custom-scrollbar "
                         >
-                          {services.map((srv) => (
+                          {filteredservices?.map((srv) => (
                             <label
                               key={srv._id}
                               className="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-[#FFF4F6] transition"
@@ -314,6 +316,7 @@ export default function SendTreatModal({
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
+                                 setValue("discountPercentage", srv?.serviceDiscount ?? 0, {shouldValidate: true,});
                                   const name =
                                     watch("firstName").trim() || "${FirstName}";
                                   const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!\nSignup and book today.`;
@@ -437,7 +440,6 @@ export default function SendTreatModal({
                     size="custom"
                     className="w-full text-[16px] font-medium py-3"
                     disabled={!isValid || isSubmitting}
-                    isLoading={isSubmitting}
                   >
                     {isSubmitting ? "Sending Invite..." : "Invite Now"}
                   </AppButton>
