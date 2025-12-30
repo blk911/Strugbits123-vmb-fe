@@ -60,9 +60,9 @@ export default function ServiceCard({ service }) {
           onClick={handleEditClick}
           className="flex-1 py-2 px-3 text-[15px] sm:text-[16px] font-medium"
         >
-          Edit Service
+         {service?.salonId ? "Edit" : "Add"}  Service
         </AppButton>
-
+{service?.salonId && (
         <button
           onClick={handleDeleteClick}
           className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-[#FF92A54D] flex items-center justify-center cursor-pointer gap-2"
@@ -72,6 +72,8 @@ export default function ServiceCard({ service }) {
             Delete
           </span>
         </button>
+)
+ }
       </div>
     </div>
   );

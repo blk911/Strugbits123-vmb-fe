@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import {
-  useAcceptInviteMutation,
+  useCreateCheckoutSessionMutation,
   useGetSalonByIdQuery,
 } from "../../../../store/api";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,7 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
+import { useUser } from "../../../../hooks/useUser";
 
 export default function ExclusiveInviteModal({
   isOpen,
@@ -27,7 +28,10 @@ export default function ExclusiveInviteModal({
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
+  // const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
+   const [createCheckoutSession, { isLoading: isRedirecting }] =
+      useCreateCheckoutSessionMutation();
+        const {user}=useUser();
   const salon = initialData;
   const services = Array.isArray(salon?.services) ? salon.services : [];
 
@@ -84,6 +88,7 @@ export default function ExclusiveInviteModal({
     setScheduleOpen(true);
   };
 
+
   const handleConfirmBooking = async () => {
     if (!inviteId) {
       toastError("Invite not found");
@@ -97,28 +102,57 @@ export default function ExclusiveInviteModal({
 
     const loadingToast = toastLoading("Confirming your appointment...");
 
+    const payload = {
+      id: inviteId,
+      salonId: salonId,
+      appointmentDate: selectedDate,
+      startTime: convertTo12Hour(selectedTime),
+      paymentAmount: finalPrice,
+      paymentType:"invite",
+      requesterEmail:user?.email,
+      clientName:user?.name,
+      services:services.map((s) => s.id),
+    };
+
     try {
-      await acceptInvite({
-        id: inviteId,
-        data: {
-          appointmentDate: selectedDate,
-          startTime: convertTo12Hour(selectedTime),
-          payment: {
-            amount: finalPrice,
-          },
-        },
-      }).unwrap();
+      const response = await createCheckoutSession(payload).unwrap();
 
       toastDismiss(loadingToast);
-      toastSuccess("Appointment booked successfully!");
 
-      closeAll();
-      initialData?.onBookingSuccess?.();
+      if (response.success && response.data?.url) {
+        window.location.href = response.data.url;
+      } else {
+        toastError("Failed to initialize payment");
+      }
     } catch (err) {
       toastDismiss(loadingToast);
-      toastError(err?.data?.message || "Failed to book appointment");
-      console.error("Accept invite failed:", err);
+      toastError(err?.data?.message || "Payment failed. Please try again.");
+      console.error("Checkout error:", err);
     }
+
+
+    // try {
+    //   await acceptInvite({
+    //     id: inviteId,
+    //     data: {
+    //       appointmentDate: selectedDate,
+    //       startTime: convertTo12Hour(selectedTime),
+    //       payment: {
+    //         amount: finalPrice,
+    //       },
+    //     },
+    //   }).unwrap();
+
+    //   toastDismiss(loadingToast);
+    //   toastSuccess("Appointment booked successfully!");
+
+    //   closeAll();
+    //   initialData?.onBookingSuccess?.();
+    // } catch (err) {
+    //   toastDismiss(loadingToast);
+    //   toastError(err?.data?.message || "Failed to book appointment");
+    //   console.error("Accept invite failed:", err);
+    // }
   };
   return (
     <>
@@ -362,10 +396,10 @@ export default function ExclusiveInviteModal({
                   <AppButton
                     variant="primary"
                     onClick={handleConfirmBooking}
-                    disabled={accepting || !selectedDate || !selectedTime}
+                    disabled={isRedirecting || !selectedDate || !selectedTime}
                     className="text-lg py-3"
                   >
-                    {accepting ? "Booking..." : "Pay Now"}
+                    {isRedirecting ? "Booking..." : "Pay Now"}
                   </AppButton>
                 </Dialog.Panel>
               </Transition.Child>

@@ -8,7 +8,6 @@ import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import successGif from "../../../../assets/successGif.gif";
 import {
-  useCreateAppointmentMutation,
   useCreateCheckoutSessionMutation,
 } from "../../../../store/api";
 import {
@@ -19,6 +18,7 @@ import {
 } from "../../../../utils/toast";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
+import { useUser } from "../../../../hooks/useUser";
 
 const bookingSchema = z.object({
   fullName: z
@@ -53,6 +53,7 @@ export default function BookAppointmentModal({
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const salon = initialData?.salon;
   const prefilledService = initialData?.service;
+  const {user}=useUser();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
   // const [createAppointment, { isLoading: booking }] =
@@ -145,21 +146,10 @@ useEffect(() => {
       appointmentDate: data?.appointmentDate,
       startTime: convertTo12Hour(data?.appointmentTime),
       paymentAmount: total,
+      paymentType:"booking",
+      requesterEmail:user?.email
     };
-
     const loadingToast = toastLoading("Creating your appointment...");
-
-    // try {
-    //   await createAppointment(payload).unwrap();
-    //   toastDismiss(loadingToast);
-    //   toastSuccess("Appointment booked successfully!");
-    //   closeModal();
-    //   setTimeout(() => setShowSuccessModal(true), 300);
-    // } catch (err) {
-    //   toastDismiss(loadingToast);
-    //   toastError(err?.data?.message || "Failed to book appointment");
-    //   console.error("Booking failed:", err);
-    // }
     try {
       const response = await createCheckoutSession(payload).unwrap();
 

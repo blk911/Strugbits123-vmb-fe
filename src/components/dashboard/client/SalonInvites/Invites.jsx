@@ -127,6 +127,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       services: invite.services
         ? [
             {
+              id:invite.services._id,
               name: invite.services.serviceName,
               price: invite.services.servicePrice || 0,
               duration:
