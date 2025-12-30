@@ -163,20 +163,17 @@ export default function SalonRequestModal({
                 <textarea
                   rows={4}
                   readOnly
-                  className="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2 text-[14px] bg-white resize-none"
+                  className="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2 text-[14px] text-[#00000080] resize-none"
                   value={
                     data?.description ||
                     "A premium beauty salon offering top-tier hair, nail, and spa services with a focus on luxury and relaxation."
                   }
                 />
               </div>
-            </div>
-          </div>
-
           <div className="h-[1px] bg-[#D9D9D9]"></div>
 
-          <div className="flex flex-col gap-4">
-            <h3 className="text-[#581838] font-semibold text-[18px]">
+
+                   <h3 className="text-[#581838] font-semibold text-[18px]">
               Owner Information
             </h3>
 
@@ -196,8 +193,15 @@ export default function SalonRequestModal({
                 {data?.phoneNumber || "+1 (555) 987-6543"}
               </p>
             </div>
+            </div>
+          </div>
 
-            <div className="flex gap-3 overflow-x-auto py-2">
+        </div>
+
+          <div className="flex flex-col gap-4">
+       
+
+            <div className="flex gap-3 overflow-x-auto custom-scrollbar py-2">
               {data?.salonPhotos.map((i) => (
                 <img
                   key={i}
@@ -209,8 +213,9 @@ export default function SalonRequestModal({
             </div>
           </div>
           {(data?.status === "pending" || data?.status === "deactivated") && (
-            <div className="flex flex-col sm:flex-row  justify-center sm:justify-end gap-3 pt-4">
+            <div className="flex flex-row  justify-end gap-3 pt-4">
               <AppButton
+              fullWidth={false}
                 variant="custom"
                 size="custom"
                 className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
@@ -222,18 +227,19 @@ export default function SalonRequestModal({
               </AppButton>
 
               <AppButton
+              fullWidth={false}
+
                 disabled={isApproving}
                 onClick={handleApprove}
                 variant="custom"
                 size="custom"
-                className="py-[15px] px-[20px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+                className="py-[15px] px-[20px] bg-white text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
                 leftIcon={<FiCheck size={16} />}
               >
                 {isApproving ? "Approving..." : "Approve"}
               </AppButton>
             </div>
           )}
-        </div>
       </div>
     </div>
   );
