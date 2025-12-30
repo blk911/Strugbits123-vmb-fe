@@ -98,7 +98,7 @@ function SalonCard({ salon }) {
       />
       <div className="p-[16px] flex flex-col">
         <span
-          className="text-[#581838] text-[22px] font-semibold line-clamp-2 min-h-[56px]"
+          className="text-[#581838] text-[22px] font-semibold line-clamp-1 "
           style={{ fontFamily: "Poppins, sans-serif", fontWeight: 500 }}
         >
           {salon.salonName || "Unnamed Salon"}
@@ -131,7 +131,7 @@ function SalonCard({ salon }) {
 <FiMapPin className="text-[#FFA1C3] text-[18px] flex-shrink-0" />
 
           <span
-            className="lg:text-[12px] xl:text-[14px] font-normal line-clamp-2 "
+            className="lg:text-[12px] xl:text-[14px] font-normal line-clamp-1 "
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             {salon.salonAddress

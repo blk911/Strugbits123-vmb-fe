@@ -57,7 +57,9 @@ export default function AllPayouts({
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess: salonSuccess,
-  } = useGetSalonByIdQuery(selectedSalonId, {
+  } = useGetSalonByIdQuery(
+    {id:selectedSalonId}
+    , {
     skip: !selectedSalonId,
   });
   useEffect(() => {

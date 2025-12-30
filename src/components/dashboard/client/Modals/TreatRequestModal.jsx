@@ -55,7 +55,9 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery(salonId, {
+  } = useGetSalonByIdQuery(
+    {id: salonId},
+   {
     skip: !isOpen || !salonId,
   });
   const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();

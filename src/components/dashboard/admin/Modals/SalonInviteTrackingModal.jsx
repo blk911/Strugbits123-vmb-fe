@@ -18,7 +18,9 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery(salonId, {
+  } = useGetSalonByIdQuery(
+   {id:salonId} 
+    , {
     skip: !isOpen || !salonId,
   });
   const handleViewSalon = () => {
