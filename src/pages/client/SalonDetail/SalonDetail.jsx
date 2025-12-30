@@ -7,19 +7,40 @@ import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoC
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { BsClockFill } from "react-icons/bs";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
+import { useUser } from "../../../hooks/useUser";
 export default function SalonDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { salon: reduxSalon, loading: reduxLoading } = useSelectedSalon();
+const { user } = useUser();
+let userLat = undefined;
+let userLng = undefined;
 
+if (user?.location?.coordinates) {
+  const [lng, lat] = user.location.coordinates;
+  userLat = lat;
+  userLng = lng;
+}
   const {
     data: apiData,
     isLoading: apiLoading,
     isError,
-  } = useGetSalonByIdQuery(id, {
+  } = useGetSalonByIdQuery(
+    { id, userLat, userLng }
+    , {
     refetchOnMountOrArgChange: true,
-  });
 
+  });
+  // const {
+  //   data: apiData,
+  //   isLoading: apiLoading,
+  //   isError,
+  // } = useGetSalonByIdQuery(
+  //   (id)
+  //   , {
+  //   refetchOnMountOrArgChange: true,
+
+  // });
   const salon = apiData?.data || reduxSalon;
   const isLoading = apiLoading && !salon;
 
@@ -69,7 +90,7 @@ export default function SalonDetail() {
           <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 text-[11px] sm:text-[13px] text-[#00000080] mt-3 sm:mt-4 sm:pl-[160px]">
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt />
-              <span>{salon.salonAddress}</span>
+              <span>{salon.salonAddress}{salon.distance !== "-" ? ` | ${salon.distance}` : ""}</span>
             </div>
             <div className="flex items-center gap-2">
               <FaPhoneAlt />

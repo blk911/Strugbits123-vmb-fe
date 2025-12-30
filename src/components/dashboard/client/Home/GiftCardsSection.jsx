@@ -85,7 +85,7 @@ export default function GiftCardsSection() {
     {
       id: 3,
       icon: SlCalender,
-      title: "Appointments",
+      title: "Pending Appointments",
       items: recentPendingAppointments,
       emptyMessage: "No pending appointments",
     },

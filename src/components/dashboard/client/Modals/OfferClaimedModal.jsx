@@ -98,8 +98,7 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                   </h3>
 
                   <p className="text-[#00000080] text-[14px] mt-2">
-                    This offer is now active under your profile
-                    <br /> for the next 14 days.
+                    You’ve successfully claimed this offer.
                   </p>
                 </div>
 

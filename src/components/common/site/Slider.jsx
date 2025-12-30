@@ -56,11 +56,12 @@ function SalonCard({ salon }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useUser();
+
   const {
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery(salon._id, {
+  } = useGetSalonByIdQuery({ id: salon._id }, {
     skip: !salon._id,
   });
   const handleViewSalon = () => {
@@ -147,7 +148,6 @@ export default function SalonSlider() {
   const { data, isLoading, isError, error } = useGetAllSalonsQuery();
 
   const salons = data?.data?.items || [];
-
   const settings = {
     dots: false,
     infinite: salons.length > 1,

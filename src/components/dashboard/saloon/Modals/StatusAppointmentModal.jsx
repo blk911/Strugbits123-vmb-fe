@@ -87,7 +87,9 @@ export default function StatusAppointmentModal({
     <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col gap-4">
       <div className="flex flex-col gap-1">
 
-      <p className="font-[Poppins] text-[14px]  text-[#581838] font-medium">Treat to:</p>
+      <p className="font-[Poppins] text-[14px]  text-[#581838] font-medium">
+        {appointmentType === "gift"? "Treat to:": " Paid by:"}
+       </p>
       <div className="flex items-center gap-3 flex-wrap">
         <img
           src={left.image || ""}
@@ -108,7 +110,10 @@ export default function StatusAppointmentModal({
       </div>
      <div className="flex flex-col gap-1">
 
- <p className="font-[Poppins] text-[14px] text-[#581838] font-medium">Treat by:</p>
+ <p className="font-[Poppins] text-[14px] text-[#581838] font-medium">
+        {appointmentType === "gift"? "Treat by:": " Paid to:"}
+  
+  </p>
       <div className="flex items-center gap-3 flex-wrap">
         <img
           src={right.image || ""}

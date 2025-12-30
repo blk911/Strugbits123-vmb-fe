@@ -64,7 +64,7 @@ export default function GalleryModal({
               <button
                 onClick={prev}
                 className="
-                  absolute left-2 sm:left-4 top-1/2 -translate-y-1/2
+                  absolute left-2  top-1/2 -translate-y-1/2
                   w-[28px] h-[28px] sm:w-[32px] sm:h-[32px]
                   bg-white rounded-full flex items-center justify-center
                   shadow-md z-20
@@ -76,7 +76,7 @@ export default function GalleryModal({
               <button
                 onClick={next}
                 className="
-                  absolute right-2 sm:right-4 top-1/2 -translate-y-1/2
+                  absolute right-2  top-1/2 -translate-y-1/2
                   w-[28px] h-[28px] sm:w-[32px] sm:h-[32px]
                   bg-white rounded-full flex items-center justify-center
                   shadow-md z-20
