@@ -198,9 +198,22 @@ export default function SalonStep2({ onBack }) {
       />
 
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
-        <TimeInput label="Start Time" name="startTime" />
-        <TimeInput label="End Time" name="endTime" />
-
+        {/* <TimeInput label="Start Time" name="startTime" />
+        <TimeInput label="End Time" name="endTime" /> */}
+<TimeInput
+    label="Start Time"
+    name="startTime"  
+    value={watch("startTime")}
+    onChange={(e) => setValue("startTime", e.target.value, { shouldValidate: true })}
+    error={errors.startTime}
+  />
+  <TimeInput
+    label="End Time"
+    name="endTime"
+    value={watch("endTime")}
+    onChange={(e) => setValue("endTime", e.target.value, { shouldValidate: true })}
+    error={errors.endTime}
+  />
         <div className="relative" ref={detailsRef}>
           <label className="block text-[#374151] text-[14px] font-semibold mb-1">
             Working Days
