@@ -93,9 +93,7 @@ const salonProfileSchema = z.object({
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
-  console.log("User==>",user
 
-  )
   const [updateMe, { isLoading: isUpdatingProfile }] =
     useUpdateSalonProfileMutation();
   const navigate = useNavigate();
