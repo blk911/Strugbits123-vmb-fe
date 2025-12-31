@@ -66,7 +66,7 @@ if (user?.location?.coordinates) {
         <div className="w-full relative z-0">
           <AutoCarousel
             images={salon.salonPhotos}
-            heightClass="h-[192px] rounded-tl-xl rounded-tr-xl"
+            heightClass="h-[180px] sm:h-[220px] md:h-[300px] rounded-tl-xl rounded-tr-xl"
           />
           <div className="absolute sm:-bottom-[115px] -bottom-[75px] left-1/2 sm:left-6 -translate-x-1/2 sm:translate-x-0 w-[110px] sm:w-[130px] md:w-[149px] h-[110px] sm:h-[130px] md:h-[149px] rounded-full overflow-hidden border-4 border-white shadow-md bg-white z-20">
             <img
