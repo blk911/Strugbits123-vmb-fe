@@ -105,7 +105,7 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
         setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
         shouldValidate: true,
       });
-        const name = firstName.trim() || "{FirstName}";
+        const name = firstName.trim() || "FirstName";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nSignup and book today.`;
         setValue("message", message);
       }

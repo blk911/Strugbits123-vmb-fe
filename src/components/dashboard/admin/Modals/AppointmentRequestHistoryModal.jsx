@@ -38,7 +38,7 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery(salonId, {
+  } = useGetSalonByIdQuery({id:salonId}, {
     skip: !isOpen || !salonId,
   });
   const handleViewSalon = () => {

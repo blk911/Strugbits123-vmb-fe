@@ -43,7 +43,7 @@ export default function ServiceCardAnonymous({ services, salon }) {
         </div>
    <p
           className="text-[#4B5563] text-[14px] sm:text-[15px]
-                     leading-[18px] line-clamp-2 min-h-[36px]"
+                     leading-[18px] line-clamp-2 "
         >
           {description || "\u00A0"}
         </p>

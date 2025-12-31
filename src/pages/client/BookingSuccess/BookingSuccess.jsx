@@ -210,7 +210,7 @@ export default function BookingSuccess() {
                       Total Paid:
                     </span>
                     <span className="text-[#FF92A5] text-[16px] font-semibold">
-                      ${amountPaid.toFixed(2)}
+                      ${details?.sourceType==="invite"? totalAmount.toFixed(2) : amountPaid.toFixed(2)}
                     </span>
                   </div>
                 </div>

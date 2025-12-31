@@ -44,7 +44,9 @@ export default function ExclusiveInviteModal({
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery(salonId, {
+  } = useGetSalonByIdQuery(
+    {id:salonId}
+    , {
     skip: !isOpen || !salonId,
   });
   // useEffect(() => setInviteOpen(isOpen), [isOpen]);

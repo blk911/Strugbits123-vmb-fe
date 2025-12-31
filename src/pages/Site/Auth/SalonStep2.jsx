@@ -348,12 +348,12 @@ export default function SalonStep2({ onBack }) {
             Upload Salon Photos
           </label>
 
-          <div className="flex items-start gap-3">
+          <div className="flex  items-center gap-3">
             <button
               type="button"
               onClick={() => photosRef.current.click()}
               disabled={uploading}
-              className={`flex-shrink-0 flex flex-col items-center justify-center w-[94px] h-[82px] border border-[#C0C0C0] bg-white rounded-md hover:bg-[#FFF4F6] transition-all cursor-pointer ${
+              className={`flex-shrink-0 flex flex-col items-center justify-center w-[74px] h-[70px] md:w-[94px] md:h-[82px] border border-[#C0C0C0] bg-white rounded-md hover:bg-[#FFF4F6] transition-all cursor-pointer ${
                 uploading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
@@ -375,18 +375,20 @@ export default function SalonStep2({ onBack }) {
               accept="image/*"
               onChange={handleSalonPhotosUpload}
             />
-            <div className="flex flex-wrap gap-2 sm:gap-3">
+     <div className="w-full overflow-x-auto custom-scrollbar">
+
+            <div className="flex  pt-3 gap-2 sm:gap-3">
               {watch("salonPhotos")?.map((photo, index) => (
                 <div key={index} className="relative flex-shrink-0">
                   <img
                     src={photo.url}
                     alt={`Salon photo ${index + 1}`}
-                    className="w-[80px] h-[74px] object-cover rounded-md border"
+                    className="w-[60px] h-[54px] md:w-[80px] md:h-[74px] object-cover rounded-md border"
                   />
                   <button
                     type="button"
                     onClick={() => removeSalonPhoto(index)}
-                    className="absolute cursor-pointer top-[-2px] right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
+                    className="absolute cursor-pointer top-[-2px] right-[15px] md:right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
                   >
                     ×
                   </button>
@@ -396,38 +398,8 @@ export default function SalonStep2({ onBack }) {
                 </div>
               ))}
             </div>
-            {/* <div className="flex-1 overflow-x-auto md:overflow-x-auto overflow-x-hidden">
-              <div
-                className="
-      grid grid-cols-3 gap-2
-      sm:grid-cols-4 sm:gap-3
-      md:flex md:gap-3 md:min-w-max
-    "
-              >
-                {watch("salonPhotos")?.map((photo, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={photo.url}
-                      alt={`Salon photo ${index + 1}`}
-                      className="
-            w-full aspect-[80/74]
-            md:w-[80px] md:h-[74px]
-            object-cover rounded-md border
-          "
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() => removeSalonPhoto(index)}
-                      className="absolute cursor-pointer -top-0 -right-1 bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
-                    >
-                      ×
-                    </button>
-
-                  </div>
-                ))}
-              </div>
-            </div> */}
+     </div>
+          
           </div>
 
           {errors.salonPhotos && (

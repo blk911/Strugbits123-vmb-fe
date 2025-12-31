@@ -30,9 +30,9 @@ export default function SalonCard({ salon }) {
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 mt-3 gap-2">
+      <div className="flex flex-col flex-1 mt-3 gap-3">
 
-        <div className="hidden sm:flex justify-between items-start min-h-[48px]">
+        <div className="hidden sm:flex justify-between items-start ">
           <h3 className="text-[#581838] font-medium text-[18px] leading-[24px] 
                          line-clamp-2 max-w-[60%]">
             {salon?.salonName}
@@ -42,7 +42,7 @@ export default function SalonCard({ salon }) {
             {salon?.distance || " "}
           </span>
         </div>
-    <div className="flex-col  flex sm:hidden items-start min-h-[48px]">
+    <div className="flex-col  flex sm:hidden items-start ">
           <h3 className="text-[#581838] font-medium text-[18px] leading-[24px] 
                          line-clamp-2 ">
             {salon?.salonName}
@@ -53,7 +53,7 @@ export default function SalonCard({ salon }) {
           </span>
         </div>
         <p className="text-[#4B5563] text-[12px] font-medium leading-[14px] 
-                      line-clamp-2 min-h-[28px]">
+                      line-clamp-2 ">
           {salon?.description || " "}
         </p>
 
