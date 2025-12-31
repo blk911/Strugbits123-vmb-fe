@@ -8,7 +8,7 @@ import { formatDuration } from "../../../../utils/HelperFunctions";
 
 const PAGE_SIZE = 10;
 
-export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
+export default function Invites({ searchQuery = "", sortOption = "Newest" ,initialTab = "All"}) {
   const { openModal } = useDashboardModal();
   const sortMap = {
     Newest: "newest",
@@ -18,7 +18,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const sortValue = sortMap[sortOption] || "newest";
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState(initialTab);
 
   const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
@@ -208,7 +208,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         <TabbedTable
           tabs={tabs}
           tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}
-          defaultTab="All"
+          defaultTab={activeTab}
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
           setExternalActiveTab={setActiveTab}
