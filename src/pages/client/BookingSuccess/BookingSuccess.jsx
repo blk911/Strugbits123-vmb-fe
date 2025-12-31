@@ -220,7 +220,7 @@ export default function BookingSuccess() {
 
           <div className="text-center px-[20px]">
             <AppButton
-              onClick={() => navigate("/client")}
+              onClick={() => navigate("/appointments")}
               variant="outline-dark"
               leftIcon={<FaArrowLeftLong size={16} />}
               className="text-[12px] sm:text-[16px]"
