@@ -35,6 +35,7 @@ import { clearUser, setUser } from "../../../../store/features/userSlice";
 import { useNavigate } from "react-router-dom";
 import { clearRole } from "../../../../store/features/roleSlice";
 import { setAuthMode } from "../../../../store/features/authSlice";
+import TimeInput from "../../../common/site/TimeInput";
 const days = [
   "Monday",
   "Tuesday",
@@ -66,12 +67,12 @@ const salonProfileSchema = z.object({
     .optional()
     .or(z.literal("")),
   description: z.string().min(10, "Description must be at least 10 characters"),
-  startTime: z
-    .string()
-    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
-  endTime: z
-    .string()
-    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+  // startTime: z
+  //   .string()
+  //   .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+  // endTime: z
+  //   .string()
+  //   .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
   selectedDays: z.array(z.string()).min(1, "Select at least one working day"),
   logo: z.string().url().optional().or(z.literal("")),
   licenseDocument: z.string().url().optional().or(z.literal("")),
@@ -92,6 +93,7 @@ const salonProfileSchema = z.object({
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
+
   const [updateMe, { isLoading: isUpdatingProfile }] =
     useUpdateSalonProfileMutation();
   const navigate = useNavigate();
@@ -556,7 +558,19 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <div>
+                 <TimeInput
+    label="Start Time"
+    value={watch("startTime")}
+    onChange={(e) => setValue("startTime", e.target.value, { shouldValidate: true })}
+    error={errors.startTime}
+  />
+  <TimeInput
+    label="End Time"
+    value={watch("endTime")}
+    onChange={(e) => setValue("endTime", e.target.value, { shouldValidate: true })}
+    error={errors.endTime}
+  />
+                      {/* <div>
                         <label className="block text-[#374151] text-[14px] font-semibold mb-1">
                           Start Time
                         </label>
@@ -599,7 +613,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                             {errors.endTime.message}
                           </p>
                         )}
-                      </div>
+                      </div> */}
                     </div>
 
                     <div>
