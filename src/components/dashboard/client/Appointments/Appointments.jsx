@@ -55,7 +55,6 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
   });
-
   const {
     data: pendingData,
     isLoading: loadingPending,
@@ -222,6 +221,7 @@ export default function Appointments({
         name: s.serviceName || s.name,
         duration: `${s.duration || 60} min`,
         price: s.price || 0,
+        discount: s.discount || 0,
       })),
       appointment: {
         date: appt.appointmentDate,

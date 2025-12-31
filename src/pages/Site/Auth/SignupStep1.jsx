@@ -102,6 +102,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         error={errors.email}
       />
       <InputWithIcon
+      type="number"
         label="Phone Number"
         icon={FaPhoneAlt}
         name="phone"

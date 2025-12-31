@@ -23,12 +23,14 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
   let finalTotal;
 
   if (type === "invite") {
-    finalTotal = total;
+     const discount=salon?.discount;
+    finalTotal = (total-((total * discount)/100));
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {
     finalTotal = total + total * 0.1;
   } else {
+   
     finalTotal = total;
   }
   const salonId = salon?.salonId;

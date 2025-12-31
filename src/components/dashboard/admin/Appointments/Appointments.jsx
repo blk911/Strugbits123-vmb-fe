@@ -45,7 +45,6 @@ export default function Appointments({
     refetch();
   }, [refetch]);
   const appointments = response?.data?.items || [];
-
   const totalPages = response?.data?.pages || 1;
   const formatDate = (date) =>
     !date ? "" : new Date(date).toLocaleDateString("en-GB");
@@ -216,6 +215,7 @@ export default function Appointments({
           email: appt.salon.salonEmail,
           phone: appt.salon.salonPhone,
           serviceRequested: appt.services,
+          discount:appt.type==="invite"?appt.services[0]?.discount:0,
           image: appt.salon.salonImage || SalonImage,
         },
       },

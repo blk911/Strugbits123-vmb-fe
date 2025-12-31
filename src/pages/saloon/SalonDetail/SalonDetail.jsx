@@ -1,6 +1,6 @@
 import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
-
+import { BsClockFill } from "react-icons/bs";
 import AppButton from "../../../components/common/site/AppButton";
 import ServicesSection from "../../../components/dashboard/saloon/SalonDetail/ServicesSection";
 import { useDashboardModal } from "../../ModalProvider";
@@ -27,7 +27,7 @@ export default function SalonDetail() {
         <div className="w-full relative">
           <AutoCarousel
             images={user?.salonPhotos}
-            heightClass="h-[180px] sm:h-[220px] md:h-[192px] rounded-tl-xl rounded-tr-xl"
+            heightClass="h-[180px] sm:h-[220px] md:h-[300px] rounded-tl-xl rounded-tr-xl"
           />
 
           <div
@@ -85,7 +85,7 @@ export default function SalonDetail() {
               </div>
 
               <div className="flex items-center gap-2">
-                <FaRegClock />
+                <BsClockFill />
                 <span>
                   {user?.startTime && user?.endTime
                     ? `${user.startTime} - ${user.endTime}`

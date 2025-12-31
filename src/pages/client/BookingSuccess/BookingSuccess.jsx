@@ -77,9 +77,9 @@ export default function BookingSuccess() {
       </div>
     );
   }
-
   const isGift = details?.sourceType === "gift" || details?.giftId;
   const services = details?.services || [];
+  
   const totalAmount = details?.services.reduce(
     (sum, s) => sum + (Number(s.price || s.servicePrice) || 0),
     0
@@ -210,7 +210,7 @@ export default function BookingSuccess() {
                       Total Paid:
                     </span>
                     <span className="text-[#FF92A5] text-[16px] font-semibold">
-                      ${details?.sourceType==="invite"? totalAmount.toFixed(2) : amountPaid.toFixed(2)}
+                      ${details?.sourceType==="invite"? (totalAmount-((totalAmount * details?.services[0]?.discount)/100)).toFixed(2) : amountPaid.toFixed(2)}
                     </span>
                   </div>
                 </div>
