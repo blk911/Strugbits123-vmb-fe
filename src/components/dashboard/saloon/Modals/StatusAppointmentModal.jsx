@@ -50,7 +50,8 @@ export default function StatusAppointmentModal({
   let finalTotal;
 
   if (appointmentType === "invite") {
-    finalTotal = totalPrice;
+// finalTotal=totalPrice
+      finalTotal = (totalPrice-((totalPrice * merged?.services[0]?.discount)/100));
   } else if (appointmentType === "booking") {
     finalTotal = totalPrice + 2.5;
   } else if (appointmentType === "gift") {

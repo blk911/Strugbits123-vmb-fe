@@ -10,7 +10,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
     if (open) {
       const timer = setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 9000);
 
       return () => clearTimeout(timer);
     }

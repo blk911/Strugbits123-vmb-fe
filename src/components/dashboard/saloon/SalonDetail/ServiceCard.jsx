@@ -29,7 +29,7 @@ export default function ServiceCard({ service }) {
         </div>
       </div>
  
-      <div className="flex justify-between items-start min-h-[48px] gap-2">
+      <div className="flex justify-between items-start gap-2">
           <h4
             className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
                        leading-[22px] line-clamp-2 max-w-[70%]"
@@ -44,7 +44,7 @@ export default function ServiceCard({ service }) {
 
         <p
           className="text-[#4B5563] text-[14px] sm:text-[15px]
-                     leading-[18px] line-clamp-2 min-h-[36px]"
+                     leading-[18px] line-clamp-2 "
         >
           {  service?.description || "\u00A0"}
         </p>

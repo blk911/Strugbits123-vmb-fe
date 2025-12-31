@@ -4,10 +4,12 @@ export default function AppointmentDetailsSection({ data }) {
   const total = data.services.reduce((s, it) => s + it.price, 0);
   const type = data?.appointment?.type;
   const status = data?.appointment?.status;
+  
   let finalTotal;
 
   if (type === "invite") {
-    finalTotal = total;
+    const discount=data?.services[0]?.discount;
+    finalTotal = (total-((total * discount)/100));
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {

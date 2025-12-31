@@ -190,6 +190,7 @@ export default function SalonStep2({ onBack }) {
         </div>
       </div>
       <InputWithIcon
+      type="number"
         label="Phone Number"
         icon={FaPhoneAlt}
         name="salonPhone"

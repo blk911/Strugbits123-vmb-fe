@@ -180,7 +180,6 @@ export default function Appointments({
       : activeTab === "Confirmed"
       ? fetchingConfirmed
       : fetchingDeclined;
-
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
   const transformedAppointments = appointments.map((appt) => ({
@@ -203,6 +202,7 @@ export default function Appointments({
         image: appt.salon?.salonImage || "/default-salon.jpg",
       },
       services: (appt.services || []).map((s) => ({
+        discount: s.discount || 0,
         name: s.serviceName || s.name,
         duration: s.duration ? `${s.duration} min` : "N/A",
         price: s.price || 0,
