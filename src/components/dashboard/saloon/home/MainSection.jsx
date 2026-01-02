@@ -39,6 +39,7 @@ const { data: rescheduleRes, isLoading: loadingReschedule } =
     });
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
+  console.log("Pending Invites==>", pendingInvites);
   const pendingAppointments = appointmentsRes?.data?.items || [];
 const rescheduleAppointments = rescheduleRes?.data?.items || [];
 
@@ -57,8 +58,8 @@ let selectedAppointments = [];
     }
   }
   const getInviteProps = (item) => ({
-    img: item?.salonProfilePic || SalonImage,
-    salon: item.salonName,
+    img: item?.inviteeProfilePic || SalonImage,
+    salon: item.fullName,
     service: item?.services?.serviceName || "No Service",
     statusText: "Pending",
     statusColor: "#FF9500",
