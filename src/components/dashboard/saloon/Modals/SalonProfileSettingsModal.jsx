@@ -749,11 +749,11 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       <label className="block text-[#374151] font-semibold mb-2">
                         Salon Photos
                       </label>
-                      <div className="flex items-center gap-3">
+                      <div className="flex  items-center gap-3">
                         <button
                           type="button"
                           onClick={() => photosRef.current.click()}
-                          className="flex-shrink-0 w-[94px] h-[82px] border border-[#C0C0C0] bg-white rounded-md flex flex-col items-center justify-center hover:bg-[#FFF4F6] cursor-pointer"
+                          className="flex-shrink-0 w-[94px] h-[90px] border border-[#C0C0C0] bg-white rounded-md flex flex-col items-center justify-center hover:bg-[#FFF4F6] cursor-pointer"
                         >
                           <img
                             src={uploadIcon}
@@ -777,7 +777,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         />
    <div className="w-full overflow-x-auto custom-scrollbar">
 
-            <div className="flex  pt-3 gap-2 sm:gap-3">
+            <div className="flex  pt-2 gap-2 sm:gap-3">
          
                         {watch("salonPhotos")?.map((photo, i) => (
                           <div key={i} className="relative">
@@ -794,7 +794,13 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                               ×
                             </button>
                             <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
-                              {photo.name}
+                              {decodeURIComponent(
+                              photo.name
+                                .split("/")
+                                .pop()
+                                .split("?")[0]
+                                .replace(/^\d+_/, "")
+                            )}
                             </p>
                           </div>
                         ))}

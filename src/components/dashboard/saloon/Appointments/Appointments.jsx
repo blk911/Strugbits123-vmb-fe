@@ -221,8 +221,8 @@ export default function Appointments({
       },
       appointment: {
         id: appt._id,
-        date: appt.appointmentDate,
-        time: appt.startTime,
+        date: appt.appointmentDate || "N/A",
+        time: appt.startTime || "N/A",
         message: appt.reschduleReason || "",
         status: appt.status,
         type: appt.type,

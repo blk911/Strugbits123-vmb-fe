@@ -39,6 +39,7 @@ const createSchema = (hasServices) =>
 
 export default function TreatModal({ isOpen, closeModal, initialData }) {
   const gift = initialData?.gift;
+  const [copyToastId, setCopyToastId] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [salonDropdownOpen, setSalonDropdownOpen] = useState(false);
@@ -632,12 +633,16 @@ useEffect(() => {
                         {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                       </span>
                       <IoCopyOutline
-                        onClick={() => {
-                          navigator.clipboard.writeText(
-                            import.meta.env.VITE_FRONTEND_URL + `gifts`
-                          );
-                          toastSuccess("Link copied!");
-                        }}
+                      onClick={() => {
+    if (copyToastId) {
+      toastDismiss(copyToastId);
+    }
+    navigator.clipboard.writeText(
+      import.meta.env.VITE_FRONTEND_URL + `gifts`
+    );
+    const newToastId = toastSuccess("Link copied!");
+    setCopyToastId(newToastId);
+  }}
                         className="text-[#581838] text-xl cursor-pointer"
                       />
                     </div>

@@ -1,4 +1,4 @@
-import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit, FaCamera } from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 import { BsClockFill } from "react-icons/bs";
 import AppButton from "../../../components/common/site/AppButton";
@@ -48,6 +48,23 @@ export default function SalonDetail() {
               alt={user?.salonName}
               className="w-full h-full object-cover"
             />
+  <button
+   onClick={() => openModal("salonprofileSettings")}
+    className="
+      absolute 
+      bottom-2 right-3 sm:bottom-2.5 sm:right-5
+      w-6 h-6 sm:w-8 sm:h-8 
+      rounded-full 
+      bg-[#FF92A5]
+      flex items-center justify-center
+      shrink-0
+      shadow-md
+      hover:scale-105 transition
+      cursor-pointer
+    "
+  >
+    <FaCamera className="text-white text-[11px] sm:text-sm shrink-0" />
+  </button>
           </div>
         </div>
 

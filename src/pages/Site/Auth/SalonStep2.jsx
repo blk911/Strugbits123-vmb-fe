@@ -297,6 +297,16 @@ export default function SalonStep2({ onBack }) {
           <textarea
             {...register("description")}
             rows={3}
+            onChange={(e) => {
+                        let value = e.target.value;
+
+                        if (value.startsWith(" ")) {
+                          value = value.trimStart();
+                          e.target.value = value;
+                        }
+
+                        register("description").onChange(e);
+                      }}
             placeholder="Enter description"
             className="w-full border border-[#E5E5E5] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
           />

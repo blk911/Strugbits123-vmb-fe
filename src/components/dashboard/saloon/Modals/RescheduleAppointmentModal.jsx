@@ -282,7 +282,7 @@ export default function RescheduleAppointmentModal({
                                     <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
                                       <FaCalendarAlt className="text-[#581838]" />
                                       <span className="text-[14px] text-[#404040]">
-                                        {data?.appointment?.date}
+                                        {data?.appointment?.date || "N/A"}
                                       </span>
                                     </div>
                                   </div>
@@ -294,7 +294,7 @@ export default function RescheduleAppointmentModal({
                                     <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
                                       <FaClock className="text-[#581838]" />
                                       <span className="text-[14px] text-[#404040]">
-                                        {data?.appointment?.time}
+                                        {data?.appointment?.time || "N/A"}
                                       </span>
                                     </div>
                                   </div>
