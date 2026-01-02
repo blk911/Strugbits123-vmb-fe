@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
-import { FaCheck, FaTimes } from "react-icons/fa";
+import { FaCalendar, FaCheck, FaTimes } from "react-icons/fa";
 import {
   useCreateCheckoutSessionMutation,
   useGetSalonByIdQuery,
@@ -18,6 +18,7 @@ import {
 } from "../../../../utils/toast";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { useUser } from "../../../../hooks/useUser";
+import { TimePickerControlled } from "../../../common/site/TimePicker";
 
 export default function ExclusiveInviteModal({
   isOpen,
@@ -378,19 +379,36 @@ export default function ExclusiveInviteModal({
                         Select Appointment Schedule
                       </p>
                       <div className="grid grid-cols-2 gap-4">
-                        <input
-                          type="date"
-                          value={selectedDate}
-                          onChange={(e) => setSelectedDate(e.target.value)}
+                             <div className="relative">
+        <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+
+        <input
+         type="date"
+               value={selectedDate}
+                 onChange={(e) => setSelectedDate(e.target.value)}
                           min={new Date().toISOString().split("T")[0]}
-                          className="border border-[#E5E5E5] rounded-lg px-4 py-3"
-                        />
-                        <input
+          className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
+                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                   transition-all cursor-pointer
+                   [&::-webkit-calendar-picker-indicator]:opacity-0
+                   [&::-webkit-calendar-picker-indicator]:absolute
+                   [&::-webkit-calendar-picker-indicator]:right-0
+                   [&::-webkit-calendar-picker-indicator]:w-full
+                   [&::-webkit-calendar-picker-indicator]:h-full"
+          style={{ appearance: "none" }}
+        />
+      </div>
+                     
+                        {/* <input
                           type="time"
                           value={selectedTime}
                           onChange={(e) => setSelectedTime(e.target.value)}
                           className="border border-[#E5E5E5] rounded-lg px-4 py-3"
-                        />
+                        /> */}
+                        <TimePickerControlled
+  value={selectedTime}
+  onChange={setSelectedTime}
+/>
                       </div>
                     </div>
                   </div>

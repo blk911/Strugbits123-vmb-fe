@@ -226,6 +226,7 @@ export default function Appointments({
         message: appt.reschduleReason || "",
         status: appt.status,
         type: appt.type,
+        amountPaid:appt.paidAmount || 0
       },
     },
   }));

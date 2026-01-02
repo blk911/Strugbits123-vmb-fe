@@ -24,7 +24,7 @@ export const menus = {
     },
     {
       name: "Invites",
-      path: "/saloninvites",
+      path: "/salon-invites",
       icon: <LuUserRoundPlus className="h-5 w-5" />,
     },
     {
@@ -46,7 +46,7 @@ export const menus = {
     },
     {
       name: "Invites",
-      path: "/saloninvites",
+      path: "/salon-invites",
       icon: <LuUserRoundPlus className="h-5 w-5" />,
     },
     {
@@ -79,7 +79,7 @@ export const menus = {
     },
     {
       name: "Salon Invites",
-      path: "/saloninvites",
+      path: "/salon-invites",
       icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
     },
   ],

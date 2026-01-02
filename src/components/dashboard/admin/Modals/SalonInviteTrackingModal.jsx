@@ -9,7 +9,6 @@ import { toastLoading } from "../../../../utils/toast";
 
 export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
-
   const { timelineItems = [], salonInfo = {}, clientInfo = {} } = data;
   const salonId = salonInfo?.salonId;
   const navigate = useNavigate();
@@ -232,7 +231,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                   <img
                     src={clientInfo.avatar}
                     alt={clientInfo.name}
-                    className="w-[101px] h-[101px] rounded-full object-cover"
+                    className="w-[101px] h-[101px] border border-gray-200 rounded-full object-cover"
                   />
 
                   <div className="text-sm">

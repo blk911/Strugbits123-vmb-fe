@@ -9,7 +9,6 @@ import { useGetSalonByIdQuery } from "../../../../store/api";
 
 export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   if (!isOpen || !data) return null;
-
   const { timelineItems = [], treatSection = {} } = data;
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
 

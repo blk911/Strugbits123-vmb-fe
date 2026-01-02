@@ -19,6 +19,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
+import TimePicker from "../../../common/site/TimePicker";
 export default function ScheduleAppointmentModal({
   isOpen,
   closeModal,
@@ -336,7 +337,7 @@ export default function ScheduleAppointmentModal({
 
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
-                          className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                          className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
                         >
                           <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
                             <p className="text-[#581838] text-[14px] font-medium">
@@ -381,7 +382,7 @@ export default function ScheduleAppointmentModal({
 
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                <label className="text-[14px] font-medium text-[#404040] block mb-1">
                                   Date
                                 </label>
 
@@ -409,8 +410,12 @@ export default function ScheduleAppointmentModal({
                                   </p>
                                 )}
                               </div>
-
-                              <div>
+<TimePicker
+  label="Time"
+  name="appointmentTime"
+  control={control}
+/>
+                              {/* <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
@@ -435,7 +440,7 @@ export default function ScheduleAppointmentModal({
                                     {errors.appointmentTime.message}
                                   </p>
                                 )}
-                              </div>
+                              </div> */}
                             </div>
                           </div>
 

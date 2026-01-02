@@ -147,7 +147,7 @@ statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
               Services
             </h3>
             <button
-              onClick={() => navigate("/salondetail")}
+              onClick={() => navigate("/salon-detail")}
               className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[16px] hover:bg-[#ff7a8a] transition cursor-pointer"
             >
               Manage Services

@@ -23,6 +23,7 @@ import {
   toastLoading,
   toastSuccess,
 } from "../../../../utils/toast";
+import TimePicker from "../../../common/site/TimePicker";
 export default function RescheduleAppointmentModal({
   isOpen,
   closeModal,
@@ -380,7 +381,7 @@ export default function RescheduleAppointmentModal({
                          */}
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
-                          className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                          className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
                         >
                           <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
                             <p className="text-[#581838] text-[14px] font-medium">
@@ -453,8 +454,12 @@ export default function RescheduleAppointmentModal({
                                   </p>
                                 )}
                               </div>
-
-                              <div>
+<TimePicker
+  label="Time"
+  name="appointmentTime"
+  control={control}
+/>
+                              {/* <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
@@ -479,7 +484,7 @@ export default function RescheduleAppointmentModal({
                                     {errors.appointmentTime.message}
                                   </p>
                                 )}
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                           {/* </div> */}

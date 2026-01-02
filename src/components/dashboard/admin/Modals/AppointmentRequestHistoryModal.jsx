@@ -16,15 +16,15 @@ export default function AppointmentRequestHistoryModal({
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], treatSection = {}, appointment } = data;
-
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
       const type = appointment?.type;
 const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
   let finalTotal;
 
   if (type === "invite") {
-     const discount=salon?.discount;
-    finalTotal = (total-((total * discount)/100));
+    //  const discount=salon?.discount;
+    // finalTotal = (total-((total * discount)/100));
+    finalTotal = appointment?.paidAmount || 0;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {

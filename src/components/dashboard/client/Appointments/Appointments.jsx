@@ -230,6 +230,7 @@ export default function Appointments({
         status: appt.status,
         type: appt.type,
         rescheduleReason: appt.reschduleReason || "",
+        amountPaid: appt.paidAmount || 0,
       },
     },
   }));

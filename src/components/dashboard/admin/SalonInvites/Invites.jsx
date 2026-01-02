@@ -10,7 +10,7 @@ import {
   FaRegHandPointer,
 } from "react-icons/fa";
 import SalonImage from "../../../../assets/salon-1.png";
-import userAvatar from "../../../../assets/person_icon.png";
+import userAvatar from "../../../../assets/user.png";
 import { FiX } from "react-icons/fi";
 import { RiCalendarScheduleLine } from "react-icons/ri";
 const PAGE_SIZE = 10;
@@ -278,7 +278,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         name: invite.inviteeName || "",
         email: invite.inviteeEmail,
         phone: invite.inviteePhone || "",
-        avatar: invite.inviteeAvatar || userAvatar,
+        avatar: invite.inviteeProfilePic || userAvatar,
       },
     },
   }));

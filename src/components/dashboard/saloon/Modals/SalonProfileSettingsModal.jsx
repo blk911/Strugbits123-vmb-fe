@@ -35,6 +35,7 @@ import { clearUser, setUser } from "../../../../store/features/userSlice";
 import { useNavigate } from "react-router-dom";
 import { clearRole } from "../../../../store/features/roleSlice";
 import { setAuthMode } from "../../../../store/features/authSlice";
+import TimePicker from "../../../common/site/TimePicker";
 const days = [
   "Monday",
   "Tuesday",
@@ -556,6 +557,21 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
+ 
+  <TimePicker
+  label="Start Time"
+  name="startTime"
+  control={control}
+/>
+
+<TimePicker
+  label="End Time"
+  name="endTime"
+  control={control}
+/>
+
+</div>
+                    {/* <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[#374151] text-[14px] font-semibold mb-1">
                           Start Time
@@ -600,7 +616,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           </p>
                         )}
                       </div>
-                    </div>
+                    </div> */}
 
                     <div>
                       <label className="block text-[#374151] text-[14px] font-semibold mb-1">

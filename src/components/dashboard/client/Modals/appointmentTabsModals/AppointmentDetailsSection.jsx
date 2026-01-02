@@ -8,8 +8,9 @@ export default function AppointmentDetailsSection({ data }) {
   let finalTotal;
 
   if (type === "invite") {
-    const discount=data?.services[0]?.discount;
-    finalTotal = (total-((total * discount)/100));
+    // const discount=data?.services[0]?.discount;
+    // finalTotal = (total-((total * discount)/100));
+    finalTotal = data?.appointment?.amountPaid;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {

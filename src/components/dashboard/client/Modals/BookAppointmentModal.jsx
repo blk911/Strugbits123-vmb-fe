@@ -19,6 +19,7 @@ import {
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 import { useUser } from "../../../../hooks/useUser";
+import TimePicker from "../../../common/site/TimePicker";
 
 const bookingSchema = z.object({
   fullName: z
@@ -344,8 +345,8 @@ useEffect(() => {
                       </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex flex-col gap-2">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                      <div className="flex flex-col">
+                        <label className="text-[#404040] text-[14px] font-semibold mb-1">
                           Booking Date
                         </label>
                         <Controller
@@ -378,8 +379,13 @@ useEffect(() => {
                           </p>
                         )}
                       </div>
+<TimePicker
+  label="Booking Time"
+  name="appointmentTime"
+  control={control}
+/>
 
-                      <div className="flex flex-col gap-2">
+                      {/* <div className="flex flex-col gap-2">
                         <label className="text-[#404040] text-[14px] font-medium">
                           Booking Time
                         </label>
@@ -411,7 +417,7 @@ useEffect(() => {
                             {errors.appointmentTime.message}
                           </p>
                         )}
-                      </div>
+                      </div> */}
                     </div>
 
                     <AppButton
