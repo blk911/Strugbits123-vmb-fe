@@ -146,12 +146,20 @@ statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
             <h3 className="text-[18px] font-semibold text-[#581838]">
               Services
             </h3>
+            <div className="flex flex-col sm:flex-row gap-2">
+ <button
+              onClick={() => navigate("/salon-detail")}
+              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
+            >
+              View All
+            </button>
             <button
               onClick={() => navigate("/salon-detail")}
-              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[16px] hover:bg-[#ff7a8a] transition cursor-pointer"
+              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
             >
               Manage Services
             </button>
+            </div>
           </div>
 
           {loadingServices ? (

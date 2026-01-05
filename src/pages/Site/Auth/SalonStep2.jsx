@@ -217,7 +217,8 @@ export default function SalonStep2({ onBack }) {
             >
               <span className="text-gray-600 text-[14px]">
                 {selectedDays.length > 0
-                  ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
+                // ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
+                ? `0${selectedDays.length} Days`
                   : "Select Days"}
               </span>
 
