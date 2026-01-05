@@ -146,7 +146,7 @@ export default function AppointmentScheduledModal({
                     <h2 className="text-[#581838] font-bold text-[22px]">
                       Great News! <br />
                       {status === "pending"
-                        ? "Your Treat Request is Fullfilled."
+                        ? "Your Treat Request is Fulfilled."
                         : "Your Appointment is Scheduled."}
                     </h2>
                     <p className="text-[#00000080] text-[14px] mt-2 leading-[20px]">
