@@ -393,8 +393,9 @@ useEffect(() => {
                     )}
 
                     {selectedServices.length > 0 && (
+
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-28 overflow-y-auto custom-scrollbar">
-                        <div className="flex justify-between text-xs font-medium mb-2 ">
+                        <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -404,7 +405,7 @@ useEffect(() => {
                           return (
                             <div
                               key={name}
-                              className="border-b border-[#D9D9D9] py-2 flex  justify-between text-xs text-[#4B5563]"
+                              className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-xs text-[#4B5563]"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -562,7 +563,7 @@ useEffect(() => {
                       </div>
 
                       <div className="mt-3 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2 max-h-28 overflow-y-auto custom-scrollbar">
-                        <div className="flex justify-between text-[12px] text-[#4B5563] font-medium">
+                        <div className=" grid grid-cols-3 gap-2    mb-2   text-[12px] text-[#4B5563] font-medium">
                           <span>Service:</span>
                           <span>Duration:</span>
                           <span>Price:</span>
@@ -571,7 +572,7 @@ useEffect(() => {
                           ? gift?.services?.map((svc, i) => (
                               <div
                                 key={i}
-                                className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
+                                className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
                               >
                                 <span>{svc.serviceName}</span>
                                 <span>
@@ -587,7 +588,7 @@ useEffect(() => {
                               .map((svc, i) => (
                                 <div
                                   key={i}
-                                  className="border-t border-[#D9D9D9] pt-2 flex justify-between text-[12px] text-[#4B5563]"
+                                  className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
                                 >
                                   <span>{svc.serviceName}</span>
                                   <span>

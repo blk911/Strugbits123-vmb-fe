@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import TimePicker from "../../../common/site/TimePicker";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 export default function ScheduleAppointmentModal({
   isOpen,
   closeModal,
@@ -274,30 +275,15 @@ export default function ScheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-32 overflow-y-auto custom-scrollbar">
-                              <div className="flex justify-between text-[12px] font-medium text-black">
-                                <span>Service</span>
-                                <div className="flex gap-8">
-                                  <span>Duration</span>
-                                  <span>Price</span>
-                                </div>
-                              </div>
-
-                              {data?.services?.length > 0 &&
-                                data.services.map((srv, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                  >
-                                    <span>{srv.name}</span>
-                                    <div className="flex gap-8">
-                                      <span>{srv.duration}</span>
-                                      <span>${srv.price}</span>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
+       <ServicesTable
+  services={data?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
+                        
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
@@ -343,30 +329,15 @@ export default function ScheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-32 overflow-y-auto custom-scrollbar">
-                              <div className="flex justify-between text-[12px] font-medium text-black">
-                                <span>Service</span>
-                                <div className="flex gap-8">
-                                  <span>Duration</span>
-                                  <span>Price</span>
-                                </div>
-                              </div>
-
-                              {data?.services?.length > 0 &&
-                                data.services.map((srv, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                  >
-                                    <span>{srv.name}</span>
-                                    <div className="flex gap-8">
-                                      <span>{srv.duration}</span>
-                                      <span>${srv.price}</span>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
+     <ServicesTable
+  services={data?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
+                           
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">

@@ -3,6 +3,7 @@ import { Fragment, useRef, useLayoutEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import salonIcon from "../../../../assets/salon-1.png";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 const DEFAULT_DATA = {
   salon: { name: "Luxe Beauty Salon", description: "Premium Beauty Services" },
   treatTo: {
@@ -140,29 +141,15 @@ export default function StatusAppointmentModal({
   const ServicesBlock = () => (
     <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
       <p className="text-[#581838] text-[14px] font-medium">Services:</p>
+<ServicesTable
+  services={merged.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
 
-      <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]">
-        <div className="flex justify-between text-[12px] font-medium text-black">
-          <span>Service</span>
-          <div className="flex gap-8">
-            <span>Duration</span>
-            <span>Price</span>
-          </div>
-        </div>
-
-        {merged.services.map((srv, idx) => (
-          <div
-            key={idx}
-            className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-          >
-            <span>{srv.name}</span>
-            <div className="flex gap-8">
-              <span>{srv.duration}</span>
-              <span>${srv.price}</span>
-            </div>
-          </div>
-        ))}
-      </div>
 
       <div className="flex justify-end">
         <p className="text-[#FF92A5] font-bold text-[13px]">

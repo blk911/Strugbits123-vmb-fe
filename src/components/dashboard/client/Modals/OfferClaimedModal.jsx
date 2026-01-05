@@ -10,6 +10,7 @@ import {
 } from "../../../../store/api";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { toastLoading } from "../../../../utils/toast";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 export default function OfferClaimedModal({ isOpen, closeModal, data }) {
   const salon = data;
   const services = Array.isArray(salon?.services) ? salon.services : [];
@@ -112,10 +113,10 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                         className="w-10 h-10 rounded-lg object-cover  border border-gray-200"
                       />
                       <div>
-                        <div className="font-semibold text-[#4B5563]">
+                        <div className="text-[14px] sm:text-[16px] font-semibold text-[#4B5563]">
                           {salon?.name}
                         </div>
-                        <div className="text-sm text-[#4B5563]">
+                        <div className="text-[12px] sm:text-sm text-[#4B5563]">
                           {salon?.description}
                         </div>
                       </div>
@@ -133,29 +134,17 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                     <h4 className="font-medium text-[#581838]">
                       Exclusive Offer
                     </h4>
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
-                      <div className="flex justify-between text-[12px]  font-medium text-[#000]">
-                        <div>Service</div>
-                        <div>Duration</div>
-                        <div>Price</div>
-                      </div>
-                      {services.map((s, i) => (
-                        <div
-                          key={i}
-                          className={`flex justify-between text-[#4B5563] mt-2 ${
-                            i === services?.length - 1
-                              ? ""
-                              : "border-b border-[#D9D9D9]"
-                          }`}
-                        >
-                          <div>{s.name}</div>
-                          <div>{s.duration}</div>
-                          <div>${s.price}</div>
-                        </div>
-                      ))}
-                    </div>
+                        <ServicesTable
+  services={services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
+/>
+             
 
-                    <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
+                    <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
                       <div>Discount (%) : &nbsp; {discountPercent}%</div>
                       <div>Price After Discount: ${finalPrice.toFixed(2)}</div>
                     </div>
