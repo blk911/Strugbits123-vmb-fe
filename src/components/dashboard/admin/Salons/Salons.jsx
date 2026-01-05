@@ -312,7 +312,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       try {
         await approveSalon(salonId).unwrap();
         toastDismiss(loadingToast);
-        toastSuccess(`"${salonName}" has been approved successfully!`);
+        // toastSuccess(`"${salonName}" has been approved successfully!`);
         openModal("salonApprovedSuccess", {
           title: "Salon Verification Approved",
           subtitle:

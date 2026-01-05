@@ -200,7 +200,6 @@ export default function AuthForm() {
         }).unwrap();
 
         toastDismiss(loadingToastId);
-        toastSuccess("Welcome back!");
         dispatch(setToken(resSignin?.data?.token));
         handleSuccess(resSignin?.data?.user?.role);
       } else if (mode === "signup" && step === "step2") {
