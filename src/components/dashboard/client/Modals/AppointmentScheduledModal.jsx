@@ -16,6 +16,7 @@ import {
   toastLoading,
   toastSuccess,
 } from "../../../../utils/toast";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 
 export default function AppointmentScheduledModal({
   isOpen,
@@ -146,7 +147,7 @@ export default function AppointmentScheduledModal({
                     <h2 className="text-[#581838] font-bold text-[22px]">
                       Great News! <br />
                       {status === "pending"
-                        ? "Your Treat Request is Fullfilled."
+                        ? "Your Treat Request is Fulfilled."
                         : "Your Appointment is Scheduled."}
                     </h2>
                     <p className="text-[#00000080] text-[14px] mt-2 leading-[20px]">
@@ -172,45 +173,25 @@ export default function AppointmentScheduledModal({
                         </p>
                       </div>
                     </div>
-
                     <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
                       <h3 className="text-[#581838] text-[14px] font-medium">
                         Services:
                       </h3>
-
-                      <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-28 overflow-y-auto custom-scrollbar">
-                        <div className="flex justify-between text-[12px] font-medium text-black">
-                          <span>Service</span>
-                          <div className="flex gap-8">
-                            <span>Duration</span>
-                            <span>Price</span>
-                          </div>
-                        </div>
-
-                        {mock?.services?.map((srv, i) => (
-                          <div
-                            key={i}
-                            className={`flex ${
-                              i === mock?.services?.length - 1
-                                ? ""
-                                : "border-b border-[#D9D9D9]"
-                            } justify-between text-[12px] text-[#581838]`}
-                          >
-                            <span>{srv?.name}</span>
-                            <div className="flex gap-8">
-                              <span>{srv?.duration}</span>
-                              <span>${srv?.price}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="flex justify-end">
+       <ServicesTable
+  services={mock?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
+                      />
+                        <div className="flex justify-end">
                         <p className="text-[#FF92A5] font-bold text-[13px]">
                           Amount Paid: ${finalTotal}
                         </p>
                       </div>
-                    </div>
+                      </div>
+        
                     {status !== "pending" && (
                       <>
                         <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">

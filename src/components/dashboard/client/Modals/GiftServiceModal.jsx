@@ -30,6 +30,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
   const dropdownRef = useRef(null);
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copyToastId, setCopyToastId] = useState(null);
   const [toastId, setToastId] = useState(null);
   const [submittedData, setSubmittedData] = useState(null);
   const salon = initialData?.salon;
@@ -278,7 +279,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
 
                     {selectedServices.length > 0 && (
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-32 overflow-y-auto custom-scrollbar">
-                        <div className="flex justify-between text-xs font-medium mb-2">
+                        <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -288,7 +289,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           return (
                             <div
                               key={name}
-                              className="border-b border-[#D9D9D9] py-2 flex justify-between text-xs text-[#4B5563]"
+                              className=" border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -399,7 +400,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         </div>
                       </div>
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4">
-                        <div className="flex justify-between text-xs font-medium mb-2">
+                        <div className="  grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -409,7 +410,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           return (
                             <div
                               key={name}
-                              className="border-b border-[#D9D9D9] py-2 flex justify-between text-xs text-[#4B5563]"
+                              className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -460,12 +461,16 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                         </span>
                         <IoCopyOutline
-                          onClick={() => {
-                            navigator.clipboard.writeText(
-                              import.meta.env.VITE_FRONTEND_URL + `gifts`
-                            );
-                            toastSuccess("Link copied!");
-                          }}
+                                       onClick={() => {
+    if (copyToastId) {
+      toastDismiss(copyToastId);
+    }
+    navigator.clipboard.writeText(
+      import.meta.env.VITE_FRONTEND_URL + `gifts`
+    );
+    const newToastId = toastSuccess("Link copied!");
+    setCopyToastId(newToastId);
+  }}
                           className="text-[#FF92A5] text-2xl cursor-pointer hover:opacity-80"
                         />
                       </div>

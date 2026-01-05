@@ -116,22 +116,22 @@ export default function AllPayouts({
       key: "subtotal",
       header: "Subtotal",
       render: (row) => (
-        <span className="font-medium">${row.subtotal.toFixed(2)}</span>
+     <span className="font-medium">${row.subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
       ),
     },
     {
       key: "vmbFee",
       header: "VMB Fee",
       render: (row) => (
-        <span className="font-medium">${row.vmbFee.toFixed(2)}</span>
+      <span className="font-medium">${row.vmbFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
       ),
     },
     {
       key: "totalCharged",
       header: "Total Charged",
       render: (row) => (
-        <span className="font-bold text-lg text-[#FF92A5] ">
-          ${row.totalCharged.toFixed(2)}
+       <span className="font-bold text-lg text-[#FF92A5] ">
+          ${row.totalCharged.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </span>
       ),
     },

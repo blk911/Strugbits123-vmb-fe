@@ -216,7 +216,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           name: gift.receiverName || "Receiver",
           email: gift.receiverEmail,
           phone: "",
-          avatar: userAvatar,
+          avatar: gift.receiverProfilePic || userAvatar,
         },
         salon: {
           salonId: gift.salonId?._id,

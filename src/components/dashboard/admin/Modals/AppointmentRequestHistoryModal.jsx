@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { useGetSalonByIdQuery } from "../../../../store/api";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { toastLoading } from "../../../../utils/toast";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 
 export default function AppointmentRequestHistoryModal({
   isOpen,
@@ -16,15 +17,15 @@ export default function AppointmentRequestHistoryModal({
   if (!isOpen || !data) return null;
 
   const { timelineItems = [], treatSection = {}, appointment } = data;
-
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
       const type = appointment?.type;
 const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
   let finalTotal;
 
   if (type === "invite") {
-     const discount=salon?.discount;
-    finalTotal = (total-((total * discount)/100));
+    //  const discount=salon?.discount;
+    // finalTotal = (total-((total * discount)/100));
+    finalTotal = appointment?.paidAmount || 0;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {
@@ -225,55 +226,16 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
               <p className="text-[#581838] font-medium text-[14px]">
                 Services:
               </p>
+<ServicesTable
+  services={salon.serviceRequested}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[11px] sm:text-[12px]"
+/>
 
-              <div className="border border-[#9CA3AF4D] rounded-[10px] p-3 text-[12px] max-h-32 overflow-y-auto custom-scrollbar">
-                {salon.serviceRequested ? (
-                  <div className="flex flex-col gap-3">
-                    <div className="hidden sm:flex justify-between text-[12px] font-medium text-[#000] px-1">
-                      <div>Service</div>
-                      <div>Duration</div>
-                      <div>Price</div>
-                    </div>
-
-                    {salon.serviceRequested.map((s, i) => (
-                      <div
-                        key={i}
-                        className={`border border-[#D9D9D9] rounded-lg p-3 text-sm 
-            flex flex-col sm:flex-row sm:justify-between gap-2`}
-                      >
-                        <div className="flex flex-col sm:hidden justify-between">
-                          <span className="text-[#000] font-medium">
-                            Service:
-                          </span>
-                          <span className="text-[#4B5563]">{s.name}</span>
-                        </div>
-
-                        <div className="flex flex-col sm:hidden justify-between">
-                          <span className="text-[#000] font-medium">
-                            Duration:
-                          </span>
-                          <span className="text-[#4B5563]">{s.duration}</span>
-                        </div>
-
-                        <div className="flex flex-col sm:hidden justify-between">
-                          <span className="text-[#000] font-medium">
-                            Price:
-                          </span>
-                          <span className="text-[#4B5563]">${s.price}</span>
-                        </div>
-
-                        <div className="hidden sm:flex justify-between w-full text-[#4B5563]">
-                          <div>{s.name}</div>
-                          <div>{s.duration}</div>
-                          <div>${s.price}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-[#4B5563]">No services selected</p>
-                )}
-              </div>
+            
               <p className="text-left sm:text-right text-[#FF92A5] font-bold text-[13px]">
                 Amount Paid: $
                 {finalTotal}

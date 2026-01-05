@@ -131,7 +131,7 @@ export default function Appointments({
             body: null,
             reschedule: {
               requestFrom: `Rescheduled request from ${
-                appt.requestedFrom?.name || "Client"
+                appt?.salon?.salonName|| "Salon"
               }`,
               requestMessage: `• Message: ${
                 item.description || "Reschedule requested"

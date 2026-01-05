@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-const nameRegex = /^[a-zA-Z\s'-]+$/;
+const nameRegex = /^[a-zA-Z\s&'-]+$/;
 const phoneRegex = /^\d{10,15}$/;
 
 export const loginSchema = z.object({
@@ -68,7 +67,10 @@ export const salonStep2Schema = z.object({
     .string()
     .url("Invalid image URL")
     .min(1, "Profile picture required"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
+  description: z.string().min(10, "Description must be at least 10 characters").regex(
+    /^[a-zA-Z0-9\s,.'-]+$/,
+    "Invalid description"
+  ),
   salonPhotos: z
     .array(
       z.object({

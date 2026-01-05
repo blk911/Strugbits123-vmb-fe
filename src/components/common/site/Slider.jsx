@@ -71,7 +71,7 @@ function SalonCard({ salon }) {
       if (user?.role === "customer" || user?.role === "admin") {
         navigate(`/salon/${salon._id}`);
       } else if (user?._id === salon._id) {
-        navigate(`/salondetail`);
+        navigate(`/salon-detail`);
       } else {
         navigate(`/salon-detail/${salon._id}`);
       }

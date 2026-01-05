@@ -19,9 +19,9 @@ export default function SalonRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route path="/saloninvites" element={<SalonInvites />} />
+      <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
-      <Route path="/salondetail" element={<SalonDetail />} />
+      <Route path="/salon-detail" element={<SalonDetail />} />
     </Route>
   );
 }

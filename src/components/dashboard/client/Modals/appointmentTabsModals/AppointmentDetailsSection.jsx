@@ -1,4 +1,5 @@
 import { IoCalendarOutline, IoTimeOutline } from "react-icons/io5";
+import ServicesTable from "../../../../common/dashboard/ServicesTable";
 
 export default function AppointmentDetailsSection({ data }) {
   const total = data.services.reduce((s, it) => s + it.price, 0);
@@ -8,8 +9,9 @@ export default function AppointmentDetailsSection({ data }) {
   let finalTotal;
 
   if (type === "invite") {
-    const discount=data?.services[0]?.discount;
-    finalTotal = (total-((total * discount)/100));
+    // const discount=data?.services[0]?.discount;
+    // finalTotal = (total-((total * discount)/100));
+    finalTotal = data?.appointment?.amountPaid;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
   } else if (type === "gift") {
@@ -35,31 +37,15 @@ export default function AppointmentDetailsSection({ data }) {
 
       <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
         <h3 className="text-[#581838] text-[14px] font-medium">Services:</h3>
-        <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px]  max-h-32 overflow-y-auto custom-scrollbar">
-          <div className="flex justify-between text-[12px] font-medium text-black">
-            <span>Service</span>
-            <div className="flex gap-8">
-              <span>Duration</span>
-              <span>Price</span>
-            </div>
-          </div>
-          {data.services.map((srv, i) => (
-            <div
-              key={i}
-              className={`flex justify-between text-[12px] text-[#581838] ${
-                i === data?.services?.length - 1
-                  ? ""
-                  : "border-b border-[#D9D9D9]"
-              }`}
-            >
-              <span>{srv.name}</span>
-              <div className="flex gap-8">
-                <span>{srv.duration}</span>
-                <span>${srv.price}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ServicesTable
+  services={data?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
+      
         <div className="flex justify-end">
           <p className="text-[#FF92A5] font-bold text-[13px]">
             Amount Paid: ${finalTotal.toFixed(2)}

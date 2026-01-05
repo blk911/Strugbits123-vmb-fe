@@ -57,7 +57,7 @@ export default function PendingRequestsSection() {
     setApprovingId(salonId);
     try {
       await approveSalon(salonId).unwrap();
-      toastSuccess(`"${salonName}" has been approved successfully!`);
+      // toastSuccess(`"${salonName}" has been approved successfully!`);
       openModal("salonApprovedSuccess", {
         title: "Salon Verification Approved",
         subtitle:

@@ -27,7 +27,7 @@ export default function ClientRoutes() {
      
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
-      <Route path="/saloninvites" element={<SalonInvites />} />
+      <Route path="/salon-invites" element={<SalonInvites />} />
     </Route>
   );
 }

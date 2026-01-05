@@ -26,7 +26,7 @@ export default function AdminRoutes() {
       <Route path="/salon/:id" element={<SalonDetail />} />
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
-      <Route path="/saloninvites" element={<SalonInvites />} />
+      <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/payouts" element={<Payouts />} />
     </Route>
   );

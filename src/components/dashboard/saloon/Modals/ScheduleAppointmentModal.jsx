@@ -19,6 +19,8 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
+import TimePicker from "../../../common/site/TimePicker";
+import ServicesTable from "../../../common/dashboard/ServicesTable";
 export default function ScheduleAppointmentModal({
   isOpen,
   closeModal,
@@ -273,30 +275,15 @@ export default function ScheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-32 overflow-y-auto custom-scrollbar">
-                              <div className="flex justify-between text-[12px] font-medium text-black">
-                                <span>Service</span>
-                                <div className="flex gap-8">
-                                  <span>Duration</span>
-                                  <span>Price</span>
-                                </div>
-                              </div>
-
-                              {data?.services?.length > 0 &&
-                                data.services.map((srv, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                  >
-                                    <span>{srv.name}</span>
-                                    <div className="flex gap-8">
-                                      <span>{srv.duration}</span>
-                                      <span>${srv.price}</span>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
+       <ServicesTable
+  services={data?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
+                        
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
@@ -336,36 +323,21 @@ export default function ScheduleAppointmentModal({
 
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
-                          className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                          className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
                         >
                           <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-
-                            <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[12px] max-h-32 overflow-y-auto custom-scrollbar">
-                              <div className="flex justify-between text-[12px] font-medium text-black">
-                                <span>Service</span>
-                                <div className="flex gap-8">
-                                  <span>Duration</span>
-                                  <span>Price</span>
-                                </div>
-                              </div>
-
-                              {data?.services?.length > 0 &&
-                                data.services.map((srv, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex justify-between text-[12px] text-[#581838] border-t border-[#9CA3AF4D] pt-2"
-                                  >
-                                    <span>{srv.name}</span>
-                                    <div className="flex gap-8">
-                                      <span>{srv.duration}</span>
-                                      <span>${srv.price}</span>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
+     <ServicesTable
+  services={data?.services}
+  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+  scrollbarClass="custom-scrollbar"
+  maxHeightClass="max-h-32"
+  headerClass="px-1"
+  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+/>
+                           
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
@@ -381,7 +353,7 @@ export default function ScheduleAppointmentModal({
 
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                <label className="text-[14px] font-medium text-[#404040] block mb-1">
                                   Date
                                 </label>
 
@@ -409,8 +381,12 @@ export default function ScheduleAppointmentModal({
                                   </p>
                                 )}
                               </div>
-
-                              <div>
+<TimePicker
+  label="Time"
+  name="appointmentTime"
+  control={control}
+/>
+                              {/* <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time
                                 </label>
@@ -435,7 +411,7 @@ export default function ScheduleAppointmentModal({
                                     {errors.appointmentTime.message}
                                   </p>
                                 )}
-                              </div>
+                              </div> */}
                             </div>
                           </div>
 

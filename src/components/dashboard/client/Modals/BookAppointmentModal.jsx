@@ -19,6 +19,7 @@ import {
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 import { useUser } from "../../../../hooks/useUser";
+import TimePicker from "../../../common/site/TimePicker";
 
 const bookingSchema = z.object({
   fullName: z
@@ -56,8 +57,7 @@ export default function BookAppointmentModal({
   const {user}=useUser();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
-  // const [createAppointment, { isLoading: booking }] =
-  //   useCreateAppointmentMutation();
+
   const {
     control,
     handleSubmit,
@@ -319,7 +319,7 @@ useEffect(() => {
 
                     {selectedServices.length > 0 && (
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4  max-h-32 overflow-y-auto custom-scrollbar">
-                        <div className="flex justify-between text-xs font-medium mb-2">
+                        <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -329,7 +329,7 @@ useEffect(() => {
                           return (
                             <div
                               key={name}
-                              className="border-b border-[#D9D9D9] py-2 flex justify-between text-xs text-[#4B5563]"
+                              className="text-[#4B5563] border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -344,8 +344,8 @@ useEffect(() => {
                       </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="flex flex-col gap-2">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                      <div className="flex flex-col">
+                        <label className="text-[#404040] text-[14px] font-semibold mb-1">
                           Booking Date
                         </label>
                         <Controller
@@ -378,8 +378,13 @@ useEffect(() => {
                           </p>
                         )}
                       </div>
+<TimePicker
+  label="Booking Time"
+  name="appointmentTime"
+  control={control}
+/>
 
-                      <div className="flex flex-col gap-2">
+                      {/* <div className="flex flex-col gap-2">
                         <label className="text-[#404040] text-[14px] font-medium">
                           Booking Time
                         </label>
@@ -411,18 +416,16 @@ useEffect(() => {
                             {errors.appointmentTime.message}
                           </p>
                         )}
-                      </div>
+                      </div> */}
                     </div>
 
                     <AppButton
                       type="submit"
                       variant="primary"
                       size="custom"
-                      // disabled={!isValid || booking}
                       disabled={!isValid || isRedirecting}
                       className="text-[16px] py-3 w-full"
                     >
-                      {/* {booking ? "Booking..." : "Confirm & Pay"} */}
                       {isRedirecting ? "Redirecting..." : "Confirm & Pay"}
                     </AppButton>
                   </form>

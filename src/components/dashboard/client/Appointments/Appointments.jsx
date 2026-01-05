@@ -230,6 +230,7 @@ export default function Appointments({
         status: appt.status,
         type: appt.type,
         rescheduleReason: appt.reschduleReason || "",
+        amountPaid: appt.paidAmount || 0,
       },
     },
   }));
@@ -267,8 +268,7 @@ export default function Appointments({
       const row = originalRows.Reschedule.find((r) => r.id === cleanRow.id);
       if (row?._modalData) {
         openModal("rescheduleRequestSent", row._modalData);
-        // setDirectData(row._modalData);
-        // setShowReschedule(true);
+  
       }
     },
     Hold: (cleanRow) => {
