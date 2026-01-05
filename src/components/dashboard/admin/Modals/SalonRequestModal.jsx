@@ -170,76 +170,71 @@ export default function SalonRequestModal({
                   }
                 />
               </div>
-          <div className="h-[1px] bg-[#D9D9D9]"></div>
+              <div className="h-[1px] bg-[#D9D9D9]"></div>
 
+              <h3 className="text-[#581838] font-semibold text-[18px]">
+                Owner Information
+              </h3>
 
-                   <h3 className="text-[#581838] font-semibold text-[18px]">
-              Owner Information
-            </h3>
+              <div>
+                <p className="text-[#000] text-[14px] font-medium">Full Name</p>
+                <p className="text-[#00000080] text-[16px]">{data?.name}</p>
+              </div>
 
-            <div>
-              <p className="text-[#000] text-[14px] font-medium">Full Name</p>
-              <p className="text-[#00000080] text-[16px]">{data?.name}</p>
-            </div>
+              <div>
+                <p className="text-[#000] text-[14px] font-medium">Email</p>
+                <p className="text-[#00000080] text-[16px]">{data?.email}</p>
+              </div>
 
-            <div>
-              <p className="text-[#000] text-[14px] font-medium">Email</p>
-              <p className="text-[#00000080] text-[16px]">{data?.email}</p>
-            </div>
-
-            <div>
-              <p className="text-[#000] text-[14px] font-medium">Phone</p>
-              <p className="text-[#00000080] text-[16px]">
-                {data?.phoneNumber || "+1 (555) 987-6543"}
-              </p>
-            </div>
+              <div>
+                <p className="text-[#000] text-[14px] font-medium">Phone</p>
+                <p className="text-[#00000080] text-[16px]">
+                  {data?.phoneNumber || "+1 (555) 987-6543"}
+                </p>
+              </div>
             </div>
           </div>
-
         </div>
 
-          <div className="flex flex-col gap-4">
-       
-
-            <div className="flex gap-3 overflow-x-auto custom-scrollbar py-2">
-              {data?.salonPhotos.map((i) => (
-                <img
-                  key={i}
-                  src={i || defaultImg}
-                  alt={`Gallery ${i}`}
-                  className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-gray-300"
-                />
-              ))}
-            </div>
+        <div className="flex flex-col gap-4">
+          <div className="flex gap-3 overflow-x-auto custom-scrollbar py-2">
+            {data?.salonPhotos.map((i) => (
+              <img
+                key={i}
+                src={i || defaultImg}
+                alt={`Gallery ${i}`}
+                className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-gray-300"
+              />
+            ))}
           </div>
-          {(data?.status === "pending" || data?.status === "deactivated") && (
-            <div className="flex flex-row  justify-end gap-3 pt-4">
-              <AppButton
+        </div>
+        {(data?.status === "pending" || data?.status === "deactivated") && (
+          <div className="flex flex-row  justify-end gap-3 pt-4">
+            <AppButton
               fullWidth={false}
-                variant="custom"
-                size="custom"
-                className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
-                leftIcon={<FiX size={16} />}
-                onClick={handleDecline}
-                disabled={isDeclining}
-              >
-                {isDeclining ? "Rejecting..." : "Reject"}
-              </AppButton>
+              variant="custom"
+              size="custom"
+              className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+              leftIcon={<FiX size={16} />}
+              onClick={handleDecline}
+              disabled={isDeclining}
+            >
+              {isDeclining ? "Rejecting..." : "Reject"}
+            </AppButton>
 
-              <AppButton
+            <AppButton
               fullWidth={false}
-
-                disabled={isApproving}
-                onClick={handleApprove}
-                variant="custom"
-                size="custom"
-                className="py-[15px] px-[20px] bg-white text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
-                leftIcon={<FiCheck size={16} />}
-              >
-                {isApproving ? "Approving..." : "Approve"}
-              </AppButton>
-            </div>
-          )}
+              disabled={isApproving}
+              onClick={handleApprove}
+              variant="custom"
+              size="custom"
+              className="py-[15px] px-[20px] bg-white text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+              leftIcon={<FiCheck size={16} />}
+            >
+              {isApproving ? "Approving..." : "Approve"}
+            </AppButton>
+          </div>
+        )}
       </div>
     </div>
   );

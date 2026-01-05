@@ -197,10 +197,9 @@ export default function Appointments({
     id: appt?._id,
     salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
-   payersEmail: 
-  ["booking", "invite"].includes(appt?.type)
-    ? appt?.requestedBy?.email ?? "N/A"
-    : appt?.type === "gift"
+    payersEmail: ["booking", "invite"].includes(appt?.type)
+      ? appt?.requestedBy?.email ?? "N/A"
+      : appt?.type === "gift"
       ? appt?.requestedFrom?.email ?? "N/A"
       : "N/A",
     appointmentDate: appt?.appointmentDate
@@ -268,7 +267,6 @@ export default function Appointments({
       const row = originalRows.Reschedule.find((r) => r.id === cleanRow.id);
       if (row?._modalData) {
         openModal("rescheduleRequestSent", row._modalData);
-  
       }
     },
     Hold: (cleanRow) => {
@@ -322,7 +320,7 @@ export default function Appointments({
     }
   };
   const handlePageChange = (page) => {
-    if(activeTab==="All") setAllPage(page);
+    if (activeTab === "All") setAllPage(page);
     if (activeTab === "Pending") setPendingPage(page);
     if (activeTab === "Reschedule") setReschedulePage(page);
     if (activeTab === "Hold") setHoldPage(page);

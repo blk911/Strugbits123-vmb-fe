@@ -19,7 +19,11 @@ export default function SalonInvites() {
         sortOptions={["Newest", "Oldest"]}
       />
       <div className="w-full ">
-        <Invites searchQuery={searchQuery} sortOption={sortOption} initialTab={initialTab}/>
+        <Invites
+          searchQuery={searchQuery}
+          sortOption={sortOption}
+          initialTab={initialTab}
+        />
       </div>
     </div>
   );

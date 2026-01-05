@@ -59,7 +59,9 @@ export default function SendTreatModal({
   const services = response?.data?.items || [];
   const currentPage = response?.data?.page || 1;
   const totalPages = response?.data?.pages || 1;
-const filteredservices=services?.filter((service) => service.salonId !== null);
+  const filteredservices = services?.filter(
+    (service) => service.salonId !== null
+  );
   const {
     control,
     handleSubmit,
@@ -103,8 +105,8 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
       const selectedService = services.find((s) => s._id === selectedServiceId);
       if (selectedService) {
         setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
-        shouldValidate: true,
-      });
+          shouldValidate: true,
+        });
         const name = firstName.trim() || "FirstName";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
         setValue("message", message);
@@ -119,7 +121,7 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
         lastName: "",
         email: prefilledEmail,
         serviceId: "",
-        discountPercentage: services[0].serviceDiscount || 10,
+        discountPercentage: services[0]?.serviceDiscount || 10,
         message: "",
       });
       setPage(1);
@@ -300,9 +302,7 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
                       </p>
                     ) : (
                       <>
-                        <div
-                          className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-44 overflow-y-auto custom-scrollbar "
-                        >
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-44 overflow-y-auto custom-scrollbar ">
                           {filteredservices?.map((srv) => (
                             <label
                               key={srv._id}
@@ -316,7 +316,11 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
-                                 setValue("discountPercentage", srv?.serviceDiscount ?? 0, {shouldValidate: true,});
+                                  setValue(
+                                    "discountPercentage",
+                                    srv?.serviceDiscount ?? 0,
+                                    { shouldValidate: true }
+                                  );
                                   const name =
                                     watch("firstName").trim() || "${FirstName}";
                                   const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!\nSignup and book today.`;

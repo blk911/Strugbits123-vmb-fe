@@ -249,7 +249,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           {...register("phone", {
                             required: "Phone number is required",
                             pattern: {
-                             value: /^\d{10,15}$/,
+                              value: /^\d{10,15}$/,
                               message: "Please enter a valid phone number",
                             },
                           })}

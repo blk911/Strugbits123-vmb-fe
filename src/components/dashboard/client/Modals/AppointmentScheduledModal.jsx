@@ -40,7 +40,7 @@ export default function AppointmentScheduledModal({
   const [confirmAppointment, { isLoading: confirming }] =
     useConfirmAppointmentMutation();
   const total = mock?.services?.reduce((s, it) => s + (it.price || 0), 0);
-      const type = mock?.appointment?.type;
+  const type = mock?.appointment?.type;
   let finalTotal;
 
   if (type === "invite") {
@@ -177,21 +177,21 @@ export default function AppointmentScheduledModal({
                       <h3 className="text-[#581838] text-[14px] font-medium">
                         Services:
                       </h3>
-       <ServicesTable
-  services={mock?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
+                      <ServicesTable
+                        services={mock?.services}
+                        containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                        scrollbarClass="custom-scrollbar"
+                        maxHeightClass="max-h-32"
+                        headerClass="px-1"
+                        rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
                       />
-                        <div className="flex justify-end">
+                      <div className="flex justify-end">
                         <p className="text-[#FF92A5] font-bold text-[13px]">
                           Amount Paid: ${finalTotal}
                         </p>
                       </div>
-                      </div>
-        
+                    </div>
+
                     {status !== "pending" && (
                       <>
                         <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">

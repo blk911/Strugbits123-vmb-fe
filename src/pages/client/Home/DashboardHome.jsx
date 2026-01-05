@@ -31,7 +31,9 @@ const DashboardHome = () => {
     >
       <WelcomeBanner
         user={user}
-        onInviteClick={() => navigate("/saloninvites", { state: { tab: "Pending" } })}
+        onInviteClick={() =>
+          navigate("/saloninvites", { state: { tab: "Pending" } })
+        }
         onGiftClick={() => {
           openModal("treat");
         }}

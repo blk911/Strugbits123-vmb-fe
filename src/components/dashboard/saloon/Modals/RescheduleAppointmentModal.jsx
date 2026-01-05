@@ -320,15 +320,14 @@ export default function RescheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-    <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-                         
+                            <ServicesTable
+                              services={data?.services}
+                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              scrollbarClass="custom-scrollbar"
+                              maxHeightClass="max-h-32"
+                              headerClass="px-1"
+                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                            />
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
@@ -340,24 +339,22 @@ export default function RescheduleAppointmentModal({
 
                         <div className="flex  flex-col  sm:flex-row justify-between gap-4 mt-4">
                           <div className="w-full sm:w-[40%]">
-                            
-                          <AppButton
-                            leftIcon={<FaTimes />}
-                            variant="primary"
-                            onClick={closeModal}
-                          >
-                            Decline
-                          </AppButton>
+                            <AppButton
+                              leftIcon={<FaTimes />}
+                              variant="primary"
+                              onClick={closeModal}
+                            >
+                              Decline
+                            </AppButton>
                           </div>
                           <div className="w-full sm:w-[60%]">
-
-                          <AppButton
-                            leftIcon={<FaCheck />}
-                            variant="outline-dark"
-                            onClick={onAcceptAndSchedule}
-                          >
-                            Accept & Reschedule
-                          </AppButton>
+                            <AppButton
+                              leftIcon={<FaCheck />}
+                              variant="outline-dark"
+                              onClick={onAcceptAndSchedule}
+                            >
+                              Accept & Reschedule
+                            </AppButton>
                           </div>
                         </div>
                       </div>
@@ -367,7 +364,6 @@ export default function RescheduleAppointmentModal({
                           Reschedule Appointment
                         </h2>
 
-                      
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
                           className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
@@ -376,19 +372,18 @@ export default function RescheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-    <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-                        
+                            <ServicesTable
+                              services={data?.services}
+                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              scrollbarClass="custom-scrollbar"
+                              maxHeightClass="max-h-32"
+                              headerClass="px-1"
+                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                            />
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                   Amount Paid: ${finalTotal.toFixed(2)}
+                                Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
                           </div>
@@ -428,11 +423,11 @@ export default function RescheduleAppointmentModal({
                                   </p>
                                 )}
                               </div>
-<TimePicker
-  label="Time"
-  name="appointmentTime"
-  control={control}
-/>
+                              <TimePicker
+                                label="Time"
+                                name="appointmentTime"
+                                control={control}
+                              />
                               {/* <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time

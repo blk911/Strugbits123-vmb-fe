@@ -15,7 +15,7 @@ export default function ServiceCard({ service }) {
 
   return (
     <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 h-full hover:shadow-md transition-all duration-300">
-        <div className="relative w-full h-[200px] shrink-0">
+      <div className="relative w-full h-[200px] shrink-0">
         <img
           src={service?.serviceImage}
           alt={service?.serviceName}
@@ -25,30 +25,29 @@ export default function ServiceCard({ service }) {
           className="absolute top-3 right-3 bg-white text-[#6B7280]
                      text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm"
         >
-         {service?.serviceDuration} min
+          {service?.serviceDuration} min
         </div>
       </div>
- 
+
       <div className="flex justify-between items-start gap-2">
-          <h4
-            className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+        <h4
+          className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
                        leading-[22px] line-clamp-2 max-w-[70%]"
-          >
-           {service?.serviceName}
-          </h4>
-
-          <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
-             ${service?.servicePrice}
-          </span>
-        </div>
-
-        <p
-          className="text-[#4B5563] text-[14px] sm:text-[15px]
-                     leading-[18px] line-clamp-2 "
         >
-          {  service?.description || "\u00A0"}
-        </p>
+          {service?.serviceName}
+        </h4>
 
+        <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+          ${service?.servicePrice}
+        </span>
+      </div>
+
+      <p
+        className="text-[#4B5563] text-[14px] sm:text-[15px]
+                     leading-[18px] line-clamp-2 "
+      >
+        {service?.description || "\u00A0"}
+      </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
         <AppButton
@@ -60,20 +59,19 @@ export default function ServiceCard({ service }) {
           onClick={handleEditClick}
           className="flex-1 py-2 px-3 text-[15px] sm:text-[16px] font-medium"
         >
-         {service?.salonId ? "Edit" : "Add"}  Service
+          {service?.salonId ? "Edit" : "Add"} Service
         </AppButton>
-{service?.salonId && (
-        <button
-          onClick={handleDeleteClick}
-          className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-[#FF92A54D] flex items-center justify-center cursor-pointer gap-2"
-        >
-          <FaTrash className="text-[#581838] text-[16px]" />
-          <span className="block sm:hidden text-[#581838] text-[16px]">
-            Delete
-          </span>
-        </button>
-)
- }
+        {service?.salonId && (
+          <button
+            onClick={handleDeleteClick}
+            className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-[#FF92A54D] flex items-center justify-center cursor-pointer gap-2"
+          >
+            <FaTrash className="text-[#581838] text-[16px]" />
+            <span className="block sm:hidden text-[#581838] text-[16px]">
+              Delete
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );

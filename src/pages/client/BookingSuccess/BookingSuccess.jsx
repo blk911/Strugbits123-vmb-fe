@@ -209,7 +209,10 @@ export default function BookingSuccess() {
                       Total Paid:
                     </span>
                     <span className="text-[#FF92A5] text-[16px] font-semibold">
-                      ${details?.sourceType==="invite"? details?.paidAmount.toFixed(2) : amountPaid.toFixed(2)}
+                      $
+                      {details?.sourceType === "invite"
+                        ? details?.paidAmount.toFixed(2)
+                        : amountPaid.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -219,7 +222,11 @@ export default function BookingSuccess() {
 
           <div className="text-center px-[20px]">
             <AppButton
-              onClick={() =>details?.sourceType==="gift"? navigate("/client"): navigate("/appointments")}
+              onClick={() =>
+                details?.sourceType === "gift"
+                  ? navigate("/client")
+                  : navigate("/appointments")
+              }
               variant="outline-dark"
               leftIcon={<FaArrowLeftLong size={16} />}
               className="text-[12px] sm:text-[16px]"

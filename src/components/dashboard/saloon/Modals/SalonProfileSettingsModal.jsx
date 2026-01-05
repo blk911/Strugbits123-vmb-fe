@@ -557,20 +557,18 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       )}
                     </div>
                     <div className="grid grid-cols-2 gap-4">
- 
-  <TimePicker
-  label="Start Time"
-  name="startTime"
-  control={control}
-/>
+                      <TimePicker
+                        label="Start Time"
+                        name="startTime"
+                        control={control}
+                      />
 
-<TimePicker
-  label="End Time"
-  name="endTime"
-  control={control}
-/>
-
-</div>
+                      <TimePicker
+                        label="End Time"
+                        name="endTime"
+                        control={control}
+                      />
+                    </div>
                     {/* <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[#374151] text-[14px] font-semibold mb-1">
@@ -635,14 +633,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
 
                               : "Select Days"} */}
                             {(() => {
-  const selected = watch("selectedDays") || [];
-  if (selected.length === 0) return "Select Days";
+                              const selected = watch("selectedDays") || [];
+                              if (selected.length === 0) return "Select Days";
 
-  return days
-    .filter((day) => selected.includes(day))
-    .map((day) => day.slice(0, 3))
-    .join(", ");
-})()}
+                              return days
+                                .filter((day) => selected.includes(day))
+                                .map((day) => day.slice(0, 3))
+                                .join(", ");
+                            })()}
                           </span>
                           <RiArrowDropDownLine className="text-[24px]" />
                         </div>
@@ -785,43 +783,41 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           className="hidden"
                           onChange={handleSalonPhotosUpload}
                         />
-   <div className="w-full overflow-x-auto custom-scrollbar">
-
-            <div className="flex  pt-2 gap-2 sm:gap-3">
-         
-                        {watch("salonPhotos")?.map((photo, i) => (
-                          <div key={i} className="relative">
-                            <img
-                              src={photo.url}
-                              alt="salon"
-                              className="w-[80px] h-[74px] object-cover rounded-md"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => removeSalonPhoto(i)}
-                              className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs cursor-pointer"
-                            >
-                              ×
-                            </button>
-                            <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
-                              {decodeURIComponent(
-                              photo.name
-                                .split("/")
-                                .pop()
-                                .split("?")[0]
-                                .replace(/^\d+_/, "")
-                            )}
-                            </p>
+                        <div className="w-full overflow-x-auto custom-scrollbar">
+                          <div className="flex  pt-2 gap-2 sm:gap-3">
+                            {watch("salonPhotos")?.map((photo, i) => (
+                              <div key={i} className="relative">
+                                <img
+                                  src={photo.url}
+                                  alt="salon"
+                                  className="w-[80px] h-[74px] object-cover rounded-md"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => removeSalonPhoto(i)}
+                                  className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs cursor-pointer"
+                                >
+                                  ×
+                                </button>
+                                <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
+                                  {decodeURIComponent(
+                                    photo.name
+                                      .split("/")
+                                      .pop()
+                                      .split("?")[0]
+                                      .replace(/^\d+_/, "")
+                                  )}
+                                </p>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-            </div>
-     </div>
+                        </div>
                       </div>
-                        {errors.salonPhotos && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.salonPhotos.message}
-                          </p>
-                        )}
+                      {errors.salonPhotos && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.salonPhotos.message}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </form>

@@ -275,19 +275,18 @@ export default function ScheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-       <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-                        
+                            <ServicesTable
+                              services={data?.services}
+                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              scrollbarClass="custom-scrollbar"
+                              maxHeightClass="max-h-32"
+                              headerClass="px-1"
+                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                            />
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
-                                     Amount Paid: ${finalTotal}
+                                Amount Paid: ${finalTotal}
                               </p>
                             </div>
                           </div>
@@ -329,15 +328,14 @@ export default function ScheduleAppointmentModal({
                             <p className="text-[#581838] text-[14px] font-medium">
                               Services:
                             </p>
-     <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-                           
+                            <ServicesTable
+                              services={data?.services}
+                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              scrollbarClass="custom-scrollbar"
+                              maxHeightClass="max-h-32"
+                              headerClass="px-1"
+                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                            />
 
                             <div className="flex justify-end">
                               <p className="text-[#FF92A5] font-bold text-[13px]">
@@ -381,11 +379,11 @@ export default function ScheduleAppointmentModal({
                                   </p>
                                 )}
                               </div>
-<TimePicker
-  label="Time"
-  name="appointmentTime"
-  control={control}
-/>
+                              <TimePicker
+                                label="Time"
+                                name="appointmentTime"
+                                control={control}
+                              />
                               {/* <div>
                                 <label className="text-[14px] font-medium text-[#404040] block mb-2">
                                   Time

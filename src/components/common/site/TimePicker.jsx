@@ -1,17 +1,13 @@
-
-
 import { Fragment, useMemo } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { FaClock } from "react-icons/fa";
 import { useFormContext, Controller } from "react-hook-form";
-
 
 const HOURS = Array.from({ length: 12 }, (_, i) =>
   (i + 1).toString().padStart(2, "0")
 );
 const MINUTES = ["00", "15", "30", "45"];
 const MERIDIEM = ["AM", "PM"];
-
 
 function to24Hour(hour, minute, meridiem) {
   let h = parseInt(hour, 10);
@@ -43,7 +39,6 @@ function displayValue(value) {
   const { hour, minute, meridiem } = from24Hour(value);
   return `${hour}:${minute} ${meridiem}`;
 }
-
 
 function PickerUI({ label, value, onChange, error }) {
   const parsed = useMemo(() => from24Hour(value), [value]);
@@ -116,9 +111,7 @@ function PickerUI({ label, value, onChange, error }) {
         </Transition>
       </Popover>
 
-      {error && (
-        <p className="text-xs text-red-600 mt-1">{error.message}</p>
-      )}
+      {error && <p className="text-xs text-red-600 mt-1">{error.message}</p>}
     </div>
   );
 }
@@ -144,7 +137,6 @@ function Column({ title, options, value, onChange }) {
   );
 }
 
-
 export default function TimePicker({ name, label, control }) {
   const methods = useFormContext?.();
 
@@ -169,9 +161,7 @@ export default function TimePicker({ name, label, control }) {
     <PickerUI
       label={label}
       value={methods.watch(name)}
-      onChange={(v) =>
-        methods.setValue(name, v, { shouldValidate: true })
-      }
+      onChange={(v) => methods.setValue(name, v, { shouldValidate: true })}
       error={methods.formState.errors[name]}
     />
   );
@@ -180,10 +170,7 @@ export default function TimePicker({ name, label, control }) {
 export function TimePickerControlled({ value, onChange }) {
   return (
     <div className="relative">
-      <PickerUI
-        value={value}
-        onChange={onChange}
-      />
+      <PickerUI value={value} onChange={onChange} />
     </div>
   );
 }

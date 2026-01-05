@@ -26,7 +26,7 @@ function Header() {
             <span className="block w-8 h-1 bg-[#7a2c3a] rounded"></span>
           </button>
         </div> */}
-        <div >
+        <div>
           <ul className="flex items-center gap-[20px] text-[#4B5563]">
             {/* <li>
               <a href="" className="text-[#4B5563]">

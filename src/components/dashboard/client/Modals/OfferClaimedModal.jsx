@@ -28,9 +28,11 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
     isLoading: loadingSalon,
     isSuccess,
   } = useGetSalonByIdQuery(
-    {id:salonId}, {
-    skip: !isOpen || !salonId,
-  });
+    { id: salonId },
+    {
+      skip: !isOpen || !salonId,
+    }
+  );
   const handleViewSalon = () => {
     if (!salonId) return;
 
@@ -134,15 +136,14 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                     <h4 className="font-medium text-[#581838]">
                       Exclusive Offer
                     </h4>
-                        <ServicesTable
-  services={services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
-/>
-             
+                    <ServicesTable
+                      services={services}
+                      containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                      scrollbarClass="custom-scrollbar"
+                      maxHeightClass="max-h-32"
+                      headerClass="px-1"
+                      rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
+                    />
 
                     <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
                       <div>Discount (%) : &nbsp; {discountPercent}%</div>

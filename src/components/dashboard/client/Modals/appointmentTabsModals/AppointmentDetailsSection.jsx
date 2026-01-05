@@ -5,7 +5,7 @@ export default function AppointmentDetailsSection({ data }) {
   const total = data.services.reduce((s, it) => s + it.price, 0);
   const type = data?.appointment?.type;
   const status = data?.appointment?.status;
-  
+
   let finalTotal;
 
   if (type === "invite") {
@@ -38,14 +38,14 @@ export default function AppointmentDetailsSection({ data }) {
       <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
         <h3 className="text-[#581838] text-[14px] font-medium">Services:</h3>
         <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-      
+          services={data?.services}
+          containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+          scrollbarClass="custom-scrollbar"
+          maxHeightClass="max-h-32"
+          headerClass="px-1"
+          rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+        />
+
         <div className="flex justify-end">
           <p className="text-[#FF92A5] font-bold text-[13px]">
             Amount Paid: ${finalTotal.toFixed(2)}

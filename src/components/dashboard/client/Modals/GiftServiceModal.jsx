@@ -461,16 +461,16 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                           {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                         </span>
                         <IoCopyOutline
-                                       onClick={() => {
-    if (copyToastId) {
-      toastDismiss(copyToastId);
-    }
-    navigator.clipboard.writeText(
-      import.meta.env.VITE_FRONTEND_URL + `gifts`
-    );
-    const newToastId = toastSuccess("Link copied!");
-    setCopyToastId(newToastId);
-  }}
+                          onClick={() => {
+                            if (copyToastId) {
+                              toastDismiss(copyToastId);
+                            }
+                            navigator.clipboard.writeText(
+                              import.meta.env.VITE_FRONTEND_URL + `gifts`
+                            );
+                            const newToastId = toastSuccess("Link copied!");
+                            setCopyToastId(newToastId);
+                          }}
                           className="text-[#FF92A5] text-2xl cursor-pointer hover:opacity-80"
                         />
                       </div>

@@ -131,7 +131,7 @@ export default function Appointments({
             body: null,
             reschedule: {
               requestFrom: `Rescheduled request from ${
-                appt?.salon?.salonName|| "Salon"
+                appt?.salon?.salonName || "Salon"
               }`,
               requestMessage: `• Message: ${
                 item.description || "Reschedule requested"
@@ -215,7 +215,7 @@ export default function Appointments({
           email: appt.salon.salonEmail,
           phone: appt.salon.salonPhone,
           serviceRequested: appt.services,
-          discount:appt.type==="invite"?appt.services[0]?.discount:0,
+          discount: appt.type === "invite" ? appt.services[0]?.discount : 0,
           image: appt.salon.salonImage || SalonImage,
         },
       },

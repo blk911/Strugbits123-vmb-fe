@@ -18,8 +18,8 @@ export default function AppointmentRequestHistoryModal({
 
   const { timelineItems = [], treatSection = {}, appointment } = data;
   const { sender = {}, receiver = {}, salon = {} } = treatSection;
-      const type = appointment?.type;
-const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
+  const type = appointment?.type;
+  const total = salon?.serviceRequested.reduce((a, b) => a + b.price, 0);
   let finalTotal;
 
   if (type === "invite") {
@@ -31,7 +31,6 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
   } else if (type === "gift") {
     finalTotal = total + total * 0.1;
   } else {
-   
     finalTotal = total;
   }
   const salonId = salon?.salonId;
@@ -41,9 +40,12 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery({id:salonId}, {
-    skip: !isOpen || !salonId,
-  });
+  } = useGetSalonByIdQuery(
+    { id: salonId },
+    {
+      skip: !isOpen || !salonId,
+    }
+  );
   const handleViewSalon = () => {
     if (!salonId) return;
 
@@ -226,19 +228,17 @@ const total=salon?.serviceRequested.reduce((a, b) => a + b.price, 0)
               <p className="text-[#581838] font-medium text-[14px]">
                 Services:
               </p>
-<ServicesTable
-  services={salon.serviceRequested}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[11px] sm:text-[12px]"
-/>
+              <ServicesTable
+                services={salon.serviceRequested}
+                containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                scrollbarClass="custom-scrollbar"
+                maxHeightClass="max-h-32"
+                headerClass="px-1"
+                rowClass="border-t border-[#9CA3AF4D] pt-2 text-[11px] sm:text-[12px]"
+              />
 
-            
               <p className="text-left sm:text-right text-[#FF92A5] font-bold text-[13px]">
-                Amount Paid: $
-                {finalTotal}
+                Amount Paid: ${finalTotal}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[14px]">

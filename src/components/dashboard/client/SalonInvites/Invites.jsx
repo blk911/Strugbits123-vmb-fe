@@ -8,7 +8,11 @@ import { formatDuration } from "../../../../utils/HelperFunctions";
 
 const PAGE_SIZE = 10;
 
-export default function Invites({ searchQuery = "", sortOption = "Newest" ,initialTab = "All"}) {
+export default function Invites({
+  searchQuery = "",
+  sortOption = "Newest",
+  initialTab = "All",
+}) {
   const { openModal } = useDashboardModal();
   const sortMap = {
     Newest: "newest",
@@ -127,7 +131,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" ,initi
       services: invite.services
         ? [
             {
-              id:invite.services._id,
+              id: invite.services._id,
               name: invite.services.serviceName,
               price: invite.services.servicePrice || 0,
               duration:
