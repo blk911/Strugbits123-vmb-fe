@@ -10,6 +10,15 @@ import { convertTo12Hour } from "../../../utils/HelperFunctions";
 
 export default function SalonDetail() {
   const { user, loading } = useUser();
+  const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -111,8 +120,17 @@ export default function SalonDetail() {
               </div>
 
               <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838] whitespace-nowrap">
-                {user?.workingDays.map((day) => day.slice(0, 3)).join("-") ||
-                  "Mon - Thu - Fri"}
+                {/* {user?.workingDays.map((day) => day.slice(0, 3)).join("-") ||
+                  "Mon - Thu - Fri"} */}
+                  {(() => {
+      const currentDays = user?.workingDays || [];
+      if (currentDays.length === 0) return "No working days set";
+
+      return days
+        .filter((day) => currentDays.includes(day))
+        .map((day) => day.slice(0, 3))
+        .join("-");
+    })()}
               </div>
 
               <AppButton

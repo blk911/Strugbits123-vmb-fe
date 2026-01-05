@@ -628,11 +628,21 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           className="bg-white border border-gray-300 rounded-md py-3 px-4 flex justify-between cursor-pointer"
                         >
                           <span className="text-[14px] text-gray-600">
-                            {watch("selectedDays").length > 0
+                            {/* {watch("selectedDays").length > 0
                               ? watch("selectedDays")
                                   .map((d) => d.slice(0, 3))
                                   .join(", ")
-                              : "Select Days"}
+
+                              : "Select Days"} */}
+                            {(() => {
+  const selected = watch("selectedDays") || [];
+  if (selected.length === 0) return "Select Days";
+
+  return days
+    .filter((day) => selected.includes(day))
+    .map((day) => day.slice(0, 3))
+    .join(", ");
+})()}
                           </span>
                           <RiArrowDropDownLine className="text-[24px]" />
                         </div>

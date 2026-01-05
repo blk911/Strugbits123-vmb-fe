@@ -15,7 +15,15 @@ export default function SalonDetail() {
 const { user } = useUser();
 let userLat = undefined;
 let userLng = undefined;
-
+const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 if (user?.location?.coordinates) {
   const [lng, lat] = user.location.coordinates;
   userLat = lat;
@@ -103,7 +111,16 @@ if (user?.location?.coordinates) {
               </span>
             </div>
             <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838]">
-              {salon.workingDays?.map((d) => d.slice(0, 3)).join(" · ")}
+              {/* {salon.workingDays?.map((d) => d.slice(0, 3)).join(" · ")} */}
+                {(() => {
+      const currentDays = salon?.workingDays || [];
+      if (currentDays.length === 0) return "No working days set";
+
+      return days
+        .filter((day) => currentDays.includes(day))
+        .map((day) => day.slice(0, 3))
+        .join("-");
+    })()}
             </div>
           </div>
         </div>

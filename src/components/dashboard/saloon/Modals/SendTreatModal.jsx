@@ -91,7 +91,7 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
       const generateMessage = () => {
         const serviceName = firstService.serviceName;
         const name = firstName.trim() || "{FirstName}";
-        return `Hi ${name},\nI want you to experience my salon with ${serviceName} at an exclusive discount!\nSignup and book today.`;
+        return `Hi ${name},\nI want you to experience my salon with ${serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
       };
 
       setValue("message", generateMessage());
@@ -106,7 +106,7 @@ const filteredservices=services?.filter((service) => service.salonId !== null);
         shouldValidate: true,
       });
         const name = firstName.trim() || "FirstName";
-        const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nSignup and book today.`;
+        const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
         setValue("message", message);
       }
     }

@@ -16,6 +16,15 @@ import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator"
 export default function SalonProfilePanel() {
   const { openModal } = useDashboardModal();
   const { user, loading } = useUser();
+  const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -79,7 +88,16 @@ export default function SalonProfilePanel() {
           <FaCalendar className="text-[#9CA3AF] shrink-0" />
           <p className="text-[14px] text-[#4B5563]">
             {" "}
-            {user?.workingDays.map((day) => day.slice(0, 3)).join("-")}
+            {/* {user?.workingDays.map((day) => day.slice(0, 3)).join("-")} */}
+    {(() => {
+      const currentDays = user?.workingDays || [];
+      if (currentDays.length === 0) return "No working days set";
+
+      return days
+        .filter((day) => currentDays.includes(day))
+        .map((day) => day.slice(0, 3))
+        .join("-");
+    })()}
           </p>
         </div>
       </div>
