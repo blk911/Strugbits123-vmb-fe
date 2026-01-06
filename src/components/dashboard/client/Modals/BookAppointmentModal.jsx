@@ -18,7 +18,7 @@ import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 import { useUser } from "../../../../hooks/useUser";
 import TimePicker from "../../../common/site/TimePicker";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const bookingSchema = z.object({
   fullName: z
     .string()
@@ -67,7 +67,7 @@ export default function BookAppointmentModal({
     resolver: zodResolver(bookingSchema),
     mode: "onChange",
     defaultValues: {
-      fullName: "",
+      fullName: user?.name || "",
       selectedServices: [],
       appointmentDate: "",
       appointmentTime: "",
@@ -96,7 +96,7 @@ export default function BookAppointmentModal({
         : [];
 
       reset({
-        fullName: "",
+        fullName: user?.name || "",
         selectedServices: defaultServices,
         appointmentDate: "",
         appointmentTime: "",
@@ -192,7 +192,7 @@ export default function BookAppointmentModal({
                       src={
                         salon?.profilePic ||
                         salon?.salonPhotos?.[0] ||
-                        "/default-salon.jpg"
+                        SalonImage
                       }
                       alt={salon?.salonName}
                       className="w-[60px] h-[60px] rounded-md object-cover"

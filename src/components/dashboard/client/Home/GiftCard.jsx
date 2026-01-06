@@ -3,7 +3,7 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import defaultUser from "../../../../assets/user_icon.png";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 import { capitalizeFirst } from "../../../../utils/HelperFunctions";
-
+import SalonImage from "../../../../assets/salon-1.png";
 function EmptyState({ message }) {
   return (
     <div className="text-center py-5 text-[#9CA3AF]">
@@ -60,7 +60,7 @@ export default function GiftCard({
         salon: {
           name: item?.salon?.salonName,
           description: item?.salon?.salonDescription || "",
-          image: item?.salon?.salonImage || "/default-salon.jpg",
+          image: item?.salon?.salonImage || SalonImage,
         },
         services: (item?.services || []).map((s) => ({
           name: s.serviceName || s.name,

@@ -185,7 +185,7 @@ export default function SendTreatModal({
                 </h2>
 
                 <p className="text-center text-[#00000080] text-[14px] leading-[20px]">
-                  Invite your customer to enjoy one of your salon services.  Add
+                  Invite your customer to enjoy one of your salon services. Add
                   a discount, include a short message, and send your invite
                   instantly. 💖
                 </p>

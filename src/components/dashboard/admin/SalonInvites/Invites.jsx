@@ -263,7 +263,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       timelineItems: mapTimeline(invite.timeline),
       salonInfo: {
         salonId: invite.salonId,
-        image: invite.salonProfilePic || "/default-salon.jpg",
+        image: invite.salonProfilePic || SalonImage,
         name: invite.salonName,
         desc: invite.salonDesc || "Premium Beauty Services",
         email: invite.salonEmail,

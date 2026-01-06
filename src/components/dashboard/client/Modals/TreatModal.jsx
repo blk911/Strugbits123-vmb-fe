@@ -18,7 +18,7 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import { useUser } from "../../../../hooks/useUser";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const createSchema = (hasServices) =>
   z.object({
     salonId: z.string().min(1, "Please select a salon"),
@@ -286,7 +286,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                 className="px-4 py-3 hover:bg-[#FFF4F6] border-1  border-[#E5E5E5] cursor-pointer flex items-center gap-3"
                               >
                                 <img
-                                  src={salon.profilePic || "/default-salon.jpg"}
+                                  src={salon.profilePic || SalonImage}
                                   alt={salon.salonName}
                                   className="w-10 h-10 rounded-md object-cover"
                                 />
@@ -540,7 +540,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           src={
                             selectedSalon?.profilePic ||
                             gift?.salonId?.profilePic ||
-                            "/default-salon.jpg"
+                            SalonImage
                           }
                           alt={
                             selectedSalon?.salonName || gift?.salonId?.salonName

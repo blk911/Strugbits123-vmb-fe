@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { useGetSalonByIdQuery } from "../../../../store/api";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
 export default function AllPayouts({
@@ -83,7 +83,7 @@ export default function AllPayouts({
         : "pending" + crypto.randomUUID()
     }`,
     salonId: payout.salon._id.toString(),
-    salonImage: payout.salon?.profilePic || "/default-salon.jpg",
+    salonImage: payout.salon?.profilePic || SalonImage,
     salonName: payout.salon?.salonName || "Unknown Salon",
     salonEmail: payout.salon?.email || "N/A",
     subtotal: payout.subtotal,

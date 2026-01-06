@@ -4,6 +4,7 @@ import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonAppointmentsQuery } from "../../../../store/api";
 import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
+import userAvatar from "../../../../assets/user.png";
 
 const PAGE_SIZE = 10;
 
@@ -199,7 +200,7 @@ export default function Appointments({
       salon: {
         name: appt.salon?.salonName,
         description: appt.salon?.salonDescription || "",
-        image: appt.salon?.salonImage || "/default-salon.jpg",
+        image: appt.salon?.salonImage || userAvatar,
       },
       services: (appt.services || []).map((s) => ({
         discount: s.discount || 0,
@@ -211,13 +212,16 @@ export default function Appointments({
         name: appt.requestedBy.name || "Client",
         email: appt.requestedBy.email || "N/A",
         phone: appt.requestedBy.phone || "N/A",
-        image: appt.requestedBy.image || "/default-user.jpg",
+        image: appt.requestedBy.image || userAvatar,
       },
       treatBy: {
         name: appt.requestedFrom.name || "Payer",
         email: appt.requestedFrom.email || "N/A",
         phone: appt.requestedFrom.phone || "N/A",
-        image: appt.requestedFrom.image || "/default-user.jpg",
+        image:
+          appt?.requestedFrom?.name === appt?.salon?.salonName
+            ? appt?.salon?.salonImage
+            : appt.requestedFrom.image || userAvatar,
       },
       appointment: {
         id: appt._id,

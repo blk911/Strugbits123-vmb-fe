@@ -14,6 +14,7 @@ import {
   toastLoading,
   toastSuccess,
 } from "../../../../utils/toast";
+import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
 export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
@@ -168,7 +169,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
 
   const transformedData = salons.map((salon) => ({
     id: salon._id,
-    image: salon.profilePic || "/default-salon.jpg",
+    image: salon.profilePic || SalonImage,
     salonName: salon.salonName || "Unknown Salon",
     ownerName: salon.name || "N/A",
     email: salon.email || "N/A",

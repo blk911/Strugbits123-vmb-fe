@@ -8,7 +8,7 @@ import { useGetSalonByIdQuery } from "../../../../store/api";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { toastLoading } from "../../../../utils/toast";
 import ServicesTable from "../../../common/dashboard/ServicesTable";
-
+import userAvatar from "../../../../assets/user.png";
 export default function AppointmentRequestHistoryModal({
   isOpen,
   onClose,
@@ -279,7 +279,7 @@ export default function AppointmentRequestHistoryModal({
 
               <div className="flex items-center gap-4">
                 <img
-                  src={salon.image || "/default-salon.jpg"}
+                  src={salon.image || userAvatar}
                   alt={salon.name}
                   className="w-15 h-15 rounded-[10px] object-cover"
                 />
