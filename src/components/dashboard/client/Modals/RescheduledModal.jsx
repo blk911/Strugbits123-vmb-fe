@@ -88,15 +88,15 @@ export default function RescheduleRequestModal({ isOpen, onClose, data }) {
                       <h3 className="text-[#581838] text-[14px] font-medium">
                         Paying For:
                       </h3>
-                             <ServicesTable
-  services={data?.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-                     
+                      <ServicesTable
+                        services={data?.services}
+                        containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                        scrollbarClass="custom-scrollbar"
+                        maxHeightClass="max-h-32"
+                        headerClass="px-1"
+                        rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                      />
+
                       <div className="flex justify-end">
                         <p className="text-[#FF92A5] font-bold text-[13px]">
                           Total Price: ${finalTotal.toFixed(2)}

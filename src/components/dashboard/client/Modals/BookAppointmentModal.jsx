@@ -7,9 +7,7 @@ import * as z from "zod";
 import AppButton from "../../../common/site/AppButton";
 import CustomCheckbox from "../../../common/site/CustomCheckbox";
 import successGif from "../../../../assets/successGif.gif";
-import {
-  useCreateCheckoutSessionMutation,
-} from "../../../../store/api";
+import { useCreateCheckoutSessionMutation } from "../../../../store/api";
 import {
   toastDismiss,
   toastError,
@@ -20,7 +18,7 @@ import { convertTo12Hour } from "../../../../utils/HelperFunctions";
 import { FaCalendar, FaClock } from "react-icons/fa";
 import { useUser } from "../../../../hooks/useUser";
 import TimePicker from "../../../common/site/TimePicker";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const bookingSchema = z.object({
   fullName: z
     .string()
@@ -54,7 +52,7 @@ export default function BookAppointmentModal({
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const salon = initialData?.salon;
   const prefilledService = initialData?.service;
-  const {user}=useUser();
+  const { user } = useUser();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
 
@@ -69,7 +67,7 @@ export default function BookAppointmentModal({
     resolver: zodResolver(bookingSchema),
     mode: "onChange",
     defaultValues: {
-      fullName: "",
+      fullName: user?.name || "",
       selectedServices: [],
       appointmentDate: "",
       appointmentTime: "",
@@ -77,22 +75,18 @@ export default function BookAppointmentModal({
   });
 
   const selectedServices = watch("selectedServices") || [];
-useEffect(() => {
-  const handleClickOutside = (event) => {
-  
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target)
-    ) {
-      setDropdownOpen(false);
-    }
-  };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
 
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (isOpen && salon) {
@@ -102,7 +96,7 @@ useEffect(() => {
         : [];
 
       reset({
-        fullName: "",
+        fullName: user?.name || "",
         selectedServices: defaultServices,
         appointmentDate: "",
         appointmentTime: "",
@@ -146,8 +140,8 @@ useEffect(() => {
       appointmentDate: data?.appointmentDate,
       startTime: convertTo12Hour(data?.appointmentTime),
       paymentAmount: total,
-      paymentType:"booking",
-      requesterEmail:user?.email
+      paymentType: "booking",
+      requesterEmail: user?.email,
     };
     const loadingToast = toastLoading("Creating your appointment...");
     try {
@@ -198,7 +192,7 @@ useEffect(() => {
                       src={
                         salon?.profilePic ||
                         salon?.salonPhotos?.[0] ||
-                        "/default-salon.jpg"
+                        SalonImage
                       }
                       alt={salon?.salonName}
                       className="w-[60px] h-[60px] rounded-md object-cover"
@@ -378,11 +372,11 @@ useEffect(() => {
                           </p>
                         )}
                       </div>
-<TimePicker
-  label="Booking Time"
-  name="appointmentTime"
-  control={control}
-/>
+                      <TimePicker
+                        label="Booking Time"
+                        name="appointmentTime"
+                        control={control}
+                      />
 
                       {/* <div className="flex flex-col gap-2">
                         <label className="text-[#404040] text-[14px] font-medium">

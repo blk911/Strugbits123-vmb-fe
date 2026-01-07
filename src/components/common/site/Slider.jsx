@@ -61,9 +61,12 @@ function SalonCard({ salon }) {
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery({ id: salon._id }, {
-    skip: !salon._id,
-  });
+  } = useGetSalonByIdQuery(
+    { id: salon._id },
+    {
+      skip: !salon._id,
+    }
+  );
   const handleViewSalon = () => {
     if (!salon._id) return;
     if (isSuccess && salonResponse?.data) {
@@ -128,7 +131,7 @@ function SalonCard({ salon }) {
               </clipPath>
             </defs>
           </svg> */}
-<FiMapPin className="text-[#FFA1C3] text-[18px] flex-shrink-0" />
+          <FiMapPin className="text-[#FFA1C3] text-[18px] flex-shrink-0" />
 
           <span
             className="lg:text-[12px] xl:text-[14px] font-normal line-clamp-1 "

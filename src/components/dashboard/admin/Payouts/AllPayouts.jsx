@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { useGetSalonByIdQuery } from "../../../../store/api";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
 export default function AllPayouts({
@@ -58,10 +58,11 @@ export default function AllPayouts({
     isLoading: loadingSalon,
     isSuccess: salonSuccess,
   } = useGetSalonByIdQuery(
-    {id:selectedSalonId}
-    , {
-    skip: !selectedSalonId,
-  });
+    { id: selectedSalonId },
+    {
+      skip: !selectedSalonId,
+    }
+  );
   useEffect(() => {
     if (salonSuccess && salonResponse?.data && selectedSalonId) {
       dispatch(setSelectedSalon(salonResponse.data));
@@ -76,9 +77,13 @@ export default function AllPayouts({
   const payouts = payoutsData?.data?.items || [];
   const totalPages = payoutsData?.data?.pages || 1;
   const transformedData = payouts.map((payout) => ({
-    id: `${payout.salon._id}-${crypto.randomUUID()}-${payout.payoutDate ? new Date(payout.payoutDate).toISOString() : 'pending'+crypto.randomUUID()}`,
+    id: `${payout.salon._id}-${crypto.randomUUID()}-${
+      payout.payoutDate
+        ? new Date(payout.payoutDate).toISOString()
+        : "pending" + crypto.randomUUID()
+    }`,
     salonId: payout.salon._id.toString(),
-    salonImage: payout.salon?.profilePic || "/default-salon.jpg",
+    salonImage: payout.salon?.profilePic || SalonImage,
     salonName: payout.salon?.salonName || "Unknown Salon",
     salonEmail: payout.salon?.email || "N/A",
     subtotal: payout.subtotal,
@@ -116,22 +121,38 @@ export default function AllPayouts({
       key: "subtotal",
       header: "Subtotal",
       render: (row) => (
-     <span className="font-medium">${row.subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        <span className="font-medium">
+          $
+          {row.subtotal.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </span>
       ),
     },
     {
       key: "vmbFee",
       header: "VMB Fee",
       render: (row) => (
-      <span className="font-medium">${row.vmbFee.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        <span className="font-medium">
+          $
+          {row.vmbFee.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
+        </span>
       ),
     },
     {
       key: "totalCharged",
       header: "Total Charged",
       render: (row) => (
-       <span className="font-bold text-lg text-[#FF92A5] ">
-          ${row.totalCharged.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        <span className="font-bold text-lg text-[#FF92A5] ">
+          $
+          {row.totalCharged.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </span>
       ),
     },

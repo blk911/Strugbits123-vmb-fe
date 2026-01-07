@@ -1,4 +1,10 @@
-import { FaMapMarkerAlt, FaPhoneAlt, FaRegClock, FaEdit, FaCamera } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaRegClock,
+  FaEdit,
+  FaCamera,
+} from "react-icons/fa";
 import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoCarousel";
 import { BsClockFill } from "react-icons/bs";
 import AppButton from "../../../components/common/site/AppButton";
@@ -11,14 +17,14 @@ import { convertTo12Hour } from "../../../utils/HelperFunctions";
 export default function SalonDetail() {
   const { user, loading } = useUser();
   const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -57,9 +63,9 @@ export default function SalonDetail() {
               alt={user?.salonName}
               className="w-full h-full object-cover"
             />
-  <button
-   onClick={() => openModal("salonprofileSettings")}
-    className="
+            <button
+              onClick={() => openModal("salonprofileSettings")}
+              className="
       absolute 
       bottom-2 right-3 sm:bottom-2.5 sm:right-5
       w-6 h-6 sm:w-8 sm:h-8 
@@ -71,9 +77,9 @@ export default function SalonDetail() {
       hover:scale-105 transition
       cursor-pointer
     "
-  >
-    <FaCamera className="text-white text-[11px] sm:text-sm shrink-0" />
-  </button>
+            >
+              <FaCamera className="text-white text-[11px] sm:text-sm shrink-0" />
+            </button>
           </div>
         </div>
 
@@ -122,15 +128,15 @@ export default function SalonDetail() {
               <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838] whitespace-nowrap">
                 {/* {user?.workingDays.map((day) => day.slice(0, 3)).join("-") ||
                   "Mon - Thu - Fri"} */}
-                  {(() => {
-      const currentDays = user?.workingDays || [];
-      if (currentDays.length === 0) return "No working days set";
+                {(() => {
+                  const currentDays = user?.workingDays || [];
+                  if (currentDays.length === 0) return "No working days set";
 
-      return days
-        .filter((day) => currentDays.includes(day))
-        .map((day) => day.slice(0, 3))
-        .join("-");
-    })()}
+                  return days
+                    .filter((day) => currentDays.includes(day))
+                    .map((day) => day.slice(0, 3))
+                    .join("-");
+                })()}
               </div>
 
               <AppButton

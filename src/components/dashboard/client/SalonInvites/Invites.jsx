@@ -5,10 +5,14 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetUserInvitesQuery } from "../../../../store/api";
 import { ConfirmConfirmation } from "../Modals/appointmentTabsModals/ConfirmationModals";
 import { formatDuration } from "../../../../utils/HelperFunctions";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
-export default function Invites({ searchQuery = "", sortOption = "Newest" ,initialTab = "All"}) {
+export default function Invites({
+  searchQuery = "",
+  sortOption = "Newest",
+  initialTab = "All",
+}) {
   const { openModal } = useDashboardModal();
   const sortMap = {
     Newest: "newest",
@@ -120,14 +124,14 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" ,initi
     status: invite.status.charAt(0).toUpperCase() + invite.status.slice(1),
     _modalData: {
       name: invite.salonName,
-      image: invite.salonProfilePic || "/default-salon.jpg",
+      image: invite.salonProfilePic || SalonImage,
       description: invite.salonDesc || "N/A",
       salonId: invite.salonId,
       inviteId: invite._id,
       services: invite.services
         ? [
             {
-              id:invite.services._id,
+              id: invite.services._id,
               name: invite.services.serviceName,
               price: invite.services.servicePrice || 0,
               duration:

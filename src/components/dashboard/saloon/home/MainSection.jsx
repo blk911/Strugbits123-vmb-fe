@@ -32,7 +32,7 @@ export default function MainSection() {
       status: "pending",
       sort: "newest",
     });
-const { data: rescheduleRes, isLoading: loadingReschedule } =
+  const { data: rescheduleRes, isLoading: loadingReschedule } =
     useGetSalonAppointmentsQuery({
       status: "reschedule-requested",
       sort: "newest",
@@ -40,9 +40,9 @@ const { data: rescheduleRes, isLoading: loadingReschedule } =
   const services = servicesRes?.data?.items?.slice(0, 4) || [];
   const pendingInvites = invitesRes?.data?.items || [];
   const pendingAppointments = appointmentsRes?.data?.items || [];
-const rescheduleAppointments = rescheduleRes?.data?.items || [];
+  const rescheduleAppointments = rescheduleRes?.data?.items || [];
 
-let selectedAppointments = [];
+  let selectedAppointments = [];
   if (pendingAppointments.length > 0) {
     selectedAppointments.push(pendingAppointments[0]);
   }
@@ -52,7 +52,10 @@ let selectedAppointments = [];
   if (selectedAppointments.length < 2) {
     if (pendingAppointments.length > 1 && selectedAppointments.length < 2) {
       selectedAppointments.push(pendingAppointments[1]);
-    } else if (rescheduleAppointments.length > 1 && selectedAppointments.length < 2) {
+    } else if (
+      rescheduleAppointments.length > 1 &&
+      selectedAppointments.length < 2
+    ) {
       selectedAppointments.push(rescheduleAppointments[1]);
     }
   }
@@ -73,7 +76,7 @@ let selectedAppointments = [];
     price: `$${
       item.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0
     }`,
-statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
+    statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
     statusColor: item.status === "pending" ? "#FF9500" : "#FF92A5",
     timeAgo: formatTimeAgo(item?.timeline[0]?.timestamp || item.createdAt),
     data: item,
@@ -147,18 +150,18 @@ statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
               Services
             </h3>
             <div className="flex flex-col sm:flex-row gap-2">
- <button
-              onClick={() => navigate("/salon-detail")}
-              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
-            >
-              View All
-            </button>
-            <button
-              onClick={() => navigate("/salon-detail")}
-              className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
-            >
-              Manage Services
-            </button>
+              <button
+                onClick={() => navigate("/salon-detail")}
+                className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
+              >
+                View All
+              </button>
+              <button
+                onClick={() => navigate("/salon-detail")}
+                className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
+              >
+                Manage Services
+              </button>
             </div>
           </div>
 

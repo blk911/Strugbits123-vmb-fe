@@ -1,6 +1,6 @@
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
-
+import SalonImage from "../../../../assets/salon-1.png";
 export default function AppointmentCard({
   icon,
   from,
@@ -18,12 +18,15 @@ export default function AppointmentCard({
       className="border border-[#0000001A] rounded-[10px] p-3 
       flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 cursor-pointer hover:border-2 hover:border-[#FF92A5]  transition-all"
       onClick={() => {
-        const modalType = data.status === "pending" ? "scheduleAppointment" : "rescheduleAppointment";
+        const modalType =
+          data.status === "pending"
+            ? "scheduleAppointment"
+            : "rescheduleAppointment";
         openModal(modalType, {
           salon: {
             name: data?.salonName,
             description: data?.salonDescription || "",
-            image: data?.salonImage || "/default-salon.jpg",
+            image: data?.salonImage || SalonImage,
           },
           services: (data?.services || []).map((s) => ({
             name: s.serviceName || s.name,

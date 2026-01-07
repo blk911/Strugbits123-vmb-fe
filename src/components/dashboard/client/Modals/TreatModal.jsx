@@ -18,7 +18,7 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import { useUser } from "../../../../hooks/useUser";
-
+import SalonImage from "../../../../assets/salon-1.png";
 const createSchema = (hasServices) =>
   z.object({
     salonId: z.string().min(1, "Please select a salon"),
@@ -73,7 +73,8 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
       salonId: "",
       selectedServices: [],
       email: "",
-      message: "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
+      message:
+        "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
     },
   });
 
@@ -99,13 +100,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
         salonId: "",
         selectedServices: [],
         email: "",
-        message: "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
+        message:
+          "Hi! I’ve sent you a request to pay for my treat. Once the payment is complete, I’ll finalize the booking. Thanks! 💕",
       });
       setIsSubmitted(false);
       setSubmittedData(null);
     }
   }, [isOpen, gift, reset]);
-useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         salonDropdownRef.current &&
@@ -284,7 +286,7 @@ useEffect(() => {
                                 className="px-4 py-3 hover:bg-[#FFF4F6] border-1  border-[#E5E5E5] cursor-pointer flex items-center gap-3"
                               >
                                 <img
-                                  src={salon.profilePic || "/default-salon.jpg"}
+                                  src={salon.profilePic || SalonImage}
                                   alt={salon.salonName}
                                   className="w-10 h-10 rounded-md object-cover"
                                 />
@@ -296,7 +298,6 @@ useEffect(() => {
                                     ({salon.distance})
                                   </p>
                                 </div>
-                             
                               </div>
                             ))
                           )}
@@ -393,7 +394,6 @@ useEffect(() => {
                     )}
 
                     {selectedServices.length > 0 && (
-
                       <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-28 overflow-y-auto custom-scrollbar">
                         <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
                           <span>Service</span>
@@ -504,37 +504,35 @@ useEffect(() => {
                   </form>
                 ) : (
                   <>
-           <Dialog.Title
-  as="h3"
-  className="text-center text-[22px] font-bold text-[#FF92A5]"
->
-  {gift?.status === "accepted"
-    ? "Treat Confirmed!"
-    : "Treat Request Sent!"}
-</Dialog.Title>
+                    <Dialog.Title
+                      as="h3"
+                      className="text-center text-[22px] font-bold text-[#FF92A5]"
+                    >
+                      {gift?.status === "accepted"
+                        ? "Treat Confirmed!"
+                        : "Treat Request Sent!"}
+                    </Dialog.Title>
 
-<p className="text-center text-[#00000080] text-[14px] mt-2">
-  {gift?.status === "accepted" ? (
-    <>
-      Payment has been completed successfully.
-      <br />
-      The salon has been notified and your treat is confirmed.
-    
-      Enjoy the experience!
-    </>
-  ) : (
-    <>
-      Your request has been shared successfully.
-      <br />
-      Wait for payment confirmation.
-      <br />
-      We’ve notified the user about your treat.
-      <br />
-      You’ll be updated soon.
-    </>
-  )}
-</p>
-
+                    <p className="text-center text-[#00000080] text-[14px] mt-2">
+                      {gift?.status === "accepted" ? (
+                        <>
+                          Payment has been completed successfully.
+                          <br />
+                          The salon has been notified and your treat is
+                          confirmed. Enjoy the experience!
+                        </>
+                      ) : (
+                        <>
+                          Your request has been shared successfully.
+                          <br />
+                          Wait for payment confirmation.
+                          <br />
+                          We’ve notified the user about your treat.
+                          <br />
+                          You’ll be updated soon.
+                        </>
+                      )}
+                    </p>
 
                     <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">
                       <div className="flex items-center gap-3">
@@ -542,7 +540,7 @@ useEffect(() => {
                           src={
                             selectedSalon?.profilePic ||
                             gift?.salonId?.profilePic ||
-                            "/default-salon.jpg"
+                            SalonImage
                           }
                           alt={
                             selectedSalon?.salonName || gift?.salonId?.salonName
@@ -634,16 +632,16 @@ useEffect(() => {
                         {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                       </span>
                       <IoCopyOutline
-                      onClick={() => {
-    if (copyToastId) {
-      toastDismiss(copyToastId);
-    }
-    navigator.clipboard.writeText(
-      import.meta.env.VITE_FRONTEND_URL + `gifts`
-    );
-    const newToastId = toastSuccess("Link copied!");
-    setCopyToastId(newToastId);
-  }}
+                        onClick={() => {
+                          if (copyToastId) {
+                            toastDismiss(copyToastId);
+                          }
+                          navigator.clipboard.writeText(
+                            import.meta.env.VITE_FRONTEND_URL + `gifts`
+                          );
+                          const newToastId = toastSuccess("Link copied!");
+                          setCopyToastId(newToastId);
+                        }}
                         className="text-[#581838] text-xl cursor-pointer"
                       />
                     </div>

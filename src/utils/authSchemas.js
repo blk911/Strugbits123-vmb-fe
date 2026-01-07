@@ -67,10 +67,10 @@ export const salonStep2Schema = z.object({
     .string()
     .url("Invalid image URL")
     .min(1, "Profile picture required"),
-  description: z.string().min(10, "Description must be at least 10 characters").regex(
-    /^[a-zA-Z0-9\s,.'-]+$/,
-    "Invalid description"
-  ),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters")
+    .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid description"),
   salonPhotos: z
     .array(
       z.object({

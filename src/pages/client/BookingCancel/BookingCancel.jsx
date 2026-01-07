@@ -35,8 +35,6 @@ export default function BookingCancel() {
             Back to Dashboard
           </AppButton>
         </div>
-
-       
       </div>
     </div>
   );

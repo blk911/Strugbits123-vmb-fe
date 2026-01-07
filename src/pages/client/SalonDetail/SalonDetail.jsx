@@ -12,33 +12,33 @@ export default function SalonDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { salon: reduxSalon, loading: reduxLoading } = useSelectedSalon();
-const { user } = useUser();
-let userLat = undefined;
-let userLng = undefined;
-const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
-if (user?.location?.coordinates) {
-  const [lng, lat] = user.location.coordinates;
-  userLat = lat;
-  userLng = lng;
-}
+  const { user } = useUser();
+  let userLat = undefined;
+  let userLng = undefined;
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  if (user?.location?.coordinates) {
+    const [lng, lat] = user.location.coordinates;
+    userLat = lat;
+    userLng = lng;
+  }
   const {
     data: apiData,
     isLoading: apiLoading,
     isError,
   } = useGetSalonByIdQuery(
-    { id, userLat, userLng }
-    , {
-    refetchOnMountOrArgChange: true,
-
-  });
+    { id, userLat, userLng },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
   // const {
   //   data: apiData,
   //   isLoading: apiLoading,
@@ -98,7 +98,10 @@ if (user?.location?.coordinates) {
           <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 text-[11px] sm:text-[13px] text-[#00000080] mt-3 sm:mt-4 sm:pl-[160px]">
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt />
-              <span>{salon.salonAddress}{salon.distance !== "-" ? ` | ${salon.distance}` : ""}</span>
+              <span>
+                {salon.salonAddress}
+                {salon.distance !== "-" ? ` | ${salon.distance}` : ""}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <FaPhoneAlt />
@@ -112,15 +115,15 @@ if (user?.location?.coordinates) {
             </div>
             <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838]">
               {/* {salon.workingDays?.map((d) => d.slice(0, 3)).join(" · ")} */}
-                {(() => {
-      const currentDays = salon?.workingDays || [];
-      if (currentDays.length === 0) return "No working days set";
+              {(() => {
+                const currentDays = salon?.workingDays || [];
+                if (currentDays.length === 0) return "No working days set";
 
-      return days
-        .filter((day) => currentDays.includes(day))
-        .map((day) => day.slice(0, 3))
-        .join("-");
-    })()}
+                return days
+                  .filter((day) => currentDays.includes(day))
+                  .map((day) => day.slice(0, 3))
+                  .join("-");
+              })()}
             </div>
           </div>
         </div>

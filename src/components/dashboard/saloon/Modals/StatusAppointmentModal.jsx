@@ -51,9 +51,9 @@ export default function StatusAppointmentModal({
   let finalTotal;
 
   if (appointmentType === "invite") {
-// finalTotal=totalPrice
-      // finalTotal = (totalPrice-((totalPrice * merged?.services[0]?.discount)/100));
-      finalTotal = data?.appointment?.amountPaid;
+    // finalTotal=totalPrice
+    // finalTotal = (totalPrice-((totalPrice * merged?.services[0]?.discount)/100));
+    finalTotal = data?.appointment?.amountPaid;
   } else if (appointmentType === "booking") {
     finalTotal = totalPrice + 2.5;
   } else if (appointmentType === "gift") {
@@ -89,51 +89,48 @@ export default function StatusAppointmentModal({
   const TreatBlock = ({ left, right }) => (
     <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col gap-4">
       <div className="flex flex-col gap-1">
+        <p className="font-[Poppins] text-[14px]  text-[#581838] font-medium">
+          {appointmentType === "gift" ? "Treat to:" : " Paid by:"}
+        </p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <img
+            src={left.image || ""}
+            alt={left.name}
+            className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+          />
+          <div>
+            <p className="font-semibold text-[14px] text-[#4B5563]">
+              {left.name}
+            </p>
+            <p className="text-[12px] text-[#4B5563]">{left.email}</p>
 
-      <p className="font-[Poppins] text-[14px]  text-[#581838] font-medium">
-        {appointmentType === "gift"? "Treat to:": " Paid by:"}
-       </p>
-      <div className="flex items-center gap-3 flex-wrap">
-        <img
-          src={left.image || ""}
-          alt={left.name}
-          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
-        />
-        <div>
-          <p className="font-semibold text-[14px] text-[#4B5563]">
-            {left.name}
-          </p>
-          <p className="text-[12px] text-[#4B5563]">{left.email}</p>
-
-          {left.phone && (
-            <p className="text-[12px] text-[#4B5563]">{left.phone}</p>
-          )}
+            {left.phone && (
+              <p className="text-[12px] text-[#4B5563]">{left.phone}</p>
+            )}
+          </div>
         </div>
       </div>
-      </div>
-     <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1">
+        <p className="font-[Poppins] text-[14px] text-[#581838] font-medium">
+          {appointmentType === "gift" ? "Treat by:" : " Paid to:"}
+        </p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <img
+            src={right.image || ""}
+            alt={right.name}
+            className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+          />
+          <div>
+            <p className="font-semibold text-[14px] text-[#581838]">
+              {right.name}
+            </p>
+            <p className="text-[12px] text-[#4B5563]">{right.email}</p>
 
- <p className="font-[Poppins] text-[14px] text-[#581838] font-medium">
-        {appointmentType === "gift"? "Treat by:": " Paid to:"}
-  
-  </p>
-      <div className="flex items-center gap-3 flex-wrap">
-        <img
-          src={right.image || ""}
-          alt={right.name}
-          className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
-        />
-        <div>
-          <p className="font-semibold text-[14px] text-[#581838]">
-            {right.name}
-          </p>
-          <p className="text-[12px] text-[#4B5563]">{right.email}</p>
-
-          {right.phone && (
-            <p className="text-[12px] text-[#4B5563]">{right.phone}</p>
-          )}
+            {right.phone && (
+              <p className="text-[12px] text-[#4B5563]">{right.phone}</p>
+            )}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
@@ -141,15 +138,14 @@ export default function StatusAppointmentModal({
   const ServicesBlock = () => (
     <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
       <p className="text-[#581838] text-[14px] font-medium">Services:</p>
-<ServicesTable
-  services={merged.services}
-  containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-  headerClass="px-1"
-  rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
-/>
-
+      <ServicesTable
+        services={merged.services}
+        containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+        scrollbarClass="custom-scrollbar"
+        maxHeightClass="max-h-32"
+        headerClass="px-1"
+        rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+      />
 
       <div className="flex justify-end">
         <p className="text-[#FF92A5] font-bold text-[13px]">

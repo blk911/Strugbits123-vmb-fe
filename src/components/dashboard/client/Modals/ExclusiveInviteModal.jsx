@@ -31,9 +31,9 @@ export default function ExclusiveInviteModal({
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   // const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
-   const [createCheckoutSession, { isLoading: isRedirecting }] =
-      useCreateCheckoutSessionMutation();
-        const {user}=useUser();
+  const [createCheckoutSession, { isLoading: isRedirecting }] =
+    useCreateCheckoutSessionMutation();
+  const { user } = useUser();
   const salon = initialData;
   const services = Array.isArray(salon?.services) ? salon.services : [];
 
@@ -47,10 +47,11 @@ export default function ExclusiveInviteModal({
     isLoading: loadingSalon,
     isSuccess,
   } = useGetSalonByIdQuery(
-    {id:salonId}
-    , {
-    skip: !isOpen || !salonId,
-  });
+    { id: salonId },
+    {
+      skip: !isOpen || !salonId,
+    }
+  );
   // useEffect(() => setInviteOpen(isOpen), [isOpen]);
   useEffect(() => {
     if (isOpen) {
@@ -92,7 +93,6 @@ export default function ExclusiveInviteModal({
     setScheduleOpen(true);
   };
 
-
   const handleConfirmBooking = async () => {
     if (!inviteId) {
       toastError("Invite not found");
@@ -112,10 +112,10 @@ export default function ExclusiveInviteModal({
       appointmentDate: selectedDate,
       startTime: convertTo12Hour(selectedTime),
       paymentAmount: finalPrice,
-      paymentType:"invite",
-      requesterEmail:user?.email,
-      clientName:user?.name,
-      services:services.map((s) => s.id),
+      paymentType: "invite",
+      requesterEmail: user?.email,
+      clientName: user?.name,
+      services: services.map((s) => s.id),
     };
 
     try {
@@ -133,7 +133,6 @@ export default function ExclusiveInviteModal({
       toastError(err?.data?.message || "Payment failed. Please try again.");
       console.error("Checkout error:", err);
     }
-
 
     // try {
     //   await acceptInvite({
@@ -241,14 +240,13 @@ export default function ExclusiveInviteModal({
                       <h4 className="font-medium text-[#581838]">
                         Exclusive Offer
                       </h4>
-                                          <ServicesTable
-  services={services}
-  containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-/>
+                      <ServicesTable
+                        services={services}
+                        containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
+                        scrollbarClass="custom-scrollbar"
+                        maxHeightClass="max-h-32"
+                      />
 
-                  
                       <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
                         <div>Discount (%): &nbsp; {discountPercent}%</div>
                         <div>
@@ -339,13 +337,12 @@ export default function ExclusiveInviteModal({
                         Exclusive Offer
                       </h4>
                       <ServicesTable
-  services={services}
-  containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
-  scrollbarClass="custom-scrollbar"
-  maxHeightClass="max-h-32"
-/>
+                        services={services}
+                        containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
+                        scrollbarClass="custom-scrollbar"
+                        maxHeightClass="max-h-32"
+                      />
 
-                     
                       <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
                         <div>Discount: {discountPercent}%</div>
                         <div>
@@ -358,15 +355,15 @@ export default function ExclusiveInviteModal({
                         Select Appointment Schedule
                       </p>
                       <div className="grid grid-cols-2 gap-4">
-                             <div className="relative">
-        <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+                        <div className="relative">
+                          <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
 
-        <input
-         type="date"
-               value={selectedDate}
-                 onChange={(e) => setSelectedDate(e.target.value)}
-                          min={new Date().toISOString().split("T")[0]}
-          className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
+                          <input
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) => setSelectedDate(e.target.value)}
+                            min={new Date().toISOString().split("T")[0]}
+                            className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
                    focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
                    transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
@@ -374,10 +371,10 @@ export default function ExclusiveInviteModal({
                    [&::-webkit-calendar-picker-indicator]:right-0
                    [&::-webkit-calendar-picker-indicator]:w-full
                    [&::-webkit-calendar-picker-indicator]:h-full"
-          style={{ appearance: "none" }}
-        />
-      </div>
-                     
+                            style={{ appearance: "none" }}
+                          />
+                        </div>
+
                         {/* <input
                           type="time"
                           value={selectedTime}
@@ -385,9 +382,9 @@ export default function ExclusiveInviteModal({
                           className="border border-[#E5E5E5] rounded-lg px-4 py-3"
                         /> */}
                         <TimePickerControlled
-  value={selectedTime}
-  onChange={setSelectedTime}
-/>
+                          value={selectedTime}
+                          onChange={setSelectedTime}
+                        />
                       </div>
                     </div>
                   </div>

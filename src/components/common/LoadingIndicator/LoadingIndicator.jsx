@@ -6,7 +6,6 @@ const LoadingIndicator = ({ size = "lg" }) => {
     xl: "w-24 h-24",
   };
 
-
   return (
     <div
       className={`animate-spin rounded-full ${sizes[size]} border-t-2 border-b-2 border-[#FF92A5]`}

@@ -18,15 +18,14 @@ export default function App() {
 
   return (
     <Router>
-        <ScrollToTop />
+      <ScrollToTop />
       <Routes>
         {PublicRoutes()}
         {role === "admin" && AdminRoutes()}
         {role === "salon-owner" && SaloonRoutes()}
         {role === "customer" && ClientRoutes()}
-         <Route path="/booking-success" element={<BookingSuccess />} />
-         <Route path="/booking-cancel" element={<BookingCancel />} />
-
+        <Route path="/booking-success" element={<BookingSuccess />} />
+        <Route path="/booking-cancel" element={<BookingCancel />} />
 
         <Route path="*" element={<Navigate to="/register" replace />} />
       </Routes>

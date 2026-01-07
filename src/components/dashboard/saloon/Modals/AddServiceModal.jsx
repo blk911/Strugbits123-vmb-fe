@@ -25,7 +25,7 @@ const durations = [
   { label: "1.5 hr", value: 90 },
   { label: "1.75 hr", value: 105 },
   { label: "2 hr", value: 120 },
-  {label: "2.25 hr", value: 135 },
+  { label: "2.25 hr", value: 135 },
   { label: "2.5 hr", value: 150 },
   { label: "2.75 hr", value: 165 },
   { label: "3 hr", value: 180 },
@@ -235,11 +235,11 @@ export default function AddServiceModal({
                     <input
                       {...register("serviceName", {
                         required: "Service name is required",
-                      pattern: {
-  value: /^[A-Za-z\s&]+$/,
-  message: "Service name can contain letters, spaces, and &",
-},
-
+                        pattern: {
+                          value: /^[A-Za-z\s&]+$/,
+                          message:
+                            "Service name can contain letters, spaces, and &",
+                        },
                       })}
                       onChange={(e) => {
                         let value = e.target.value;

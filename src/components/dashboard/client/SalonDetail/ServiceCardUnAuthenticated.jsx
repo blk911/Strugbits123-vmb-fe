@@ -15,8 +15,7 @@ export default function ServiceCardAnonymous({ services, salon }) {
   const navigate = useNavigate();
   return (
     <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 h-full flex flex-col gap-4 hover:shadow-md transition-all duration-300">
- 
-     <div className="relative w-full h-[200px] shrink-0">
+      <div className="relative w-full h-[200px] shrink-0">
         <img
           src={serviceImage}
           alt={serviceName}
@@ -29,24 +28,24 @@ export default function ServiceCardAnonymous({ services, salon }) {
           {serviceDuration} min
         </div>
       </div>
-    <div className="flex justify-between items-start min-h-[48px] gap-2">
-          <h4
-            className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+      <div className="flex justify-between items-start min-h-[48px] gap-2">
+        <h4
+          className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
                        leading-[22px] line-clamp-2 max-w-[70%]"
-          >
-            {serviceName}
-          </h4>
-
-          <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
-            ${servicePrice}
-          </span>
-        </div>
-   <p
-          className="text-[#4B5563] text-[14px] sm:text-[15px]
-                     leading-[18px] line-clamp-2 "
         >
-          {description || "\u00A0"}
-        </p>
+          {serviceName}
+        </h4>
+
+        <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+          ${servicePrice}
+        </span>
+      </div>
+      <p
+        className="text-[#4B5563] text-[14px] sm:text-[15px]
+                     leading-[18px] line-clamp-2 "
+      >
+        {description || "\u00A0"}
+      </p>
 
       <div className="flex  mt-2">
         <AppButton

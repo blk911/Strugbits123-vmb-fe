@@ -22,9 +22,12 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
     data: salonResponse,
     isLoading: loadingSalon,
     isSuccess,
-  } = useGetSalonByIdQuery({id:salonId}, {
-    skip: !isOpen || !salonId,
-  });
+  } = useGetSalonByIdQuery(
+    { id: salonId },
+    {
+      skip: !isOpen || !salonId,
+    }
+  );
   const handleViewSalon = () => {
     if (!salonId) return;
 

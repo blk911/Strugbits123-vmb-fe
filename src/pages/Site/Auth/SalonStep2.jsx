@@ -190,7 +190,7 @@ export default function SalonStep2({ onBack }) {
         </div>
       </div>
       <InputWithIcon
-      type="number"
+        type="number"
         label="Phone Number"
         icon={FaPhoneAlt}
         name="salonPhone"
@@ -199,9 +199,8 @@ export default function SalonStep2({ onBack }) {
       />
 
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
-      
-<TimePicker label="Start Time" name="startTime" />
-<TimePicker label="End Time" name="endTime" />
+        <TimePicker label="Start Time" name="startTime" />
+        <TimePicker label="End Time" name="endTime" />
 
         <div className="relative" ref={detailsRef}>
           <label className="block text-[#374151] text-[14px] font-semibold mb-1">
@@ -217,8 +216,8 @@ export default function SalonStep2({ onBack }) {
             >
               <span className="text-gray-600 text-[14px]">
                 {selectedDays.length > 0
-                // ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
-                ? `0${selectedDays.length} Days`
+                  ? // ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
+                    `0${selectedDays.length} Days`
                   : "Select Days"}
               </span>
 
@@ -299,15 +298,15 @@ export default function SalonStep2({ onBack }) {
             {...register("description")}
             rows={3}
             onChange={(e) => {
-                        let value = e.target.value;
+              let value = e.target.value;
 
-                        if (value.startsWith(" ")) {
-                          value = value.trimStart();
-                          e.target.value = value;
-                        }
+              if (value.startsWith(" ")) {
+                value = value.trimStart();
+                e.target.value = value;
+              }
 
-                        register("description").onChange(e);
-                      }}
+              register("description").onChange(e);
+            }}
             placeholder="Enter description"
             className="w-full border border-[#E5E5E5] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
           />
@@ -388,31 +387,29 @@ export default function SalonStep2({ onBack }) {
               accept="image/*"
               onChange={handleSalonPhotosUpload}
             />
-     <div className="w-full overflow-x-auto custom-scrollbar">
-
-            <div className="flex  pt-3 gap-2 sm:gap-3">
-              {watch("salonPhotos")?.map((photo, index) => (
-                <div key={index} className="relative flex-shrink-0">
-                  <img
-                    src={photo.url}
-                    alt={`Salon photo ${index + 1}`}
-                    className="w-[60px] h-[54px] md:w-[80px] md:h-[74px] object-cover rounded-md border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeSalonPhoto(index)}
-                    className="absolute cursor-pointer top-[-2px] right-[15px] md:right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
-                  >
-                    ×
-                  </button>
-                  <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
-                    {photo.name}
-                  </p>
-                </div>
-              ))}
+            <div className="w-full overflow-x-auto custom-scrollbar">
+              <div className="flex  pt-3 gap-2 sm:gap-3">
+                {watch("salonPhotos")?.map((photo, index) => (
+                  <div key={index} className="relative flex-shrink-0">
+                    <img
+                      src={photo.url}
+                      alt={`Salon photo ${index + 1}`}
+                      className="w-[60px] h-[54px] md:w-[80px] md:h-[74px] object-cover rounded-md border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeSalonPhoto(index)}
+                      className="absolute cursor-pointer top-[-2px] right-[15px] md:right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
+                    >
+                      ×
+                    </button>
+                    <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
+                      {photo.name}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-     </div>
-          
           </div>
 
           {errors.salonPhotos && (

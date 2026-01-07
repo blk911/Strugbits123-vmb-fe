@@ -24,7 +24,7 @@ export default function ClientRoutes() {
       <Route path="/salon/:id" element={<SalonDetail />} />
 
       <Route path="/salons" element={<Salons />} />
-     
+
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/salon-invites" element={<SalonInvites />} />
