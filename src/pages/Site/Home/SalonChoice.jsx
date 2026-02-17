@@ -5,41 +5,52 @@ import customerDashboardImg from "../../../assets/customer_dashboard.png";
 function List({ items }) {
   return (
     <ul className="list-disc pl-5" style={{ color: "#777777" }}>
-      {items.map((item, idx) => (
-        <li key={idx} className="mb-3">
-          <span
-            className="max-xl:text-[14px] xl:text-[16px] text-[#777777] mt-[24px] mb-[10px]"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 400,
-            }}
-          >
-            {item}
-          </span>
-        </li>
-      ))}
+      {items.map((item, idx) => {
+        const isObjectItem =
+          typeof item === "object" && item !== null && "lead" in item;
+        return (
+          <li key={idx} className="mb-1.5">
+            <span
+              className="max-xl:text-[14px] xl:text-[15px] leading-tight text-[#777777]"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: 400,
+              }}
+            >
+              {isObjectItem ? (
+                <>
+                  <strong className="font-semibold text-[#581838]">
+                    {item.lead}
+                  </strong>
+                  <br />
+                  {item.detail}
+                </>
+              ) : (
+                item
+              )}
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }
 
-function SalonCard({ img, label, title, listItems, btnText, classes = "" }) {
-  const shadow = {
-    boxShadow: `
-      -4px 10px 24px 0px #FF92A51A,
-      -14px 42px 44px 0px #FF92A517,
-      -32px 94px 60px 0px #FF92A50D,
-      -57px 167px 71px 0px #FF92A503,
-      -89px 262px 77px 0px #FF92A500
-    `,
-  };
-
+function SalonCard({
+  img,
+  label,
+  title,
+  subtitle,
+  listItems,
+  btnText,
+  classes = "",
+}) {
   return (
     <div
       className={`flex max-xl:gap-x-[20px] lg:gap-x-[70px] gap-y-[20px] items-center ${classes}`}
     >
       <div
-        className="max-md:w-full lg:w-[400px] xl:w-[500px] h-[411px] border-1 border-[#581838] rounded-[10px] overflow-hidden"
-        style={shadow}
+        className="vmb-card max-md:w-full lg:w-[400px] xl:w-[500px] h-[411px] overflow-hidden bg-white"
       >
         <img src={img} alt="" className="w-full h-full " />
       </div>
@@ -62,6 +73,17 @@ function SalonCard({ img, label, title, listItems, btnText, classes = "" }) {
         >
           {title}
         </span>
+        {subtitle && (
+          <span
+            className="max-xl:text-[15px] xl:text-[16px] leading-tight vmb-muted"
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 500,
+            }}
+          >
+            {subtitle}
+          </span>
+        )}
         <List items={listItems} />
         <Button
           text={btnText}
@@ -76,10 +98,23 @@ function SalonCard({ img, label, title, listItems, btnText, classes = "" }) {
 
 function SalonChoice() {
   const salonOwnerList = [
-    "Create your salon profile with complete details.",
-    "Manage directly from the portal – no hassle, no missed clients.",
-    "Invite to new salon owners.",
-    "Boost visibility and gain new customers from our growing network.",
+    {
+      lead: "Replace Cancellations With Commitment",
+      detail: "Pre-paid invitations reduce no-shows and protect your schedule.",
+    },
+    {
+      lead: "Turn Invitations Into Revenue",
+      detail:
+        "Clients invite friends, request gifted services, and book together — intentionally.",
+    },
+    {
+      lead: "Reward Loyalty That Promotes You",
+      detail: "Built-in incentives turn satisfied clients into active ambassadors.",
+    },
+    {
+      lead: "Grow Through Co-Marketing",
+      detail: "Salons who build the network share in its growth.",
+    },
   ];
 
   return (
@@ -87,7 +122,7 @@ function SalonChoice() {
       <SalonCard
         img={salonDashboardImg}
         label="Salon Owners"
-        title="Grow Your Salon Business with Us"
+        title="How The VMB Model Works"
         listItems={salonOwnerList}
         btnText="Register Your Salon Today"
         classes="max-md:flex-col max-md:w-full "
@@ -95,12 +130,13 @@ function SalonChoice() {
       <SalonCard
         img={customerDashboardImg}
         label="For Customers"
-        title="Your Beauty. Your Choice. Anytime, Anywhere."
+        title="Beauty Is Better Shared; Even Better Gifted!"
+        subtitle="The salons you love. The friends you trust. All connected."
         listItems={[
-          "Find and book your favorite salons with just a few clicks.",
-          "Browse services, timings, and real-time availability before booking.",
-          "Send a salon experience as a gift to friends & family (spa, haircut, makeover, etc.).",
-          "Enjoy exclusive deals and discounts from partnered salons.",
+          "Schedule together",
+          "Send experiences as gifts",
+          "Discover salons through real relationships",
+          "Benefit when your circle grows",
         ]}
         btnText="Create Free Account"
         classes="max-md:flex-col max-md:w-full flex-row-reverse"

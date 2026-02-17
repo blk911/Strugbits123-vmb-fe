@@ -1,5 +1,104 @@
 @import "tailwindcss";
 
+/* === VMB "Milk+Honey" Theme Layer === */
+:root {
+  --vmb-bg: #fbfaf8;
+  --vmb-surface: #ffffff;
+  --vmb-ink: #1f1b1a;
+  --vmb-muted: #6b6460;
+  --vmb-border: rgba(31, 27, 26, 0.1);
+  --vmb-accent: #6b1f3a;
+  --vmb-accent-2: #b08d57;
+  --vmb-cream-overlay: rgba(245, 241, 235, 0.55);
+  --vmb-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --vmb-gold-flake-shadow:
+    0 6px 14px rgba(176, 141, 87, 0.12),
+    0 14px 28px rgba(176, 141, 87, 0.08),
+    0 1px 2px rgba(31, 27, 26, 0.04);
+}
+
+html,
+body {
+  background: var(--vmb-bg);
+  color: var(--vmb-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@utility vmb-container {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility vmb-section {
+  @apply py-10 sm:py-14;
+}
+
+@utility vmb-card {
+  @apply rounded-2xl bg-white/85 backdrop-blur border;
+  border-color: var(--vmb-border);
+  box-shadow: var(--vmb-gold-flake-shadow);
+}
+
+@utility vmb-h1 {
+  @apply text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-tight;
+}
+
+@utility vmb-h2 {
+  @apply text-2xl sm:text-3xl font-semibold tracking-tight;
+}
+
+@utility vmb-muted {
+  color: var(--vmb-muted);
+}
+
+@utility vmb-title {
+  color: #581838;
+}
+
+@utility vmb-btn {
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition;
+}
+
+@utility vmb-btn-primary {
+  @apply vmb-btn text-white;
+  background: var(--vmb-accent);
+}
+
+.vmb-btn-primary:hover {
+  filter: brightness(0.95);
+}
+
+@utility vmb-btn-ghost {
+  @apply vmb-btn border bg-white/70;
+  border-color: var(--vmb-border);
+}
+
+@utility vmb-photo {
+  @apply relative overflow-hidden rounded-2xl border;
+  border-color: rgba(31, 27, 26, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+@utility vmb-photo-img {
+  @apply block w-full h-full object-cover;
+  transform: none;
+}
+
+@utility vmb-photo-overlay {
+  @apply absolute inset-0;
+  background: transparent;
+  mix-blend-mode: normal;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+@utility vmb-photo-hover {
+  @apply transition-transform duration-200 ease-out;
+}
+
+@source inline("{hover:,}vmb-photo-hover");
+@source inline("{group-hover:,}vmb-photo-overlay");
+
 
 @keyframes arrow-marquee {
   0% {

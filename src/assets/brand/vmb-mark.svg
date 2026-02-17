@@ -1,0 +1,12 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 120 120"
+  fill="none"
+>
+  <circle cx="60" cy="60" r="52" fill="var(--vmb-mark, #1F1B1A)" opacity="0.12" />
+  <path
+    d="M34 84L52 36L60 62L68 36L86 84H74L67 62L60 84L53 62L46 84H34Z"
+    fill="var(--vmb-mark, #1F1B1A)"
+  />
+  <circle cx="95" cy="25" r="7" fill="var(--vmb-accent, #B08D57)" />
+</svg>

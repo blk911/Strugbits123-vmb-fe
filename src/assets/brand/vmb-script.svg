@@ -1,0 +1,27 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 420 120"
+  fill="none"
+>
+  <path
+    d="M26 89V31H42L66 66L90 31H106V89H90V55L66 90L42 55V89H26Z"
+    fill="var(--vmb-script, #3A3432)"
+  />
+  <path
+    d="M124 89V31H180V45H140V54H173V68H140V75H182V89H124Z"
+    fill="var(--vmb-script, #3A3432)"
+  />
+  <path
+    d="M200 89V31H216V62L244 31H264L236 62L266 89H246L216 63V89H200Z"
+    fill="var(--vmb-script, #3A3432)"
+  />
+  <path
+    d="M284 89V31H300V75H334V89H284Z"
+    fill="var(--vmb-script, #3A3432)"
+  />
+  <path
+    d="M352 89V31H368V89H352Z"
+    fill="var(--vmb-script, #3A3432)"
+  />
+  <circle cx="392" cy="30" r="7" fill="var(--vmb-accent, #B08D57)" />
+</svg>

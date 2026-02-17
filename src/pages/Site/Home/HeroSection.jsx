@@ -1,84 +1,44 @@
 import React from "react";
-import pic1 from "../../../assets/pic-1.png";
-import pic2 from "../../../assets/pic-2.png";
-import pic3 from "../../../assets/pic-3.png";
 import pic4 from "../../../assets/pic-4.png";
 import Button from "../../../components/common/site/Button";
 
 function HeroSection() {
   return (
-    <div
-      className="h-auto lg:h-[658px] xl:h-[700px] w-full py-12 px-[26px]"
-      style={{
-        background: `linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), linear-gradient(180deg, #FF92A5 0%, #FFFFFF 100%)`,
-      }}
-    >
-      <div className="flex flex-row h-full w-full justify-center gap-x-[20px]">
-        <div className="max-lg:hidden h-full flex flex-col justify-between">
-          <img
-            src={pic1}
-            alt=""
-            className="max-xl:h-[179px] max-xl:w-[195px] xl:h-[220px] xl:w-[240px]"
-          />
-          <img
-            src={pic3}
-            alt=""
-            className="max-xl:h-[118px] max-xl:w-[129px] xl:h-[145px] xl:w-[160px] ml-[21px]"
-          />
-        </div>
-        <div className="h-full flex flex-col justify-center items-center gap-y-[31px] xl:gap-y-[45px]">
-          <h2
-            className="text-[70px] sm:text-[100px] xl:text-[140px] font-normal text-center  text-[#581838] leading-[70px] lg:leading-[90px] xl:leading-[100px]"
-            style={{
-              fontFamily: "Italianno, cursive",
-              fontWeight: 400,
-              fontStyle: "normal",
-              letterSpacing: "0%",
-            }}
-          >
-            Connecting Salons & Customers
-          </h2>
-          <h3
-            className="text-[20px] max-sm:leading-[30px] sm:text-[35px] xl:text-[50px] font-medium text-center text-[#581838]"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 500,
-              fontStyle: "normal",
-              letterSpacing: "0%",
-            }}
-          >
-            the Smart Way – Through Gifting & Invites
-          </h3>
-          <p
-            className="lg:text-[20px] xl:text-[22px] font-normal text-center text-[#581838]"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 400,
-              fontStyle: "normal",
-              lineHeight: "28px",
-              letterSpacing: "0%",
-            }}
-          >
-            Send salon services as gifts to friends & family, and let every
-            occasion shine. Salon owners <br /> can also invite each other to
-            grow together on one platform.
-          </p>
-          <Button text={"Share the Gift of Beauty"} navigateTo={"register"} />
-        </div>
-        <div className="max-lg:hidden h-full flex flex-col justify-between">
-          <img
-            src={pic2}
-            alt=""
-            className="max-xl:h-[118px] max-xl:w-[129px] xl:h-[145px] xl:w-[160px]"
-          />
-          <img
-            src={pic4}
-            alt=""
-            className="max-xl:h-[186px] max-xl:w-[202px] xl:h-[230px] xl:w-[250px]"
-          />
+    <section className="relative w-full min-h-[620px] sm:min-h-[660px] overflow-hidden">
+      <div className="absolute inset-y-[50px] inset-x-[75px] rounded-2xl overflow-hidden">
+        <img
+          src={pic4}
+          alt="Hero background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/25" />
+
+        <div className="relative z-10 h-full vmb-container flex items-center py-8 sm:py-10">
+          <div className="vmb-card max-w-xl p-8 sm:p-10">
+            <h2 className="vmb-h1 vmb-title text-2xl sm:text-3xl md:text-4xl">
+              Why VMB? Fewer Cancellations. Loyal Clients. Longterm stability
+            </h2>
+            <h3 className="mt-3 leading-tight">
+              <span className="block text-lg sm:text-xl font-semibold tracking-tight vmb-title">
+                Bookings are committed, clients become advocates.
+              </span>
+            </h3>
+            <p className="mt-4 text-base sm:text-lg leading-relaxed vmb-muted">
+              VMB salons experience fewer cancellations, stronger revenue per
+              chair, and clients who actively promote your services. Thoughtful
+              incentives turn guests into loyal ambassadors - driving steady
+              growth with less risk.
+            </p>
+            <Button
+              text={"Be Part of Something More Personal."}
+              navigateTo={"register"}
+              classes="vmb-btn-primary mt-6 !border-0 !pl-6 !pr-6 !py-3 after:!hidden [&>span:last-child]:hidden"
+              textclass="!text-white !text-sm sm:!text-base"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

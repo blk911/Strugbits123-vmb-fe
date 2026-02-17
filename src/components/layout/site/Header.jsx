@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import logo from "../../../assets/logo.png";
 import Button from "../../common/site/Button";
 import { useNavigate } from "react-router-dom";
+import logoV2 from "../../../assets/brand/benefits/Logo v2.png";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <nav className="w-full bg-white py-[20px] px-[50px]">
-      <div className="flex gap-2 flex-col sm:flex-row justify-between items-center">
-        <img
-          src={logo}
-          alt="Logo"
-          className="h-[69px] w-[108px] cursor-pointer"
+    <nav className="w-full">
+      <div className="flex gap-3 flex-col sm:flex-row justify-between items-center">
+        <button
+          type="button"
+          className="cursor-pointer"
           onClick={() => navigate("/")}
-        />
+          aria-label="Go to homepage"
+        >
+          <img src={logoV2} alt="VMB logo" className="h-20 w-auto" />
+        </button>
         {/* <div className="lg:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -27,7 +29,7 @@ function Header() {
           </button>
         </div> */}
         <div>
-          <ul className="flex items-center gap-[20px] text-[#4B5563]">
+          <ul className="flex items-center gap-5 vmb-muted">
             {/* <li>
               <a href="" className="text-[#4B5563]">
                 Salon Owner
@@ -50,7 +52,7 @@ function Header() {
             </li> */}
             <li>
               <Button
-                text={"Register Your Salon Today"}
+                text={"Get Started"}
                 navigateTo={"register"}
                 type={"salon"}
               />
@@ -82,7 +84,7 @@ function Header() {
               </a>
             </li> */}
             <li>
-              <Button text={"Register Your Salon Today"} />
+              <Button text={"Get Started"} />
             </li>
           </ul>
           <button

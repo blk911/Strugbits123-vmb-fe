@@ -9,4 +9,9 @@ export default defineConfig({
     tailwindcss(),
     svgr({ exportAsDefault: true }), 
   ],
+  server: {
+    host: true,
+    port: 4317,
+    strictPort: true,
+  },
 })

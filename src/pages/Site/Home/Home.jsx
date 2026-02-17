@@ -8,7 +8,7 @@ import TopSalons from "./TopSalons";
 
 function Home() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits />
