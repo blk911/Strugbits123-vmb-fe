@@ -7,6 +7,7 @@ export default function Button({ text, classes, textclass, navigateTo, type }) {
   return (
     <button
       onClick={() => {
+        if (!navigateTo) return;
         dispatch(setAuthType(type));
         dispatch(setAuthMode("signup"));
         navigate(navigateTo);

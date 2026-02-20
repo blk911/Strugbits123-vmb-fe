@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Button from "../../common/site/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import logoV2 from "../../../assets/brand/benefits/Logo v2.png";
+
+const PAGE_LABELS = { "/salon": "SALON", "/client": "CLIENT" };
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const pageLabel = PAGE_LABELS[pathname] ?? null;
   return (
     <nav className="w-full">
       <div className="flex gap-3 flex-col sm:flex-row justify-between items-center">
@@ -30,6 +34,11 @@ function Header() {
         </div> */}
         <div>
           <ul className="flex items-center gap-5 vmb-muted">
+            {pageLabel && (
+              <li className="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border" style={{ borderColor: "var(--vmb-border)", color: "var(--vmb-muted)" }}>
+                {pageLabel}
+              </li>
+            )}
             {/* <li>
               <a href="" className="text-[#4B5563]">
                 Salon Owner
