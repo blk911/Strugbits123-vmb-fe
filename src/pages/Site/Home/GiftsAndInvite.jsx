@@ -3,63 +3,77 @@ import React from "react";
 import pic1 from "../../../assets/brand/benefits/girls-night.jpg";
 import pic2 from "../../../assets/brand/benefits/invite_sent.jpeg";
 import Button from "../../../components/common/site/Button";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
-function Card({ img, title, desc, btnText }) {
+function Card({ img, title, desc, btnText, type, mode }) {
+  const navigate = useNavigate();
   return (
     <div
-      className="vmb-card w-[526px] flex flex-col rounded-[20px] overflow-hidden bg-white hover:shadow-sm transition-shadow"
+      className="
+        w-full max-w-[630px]
+        flex flex-col
+        rounded-[20px]
+        border border-[#58183833] hover:border-[#5C8374]
+        bg-white
+        hover:shadow-2xl
+        overflow-hidden
+        pb-[20px] sm:pb-[30px]
+      "
     >
-      <div className="h-[223px] w-full overflow-hidden rounded-t-[20px]">
-        <img src={img} alt="" className="h-full w-full object-cover" />
+      <div className="w-full h-[223px] overflow-hidden">
+        <img
+          src={img}
+          alt={title}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
-      <div className="w-full flex flex-col px-[30px] pt-[27px] pb-[40px]">
-        <span
-          className="max-xl:text-[25px] xl:text-[30px] vmb-title mt-[24px] mb-[10px]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 520,
-          }}
-        >
+
+      <div className="flex flex-col gap-[27px] px-6 sm:px-10 pt-6  ">
+        <h3 className="font-poppins font-medium text-[22px] sm:text-[25px] text-[#0F3D3E] leading-snug">
           {title}
-        </span>
-        <span
-          className="max-xl:text-[14px] xl:text-[16px] max-xl:leading-[20px] mt-[10px]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-          }}
-        >
+        </h3>
+
+        <p className="font-poppins font-normal text-[14px] text-[#5C8374] leading-relaxed">
           {desc}
-        </span>
-        <div className="mt-[30px]">
-          <Button
-            text={btnText}
-            classes={"w-max capitalize"}
-            textclass={"text-[16px]"}
-            navigateTo={"register"}
-          />
-        </div>
+        </p>
+        <PrimaryButton
+          text={btnText}
+          variant="pillLight"
+          className="w-fit p-[5px] pl-[15px]"
+          onClick={() => navigate("/register")}
+          authType={type}
+          authMode={mode}
+        />
       </div>
     </div>
   );
 }
 
-function GiftsAndInvite() {
+function GiftsAndInvite({ cards }) {
   return (
-    <div className="flex flex-wrap justify-center items-center gap-[25px] px-[10px]">
-      <Card
-        img={pic1}
-        title="Two Is Fun. Three Is a Celebration."
-        desc="Turn loyal clients into new bookings — invite them to schedule with a friend or request a gift from someone special."
-        btnText="Gift a NMB gift card"
-      />
-      <Card
-        img={pic2}
-        title="Make invitations and gifting your calling card"
-        desc='VMB turns fragile bookings into consistent, bankable growth. Loyal clients into "always on" ambassadors working for you.'
-        btnText="Invite the best salon"
-      />
-    </div>
+    <section className="w-full px-4">
+      <div className="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center items-stretch">
+        <Card
+          img={pic1}
+          title={cards[0].title}
+          desc={cards[0].desc}
+          btnText="Gift A VMB Gift Card"
+          type={cards[0].type}
+          mode={cards[0].mode}
+        />
+
+        <Card
+          img={pic2}
+          title={cards[1].title}
+          desc={cards[1].desc}
+          btnText="Invite The Best Salon"
+          type={cards[1].type}
+          mode={cards[1].mode}
+        />
+      </div>
+    </section>
   );
 }
 

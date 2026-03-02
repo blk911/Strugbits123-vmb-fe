@@ -1,44 +1,59 @@
 import Marquee from "react-fast-marquee";
+import waxingImg from "../../../assets/scroller/wax.png";
 import stylingImg from "../../../assets/scroller/styling.png";
-import lipsImg from "../../../assets/scroller/lips.png";
-import browsImg from "../../../assets/scroller/brows.png";
-import waxingImg from "../../../assets/scroller/waxing.png";
 import spaImg from "../../../assets/scroller/spa.png";
 import nailsImg from "../../../assets/scroller/nails.png";
-import resortsImg from "../../../assets/scroller/resorts.png";
+import makeupImg from "../../../assets/scroller/makeup.png";
+import lipsImg from "../../../assets/scroller/lips.png";
+import lashingImg from "../../../assets/scroller/lashes.png";
+import facialImg from "../../../assets/scroller/facial.png";
+import browsImg from "../../../assets/scroller/brows.png";
 
 const services = [
-  { image: stylingImg, label: "Styling" },
-  { image: lipsImg, label: "Lips" },
-  { image: browsImg, label: "Brows" },
-  { image: waxingImg, label: "Waxing" },
-  { image: spaImg, label: "Spa" },
-  { image: nailsImg, label: "Nails" },
-  { image: resortsImg, label: "Resorts" },
+  { image: waxingImg, label: "WAXING" },
+  { image: lipsImg, label: "LIPS" },
+  { image: browsImg, label: "BROWS" },
+  { image: spaImg, label: "SPA" },
+  { image: nailsImg, label: "NAILS" },
+  { image: stylingImg, label: "STYLING" },
+  { image: makeupImg, label: "MAKEUP" },
+  { image: facialImg, label: "FACIAL" },
+  { image: lashingImg, label: "LASHES" },
 ];
 
 export default function LogoMarquee() {
   return (
-    <div className="w-full pt-2 pb-4 sm:pt-3 sm:pb-5">
-      <div className="vmb-container overflow-hidden">
-        <Marquee gradient={false} speed={45} autoFill>
-          {services.map((service) => (
+    <div className="w-full h-[146px]  flex items-center overflow-hidden">
+      <Marquee gradient={false} speed={40} autoFill pauseOnHover>
+        {services.map((service, index) => (
+          <div
+            key={`${service.label}-${index}`}
+            className="mx-3 w-[120px] h-[146px] flex flex-col items-center justify-center flex-shrink-0"
+          >
             <div
-              key={service.label}
-              className="vmb-card mx-3 w-[110px] sm:w-[124px] flex flex-col items-center p-2.5 opacity-80 transition-opacity hover:opacity-100"
+              className="
+                w-[100px] h-[100px]
+                rounded-full
+                border-[1px] border-white
+                flex items-center justify-center
+                overflow-hidden
+                bg-white/30 backdrop-blur-sm
+                shadow-xl
+              "
             >
               <img
                 src={service.image}
                 alt={service.label}
-                className="h-10 w-14 rounded-lg object-cover sm:h-12 sm:w-16"
+                className="w-[90%] h-[90%] object-cover rounded-full"
               />
-              <span className="mt-1 text-[11px] font-medium uppercase tracking-wide vmb-muted">
-                {service.label}
-              </span>
             </div>
-          ))}
-        </Marquee>
-      </div>
+
+            <span className="mt-2 text-center font-['Poppins'] text-[16px] font-normal text-[#0F3D3E] leading-none">
+              {service.label}
+            </span>
+          </div>
+        ))}
+      </Marquee>
     </div>
   );
 }

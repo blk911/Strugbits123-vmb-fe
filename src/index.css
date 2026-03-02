@@ -1,5 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;600;700&family=Poppins:wght@400;600&display=swap");
 @import "tailwindcss";
 
+.font-lato {
+  font-family: "Lato", sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.font-inter {
+  font-family: "Inter", sans-serif;
+}
 /* === VMB "Milk+Honey" Theme Layer === */
 :root {
   --vmb-bg: #fbfaf8;
@@ -12,8 +24,7 @@
   --vmb-cream-overlay: rgba(245, 241, 235, 0.55);
   --vmb-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   --vmb-gold-flake-shadow:
-    0 6px 14px rgba(176, 141, 87, 0.12),
-    0 14px 28px rgba(176, 141, 87, 0.08),
+    0 6px 14px rgba(176, 141, 87, 0.12), 0 14px 28px rgba(176, 141, 87, 0.08),
     0 1px 2px rgba(31, 27, 26, 0.04);
 }
 
@@ -99,7 +110,6 @@ body {
 @source inline("{hover:,}vmb-photo-hover");
 @source inline("{group-hover:,}vmb-photo-overlay");
 
-
 @keyframes arrow-marquee {
   0% {
     transform: translateX(-120%);
@@ -150,10 +160,12 @@ body {
   transform: rotate(-50deg);
   transform-origin: center;
 
-  background: linear-gradient(180deg,
-      transparent 25%,
-      rgba(255, 255, 255, 0.9) 50%,
-      transparent 75%);
+  background: linear-gradient(
+    180deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    transparent 75%
+  );
 
   animation: shine-horizontal 3s linear infinite;
   will-change: left;
@@ -161,10 +173,7 @@ body {
 
 @source inline("{group-hover:,}shine-line");
 
-
-
 @source inline("{group-hover:,}shine-line");
-
 
 .custom-table thead {
   @apply hidden;
@@ -191,7 +200,6 @@ body {
 }
 
 @media (min-width: 1030px) {
-
   .custom-table thead {
     @apply table-header-group bg-[#F8F8F8];
   }
@@ -201,7 +209,7 @@ body {
   }
 
   .custom-table tr {
-    @apply table-row hover:bg-gray-50 transition-colors ;
+    @apply table-row hover:bg-gray-50 transition-colors;
   }
 
   .custom-table th,
@@ -226,32 +234,30 @@ body {
   .custom-table tr td:last-child {
     @apply rounded-r-lg;
   }
-.custom-table {
-  border-collapse: separate !important;
-  border-spacing: 0 12px;
-}
+  .custom-table {
+    border-collapse: separate !important;
+    border-spacing: 0 12px;
+  }
 
-.custom-table tr {
-  @apply table-row bg-white shadow-sm;
-}
+  .custom-table tr {
+    @apply table-row bg-white shadow-sm;
+  }
 
-.custom-table td {
-  border-top: 1px solid #9CA3AF4D;
-  border-bottom: 1px solid #9CA3AF4D;
-}
+  .custom-table td {
+    border-top: 1px solid #9ca3af4d;
+    border-bottom: 1px solid #9ca3af4d;
+  }
 
-.custom-table tr td:first-child {
-  border-left: 1px solid #9CA3AF4D;
-  border-radius: 5px 0 0 5px;
-}
+  .custom-table tr td:first-child {
+    border-left: 1px solid #9ca3af4d;
+    border-radius: 5px 0 0 5px;
+  }
 
-.custom-table tr td:last-child {
-  border-right: 1px solid #9CA3AF4D;
-  border-radius: 0 5px 5px 0;
+  .custom-table tr td:last-child {
+    border-right: 1px solid #9ca3af4d;
+    border-radius: 0 5px 5px 0;
+  }
 }
-}
-
-
 
 .advanced-table-desktop {
   display: none;
@@ -269,45 +275,44 @@ body {
   .advanced-table-mobile {
     display: none;
   }
-    .advanced-table-desktop {
-      width: 100%;
-      border-collapse: separate !important;
-      border-spacing: 0 12px;
-    }
-  
-    .advanced-table-desktop thead tr {
-      background: #F8F8F8;
-    }
-  
-    .advanced-table-desktop thead th:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-  
-    .advanced-table-desktop thead th:last-child {
-      border-radius: 0 5px 5px 0;
-    }
-  
-    .advanced-table-desktop tbody tr {
-      background: white;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-  
-    .advanced-table-desktop tbody td {
-      border-top: 1px solid #9CA3AF4D;
-      border-bottom: 1px solid #9CA3AF4D;
-    }
-  
-    .advanced-table-desktop tbody tr td:first-child {
-      border-left: 1px solid #9CA3AF4D;
-      border-radius: 5px 0 0 5px;
-    }
-  
-    .advanced-table-desktop tbody tr td:last-child {
-      border-right: 1px solid #9CA3AF4D;
-      border-radius: 0 5px 5px 0;
-    }
-}
+  .advanced-table-desktop {
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0 12px;
+  }
 
+  .advanced-table-desktop thead tr {
+    background: #f8f8f8;
+  }
+
+  .advanced-table-desktop thead th:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  .advanced-table-desktop thead th:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+
+  .advanced-table-desktop tbody tr {
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .advanced-table-desktop tbody td {
+    border-top: 1px solid #9ca3af4d;
+    border-bottom: 1px solid #9ca3af4d;
+  }
+
+  .advanced-table-desktop tbody tr td:first-child {
+    border-left: 1px solid #9ca3af4d;
+    border-radius: 5px 0 0 5px;
+  }
+
+  .advanced-table-desktop tbody tr td:last-child {
+    border-right: 1px solid #9ca3af4d;
+    border-radius: 0 5px 5px 0;
+  }
+}
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;

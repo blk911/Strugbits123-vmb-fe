@@ -2,6 +2,8 @@ import React from "react";
 import pic1 from "../../../assets/salon-experience.png";
 import pic2 from "../../../assets/admin_dashboard.png";
 import Button from "../../../components/common/site/Button";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 function SalonExperience() {
   const imgShadow = {
@@ -15,7 +17,7 @@ function SalonExperience() {
     borderTopLeftRadius: "20px",
     borderTopRightRadius: "20px",
   };
-
+  const navigate = useNavigate();
   return (
     <div
       className="max-lg:h-auto lg:h-auto lg:pt-[50px] w-full bg-no-repeat bg-right bg-cover max-lg:pt-[60px] lg:px-[15px] px-[10px]"
@@ -37,24 +39,35 @@ function SalonExperience() {
             New Era of Salon Invites?
           </h4>
           <div className="flex flex-col sm:flex-row gap-x-[20px] gap-y-[10px]">
-            <Button
+            <PrimaryButton
               text="List Your Salon Now"
-              classes={"bg-[#FFFFFF] text-[#581838] w-max"}
-              textclass={"text-[16px]"}
-              navigateTo={"register"}
+              variant="pillOutline"
+              className="w-fit p-[5px] pl-[15px]"
+              onClick={() => navigate("/register")}
+              authMode={"signup"}
+              authType={"salon"}
             />
-            <Button
+            <PrimaryButton
               text="Gift Your First Service"
-              classes={"bg-[#FFFFFF] text-[#581838] w-max"}
-              textclass={"text-[16px]"}
-              navigateTo={"register"}
+              variant="pillOutline"
+              className="w-fit p-[5px] pl-[15px]"
+              onClick={() => navigate("/register")}
+              authMode={"signup"}
+              authType={"salon"}
             />
           </div>
         </div>
         <img
           src={pic2}
           alt=""
-          className="h-[400px] max-lg:w-full lg:w-[600px] self-end"
+          className="
+    w-full
+    max-w-[500px]
+    xl:max-w-[600px]
+    h-auto
+    self-center lg:self-end
+    object-contain
+  "
           style={imgShadow}
         />
       </div>

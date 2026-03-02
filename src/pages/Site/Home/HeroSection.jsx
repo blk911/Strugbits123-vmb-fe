@@ -1,45 +1,104 @@
-import React from "react";
-import pic4 from "../../../assets/pic-4.png";
-import Button from "../../../components/common/site/Button";
+import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
 
-function HeroSection() {
+const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="relative w-full min-h-[620px] sm:min-h-[660px] overflow-hidden">
-      <div className="absolute inset-y-[50px] inset-x-[75px] rounded-2xl overflow-hidden">
-        <img
-          src={pic4}
-          alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/25" />
+    <div
+      className="
+        w-full max-w-[1280px]
+        mx-auto
+        px-3 sm:px-6 md:px-8
+        py-6 sm:py-8
+        min-h-[420px] sm:min-h-[480px] md:min-h-[543px]
+        rounded-none sm:rounded-2xl
+        bg-cover bg-center
+      "
+      style={{ backgroundImage: "url('/hero-bg.png')" }}
+    >
+      <div
+        className="
+          w-full md:max-w-[610px]
+          bg-white/80 backdrop-blur-sm
+          rounded-xl sm:rounded-2xl
+          p-4 sm:p-6 md:p-[30px]
+          flex flex-col gap-4 sm:gap-5
+        "
+      >
+        <div className="flex flex-col gap-2 sm:gap-[10px]">
+          <h1
+            className="
+            font-lato font-bold
+            text-2xl sm:text-3xl md:text-[45px]
+            text-[#0F3D3E]
+            leading-tight
+          "
+          >
+            Why VMB?
+          </h1>
 
-        <div className="relative z-10 h-full vmb-container flex items-center py-8 sm:py-10">
-          <div className="vmb-card max-w-xl p-8 sm:p-10">
-            <h2 className="vmb-h1 vmb-title text-2xl sm:text-3xl md:text-4xl">
-              Why VMB? Fewer Cancellations. Loyal Clients. Longterm stability
-            </h2>
-            <h3 className="mt-3 leading-tight">
-              <span className="block text-lg sm:text-xl font-semibold tracking-tight vmb-title">
-                Bookings are committed, clients become advocates.
-              </span>
-            </h3>
-            <p className="mt-4 text-base sm:text-lg leading-relaxed vmb-muted">
-              VMB salons experience fewer cancellations, stronger revenue per
-              chair, and clients who actively promote your services. Thoughtful
-              incentives turn guests into loyal ambassadors - driving steady
-              growth with less risk.
-            </p>
-            <Button
-              text={"Be Part of Something More Personal."}
-              navigateTo={"register"}
-              classes="vmb-btn-primary mt-6 !border-0 !pl-6 !pr-6 !py-3 after:!hidden [&>span:last-child]:hidden"
-              textclass="!text-white !text-sm sm:!text-base"
-            />
-          </div>
+          <h2
+            className="
+            font-lato font-semibold
+            text-lg sm:text-2xl md:text-[35px]
+            text-[#0F3D3E]
+            leading-snug
+          "
+          >
+            Priority Access. Exclusive Perks.
+          </h2>
+
+          <h2
+            className="
+            font-lato font-semibold
+            text-lg sm:text-2xl md:text-[35px]
+            text-[#0F3D3E]
+            leading-snug
+          "
+          >
+            Insider Benefits.
+          </h2>
         </div>
+
+        <div className="flex flex-col gap-2 sm:gap-[10px]">
+          <p
+            className="
+            font-lato font-bold
+            text-sm sm:text-base md:text-[18px]
+            text-[#5C8374]
+          "
+          >
+            VMB rewards loyalty with priority booking, referral rewards, and
+            member-only benefits.
+          </p>
+
+          <p
+            className="
+            font-lato
+            text-sm sm:text-base md:text-[18px]
+            text-[#333333]
+            leading-relaxed
+          "
+          >
+            VMB members secure their preferred appointments, unlock service
+            credits and upgrades for referrals, and strengthen their connection
+            with the salons they love. Thoughtful incentives turn loyal clients
+            into insiders — delivering more value with every visit.
+          </p>
+        </div>
+
+        <PrimaryButton
+          text="Join as Customer"
+          variant="pill"
+          onClick={() => navigate("/register")}
+          className="w-fit p-[5px] pl-[15px] "
+          authMode={"signup"}
+          authType={"customer"}
+        />
       </div>
-    </section>
+    </div>
   );
-}
+};
 
 export default HeroSection;

@@ -1,39 +1,69 @@
 import React from "react";
-import pic4 from "../../../assets/pic-4.png";
-import Button from "../../../components/common/site/Button";
+import heroBg from "../../../assets/salon_hero_bg.png";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
-function HeroSection() {
+export default function WhyVMBHero() {
+  const navigate = useNavigate();
+
   return (
-    <section className="relative w-full min-h-[620px] sm:min-h-[660px] overflow-hidden">
-      <div className="absolute inset-y-[50px] inset-x-[75px] rounded-2xl overflow-hidden">
+    <section className="w-full px-4 ">
+      <div
+        className="
+          w-full max-w-[1280px]
+          mx-auto
+          rounded-[20px]
+          overflow-hidden
+          relative
+          min-h-[420px] lg:min-h-[543px]
+          flex items-start
+        "
+      >
         <img
-          src={pic4}
+          src={heroBg}
           alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover scale-x-[-1] "
         />
-        <div className="absolute inset-0 bg-black/25" />
+        <div
+          className="
+            backdrop-blur-sm
+            bg-[#FFFFFFCC]
+            border border-[#FFFFFF1A]
+            rounded-[20px]
+            p-[20px] sm:p-[30px]
+            flex flex-col gap-[20px]
 
-        <div className="relative z-10 h-full vmb-container flex items-center py-8 sm:py-10">
-          <div className="vmb-card max-w-xl p-8 sm:p-10">
-            <h2 className="vmb-h1 vmb-title text-2xl sm:text-3xl md:text-4xl">
-              Why VMB? Fewer Cancellations. Loyal Clients. Longterm stability
+            mt-[30px] sm:mt-[50px] lg:mt-[73px]
+            ml-[16px] sm:ml-[30px] lg:ml-[37px]
+
+            max-w-[562px]
+          "
+        >
+          <div>
+            <h1 className="font-lato font-bold text-[30px] sm:text-[38px] lg:text-[45px] text-[#0F3D3E]">
+              Why VMB?
+            </h1>
+
+            <h2 className="font-lato font-semibold text-[22px] sm:text-[28px] lg:text-[35px] text-[#0F3D3E] leading-snug">
+              Fewer Cancellations. Loyal Clients. Long-term Stability
             </h2>
-            <h3 className="mt-3 leading-tight">
-              <span className="block text-lg sm:text-xl font-semibold tracking-tight vmb-title">
-                Bookings are committed, clients become advocates.
-              </span>
-            </h3>
-            <p className="mt-4 text-base sm:text-lg leading-relaxed vmb-muted">
-              VMB salons experience fewer cancellations, stronger revenue per
-              chair, and clients who actively promote your services. Thoughtful
-              incentives turn guests into loyal ambassadors - driving steady
-              growth with less risk.
-            </p>
-            <Button
-              text={"Be Part of Something More Personal."}
-              navigateTo={"register"}
-              classes="vmb-btn-primary mt-6 !border-0 !pl-6 !pr-6 !py-3 after:!hidden [&>span:last-child]:hidden"
-              textclass="!text-white !text-sm sm:!text-base"
+          </div>
+
+          <p className="font-inter text-[15px] sm:text-[17px] lg:text-[18px] text-[#333333] leading-relaxed">
+            VMB salons experience fewer cancellations, stronger revenue per
+            chair, and clients who actively promote your services. Thoughtful
+            incentives turn guests into loyal ambassadors — driving steady
+            growth with less risk.
+          </p>
+
+          <div>
+            <PrimaryButton
+              text="Be Part of Something More Personal"
+              variant="pill"
+              onClick={() => navigate("/register")}
+              className="px-5 py-2"
+              authMode={"signup"}
+              authType={"salon"}
             />
           </div>
         </div>
@@ -41,5 +71,3 @@ function HeroSection() {
     </section>
   );
 }
-
-export default HeroSection;
