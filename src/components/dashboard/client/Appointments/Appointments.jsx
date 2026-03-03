@@ -147,49 +147,31 @@ export default function Appointments({
     refetchAll,
   ]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Reschedule"
-      ? rescheduleData
-      : activeTab === "Hold"
-      ? holdData
-      : activeTab === "Confirmed"
-      ? confirmedData
-      : activeTab === "Scheduled"
-      ? scheduledData
-      : declinedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Reschedule" ? rescheduleData
+    : activeTab === "Hold" ? holdData
+    : activeTab === "Confirmed" ? confirmedData
+    : activeTab === "Scheduled" ? scheduledData
+    : declinedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Reschedule"
-      ? loadingReschedule
-      : activeTab === "Hold"
-      ? loadingHold
-      : activeTab === "Confirmed"
-      ? loadingConfirmed
-      : activeTab === "Scheduled"
-      ? loadingScheduled
-      : loadingDeclined;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Reschedule" ? loadingReschedule
+    : activeTab === "Hold" ? loadingHold
+    : activeTab === "Confirmed" ? loadingConfirmed
+    : activeTab === "Scheduled" ? loadingScheduled
+    : loadingDeclined;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Reschedule"
-      ? fetchingReschedule
-      : activeTab === "Hold"
-      ? fetchingHold
-      : activeTab === "Confirmed"
-      ? fetchingConfirmed
-      : activeTab === "Scheduled"
-      ? fetchingScheduled
-      : fetchingDeclined;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Reschedule" ? fetchingReschedule
+    : activeTab === "Hold" ? fetchingHold
+    : activeTab === "Confirmed" ? fetchingConfirmed
+    : activeTab === "Scheduled" ? fetchingScheduled
+    : fetchingDeclined;
 
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -197,17 +179,19 @@ export default function Appointments({
     id: appt?._id,
     salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt.services?.map((s) => s.serviceName || s.name) || [],
-    payersEmail: ["booking", "invite"].includes(appt?.type)
-      ? appt?.requestedBy?.email ?? "N/A"
-      : appt?.type === "gift"
-      ? appt?.requestedFrom?.email ?? "N/A"
+    payersEmail:
+      ["booking", "invite"].includes(appt?.type) ?
+        (appt?.requestedBy?.email ?? "N/A")
+      : appt?.type === "gift" ? (appt?.requestedFrom?.email ?? "N/A")
       : "N/A",
-    appointmentDate: appt?.appointmentDate
-      ? new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
+    appointmentDate:
+      appt?.appointmentDate ?
+        new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
     appointmentTime: appt?.startTime || "N/A",
-    status: appt.status
-      ? appt.status.charAt(0).toUpperCase() +
+    status:
+      appt.status ?
+        appt.status.charAt(0).toUpperCase() +
         appt.status.slice(1).replace("-", " ")
       : "Pending",
     _modalData: {
@@ -304,8 +288,7 @@ export default function Appointments({
     if (status === "Pending") {
       openModal("appointmentScheduled", row._modalData);
     } else if (status === "Reschedule requested") {
-      setDirectData(row._modalData);
-      setShowReschedule(true);
+      openModal("rescheduleRequestSent", row._modalData);
     } else if (status === "Hold") {
       setDirectData(row._modalData);
       setShowHold(true);
@@ -330,19 +313,13 @@ export default function Appointments({
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Reschedule"
-      ? reschedulePage
-      : activeTab === "Hold"
-      ? holdPage
-      : activeTab === "Confirmed"
-      ? confirmedPage
-      : activeTab === "Scheduled"
-      ? scheduledPage
-      : declinedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Reschedule" ? reschedulePage
+    : activeTab === "Hold" ? holdPage
+    : activeTab === "Confirmed" ? confirmedPage
+    : activeTab === "Scheduled" ? scheduledPage
+    : declinedPage;
 
   return (
     <>

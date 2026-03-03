@@ -16,7 +16,10 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { convertTo12Hour } from "../../../../utils/HelperFunctions";
-import { useScheduleAppointmentMutation } from "../../../../store/api";
+import {
+  useDeclineAppointmentMutation,
+  useScheduleAppointmentMutation,
+} from "../../../../store/api";
 import {
   toastDismiss,
   toastError,
@@ -36,6 +39,8 @@ export default function RescheduleAppointmentModal({
     appointmentTime: z.string().min(1, "Please select a time"),
   });
   const appointmentId = initialData?.appointment?.id;
+  const [declineAppointment, { isLoading: declining }] =
+    useDeclineAppointmentMutation();
   const [scheduleAppointment, { isLoading: scheduling }] =
     useScheduleAppointmentMutation();
   const data = initialData || {
@@ -140,7 +145,20 @@ export default function RescheduleAppointmentModal({
   }, [isOpen]);
 
   const onAcceptAndSchedule = () => setStep(2);
+  const handleDecline = async () => {
+    if (!appointmentId) return toastError("Appointment not found");
 
+    const loadingToast = toastLoading("Declining appointment...");
+    try {
+      await declineAppointment(appointmentId).unwrap();
+      toastDismiss(loadingToast);
+      toastSuccess("Appointment declined");
+      closeModal();
+    } catch (err) {
+      toastDismiss(loadingToast);
+      toastError(err?.data?.message || "Failed to decline appointment");
+    }
+  };
   const onScheduleNow = async (formData) => {
     if (!appointmentId) return toastError("Appointment not found");
 
@@ -337,12 +355,20 @@ export default function RescheduleAppointmentModal({
 
                         <div className="flex  flex-col  sm:flex-row justify-between gap-4 mt-4">
                           <div className="w-full sm:w-[40%]">
-                            <AppButton
+                            {/* <AppButton
                               leftIcon={<FaTimes />}
                               variant="primary"
                               onClick={closeModal}
                             >
                               Decline
+                            </AppButton> */}
+                            <AppButton
+                              leftIcon={<FaTimes />}
+                              variant="primary"
+                              onClick={handleDecline}
+                              disabled={declining}
+                            >
+                              {declining ? "Declining..." : "Decline"}
                             </AppButton>
                           </div>
                           <div className="w-full sm:w-[60%]">
@@ -410,7 +436,7 @@ export default function RescheduleAppointmentModal({
                                       className={`w-full border rounded-[8px] p-3 ${
                                         errors.appointmentDate ?
                                           "border-red-500"
-                                          : "border-vmb-primary/10"
+                                        : "border-vmb-primary/10"
                                       }`}
                                     />
                                   )}
