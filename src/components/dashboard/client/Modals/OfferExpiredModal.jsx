@@ -50,7 +50,7 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
         <Transition.Child
@@ -77,12 +77,11 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                style={{ background: "#FFF2F4" }}
-                className="relative w-full max-w-[480px] rounded-[20px] p-[30px] shadow-xl flex flex-col gap-6"
+                className="relative w-full max-w-[480px] rounded-[20px] bg-vmb-bg-soft p-[30px] shadow-xl flex flex-col gap-6"
               >
                 <IoClose
                   onClick={closeModal}
-                  className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
+                  className="absolute top-6 right-6 text-vmb-primary text-3xl cursor-pointer hover:opacity-80"
                 />
 
                 <div className="text-center mt-3 flex flex-col items-center">
@@ -92,49 +91,49 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                     alt="Offer Expired"
                   />
 
-                  <h3 className="text-[#FF92A5] font-bold text-[22px] mt-[-24px]">
+                  <h3 className="text-vmb-secondary font-bold text-[22px] mt-2">
                     Offer Time’s Up!
                   </h3>
 
-                  <p className="text-[#00000080] text-[14px] mt-2">
+                  <p className="text-vmb-text-muted/50 text-[14px] mt-2">
                     This offer has expired and is no longer available.
                     <br /> New offers will be sent to you soon.
                   </p>
                 </div>
 
-                <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 space-y-5">
-                  <div className="flex items-center justify-between border border-[#9CA3AF4D] p-3 rounded-xl">
+                <div className="bg-white border border-vmb-primary/10 rounded-[10px] p-5 space-y-5">
+                  <div className="flex items-center justify-between border border-vmb-primary/10 p-3 rounded-xl">
                     <div className="flex items-center gap-4">
                       <img
                         src={salon?.image}
                         alt={salon?.name}
-                        className="w-10 h-10 rounded-lg object-cover border border-gray-200"
+                        className="w-10 h-10 rounded-lg object-cover border border-vmb-primary/10"
                       />
                       <div>
-                        <div className="font-semibold text-[#4B5563]">
+                        <div className="font-semibold text-vmb-text-muted">
                           {salon?.name}
                         </div>
-                        <div className="text-sm text-[#4B5563]">
+                        <div className="text-sm text-vmb-text-muted">
                           {salon?.description}
                         </div>
                       </div>
                     </div>
 
                     <button
-                      className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                      className="text-xs px-3 py-1 bg-vmb-secondary/30 text-vmb-primary rounded cursor-pointer"
                       onClick={handleViewSalon}
                     >
                       View Salon
                     </button>
                   </div>
 
-                  <div className="border border-[#9CA3AF4D] rounded-lg p-4 space-y-3">
-                    <h4 className="font-medium text-[#581838]">
+                  <div className="border border-vmb-primary/10 rounded-lg p-4 space-y-3">
+                    <h4 className="font-medium text-vmb-primary">
                       Exclusive Offer
                     </h4>
 
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-3 text-sm flex flex-col gap-2">
-                      <div className="flex justify-between text-[12px]  font-medium text-[#000]">
+                    <div className="border border-vmb-primary/10 rounded-lg p-3 text-sm flex flex-col gap-2">
+                      <div className="flex justify-between text-[12px]  font-medium text-vmb-primary">
                         <div>Service</div>
                         <div>Duration</div>
                         <div>Price</div>
@@ -142,10 +141,10 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                       {services.map((s, i) => (
                         <div
                           key={i}
-                          className={`flex justify-between text-[#4B5563] mt-2 ${
+                          className={`flex justify-between text-vmb-text-muted mt-2 ${
                             i === services?.length - 1
                               ? ""
-                              : "border-b border-[#D9D9D9]"
+                              : "border-b border-vmb-primary/10"
                           }`}
                         >
                           <div>{s.name}</div>
@@ -155,7 +154,7 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                       ))}
                     </div>
 
-                    <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-sm">
+                    <div className="flex flex-col items-end gap-1 text-vmb-secondary font-bold text-sm">
                       <div>Discount (%): &nbsp; {discountPercent}%</div>
                       <div>Price After Discount: ${finalPrice.toFixed(2)}</div>
                     </div>

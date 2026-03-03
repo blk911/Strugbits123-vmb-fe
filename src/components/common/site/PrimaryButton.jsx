@@ -34,8 +34,8 @@ export default function PrimaryButton({
       font-normal
       ${
         isActive ?
-          "bg-[#0F3D3E] text-white hover:bg-white hover:text-[#0F3D3E]"
-        : "bg-transparent text-[#581838] hover:bg-[#0F3D3E] hover:text-white"
+          "bg-vmb-primary text-white hover:bg-white hover:text-vmb-primary"
+        : "bg-transparent text-vmb-primary hover:bg-vmb-primary hover:text-white"
       }
     `,
 
@@ -43,51 +43,51 @@ export default function PrimaryButton({
       rounded-full
       text-sm sm:text-[16px]
       font-semibold
-      bg-[#0F3D3E] text-white
-      hover:bg-white hover:text-[#0F3D3E]
-      border border-[#0F3D3E]
+      bg-vmb-primary text-white
+      hover:bg-white hover:text-vmb-primary
+      border border-vmb-primary
     `,
 
     pillLight: `
       rounded-full
       text-sm sm:text-[16px]
       font-medium
-      bg-white text-[#5C8374]
-      hover:bg-[#0F3D3E] hover:text-white
-      border border-[#5C8374]
+      bg-white text-vmb-secondary
+      hover:bg-vmb-primary hover:text-white
+      border border-vmb-secondary
     `,
 
     pillGreen: `
       rounded-full
       text-sm sm:text-[16px]
       font-medium
-      bg-[#5C8374] text-white
-      hover:bg-[#0F3D3E] hover:text-white
-      border border-[#5C8374]
+      bg-vmb-secondary text-white
+      hover:bg-vmb-primary hover:text-white
+      border border-vmb-secondary
     `,
 
     pillOutline: `
       rounded-full
       text-sm sm:text-[16px]
-      bg-white text-[#0F3D3E]
-      hover:bg-[#0F3D3E] hover:text-white
-      border border-[#0F3D3E]
+      bg-white text-vmb-primary
+      hover:bg-vmb-primary hover:text-white
+      border border-vmb-primary
     `,
   };
 
   const arrowStyles = {
-    header: "bg-[#5C8374] text-white",
+    header: "bg-vmb-secondary text-white",
 
-    pill: "bg-white text-[#5C8374] group-hover:bg-[#0F3D3E] group-hover:text-white",
+    pill: "bg-white text-vmb-secondary group-hover:bg-vmb-primary group-hover:text-white",
 
     pillLight:
-      "bg-[#5C8374] text-white group-hover:bg-white group-hover:text-[#0F3D3E]",
+      "bg-vmb-secondary text-white group-hover:bg-white group-hover:text-vmb-primary",
 
     pillGreen:
-      "bg-white text-[#5C8374] group-hover:bg-white group-hover:text-[#0F3D3E]",
+      "bg-white text-vmb-secondary group-hover:bg-white group-hover:text-vmb-primary",
 
     pillOutline:
-      "bg-[#0F3D3E] text-white group-hover:bg-white group-hover:text-[#0F3D3E]",
+      "bg-vmb-primary text-white group-hover:bg-white group-hover:text-vmb-primary",
   };
 
   return (

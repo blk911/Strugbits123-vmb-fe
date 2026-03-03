@@ -26,9 +26,9 @@ const createSchema = (hasServices) =>
       .array(z.string())
       .min(
         1,
-        hasServices
-          ? "Please select at least one service"
-          : "No services available"
+        hasServices ?
+          "Please select at least one service"
+        : "No services available",
       ),
     email: z.string().email("Please enter a valid email"),
     message: z
@@ -138,8 +138,9 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
   const vmbFee = totalPrice * 0.1;
   const total = totalPrice + vmbFee;
   const toggleService = (serviceName) => {
-    const updated = selectedServices.includes(serviceName)
-      ? selectedServices.filter((s) => s !== serviceName)
+    const updated =
+      selectedServices.includes(serviceName) ?
+        selectedServices.filter((s) => s !== serviceName)
       : [...selectedServices, serviceName];
     setValue("selectedServices", updated, { shouldValidate: true });
   };
@@ -180,7 +181,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
@@ -192,28 +193,28 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
             <Transition.Child as={Fragment}>
               <Dialog.Panel
                 className={`relative w-full max-w-[408px] rounded-2xl ${
-                  isSubmitted ? "bg-white/90" : "bg-white"
+                  isSubmitted ? "bg-vmb-modal-bg" : "bg-vmb-modal-bg"
                 }  p-6 sm:p-8 shadow-xl transition-all backdrop-filter backdrop-blur-sm`}
               >
                 <IoClose
                   onClick={closeModal}
-                  className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                  className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
                 />
 
-                {!isSubmitted ? (
+                {!isSubmitted ?
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                     <div className="text-center">
-                      <h3 className="text-[#581838] font-bold text-[24px]">
+                      <h3 className="text-vmb-primary font-bold text-[24px]">
                         Treat Me, Baby!
                       </h3>
-                      <p className="text-[#00000080] italic text-[14px] mt-1">
+                      <p className="text-vmb-text-muted italic text-[14px] mt-1">
                         Get pampered — request a treat from <br /> someone you
                         love!
                       </p>
                     </div>
 
                     <div className="relative" ref={salonDropdownRef}>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Select Salon
                       </label>
                       <Controller
@@ -224,20 +225,22 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                             onClick={() =>
                               setSalonDropdownOpen(!salonDropdownOpen)
                             }
-                            className="w-full mt-1 border border-[#E5E5E5] rounded-[8px] py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer bg-white"
+                            className="w-full mt-1 border border-vmb-primary/10 rounded-[8px] py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer bg-white"
                           >
                             <span
                               className={
-                                field.value ? "text-black" : "text-[#00000080]"
+                                field.value ? "text-black" : (
+                                  "text-vmb-text-muted/50"
+                                )
                               }
                             >
-                              {field.value
-                                ? salons.find((s) => s._id === field.value)
-                                    ?.salonName || "Select salon"
-                                : "Find your salon.."}
+                              {field.value ?
+                                salons.find((s) => s._id === field.value)
+                                  ?.salonName || "Select salon"
+                              : "Find your salon.."}
                             </span>
                             <IoChevronDown
-                              className={`text-[#581838] transition-transform ${
+                              className={`text-vmb-primary transition-transform ${
                                 salonDropdownOpen ? "rotate-180" : ""
                               }`}
                             />
@@ -245,7 +248,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         )}
                       />
                       {salonDropdownOpen && (
-                        <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar">
+                        <div className="absolute top-full mt-2 w-full bg-white border border-vmb-primary/10 rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar">
                           <input
                             type="text"
                             placeholder="Search salons..."
@@ -260,19 +263,18 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
 
                               setSearchTerm(value);
                             }}
-                            className="w-full px-4 py-3 border-b border-[#E5E5E5] focus:outline-none"
+                            className="w-full px-4 py-3 border-b border-vmb-primary/10 focus:outline-none"
                             autoFocus
                           />
-                          {loadingSalons ? (
-                            <div className="p-4 text-center text-gray-500">
+                          {loadingSalons ?
+                            <div className="p-4 text-center text-vmb-text-muted">
                               Loading...
                             </div>
-                          ) : salons.length === 0 ? (
-                            <div className="p-4 text-center text-gray-500">
+                          : salons.length === 0 ?
+                            <div className="p-4 text-center text-vmb-text-muted">
                               No salons found
                             </div>
-                          ) : (
-                            salons.map((salon) => (
+                          : salons.map((salon) => (
                               <div
                                 key={salon._id}
                                 onClick={() => {
@@ -283,7 +285,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                   setSalonDropdownOpen(false);
                                   setSearchTerm("");
                                 }}
-                                className="px-4 py-3 hover:bg-[#FFF4F6] border-1  border-[#E5E5E5] cursor-pointer flex items-center gap-3"
+                                className="px-4 py-3 hover:bg-vmb-bg-soft border-1  border-vmb-bg-soft cursor-pointer flex items-center gap-3"
                               >
                                 <img
                                   src={salon.profilePic || SalonImage}
@@ -294,13 +296,13 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                   <p className="font-medium line-clamp-2">
                                     {salon.salonName}
                                   </p>
-                                  <p className="text-xs text-gray-500">
+                                  <p className="text-xs text-vmb-text-muted">
                                     ({salon.distance})
                                   </p>
                                 </div>
                               </div>
                             ))
-                          )}
+                          }
                         </div>
                       )}
                       {errors.salonId && (
@@ -312,25 +314,25 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
 
                     {selectedSalon && (
                       <div className="relative" ref={serviceDropdownRef}>
-                        <label className="text-[#404040] text-[14px] font-medium">
+                        <label className="text-vmb-text-main text-[14px] font-medium">
                           Select Services
                         </label>
                         <div
                           onClick={() =>
                             setServiceDropdownOpen(!serviceDropdownOpen)
                           }
-                          className="w-full mt-1 border border-[#E5E5E5] rounded-[8px] py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer bg-white min-h-[48px] flex-wrap gap-2"
+                          className="w-full mt-1 border border-vmb-primary/10 rounded-[8px] py-3 px-4 pr-10 text-sm flex justify-between items-center cursor-pointer bg-white min-h-[48px] flex-wrap gap-2"
                         >
-                          {selectedServices.length > 0 ? (
+                          {selectedServices.length > 0 ?
                             <div className="flex flex-wrap gap-2">
                               {selectedServices.map((name) => {
                                 const svc = selectedSalon.services.find(
-                                  (s) => s.serviceName === name
+                                  (s) => s.serviceName === name,
                                 );
                                 return (
                                   <div
                                     key={name}
-                                    className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-1.5 text-xs"
+                                    className="flex items-center gap-2 bg-vmb-primary/50 text-white rounded-md px-3 py-1.5 text-xs"
                                   >
                                     <span>{name}</span>
                                     <button
@@ -347,55 +349,53 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                 );
                               })}
                             </div>
-                          ) : (
-                            <span className="text-[#00000080]">
+                          : <span className="text-vmb-text-muted/50">
                               Choose services...
                             </span>
-                          )}
+                          }
                           <IoChevronDown
-                            className={`text-[#581838] transition-transform ${
+                            className={`text-vmb-primary transition-transform ${
                               serviceDropdownOpen ? "rotate-180" : ""
                             }`}
                           />
                         </div>
 
                         {serviceDropdownOpen && (
-                          <div className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar p-3">
-                            {selectedSalon.services.length === 0 ? (
-                              <p className="text-center text-gray-500 py-4">
+                          <div className="absolute top-full mt-2 w-full bg-white border border-vmb-primary/10 rounded-[8px] shadow-lg z-10 max-h-60 overflow-y-auto custom-scrollbar p-3">
+                            {selectedSalon.services.length === 0 ?
+                              <p className="text-center text-vmb-text-muted py-4">
                                 No services available
                               </p>
-                            ) : (
-                              selectedSalon.services.map((svc) => (
+                            : selectedSalon.services.map((svc) => (
                                 <CustomCheckbox
                                   key={svc._id}
                                   label={`${svc.serviceName} (${formatDuration(
-                                    svc.serviceDuration
+                                    svc.serviceDuration,
                                   )} min - $${svc.servicePrice})`}
                                   checked={selectedServices.includes(
-                                    svc.serviceName
+                                    svc.serviceName,
                                   )}
                                   onChange={() =>
                                     toggleService(svc.serviceName)
                                   }
                                 />
                               ))
-                            )}
+                            }
                           </div>
                         )}
                         {errors.selectedServices && (
                           <p className="text-red-500 text-xs mt-1">
-                            {hasServices
-                              ? errors.selectedServices.message
-                              : "No services available for this salon"}
+                            {hasServices ?
+                              errors.selectedServices.message
+                            : "No services available for this salon"}
                           </p>
                         )}
                       </div>
                     )}
 
                     {selectedServices.length > 0 && (
-                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4 max-h-28 overflow-y-auto custom-scrollbar">
-                        <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
+                      <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-md p-4 max-h-28 overflow-y-auto custom-scrollbar">
+                        <div className=" grid grid-cols-3 gap-2 font-medium text-vmb-text-main  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -405,7 +405,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           return (
                             <div
                               key={name}
-                              className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-xs text-[#4B5563]"
+                              className="border-b border-vmb-bg-soft py-2  grid grid-cols-3 gap-2  text-xs text-vmb-text-muted"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -413,13 +413,13 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                             </div>
                           );
                         })}
-                        <div className="flex flex-col items-end font-bold text-[#581838] mt-3">
+                        <div className="flex flex-col items-end font-bold text-vmb-primary mt-3">
                           <p>Total: ${total.toFixed(2)}</p>
                         </div>
                       </div>
                     )}
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Email
                       </label>
                       <Controller
@@ -442,10 +442,10 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
 
                               onChange(newValue);
                             }}
-                            className={`w-full border rounded-[8px] px-3 py-2 text-sm mt-1 focus:outline-none focus:border-[#FF92A5] ${
-                              errors.email
-                                ? "border-red-500"
-                                : "border-[#E5E5E5]"
+                            className={`w-full border rounded-[8px] px-3 py-2 text-sm mt-1 focus:outline-none focus:border-vmb-secondary ${
+                              errors.email ? "border-red-500" : (
+                                "border-vmb-primary/10"
+                              )
                             }`}
                           />
                         )}
@@ -458,7 +458,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                     </div>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Write a sweet message
                       </label>
                       <Controller
@@ -481,7 +481,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
 
                               onChange(newValue);
                             }}
-                            className="w-full border border-[#E5E5E5] rounded-[8px] p-3 text-sm mt-1 resize-none focus:outline-none focus:border-[#FF92A5]"
+                            className="w-full border border-vmb-primary/10 rounded-[8px] p-3 text-sm mt-1 resize-none focus:outline-none focus:border-vmb-secondary"
                           />
                         )}
                       />
@@ -502,27 +502,25 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                       {isLoading ? "Requesting..." : "  Request Now"}
                     </AppButton>
                   </form>
-                ) : (
-                  <>
+                : <>
                     <Dialog.Title
                       as="h3"
-                      className="text-center text-[22px] font-bold text-[#FF92A5]"
+                      className="text-center text-[22px] font-bold text-vmb-secondary"
                     >
-                      {gift?.status === "accepted"
-                        ? "Treat Confirmed!"
-                        : "Treat Request Sent!"}
+                      {gift?.status === "accepted" ?
+                        "Treat Confirmed!"
+                      : "Treat Request Sent!"}
                     </Dialog.Title>
 
-                    <p className="text-center text-[#00000080] text-[14px] mt-2">
-                      {gift?.status === "accepted" ? (
+                    <p className="text-center text-vmb-text-muted text-[14px] mt-2">
+                      {gift?.status === "accepted" ?
                         <>
                           Payment has been completed successfully.
                           <br />
                           The salon has been notified and your treat is
                           confirmed. Enjoy the experience!
                         </>
-                      ) : (
-                        <>
+                      : <>
                           Your request has been shared successfully.
                           <br />
                           Wait for payment confirmation.
@@ -531,10 +529,10 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           <br />
                           You’ll be updated soon.
                         </>
-                      )}
+                      }
                     </p>
 
-                    <div className="mt-6 border border-[#FF92A5] bg-white rounded-[10px] p-3 flex flex-col gap-2">
+                    <div className="mt-6 border border-vmb-secondary bg-white rounded-[10px] p-3 flex flex-col gap-2">
                       <div className="flex items-center gap-3">
                         <img
                           src={
@@ -545,14 +543,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           alt={
                             selectedSalon?.salonName || gift?.salonId?.salonName
                           }
-                          className="w-[60px] h-[60px] rounded-md object-cover border border-gray-200"
+                          className="w-[60px] h-[60px] rounded-md object-cover border border-vmb-primary/10"
                         />
                         <div>
-                          <p className="text-[#4B5563] font-semibold text-[18px]">
+                          <p className="text-vmb-text-main font-semibold text-[18px]">
                             {selectedSalon?.salonName ||
                               gift?.salonId?.salonName}
                           </p>
-                          <p className="text-[#4B5563] text-[12px]">
+                          <p className="text-vmb-text-muted text-[12px]">
                             {selectedSalon?.description ||
                               gift?.salonId?.description ||
                               ""}
@@ -560,17 +558,31 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         </div>
                       </div>
 
-                      <div className="mt-3 border border-[#5818381A] bg-[#F2F2F2] rounded-[5px] p-3 flex flex-col gap-2 max-h-28 overflow-y-auto custom-scrollbar">
-                        <div className=" grid grid-cols-3 gap-2    mb-2   text-[12px] text-[#4B5563] font-medium">
+                      <div className="mt-3 border border-vmb-primary/10 bg-vmb-bg-soft rounded-[5px] p-3 flex flex-col gap-2 max-h-28 overflow-y-auto custom-scrollbar">
+                        <div className=" grid grid-cols-3 gap-2    mb-2   text-[12px] text-vmb-text-muted font-medium">
                           <span>Service:</span>
                           <span>Duration:</span>
                           <span>Price:</span>
                         </div>
-                        {gift?.services
-                          ? gift?.services?.map((svc, i) => (
+                        {gift?.services ?
+                          gift?.services?.map((svc, i) => (
+                            <div
+                              key={i}
+                              className="border-b border-vmb-primary/5 py-2  grid grid-cols-3 gap-2  text-[12px] text-vmb-text-muted"
+                            >
+                              <span>{svc.serviceName}</span>
+                              <span>{formatDuration(svc.serviceDuration)}</span>
+                              <span>${svc.servicePrice}</span>
+                            </div>
+                          ))
+                        : selectedSalon?.services
+                            .filter((s) =>
+                              selectedServices.includes(s.serviceName),
+                            )
+                            .map((svc, i) => (
                               <div
                                 key={i}
-                                className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
+                                className="border-b border-vmb-primary/5 py-2  grid grid-cols-3 gap-2  text-[12px] text-vmb-text-muted"
                               >
                                 <span>{svc.serviceName}</span>
                                 <span>
@@ -579,29 +591,14 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                                 <span>${svc.servicePrice}</span>
                               </div>
                             ))
-                          : selectedSalon?.services
-                              .filter((s) =>
-                                selectedServices.includes(s.serviceName)
-                              )
-                              .map((svc, i) => (
-                                <div
-                                  key={i}
-                                  className="border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
-                                >
-                                  <span>{svc.serviceName}</span>
-                                  <span>
-                                    {formatDuration(svc.serviceDuration)}
-                                  </span>
-                                  <span>${svc.servicePrice}</span>
-                                </div>
-                              ))}
+                        }
                       </div>
 
                       <div className="mt-4">
-                        <h4 className="text-[#581838] font-bold text-[18px]">
+                        <h4 className="text-vmb-primary font-bold text-[18px]">
                           Who’s treating you?
                         </h4>
-                        <label className="text-[#404040] text-[14px] mt-2 block">
+                        <label className="text-vmb-text-main text-[14px] mt-2 block">
                           Email
                         </label>
                         <input
@@ -610,25 +607,25 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                             submittedData?.email || gift?.receiverEmail || ""
                           }
                           readOnly
-                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-[8px] px-3 py-2 text-sm text-[#00000080] mt-1 cursor-not-allowed"
+                          className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] px-3 py-2 text-sm text-vmb-text-muted/50 mt-1 cursor-not-allowed"
                         />
-                        <label className="text-[#404040] text-[14px] mt-3 block">
+                        <label className="text-vmb-text-main text-[14px] mt-3 block">
                           Write a sweet message
                         </label>
                         <textarea
                           rows={3}
                           value={submittedData?.message || gift?.message || ""}
                           readOnly
-                          className="w-full border border-[#E5E5E5] bg-[#F9FAFB] rounded-[8px] p-3 text-sm text-[#00000080] mt-1 resize-none cursor-not-allowed"
+                          className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] p-3 text-sm text-vmb-text-muted/50 mt-1 resize-none cursor-not-allowed"
                         />
                       </div>
                     </div>
 
-                    <p className="text-left italic text-[#00000080] text-[13px] mt-4">
+                    <p className="text-left italic text-vmb-text-muted/50 text-[13px] mt-4">
                       Copy link to share this treat request.
                     </p>
-                    <div className="mt-2 border border-[#0000001A] bg-white rounded-[10px] flex justify-between items-center px-3 py-2">
-                      <span className="italic text-[14px] text-[#00000080] truncate">
+                    <div className="mt-2 border border-vmb-primary/10 bg-white rounded-[10px] flex justify-between items-center px-3 py-2">
+                      <span className="italic text-[14px] text-vmb-text-muted/50 truncate">
                         {import.meta.env.VITE_FRONTEND_URL + `gifts`}
                       </span>
                       <IoCopyOutline
@@ -637,16 +634,16 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                             toastDismiss(copyToastId);
                           }
                           navigator.clipboard.writeText(
-                            import.meta.env.VITE_FRONTEND_URL + `gifts`
+                            import.meta.env.VITE_FRONTEND_URL + `gifts`,
                           );
                           const newToastId = toastSuccess("Link copied!");
                           setCopyToastId(newToastId);
                         }}
-                        className="text-[#581838] text-xl cursor-pointer"
+                        className="text-vmb-primary text-xl cursor-pointer"
                       />
                     </div>
                   </>
-                )}
+                }
               </Dialog.Panel>
             </Transition.Child>
           </div>

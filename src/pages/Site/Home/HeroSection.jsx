@@ -31,7 +31,7 @@ const HeroSection = () => {
             className="
             font-lato font-bold
             text-2xl sm:text-3xl md:text-[45px]
-            text-[#0F3D3E]
+            text-vmb-primary
             leading-tight
           "
           >
@@ -42,7 +42,7 @@ const HeroSection = () => {
             className="
             font-lato font-semibold
             text-lg sm:text-2xl md:text-[35px]
-            text-[#0F3D3E]
+            text-vmb-primary
             leading-snug
           "
           >
@@ -53,7 +53,7 @@ const HeroSection = () => {
             className="
             font-lato font-semibold
             text-lg sm:text-2xl md:text-[35px]
-            text-[#0F3D3E]
+            text-vmb-primary
             leading-snug
           "
           >
@@ -66,7 +66,7 @@ const HeroSection = () => {
             className="
             font-lato font-bold
             text-sm sm:text-base md:text-[18px]
-            text-[#5C8374]
+            text-vmb-secondary
           "
           >
             VMB rewards loyalty with priority booking, referral rewards, and
@@ -77,7 +77,7 @@ const HeroSection = () => {
             className="
             font-lato
             text-sm sm:text-base md:text-[18px]
-            text-[#333333]
+            text-vmb-text-main
             leading-relaxed
           "
           >

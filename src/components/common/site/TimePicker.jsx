@@ -4,7 +4,7 @@ import { FaClock } from "react-icons/fa";
 import { useFormContext, Controller } from "react-hook-form";
 
 const HOURS = Array.from({ length: 12 }, (_, i) =>
-  (i + 1).toString().padStart(2, "0")
+  (i + 1).toString().padStart(2, "0"),
 );
 const MINUTES = ["00", "15", "30", "45"];
 const MERIDIEM = ["AM", "PM"];
@@ -24,11 +24,9 @@ function from24Hour(value) {
 
   return {
     hour:
-      h === 0
-        ? "12"
-        : h > 12
-        ? (h - 12).toString().padStart(2, "0")
-        : h.toString().padStart(2, "0"),
+      h === 0 ? "12"
+      : h > 12 ? (h - 12).toString().padStart(2, "0")
+      : h.toString().padStart(2, "0"),
     minute: m,
     meridiem: h >= 12 ? "PM" : "AM",
   };
@@ -55,7 +53,7 @@ function PickerUI({ label, value, onChange, error }) {
   return (
     <div className="relative">
       {label && (
-        <label className="block text-[#374151] text-[14px] font-semibold mb-1">
+        <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
           {label}
         </label>
       )}
@@ -63,13 +61,13 @@ function PickerUI({ label, value, onChange, error }) {
       <Popover className="relative">
         <Popover.Button className="w-full">
           <div className="relative">
-            <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+            <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
 
             <input
               readOnly
               value={displayValue(value)}
-              className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
-                       focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+              className="w-full bg-white border border-vmb-primary/10 rounded-md py-3 pl-10 pr-4 text-vmb-text-main
+                       focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                        transition-all cursor-pointer"
             />
           </div>
@@ -119,15 +117,15 @@ function PickerUI({ label, value, onChange, error }) {
 function Column({ title, options, value, onChange }) {
   return (
     <div className="min-w-[40px] text-center">
-      <p className="text-xs text-gray-500 mb-1">{title}</p>
+      <p className="text-xs text-vmb-text-muted mb-1">{title}</p>
       <div className="max-h-40 overflow-y-auto custom-scrollbar border rounded-md">
         {options.map((opt) => (
           <button
             key={opt}
             type="button"
             onClick={() => onChange(opt)}
-            className={`w-full px-2 py-2 text-sm text-center hover:bg-[#FFF4F6]
-              ${opt === value ? "bg-[#FF92A54D] font-medium" : ""}`}
+            className={`w-full px-2 py-2 text-sm text-center hover:bg-vmb-bg-soft
+              ${opt === value ? "bg-vmb-secondary/30 font-medium" : ""}`}
           >
             {opt}
           </button>

@@ -62,8 +62,9 @@ export default function SalonStep2({ onBack }) {
   }, []);
 
   const handleDayToggle = (day) => {
-    const updated = selectedDays.includes(day)
-      ? selectedDays.filter((d) => d !== day)
+    const updated =
+      selectedDays.includes(day) ?
+        selectedDays.filter((d) => d !== day)
       : [...selectedDays, day];
     setSelectedDays(updated);
     setValue("workingDays", updated, { shouldValidate: true });
@@ -75,7 +76,7 @@ export default function SalonStep2({ onBack }) {
     try {
       const fileName = `${folder}/${Date.now()}_${file.name.replace(
         /[^a-zA-Z0-9.-]/g,
-        "_"
+        "_",
       )}`;
       const { data } = await getUploadUrl({
         fileName,
@@ -162,7 +163,7 @@ export default function SalonStep2({ onBack }) {
   };
 
   return (
-    <div className="w-full space-y-4 font-[Poppins,sans-serif]">
+    <div className="w-full space-y-4 font-poppins">
       <InputWithIcon
         label="Salon Name"
         icon={FaUser}
@@ -190,7 +191,7 @@ export default function SalonStep2({ onBack }) {
         </div>
       </div>
       <InputWithIcon
-        type="number"
+        type="tel"
         label="Phone Number"
         icon={FaPhoneAlt}
         name="salonPhone"
@@ -203,33 +204,33 @@ export default function SalonStep2({ onBack }) {
         <TimePicker label="End Time" name="endTime" />
 
         <div className="relative" ref={detailsRef}>
-          <label className="block text-[#374151] text-[14px] font-semibold mb-1">
+          <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
             Working Days
           </label>
 
           <div className="relative">
-            <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] z-10" />
+            <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
 
             <div
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-1 cursor-pointer flex justify-between items-center"
+              className="w-full bg-white border border-vmb-primary/10 rounded-md py-3 pl-10 pr-1 cursor-pointer flex justify-between items-center"
             >
-              <span className="text-gray-600 text-[14px]">
-                {selectedDays.length > 0
-                  ? // ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
-                    `0${selectedDays.length} Days`
-                  : "Select Days"}
+              <span className="text-vmb-text-muted text-[14px]">
+                {selectedDays.length > 0 ?
+                  // ? selectedDays.map((d) => d.slice(0, 3)).join(", ")
+                  `0${selectedDays.length} Days`
+                : "Select Days"}
               </span>
 
               <RiArrowDropDownLine
-                className={`text-gray-600 text-[24px] transition-transform duration-200 ${
+                className={`text-vmb-text-muted text-[24px] transition-transform duration-200 ${
                   isDropdownOpen ? "rotate-180" : ""
                 }`}
               />
             </div>
 
             {isDropdownOpen && (
-              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-300 rounded-lg shadow-md z-50 p-3 max-h-60 overflow-y-auto custom-scrollbar">
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-vmb-primary/10 rounded-lg shadow-md z-50 p-3 max-h-60 overflow-y-auto custom-scrollbar">
                 {days.map((day) => (
                   <CustomCheckbox
                     key={day}
@@ -253,10 +254,10 @@ export default function SalonStep2({ onBack }) {
         <div>
           <div className="flex justify-between items-start">
             <div className="w-[69%]">
-              <label className="block text-[#374151] text-[16px] font-semibold">
+              <label className="block text-vmb-text-main text-[16px] font-semibold">
                 Upload Licensed Document
               </label>
-              <span className="text-[12px] italic text-[#00000080]">
+              <span className="text-[12px] italic text-vmb-text-muted/50">
                 (png, jpeg, pdf)
               </span>
             </div>
@@ -265,7 +266,7 @@ export default function SalonStep2({ onBack }) {
               onClick={() => docRef.current.click()}
               className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition
     
-                   bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]
+                   bg-vmb-secondary/30 text-vmb-secondary hover:bg-vmb-secondary/50
               `}
             >
               <FaFileAlt /> Upload
@@ -291,7 +292,7 @@ export default function SalonStep2({ onBack }) {
         </div>
 
         <div>
-          <label className="block text-[#404040] font-medium mb-2">
+          <label className="block text-vmb-text-main font-medium mb-2">
             Description
           </label>
           <textarea
@@ -308,7 +309,7 @@ export default function SalonStep2({ onBack }) {
               register("description").onChange(e);
             }}
             placeholder="Enter description"
-            className="w-full border border-[#E5E5E5] rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
+            className="w-full border border-vmb-primary/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-vmb-secondary"
           />
           {errors.description && (
             <p className="text-xs text-red-600 mt-1">
@@ -320,7 +321,7 @@ export default function SalonStep2({ onBack }) {
         <div>
           <div className="flex justify-between items-start">
             <div className="w-[69%]">
-              <label className="block text-[#374151] text-[16px] font-semibold">
+              <label className="block text-vmb-text-main text-[16px] font-semibold">
                 Choose Profile Picture
               </label>
             </div>
@@ -330,7 +331,7 @@ export default function SalonStep2({ onBack }) {
               // disabled={uploading}
               className={`cursor-pointer flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition 
         \
-                  bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]
+                  bg-vmb-secondary/30 text-vmb-secondary hover:bg-vmb-secondary/50
               `}
             >
               <FaFileImage /> Upload
@@ -356,7 +357,7 @@ export default function SalonStep2({ onBack }) {
         </div>
 
         <div>
-          <label className="block text-[#374151] font-semibold mb-2">
+          <label className="block text-vmb-text-main font-semibold mb-2">
             Upload Salon Photos
           </label>
 
@@ -365,7 +366,7 @@ export default function SalonStep2({ onBack }) {
               type="button"
               onClick={() => photosRef.current.click()}
               disabled={uploading}
-              className={`flex-shrink-0 flex flex-col items-center justify-center w-[74px] h-[70px] md:w-[94px] md:h-[82px] border border-[#C0C0C0] bg-white rounded-md hover:bg-[#FFF4F6] transition-all cursor-pointer ${
+              className={`flex-shrink-0 flex flex-col items-center justify-center w-[74px] h-[70px] md:w-[94px] md:h-[82px] border border-vmb-primary/10 bg-white rounded-md hover:bg-vmb-secondary/10 transition-all cursor-pointer ${
                 uploading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
@@ -399,11 +400,11 @@ export default function SalonStep2({ onBack }) {
                     <button
                       type="button"
                       onClick={() => removeSalonPhoto(index)}
-                      className="absolute cursor-pointer top-[-2px] right-[15px] md:right-[-3px] bg-[#FF92A5] text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:bg-[#e07a8c]"
+                      className="absolute cursor-pointer top-[-2px] right-[15px] md:right-[-3px] bg-vmb-secondary text-white rounded-full w-6 h-6 text-sm flex items-center justify-center shadow-md hover:brightness-90"
                     >
                       ×
                     </button>
-                    <p className="text-xs text-gray-600 mt-1 truncate w-[80px]">
+                    <p className="text-xs text-vmb-text-muted mt-1 truncate w-[80px]">
                       {photo.name}
                     </p>
                   </div>
@@ -422,8 +423,8 @@ export default function SalonStep2({ onBack }) {
 
       <div className="flex justify-between items-center pt-2 gap-3">
         <button type="button" onClick={onBack} className="flex items-center">
-          <span className="flex items-center justify-center min-w-8 h-8 rounded-xl bg-[#4b0d23]">
-            <FaArrowLeftLong className="text-pink-400" />
+          <span className="flex items-center justify-center min-w-8 h-8 rounded-xl bg-vmb-primary">
+            <FaArrowLeftLong className="text-vmb-secondary" />
           </span>
         </button>
         <AuthButton text="Sign Up" />

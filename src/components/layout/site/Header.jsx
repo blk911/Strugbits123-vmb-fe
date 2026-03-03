@@ -122,7 +122,7 @@ const Header = () => {
             w-[38px] h-[38px]
             flex items-center justify-center
             rounded-lg
-            bg-[#0F3D3E]
+            bg-vmb-primary
             text-white
           "
         >
@@ -149,12 +149,12 @@ const Header = () => {
               onClick={() => handleNav("/salon")}
               className={`
                 w-full text-left px-4 py-3 rounded-lg
-                font-['Poppins'] text-[14px]
+                font-poppins text-[14px]
                 flex items-center justify-between
                 ${
                   selected === "salon" ?
-                    "bg-[#0F3D3E] text-white"
-                  : "bg-transparent text-[#581838]"
+                    "bg-vmb-primary text-white"
+                  : "bg-transparent text-vmb-primary"
                 }
               `}
             >
@@ -165,12 +165,12 @@ const Header = () => {
               onClick={() => handleNav("/")}
               className={`
                 w-full text-left px-4 py-3 rounded-lg
-                font-['Poppins'] text-[14px]
+                font-poppins text-[14px]
                 flex items-center justify-between
                 ${
                   selected === "customer" ?
-                    "bg-[#0F3D3E] text-white"
-                  : "bg-transparent text-[#581838]"
+                    "bg-vmb-primary text-white"
+                  : "bg-transparent text-vmb-primary"
                 }
               `}
             >

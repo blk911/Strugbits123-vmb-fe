@@ -31,7 +31,7 @@ function Card({ photo, title, desc }) {
           font-lato
           font-semibold
           text-lg sm:text-[20px]
-          text-[#0F3D3E]
+          text-vmb-primary
         "
       >
         {title}
@@ -42,7 +42,7 @@ function Card({ photo, title, desc }) {
           text-center
           font-inter
           text-sm sm:text-[14px]
-          text-[#5C8374]
+          text-vmb-secondary
           leading-relaxed
         "
       >
@@ -56,10 +56,10 @@ function PlatformBenefits({ heading, subheading, cards }) {
     <section className="w-full ">
       <div className="vmb-container text-center flex flex-col gap-[30px]">
         <div>
-          <h3 className="text-[30px] sm:text-[40px] font-lato text-[#0F3D3E] capitalize font-semibold">
+          <h3 className="text-[30px] sm:text-[40px] font-lato text-vmb-primary capitalize font-semibold">
             {heading}
           </h3>
-          <p className="mt-2 text-sm font-inter sm:text-[18px] text-[#5C8374] font-medium">
+          <p className="mt-2 text-sm font-inter sm:text-[18px] text-vmb-secondary font-medium">
             {subheading}
           </p>
         </div>

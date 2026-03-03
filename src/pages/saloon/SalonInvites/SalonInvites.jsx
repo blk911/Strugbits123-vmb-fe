@@ -6,7 +6,7 @@ export default function SalonInvites() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("Newest");
   return (
-    <div className="bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
+    <div className="bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
       <PageHeader
         title="Invites History"
         description="Manage your Invites efficiently"

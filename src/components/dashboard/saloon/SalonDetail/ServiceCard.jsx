@@ -14,7 +14,7 @@ export default function ServiceCard({ service }) {
   };
 
   return (
-    <div className="border border-[#58183880] rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 h-full hover:shadow-md transition-all duration-300">
+    <div className="border border-vmb-primary/50 rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 h-full hover:shadow-md transition-all duration-300">
       <div className="relative w-full h-[200px] shrink-0">
         <img
           src={service?.serviceImage}
@@ -22,7 +22,7 @@ export default function ServiceCard({ service }) {
           className="w-full h-full object-cover rounded-md"
         />
         <div
-          className="absolute top-3 right-3 bg-white text-[#6B7280]
+          className="absolute top-3 right-3 bg-white text-vmb-text-muted
                      text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm"
         >
           {service?.serviceDuration} min
@@ -31,19 +31,19 @@ export default function ServiceCard({ service }) {
 
       <div className="flex justify-between items-start gap-2">
         <h4
-          className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+          className="text-vmb-primary font-semibold text-[16px] sm:text-[18px]
                        leading-[22px] line-clamp-2 max-w-[70%]"
         >
           {service?.serviceName}
         </h4>
 
-        <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+        <span className="text-vmb-text-muted font-bold text-[16px] sm:text-[18px]">
           ${service?.servicePrice}
         </span>
       </div>
 
       <p
-        className="text-[#4B5563] text-[14px] sm:text-[15px]
+        className="text-vmb-text-main text-[14px] sm:text-[15px]
                      leading-[18px] line-clamp-2 "
       >
         {service?.description || "\u00A0"}
@@ -52,9 +52,9 @@ export default function ServiceCard({ service }) {
       <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
         <AppButton
           leftIcon={
-            <FaEdit className="text-[#FF92A5] text-[18px] flex-shrink-0" />
+            <FaEdit className="text-vmb-secondary text-[18px] flex-shrink-0" />
           }
-          variant="outline-pink"
+          variant="outline-dark"
           size="custom"
           onClick={handleEditClick}
           className="flex-1 py-2 px-3 text-[15px] sm:text-[16px] font-medium"
@@ -64,10 +64,10 @@ export default function ServiceCard({ service }) {
         {service?.salonId && (
           <button
             onClick={handleDeleteClick}
-            className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-[#FF92A54D] flex items-center justify-center cursor-pointer gap-2"
+            className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-vmb-secondary/30 flex items-center justify-center cursor-pointer gap-2"
           >
-            <FaTrash className="text-[#581838] text-[16px]" />
-            <span className="block sm:hidden text-[#581838] text-[16px]">
+            <FaTrash className="text-vmb-primary text-[16px]" />
+            <span className="block sm:hidden text-vmb-primary text-[16px]">
               Delete
             </span>
           </button>

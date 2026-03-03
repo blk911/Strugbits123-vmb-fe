@@ -14,7 +14,7 @@ export default function PublicRoutes() {
     <>
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/client" element={<HomeClient />} />
+        {/* <Route path="/client" element={<HomeClient />} /> */}
         <Route path="/salon" element={<HomeSalon />} />
         <Route path="/about" element={<About />} />
         <Route path="/salon-detail/:id" element={<SalonDetail />} />

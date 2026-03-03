@@ -37,7 +37,7 @@ export default function SalonDetail() {
     { id, userLat, userLng },
     {
       refetchOnMountOrArgChange: true,
-    }
+    },
   );
   // const {
   //   data: apiData,
@@ -60,7 +60,7 @@ export default function SalonDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#EFEFEF]">
+      <div className="min-h-screen flex items-center justify-center bg-vmb-bg-soft">
         <LoadingIndicator />
       </div>
     );
@@ -69,8 +69,8 @@ export default function SalonDetail() {
   if (!salon) return null;
 
   return (
-    <div className="bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
-      <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
+    <div className="bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+      <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-sm p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative z-0">
           <AutoCarousel
             images={salon.salonPhotos}
@@ -87,15 +87,15 @@ export default function SalonDetail() {
 
         <div className="relative z-10 flex flex-col mt-[90px] sm:mt-[16px] px-3 sm:px-6 md:px-8 text-center sm:text-left">
           <div className="sm:pl-[160px]">
-            <h1 className="text-[#581838] font-bold text-[22px] sm:text-[26px] md:text-[30px] leading-tight">
+            <h1 className="text-vmb-primary font-bold text-[22px] sm:text-[26px] md:text-[30px] leading-tight">
               {salon.salonName}
             </h1>
-            <p className="text-[#4B5563] text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
+            <p className="text-vmb-text-muted text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
               {salon.description || "Premium Beauty Services"}
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 text-[11px] sm:text-[13px] text-[#00000080] mt-3 sm:mt-4 sm:pl-[160px]">
+          <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-4 text-[11px] sm:text-[13px] text-vmb-text-muted/50 mt-3 sm:mt-4 sm:pl-[160px]">
             <div className="flex items-center gap-2">
               <FaMapMarkerAlt />
               <span>
@@ -113,7 +113,7 @@ export default function SalonDetail() {
                 {salon.startTime} - {salon.endTime}
               </span>
             </div>
-            <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838]">
+            <div className="bg-vmb-secondary/30 rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-vmb-primary">
               {/* {salon.workingDays?.map((d) => d.slice(0, 3)).join(" · ")} */}
               {(() => {
                 const currentDays = salon?.workingDays || [];

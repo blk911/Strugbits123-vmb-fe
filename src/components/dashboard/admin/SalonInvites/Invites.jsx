@@ -86,37 +86,25 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     refetchUnclaimed();
   }, [refetchAll, refetchPending, refetchClaimed, refetchUnclaimed]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Claimed"
-      ? claimedData
-      : activeTab === "Unclaimed"
-      ? unclaimedData
-      : bookedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Claimed" ? claimedData
+    : activeTab === "Unclaimed" ? unclaimedData
+    : bookedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Claimed"
-      ? loadingClaimed
-      : activeTab === "Unclaimed"
-      ? loadingUnclaimed
-      : false;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Claimed" ? loadingClaimed
+    : activeTab === "Unclaimed" ? loadingUnclaimed
+    : false;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Claimed"
-      ? fetchingClaimed
-      : activeTab === "Unclaimed"
-      ? fetchingUnclaimed
-      : false;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Claimed" ? fetchingClaimed
+    : activeTab === "Unclaimed" ? fetchingUnclaimed
+    : false;
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -133,9 +121,9 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
       const tag = item.tag?.toLowerCase();
 
       const base = {
-        iconBg: isLast ? "bg-[#F3F4F6]" : "bg-[#FF92A54D]",
-        barColor: isLast ? "bg-[#E5E7EB]" : "bg-[#FF92A5]",
-        titleColor: isLast ? "text-[#6B7280]" : "text-[#581838]",
+        iconBg: isLast ? "bg-vmb-bg-soft" : "bg-vmb-secondary/30",
+        barColor: isLast ? "bg-vmb-primary/10" : "bg-vmb-secondary",
+        titleColor: isLast ? "text-vmb-text-muted" : "text-vmb-primary",
       };
 
       switch (tag) {
@@ -146,7 +134,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             icon: <FaPaperPlane className="w-4 h-4" />,
             title: "Invitation Sent",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
-              item.timestamp
+              item.timestamp,
             )} by Salon`,
             body: item.description || "Invitation sent to client.",
           };
@@ -157,9 +145,9 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             ...base,
             icon: <FaRegHandPointer className="w-4 h-4" />,
             title: "User Responded",
-            titleColor: "text-[#581838]",
+            titleColor: "text-vmb-primary",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
-              item.timestamp
+              item.timestamp,
             )}`,
             body: item.description || "Client accepted the invitation.",
           };
@@ -170,10 +158,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
-            iconBg: "bg-[#FF92A5]",
+            iconBg: "bg-vmb-secondary",
             title: "Appointment Created",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
-              item.timestamp
+              item.timestamp,
             )}`,
             body: item.description || "Client booked an appointment.",
             smallTopLabel: true,
@@ -184,11 +172,11 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: <FiX className="w-4 h-4" />,
-            iconBg: "bg-red-100",
-            barColor: "bg-red-500",
+            iconBg: "bg-vmb-bg-soft",
+            barColor: "bg-vmb-primary/10",
             title: "Invitation Declined",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
-              item.timestamp
+              item.timestamp,
             )}`,
             body: item.description || "Client declined the invitation.",
           };
@@ -197,8 +185,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: <FaClock className="w-4 h-4" />,
-            iconBg: "bg-[#FFAA0033]",
-            barColor: "bg-[#FFAA00]",
+            iconBg: "bg-vmb-bg-soft",
+            barColor: "bg-vmb-primary/10",
             title: "On Hold",
             dateBy: `${formatDate(item.timestamp)}`,
             body: item.description || "Invitation is on hold.",
@@ -209,12 +197,12 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: (
-              <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
+              <RiCalendarScheduleLine className="w-4 h-4 text-vmb-muted/40" />
             ),
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
+            iconBg: "bg-vmb-bg-soft",
+            iconBorderColor: "var(--vmb-primary-soft)",
             title: "Reschedule",
-            titleColor: "text-[#6B7280]",
+            titleColor: "text-vmb-text-muted",
             dateBy: "",
             body: null,
             reschedule: {
@@ -236,7 +224,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
             icon: <FaPaperPlane className="w-4 h-4" />,
             title: item.event || "Event Occurred",
             dateBy: `${formatDate(item.timestamp)}, ${formatTime(
-              item.timestamp
+              item.timestamp,
             )}`,
             body: item.description || "No details available.",
           };
@@ -249,11 +237,11 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     Email: invite.inviteeEmail || "N/A",
     message: invite.message || "No message",
     serviceName: invite.services?.serviceName || "N/A",
-    discount: invite.discountPercentage
-      ? `${invite.discountPercentage}%`
-      : "0%",
-    inviteDate: invite.createdAt
-      ? new Date(invite.createdAt).toLocaleDateString("en-GB")
+    discount:
+      invite.discountPercentage ? `${invite.discountPercentage}%` : "0%",
+    inviteDate:
+      invite.createdAt ?
+        new Date(invite.createdAt).toLocaleDateString("en-GB")
       : "N/A",
     status:
       invite.status?.charAt(0).toUpperCase() + invite.status?.slice(1) ||
@@ -269,9 +257,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         email: invite.salonEmail,
         phone: invite.salonPhone || "",
         service: invite.services?.serviceName,
-        discount: invite.discountPercentage
-          ? `${invite.discountPercentage}%`
-          : "0%",
+        discount:
+          invite.discountPercentage ? `${invite.discountPercentage}%` : "0%",
         message: invite.message || "No message provided.",
       },
       clientInfo: {
@@ -322,18 +309,14 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Claimed"
-      ? claimedPage
-      : activeTab === "Unclaimed"
-      ? unclaimedPage
-      : 1;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Claimed" ? claimedPage
+    : activeTab === "Unclaimed" ? unclaimedPage
+    : 1;
 
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
+    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
       <TabbedTable
         tabs={tabs}
         tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}

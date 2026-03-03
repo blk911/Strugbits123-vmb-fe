@@ -4,22 +4,18 @@ import Button from "../../../components/common/site/Button";
 import customerDashboardImg from "../../../assets/customer_dashboard.png";
 function List({ items }) {
   return (
-    <ul className="list-disc pl-5" style={{ color: "#777777" }}>
+    <ul className="list-disc pl-5 text-vmb-text-muted">
       {items.map((item, idx) => {
         const isObjectItem =
           typeof item === "object" && item !== null && "lead" in item;
         return (
           <li key={idx} className="mb-1.5">
             <span
-              className="max-xl:text-[14px] xl:text-[15px] leading-tight text-[#777777]"
-              style={{
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 400,
-              }}
+              className="max-xl:text-[14px] xl:text-[15px] leading-tight text-vmb-text-muted font-poppins font-normal"
             >
               {isObjectItem ? (
                 <>
-                  <strong className="font-semibold text-[#581838]">
+                  <strong className="font-semibold text-vmb-primary">
                     {item.lead}
                   </strong>
                   <br />
@@ -56,30 +52,18 @@ function SalonCard({
       </div>
       <div className="max-md:w-full lg:w-[483px] flex flex-col gap-y-[10px]">
         <span
-          className="max-xl:text-[16px] xl:text-[16px] text-[#FF92A5] uppercase"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-          }}
+          className="max-xl:text-[16px] xl:text-[16px] text-vmb-secondary uppercase font-poppins font-medium"
         >
           {label}
         </span>
         <span
-          className="max-xl:text-[30px] xl:text-[30px] text-[#581838] leading-[30px]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 400,
-          }}
+          className="max-xl:text-[30px] xl:text-[30px] text-vmb-primary leading-[30px] font-poppins font-normal"
         >
           {title}
         </span>
         {subtitle && (
           <span
-            className="max-xl:text-[15px] xl:text-[16px] leading-tight vmb-muted"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 500,
-            }}
+            className="max-xl:text-[15px] xl:text-[16px] leading-tight text-vmb-text-muted font-poppins font-medium"
           >
             {subtitle}
           </span>

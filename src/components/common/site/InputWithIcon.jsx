@@ -39,8 +39,7 @@ export default function InputWithIcon({
     <div className="w-full">
       {label && (
         <label
-          className="block text-[#374151] font-semibold mb-1 text-[14px]"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          className="block text-vmb-text-main font-semibold mb-1 text-[14px] font-poppins"
         >
           {label}
         </label>
@@ -48,7 +47,7 @@ export default function InputWithIcon({
 
       <div className="relative">
         {Icon && (
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] text-md z-10" />
+          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary text-md z-10" />
         )}
 
         <input
@@ -57,7 +56,7 @@ export default function InputWithIcon({
           onChange={handleChange}
           placeholder={placeholder}
           className={twMerge(
-            `w-full border rounded-md py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none transition-all`,
+            `w-full border rounded-md py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none transition-all`,
             Icon ? "pl-10" : "pl-4",
             error ? "border-red-500" : "border-gray-300",
             className
@@ -69,7 +68,7 @@ export default function InputWithIcon({
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition-colors z-10"
+            className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-vmb-secondary hover:brightness-90 transition-colors z-10"
             tabIndex={-1}
           >
             {showPassword ? (

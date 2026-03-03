@@ -34,7 +34,7 @@ export default function PendingRequestsSection() {
     refetch,
   } = useGetPendingSalonsQuery(
     { page, limit, sort: "newest" },
-    { refetchOnMountOrArgChange: true }
+    { refetchOnMountOrArgChange: true },
   );
 
   useEffect(() => {
@@ -89,8 +89,8 @@ export default function PendingRequestsSection() {
 
   if (isLoading && page === 1) {
     return (
-      <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 font-[Poppins]">
-        <h2 className="text-[20px] font-semibold text-[#581838]">
+      <div className="border border-vmb-primary/10 rounded-[12px] bg-white p-6 font-poppins">
+        <h2 className="text-[20px] font-semibold text-vmb-primary">
           Pending Salon Owner Requests
         </h2>
         <div className="mt-6 text-center text-gray-500">
@@ -102,8 +102,8 @@ export default function PendingRequestsSection() {
 
   if (isError) {
     return (
-      <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 font-[Poppins]">
-        <h2 className="text-[20px] font-semibold text-[#581838]">
+      <div className="border border-vmb-primary/10 rounded-[12px] bg-white p-6 font-poppins">
+        <h2 className="text-[20px] font-semibold text-vmb-primary">
           Pending Salon Owner Requests
         </h2>
         <div className="mt-6 text-center text-red-500">
@@ -115,11 +115,11 @@ export default function PendingRequestsSection() {
 
   if (pendingSalons.length === 0) {
     return (
-      <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 font-[Poppins]">
-        <h2 className="text-[20px] font-semibold text-[#581838]">
+      <div className="border border-vmb-primary/10 rounded-[12px] bg-white p-6 font-poppins">
+        <h2 className="text-[20px] font-semibold text-vmb-primary">
           Pending Salon Owner Requests
         </h2>
-        <div className="w-full h-[1px] bg-[#E5E7EB] my-4"></div>
+        <div className="w-full h-[1px] bg-vmb-primary/10 my-4"></div>
         <p className="text-center text-gray-500 text-sm">
           No pending requests at the moment.
         </p>
@@ -128,14 +128,14 @@ export default function PendingRequestsSection() {
   }
 
   return (
-    <div className="border border-[#E5E7EB] rounded-[12px] bg-white p-6 font-[Poppins] flex flex-col gap-4">
+    <div className="border border-vmb-primary/10 rounded-[12px] bg-white p-6 font-poppins flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-[20px] font-semibold text-[#581838]">
+        <h2 className="text-[20px] font-semibold text-vmb-primary">
           Pending Salon Owner Requests
         </h2>
       </div>
 
-      <div className="w-full h-[1px] bg-[#E5E7EB]"></div>
+      <div className="w-full h-[1px] bg-vmb-primary/10"></div>
 
       {isFetching && page !== 1 && (
         <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-10 rounded-[12px]">
@@ -147,7 +147,7 @@ export default function PendingRequestsSection() {
         {pendingSalons.map((item) => (
           <div
             key={item._id}
-            className="flex flex-col lg:flex-row items-start lg:items-center justify-between border border-[#E5E7EB] rounded-[8px] p-[17px] gap-4 hover:bg-[#FF92A533] transition cursor-pointer"
+            className="flex flex-col lg:flex-row items-start lg:items-center justify-between border border-vmb-primary/10 rounded-[8px] p-[17px] gap-4 hover:bg-vmb-secondary/20 transition cursor-pointer"
           >
             <div className="flex items-start gap-4 w-full">
               <img
@@ -156,13 +156,13 @@ export default function PendingRequestsSection() {
                 className="w-[48px] h-[48px] rounded object-cover"
               />
               <div className="flex flex-col gap-1">
-                <p className="text-[16px] font-semibold text-[#581838]">
+                <p className="text-[16px] font-semibold text-vmb-primary">
                   {item.name || "Unknown User"}
                 </p>
-                <p className="text-[14px] text-[#4B5563]">
+                <p className="text-[14px] text-vmb-text-muted">
                   {item.salonName} • {item.address || "Unknown City"}
                 </p>
-                <p className="text-[12px] text-[#6B7280]">
+                <p className="text-[12px] text-vmb-muted">
                   Applied {new Date(item.createdAt).toLocaleDateString()}
                 </p>
               </div>
@@ -172,7 +172,7 @@ export default function PendingRequestsSection() {
               <AppButton
                 variant="custom"
                 size="custom"
-                className="flex-1 py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+                className="flex-1 py-[8px] px-[13px] text-[14px] border border-vmb-primary text-vmb-primary hover:bg-vmb-primary/10"
                 leftIcon={<FiEye size={16} />}
                 onClick={() => openModal("salonRequest", item)}
                 disabled={isProcessingThis(item._id)}
@@ -183,7 +183,7 @@ export default function PendingRequestsSection() {
               <AppButton
                 variant="custom"
                 size="custom"
-                className="flex-1 py-[8px] px-[13px] text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+                className="flex-1 py-[8px] px-[13px] text-[14px] border border-vmb-primary text-vmb-primary hover:bg-vmb-primary/10"
                 leftIcon={<FiCheck size={16} />}
                 disabled={isProcessingThis(item._id)}
                 onClick={() => handleApprove(item._id, item.salonName)}
@@ -193,7 +193,7 @@ export default function PendingRequestsSection() {
               <AppButton
                 variant="custom"
                 size="custom"
-                className="flex-1 py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+                className="flex-1 py-[8px] px-[13px] text-[14px] bg-vmb-secondary text-white hover:opacity-90"
                 leftIcon={<HiHandRaised size={16} />}
                 disabled={isProcessingThis(item._id)}
                 onClick={() =>
@@ -208,7 +208,7 @@ export default function PendingRequestsSection() {
               <AppButton
                 variant="custom"
                 size="custom"
-                className="flex-1 py-[8px] px-[13px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+                className="flex-1 py-[8px] px-[13px] text-[14px] bg-vmb-secondary text-white hover:opacity-90"
                 leftIcon={<FiX size={16} />}
                 disabled={isProcessingThis(item._id)}
                 onClick={() => handleReject(item._id, item.salonName)}
@@ -220,8 +220,8 @@ export default function PendingRequestsSection() {
         ))}
       </div>
 
-      <div className="flex flex-col  sm:flex-row items-center justify-between gap-3 mt-4 pt-4 border-t border-[#E5E7EB]">
-        <div className="text-sm text-[#6B7280]">
+      <div className="flex flex-col  sm:flex-row items-center justify-between gap-3 mt-4 pt-4 border-t border-vmb-primary/10">
+        <div className="text-sm text-vmb-muted">
           Page <b>{currentPage}</b> of <b>{totalPages}</b>
         </div>
 
@@ -229,7 +229,7 @@ export default function PendingRequestsSection() {
           <AppButton
             variant="custom"
             size="custom"
-            className="px-4 py-2 text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50"
+            className="px-4 py-2 text-sm border border-vmb-primary text-vmb-primary hover:bg-vmb-primary/10 disabled:opacity-50"
             leftIcon={<FiChevronLeft size={16} />}
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1 || isFetching}
@@ -240,7 +240,7 @@ export default function PendingRequestsSection() {
           <AppButton
             variant="custom"
             size="custom"
-            className="px-4 py-2 text-[10px] sm:text-sm border border-[#581838] text-[#581838] hover:bg-[#581838]/10 disabled:opacity-50 flex items-center gap-1 "
+            className="px-4 py-2 text-[10px] sm:text-sm border border-vmb-primary text-vmb-primary hover:bg-vmb-primary/10 disabled:opacity-50 flex items-center gap-1 "
             rightIcon={<FiChevronRight size={16} />}
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= totalPages || isFetching}

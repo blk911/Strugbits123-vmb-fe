@@ -13,18 +13,18 @@ export default function TimeInput({ label, name }) {
 
   return (
     <div className="relative">
-      <label className="block text-[#374151] text-[14px] font-semibold mb-1">
+      <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
         {label}
       </label>
 
       <div className="relative">
-        <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+        <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
 
         <input
           type="time"
           {...register(name)}
-          className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
-                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+          className="w-full bg-white border border-vmb-primary/10 rounded-md py-3 pl-10 pr-4 text-vmb-text-main
+                   focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                    transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute

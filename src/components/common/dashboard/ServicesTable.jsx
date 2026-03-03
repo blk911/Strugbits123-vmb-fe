@@ -9,7 +9,7 @@ const ServicesTable = ({
   emptyText = "No services selected",
 }) => {
   if (!services.length) {
-    return <p className="text-[#4B5563]">{emptyText}</p>;
+    return <p className="text-vmb-text-muted">{emptyText}</p>;
   }
 
   return (
@@ -23,7 +23,7 @@ const ServicesTable = ({
     >
       {showHeader && (
         <div
-          className={`grid grid-cols-3 gap-2 font-medium text-[#000] ${headerClass}`}
+          className={`grid grid-cols-3 gap-2 font-medium text-vmb-text-main ${headerClass}`}
         >
           <div>Service</div>
           <div>Duration</div>
@@ -35,7 +35,7 @@ const ServicesTable = ({
         <div
           key={s.id ?? i}
           className={`
-            grid grid-cols-3 gap-2 mt-2 text-[#4B5563]
+            grid grid-cols-3 gap-2 mt-2 text-vmb-text-muted
             ${rowClass}
           `}
         >

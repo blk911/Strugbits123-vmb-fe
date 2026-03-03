@@ -11,12 +11,11 @@ const TableRow = ({
     onClick={() => onRowClick?.(row)}
     className={`${
       showPointer ? "cursor-pointer" : ""
-    }  text-[#4B5563] font-medium border border-[#9CA3AF4D] hover:bg-gray-50 rounded-[5px]`}
+    }  text-vmb-text-muted font-medium border border-vmb-primary/10 hover:bg-vmb-bg-soft rounded-[5px]`}
   >
     {keys.map((key, index) => {
-      let cellValue = cellRenderers[key]
-        ? cellRenderers[key](row[key])
-        : row[key];
+      let cellValue =
+        cellRenderers[key] ? cellRenderers[key](row[key]) : row[key];
       const headerText =
         key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
 
@@ -29,7 +28,7 @@ const TableRow = ({
             <div
               className={`value ${
                 noTruncate ? "whitespace-nowrap" : "break-words"
-              }`}
+              } text-vmb-text-muted`}
             >
               {cellValue}
             </div>

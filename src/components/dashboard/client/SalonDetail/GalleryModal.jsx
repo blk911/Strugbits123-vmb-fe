@@ -70,7 +70,7 @@ export default function GalleryModal({
                   shadow-md z-20
                 "
               >
-                <FaChevronLeft className="text-[#64748B] cursor-pointer text-xs sm:text-sm" />
+                <FaChevronLeft className="text-vmb-text-muted cursor-pointer text-xs sm:text-sm" />
               </button>
 
               <button
@@ -82,7 +82,7 @@ export default function GalleryModal({
                   shadow-md z-20
                 "
               >
-                <FaChevronRight className="text-[#64748B] cursor-pointer text-xs sm:text-sm" />
+                <FaChevronRight className="text-vmb-text-muted cursor-pointer text-xs sm:text-sm" />
               </button>
             </Dialog.Panel>
           </Transition.Child>

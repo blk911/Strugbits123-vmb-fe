@@ -6,11 +6,11 @@ import Button from "../../../components/common/site/Button";
 function SalonExperience() {
   const imgShadow = {
     boxShadow: `
-            -9px 9px 28px 0px #1F14181A,
-            -34px 38px 51px 0px #1F141817,
-            -77px 85px 69px 0px #1F14180D,
-            -136px 152px 82px 0px #1F141803,
-            -213px 237px 89px 0px #1F141800
+            -9px 9px 28px 0px rgba(0,0,0,0.1),
+            -34px 38px 51px 0px rgba(0,0,0,0.09),
+            -77px 85px 69px 0px rgba(0,0,0,0.05),
+            -136px 152px 82px 0px rgba(0,0,0,0.01),
+            -213px 237px 89px 0px rgba(0,0,0,0)
         `,
     borderTopLeftRadius: "20px",
     borderTopRightRadius: "20px",
@@ -26,7 +26,7 @@ function SalonExperience() {
       <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-center items-center lg:gap-x-[50px] xl:gap-x-[145px]">
         <div className="flex flex-col w-full lg:w-[506px]">
           <h4
-            className="max-xl:text-[35px] xl:text-[40px] text-[#FFFFFF] mb-[10px]"
+            className="max-xl:text-[35px] xl:text-[40px] text-white mb-[10px]"
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 700,
@@ -39,13 +39,13 @@ function SalonExperience() {
           <div className="flex flex-col sm:flex-row gap-x-[20px] gap-y-[10px]">
             <Button
               text="List Your Salon Now"
-              classes={"bg-[#FFFFFF] text-[#581838] w-max"}
+              classes={"bg-white text-vmb-primary w-max"}
               textclass={"text-[16px]"}
               navigateTo={"register"}
             />
             <Button
               text="Gift Your First Service"
-              classes={"bg-[#FFFFFF] text-[#581838] w-max"}
+              classes={"bg-white text-vmb-primary w-max"}
               textclass={"text-[16px]"}
               navigateTo={"register"}
             />

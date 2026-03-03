@@ -36,13 +36,13 @@ export default function QuickInvitePanel() {
   return (
     <SectionWrapper className="p-6 flex flex-col gap-4">
       <div className="flex items-center gap-3">
-        <FaUser className="text-[#FF92A5] w-[20px] h-[20px] shrink-0" />
-        <p className="text-[18px] font-semibold text-[#581838]">
+        <FaUser className="text-vmb-secondary w-[20px] h-[20px] shrink-0" />
+        <p className="text-[18px] font-semibold text-vmb-primary">
           Quick Invites
         </p>
       </div>
 
-      <p className="text-[14px] text-[#374151] font-medium">
+      <p className="text-[14px] text-vmb-text-main font-medium">
         Send Email Invite
       </p>
 
@@ -64,7 +64,7 @@ export default function QuickInvitePanel() {
             className={`w-full border rounded-[8px] px-3 py-2 text-[14px] focus:outline-none transition-colors ${
               errors.email
                 ? "border-red-500 focus:border-red-500"
-                : "border-[#E5E7EB] focus:border-[#FF92A5]"
+                : "border-vmb-primary/10 focus:border-vmb-secondary"
             }`}
             placeholder="Enter email"
           />
@@ -80,8 +80,8 @@ export default function QuickInvitePanel() {
           disabled={!isValid}
           className={`flex items-center justify-center rounded-[8px] py-2 gap-2 transition-all duration-200 ${
             isValid
-              ? "bg-[#FF92A5] text-white cursor-pointer hover:bg-[#ff7a8e]"
-              : "bg-[#FFB3C1] text-white/70 cursor-not-allowed"
+              ? "bg-vmb-secondary text-white cursor-pointer hover:brightness-110"
+              : "bg-vmb-secondary/50 text-white/70 cursor-not-allowed"
           }`}
         >
           <FaEnvelope />

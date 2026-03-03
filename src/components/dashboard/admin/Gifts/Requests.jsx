@@ -63,9 +63,9 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
       const tag = item.tag?.toLowerCase();
 
       const base = {
-        iconBg: isLast ? "bg-[#F3F4F6]" : "bg-[#FF92A54D]",
-        barColor: isLast ? "bg-[#E5E7EB]" : "bg-[#FF92A5]",
-        titleColor: isLast ? "text-[#6B7280]" : "text-[#581838]",
+        iconBg: isLast ? "bg-vmb-bg-soft" : "bg-vmb-secondary/30",
+        barColor: isLast ? "bg-vmb-primary/10" : "bg-vmb-secondary",
+        titleColor: isLast ? "text-vmb-text-muted" : "text-vmb-primary",
       };
 
       switch (tag) {
@@ -99,7 +99,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
             ...base,
             icon: <FaRegHandPointer className="w-4 h-4" />,
             title: "Salon Responded",
-            titleColor: "text-[#581838]",
+            titleColor: "text-vmb-primary",
             dateBy: `${formatDate(item.timestamp)} | By: ${
               gift.salonId?.salonName || "Salon"
             }`,
@@ -112,7 +112,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
-            iconBg: "bg-[#FF92A5]",
+            iconBg: "bg-vmb-secondary",
             title: "User Confirmed Appointment",
             dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
             body:
@@ -124,11 +124,11 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
         case "appointment-created":
           return {
             ...base,
-            icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
+            icon: <GiCheckMark className="w-4 h-4 text-vmb-muted/40" />,
+            iconBg: "bg-vmb-bg-soft",
+            iconBorderColor: "var(--vmb-primary-soft)",
             title: "Appointment Created",
-            titleColor: "text-[#6B7280]",
+            titleColor: "text-vmb-text-muted",
             dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
             body: item.description || "Appointment created successfully.",
             smallTopLabel: true,
@@ -139,12 +139,12 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: (
-              <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
+              <RiCalendarScheduleLine className="w-4 h-4 text-vmb-muted/40" />
             ),
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
+            iconBg: "bg-vmb-bg-soft",
+            iconBorderColor: "var(--vmb-primary-soft)",
             title: "Reschedule",
-            titleColor: "text-[#6B7280]",
+            titleColor: "text-vmb-text-muted",
             dateBy: "",
             body: null,
             reschedule: {
@@ -176,8 +176,8 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           return {
             ...base,
             icon: <FaClock className="w-4 h-4" />,
-            iconBg: "bg-[#FFAA0033]",
-            barColor: "bg-[#FFAA00]",
+            iconBg: "bg-vmb-pending/20",
+            barColor: "bg-vmb-pending",
             title: "On Hold",
             dateBy: `${formatDate(item.timestamp)}`,
             body: item.description || "Gift request is on hold.",

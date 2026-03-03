@@ -18,7 +18,7 @@ export default function TextField({
       {label && (
         <label
           htmlFor={name}
-          className="text-[14px] lg:text-[16px] font-poppins font-medium text-[#404040]"
+          className="text-[14px] lg:text-[16px] font-poppins font-medium text-vmb-text-main"
           style={{
             fontFamily: "Poppins, sans-serif",
             fontWeight: 500,
@@ -38,9 +38,9 @@ export default function TextField({
             onChange={onChange}
             onBlur={onBlur}
             ref={ref}
-            className={`border border-[#E5E5E5] h-12 px-3 rounded-md
+            className={`border border-vmb-primary/10 h-12 px-3 rounded-md
               text-[12px] leading-[24px] font-poppins font-normal 
-              placeholder:text-[#00000033] focus:outline-none pl-10 ${classInput}`}
+              placeholder:text-vmb-text-muted/50 focus:outline-none pl-10 ${classInput}`}
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 400,
@@ -60,9 +60,9 @@ export default function TextField({
           onChange={onChange}
           onBlur={onBlur}
           ref={ref}
-          className={`border border-[#E5E5E5] h-12 px-3 rounded-md
+          className={`border border-vmb-primary/10 h-12 px-3 rounded-md
             text-[12px] leading-[24px] font-poppins font-normal 
-            placeholder:text-[#00000033] focus:outline-none ${classInput}`}
+            placeholder:text-vmb-text-muted/50 focus:outline-none ${classInput}`}
           style={{
             fontFamily: "Poppins, sans-serif",
             fontWeight: 400,

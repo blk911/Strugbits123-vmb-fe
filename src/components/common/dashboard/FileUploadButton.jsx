@@ -18,11 +18,11 @@ export default function FileUploadButton({
       <button
         type="button"
         onClick={handleClick}
-        className={`flex justify-center items-center py-[8px] px-[17px] rounded-[8px] cursor-pointer gap-x-[7px] bg-[#FF92A5] ${classes}`}
+        className={`flex justify-center items-center py-[8px] px-[17px] rounded-[8px] cursor-pointer gap-x-[7px] bg-vmb-secondary ${classes}`}
       >
         {icon && <span>{icon}</span>}
         <span
-          className={`text-[#FFFFFF] ${textClasses}`}
+          className={`text-white ${textClasses}`}
           style={{ fontFamily: "Poppins, sans-serif", fontWeight: 400 }}
         >
           {text}

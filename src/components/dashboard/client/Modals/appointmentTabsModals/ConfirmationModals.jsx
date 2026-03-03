@@ -19,7 +19,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
     <Transition appear show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={onClose}
       >
         <Transition.Child
@@ -31,7 +31,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-black/80" />
         </Transition.Child>
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Transition.Child
@@ -43,14 +43,16 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="bg-white rounded-[10px] p-[30px] flex flex-col items-center gap-3 w-full max-w-[468px] text-center">
+            <Dialog.Panel className="bg-vmb-bg-soft rounded-[10px] p-[30px] flex flex-col items-center gap-3 w-full max-w-[468px] text-center">
               <img
                 src={imageSrc}
                 alt={title}
                 className="w-[96px] h-[96px] object-contain"
               />
-              <h2 className="text-[#FF92A5] font-bold text-[20px]">{title}</h2>
-              <p className="text-[#404040] text-[14px] font-medium leading-[20px]">
+              <h2 className="text-vmb-secondary font-bold text-[20px]">
+                {title}
+              </h2>
+              <p className="text-vmb-text-main text-[14px] font-medium leading-[20px]">
                 {subtitle}
               </p>
             </Dialog.Panel>

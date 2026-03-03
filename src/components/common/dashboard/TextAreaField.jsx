@@ -10,7 +10,7 @@ export default function TextAreaField({
     <div className="flex flex-col gap-y-[8px]">
       <label
         htmlFor={name}
-        className="text-[14px] lg:text-[16px] font-poppins font-medium text-[#404040]"
+        className="text-[14px] lg:text-[16px] font-poppins font-medium text-vmb-text-main"
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 500,
@@ -26,9 +26,9 @@ export default function TextAreaField({
         name={name}
         placeholder={placeholder}
         rows={4}
-        className={`border border-[#E5E5E5] h-28 px-3 py-2 rounded-md
+        className={`border border-vmb-primary/10 h-28 px-3 py-2 rounded-md
                    text-[12px] leading-[24px] font-poppins font-normal
-                   placeholder:text-[#00000033] focus:outline-none resize-none ${classes}`}
+                   placeholder:text-vmb-text-muted/50 focus:outline-none resize-none ${classes}`}
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 400,

@@ -17,17 +17,17 @@ function Overview() {
   const servicesCount = response?.data?.totalServicesCount || 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-[Poppins] items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-poppins items-start">
       <div className="flex flex-col gap-2 ">
-        <h1 className="text-[18px] font-semibold text-[#581838]">
+        <h1 className="text-[18px] font-semibold text-vmb-primary">
           Welcome back!
         </h1>
 
-        <h2 className="text-[35px] font-semibold text-[#FF92A5] leading-tight">
+        <h2 className="text-[35px] font-semibold text-vmb-secondary leading-tight">
           {user?.salonName || "Salon"}
         </h2>
 
-        <p className="text-[16px] text-[#4B5563]">
+        <p className="text-[16px] text-vmb-text-muted">
           Manage your salon efficiently
         </p>
       </div>
@@ -37,7 +37,7 @@ function Overview() {
             title="Today's Appointments"
             value={appointmentsCount}
             icon={
-              <FaRegCalendarAlt className="text-[#FF92A5] w-[18px] h-[18px]" />
+              <FaRegCalendarAlt className="text-vmb-secondary w-[18px] h-[18px]" />
             }
             isLoading={isLoading}
           />
@@ -46,7 +46,7 @@ function Overview() {
           title="Today's Revenue"
           value="$0"
           icon={
-            <RiMoneyDollarCircleLine className="text-[#FF92A5] w-[20px] h-[20px]" />
+            <RiMoneyDollarCircleLine className="text-vmb-secondary w-[20px] h-[20px]" />
           }
           isLoading={isLoading}
         /> */}
@@ -54,7 +54,9 @@ function Overview() {
           <DashboardCard
             title="Total Services"
             value={servicesCount}
-            icon={<RiFlowerLine className="text-[#FF92A5] w-[20px] h-[20px]" />}
+            icon={
+              <RiFlowerLine className="text-vmb-secondary w-[20px] h-[20px]" />
+            }
             isLoading={isLoading}
           />
         </>

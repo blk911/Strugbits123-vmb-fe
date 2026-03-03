@@ -65,7 +65,7 @@ export default function ScheduleAppointmentModal({
 
   const totalPrice = (data?.services || []).reduce(
     (s, it) => s + (it.price || 0),
-    0
+    0,
   );
 
   const type = data?.appointment?.type;
@@ -176,7 +176,7 @@ export default function ScheduleAppointmentModal({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeModal}
         >
           <Transition.Child
@@ -188,7 +188,7 @@ export default function ScheduleAppointmentModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -202,10 +202,10 @@ export default function ScheduleAppointmentModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-[#5818381A] bg-[#FFF2F4] p-[30px] shadow-xl transition-all">
+                <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all">
                   <IoClose
                     onClick={closeModal}
-                    className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                    className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
                   />
 
                   <div
@@ -218,29 +218,29 @@ export default function ScheduleAppointmentModal({
                       } items-start`}
                     >
                       <div ref={step1Ref} className="w-1/2 p-0 px-0">
-                        <h2 className="text-[#581838] text-center font-bold text-[22px] mb-4">
+                        <h2 className="text-vmb-primary text-center font-bold text-[22px] mb-4">
                           Schedule Appointment
                         </h2>
 
-                        <div className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]">
-                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col gap-4">
+                        <div className="bg-white border border-vmb-primary/10 rounded-[10px] p-[20px] flex flex-col gap-[20px]">
+                          <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-3 flex flex-col gap-4">
                             <div>
-                              <p className="text-[#581838] font-medium text-[14px] mb-2">
+                              <p className="text-vmb-primary font-medium text-[14px] mb-2">
                                 Treat To:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
                                   src={data.treatTo?.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-vmb-primary/10"
                                 />
                                 <div>
-                                  <p className="font-semibold text-[14px] text-[#4B5563]">
+                                  <p className="font-semibold text-[14px] text-vmb-text-muted">
                                     {data.treatTo?.name}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatTo?.email}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatTo?.phone}
                                   </p>
                                 </div>
@@ -248,22 +248,22 @@ export default function ScheduleAppointmentModal({
                             </div>
 
                             <div>
-                              <p className="text-[#581838] font-medium text-[14px] mb-2">
+                              <p className="text-vmb-primary font-medium text-[14px] mb-2">
                                 Treat By:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
                                   src={data.treatBy?.image}
-                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                  className="w-[53px] h-[53px] rounded-full object-cover flex-shrink-0 border border-vmb-primary/10"
                                 />
                                 <div>
-                                  <p className="font-semibold text-[14px] text-[#581838]">
+                                  <p className="font-semibold text-[14px] text-vmb-primary">
                                     {data.treatBy?.name}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatBy?.email}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatBy?.phone}
                                   </p>
                                 </div>
@@ -271,21 +271,21 @@ export default function ScheduleAppointmentModal({
                             </div>
                           </div>
 
-                          <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]  ">
-                            <p className="text-[#581838] text-[14px] font-medium">
+                          <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]  ">
+                            <p className="text-vmb-primary text-[14px] font-medium">
                               Services:
                             </p>
                             <ServicesTable
                               services={data?.services}
-                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
                               scrollbarClass="custom-scrollbar"
                               maxHeightClass="max-h-32"
                               headerClass="px-1"
-                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                              rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-primary text-[11px] sm:text-[12px]"
                             />
 
                             <div className="flex justify-end">
-                              <p className="text-[#FF92A5] font-bold text-[13px]">
+                              <p className="text-vmb-secondary font-bold text-[13px]">
                                 Amount Paid: ${finalTotal}
                               </p>
                             </div>
@@ -316,42 +316,42 @@ export default function ScheduleAppointmentModal({
                       </div>
 
                       <div ref={step2Ref} className="w-1/2 p-0 px-0">
-                        <h2 className="text-[#581838] text-center font-bold text-[22px] mb-4">
+                        <h2 className="text-vmb-primary text-center font-bold text-[22px] mb-4">
                           Schedule Appointment
                         </h2>
 
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
-                          className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                          className="bg-white border border-vmb-primary/10 overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
                         >
-                          <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-                            <p className="text-[#581838] text-[14px] font-medium">
+                          <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                            <p className="text-vmb-primary text-[14px] font-medium">
                               Services:
                             </p>
                             <ServicesTable
                               services={data?.services}
-                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
                               scrollbarClass="custom-scrollbar"
                               maxHeightClass="max-h-32"
                               headerClass="px-1"
-                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                              rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-primary text-[11px] sm:text-[12px]"
                             />
 
                             <div className="flex justify-end">
-                              <p className="text-[#FF92A5] font-bold text-[13px]">
+                              <p className="text-vmb-secondary font-bold text-[13px]">
                                 Amount Paid: ${finalTotal}
                               </p>
                             </div>
                           </div>
 
                           <div>
-                            <p className="text-[#581838] font-medium text-[14px] mb-2">
+                            <p className="text-vmb-primary font-medium text-[14px] mb-2">
                               Choose schedule Date & Time
                             </p>
 
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-[14px] font-medium text-[#404040] block mb-1">
+                                <label className="text-[14px] font-medium text-vmb-text-main block mb-1">
                                   Date
                                 </label>
 
@@ -366,9 +366,9 @@ export default function ScheduleAppointmentModal({
                                         new Date().toISOString().split("T")[0]
                                       }
                                       className={`w-full border rounded-[8px] p-3 ${
-                                        errors.appointmentDate
-                                          ? "border-red-500"
-                                          : "border-[#E5E5E5]"
+                                        errors.appointmentDate ?
+                                          "border-red-500"
+                                        : "border-vmb-primary/10 text-vmb-text-main"
                                       }`}
                                     />
                                   )}
@@ -385,7 +385,7 @@ export default function ScheduleAppointmentModal({
                                 control={control}
                               />
                               {/* <div>
-                                <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                <label className="text-[14px] font-medium text-vmb-text-main block mb-2">
                                   Time
                                 </label>
 
@@ -399,7 +399,7 @@ export default function ScheduleAppointmentModal({
                                       className={`w-full border rounded-[8px] p-3 ${
                                         errors.appointmentTime
                                           ? "border-red-500"
-                                          : "border-[#E5E5E5]"
+                                          : "border-vmb-primary/10"
                                       }`}
                                     />
                                   )}
@@ -419,10 +419,10 @@ export default function ScheduleAppointmentModal({
                               onClick={onBack}
                               className="flex items-center cursor-pointer"
                             >
-                              <span className="flex items-center justify-center min-w-8 h-8 rounded-xl bg-[#4b0d23] mr-2">
-                                <FaArrowLeftLong className="text-pink-400" />
+                              <span className="flex items-center justify-center min-w-8 h-8 rounded-xl bg-vmb-primary mr-2">
+                                <FaArrowLeftLong className="text-vmb-secondary" />
                               </span>
-                              <span className="text-[#581838] font-medium">
+                              <span className="text-vmb-primary font-medium">
                                 Back
                               </span>
                             </button>

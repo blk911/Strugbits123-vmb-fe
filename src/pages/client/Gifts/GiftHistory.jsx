@@ -6,7 +6,7 @@ export default function GiftHistory() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("Newest");
   return (
-    <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
+    <div className=" bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
       <PageHeader
         title="Gifts History"
         description="Manage your gifts efficiently."

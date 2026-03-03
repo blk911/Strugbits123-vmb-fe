@@ -30,7 +30,7 @@ export default function ServiceCard({ services, salon }) {
 
   return (
     <div
-      className="border border-[#58183880] rounded-[12px] p-4 sm:p-5
+      className="border border-vmb-primary/50 rounded-[12px] p-4 sm:p-5
                  flex flex-col h-full hover:shadow-md transition-all duration-300"
     >
       <div className="relative w-full h-[200px] shrink-0">
@@ -40,7 +40,7 @@ export default function ServiceCard({ services, salon }) {
           className="w-full h-full object-cover rounded-md"
         />
         <div
-          className="absolute top-3 right-3 bg-white text-[#6B7280]
+          className="absolute top-3 right-3 bg-white text-vmb-text-muted
                      text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm"
         >
           {serviceDuration} min
@@ -50,19 +50,19 @@ export default function ServiceCard({ services, salon }) {
       <div className="flex flex-col flex-1 mt-4 gap-2">
         <div className="flex justify-between items-start  gap-2">
           <h4
-            className="text-[#581838] font-semibold text-[16px] sm:text-[18px]
+            className="text-vmb-primary font-semibold text-[16px] sm:text-[18px]
                        leading-[22px] line-clamp-2 max-w-[70%]"
           >
             {serviceName}
           </h4>
 
-          <span className="text-[#6B7280] font-bold text-[16px] sm:text-[18px]">
+          <span className="text-vmb-text-muted font-bold text-[16px] sm:text-[18px]">
             ${servicePrice}
           </span>
         </div>
 
         <p
-          className="text-[#4B5563] text-[14px] sm:text-[15px]
+          className="text-vmb-text-muted text-[14px] sm:text-[15px]
                      leading-[18px] line-clamp-2 "
         >
           {description || "\u00A0"}
@@ -73,7 +73,7 @@ export default function ServiceCard({ services, salon }) {
         <div className="w-full flex flex-col md:flex-row gap-2">
           <div className="w-full md:w-[60%]">
             <AppButton
-              leftIcon={<FaGift className="text-[#FF92A5] text-[18px]" />}
+              leftIcon={<FaGift className="text-vmb-secondary text-[18px]" />}
               variant="ghost-pink-light"
               size="custom"
               onClick={handleGiftClick}
@@ -86,7 +86,7 @@ export default function ServiceCard({ services, salon }) {
           <div className="w-full md:w-[40%]">
             <AppButton
               leftIcon={
-                <FaRegCalendarAlt className="text-[#FF92A5] text-[18px]" />
+                <FaRegCalendarAlt className="text-vmb-secondary text-[18px]" />
               }
               variant="outline-pink"
               size="custom"

@@ -18,7 +18,7 @@ function DashboardSidebar() {
     items = items.filter((item) => item.name === "Dashboard");
   }
   return (
-    <div className="h-full bg-white flex flex-col border bt-[1px] border-[#E5E7EB] ">
+    <div className="h-full bg-white/50 flex flex-col border-r border-vmb-primary/10 ">
       <div className="flex flex-col gap-y-[10px] px-[8px]  py-[30px]">
         {items.map((item, idx) => (
           <NavLink
@@ -29,7 +29,7 @@ function DashboardSidebar() {
               `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[8px] sm:px-[4px]
    rounded-[14px] transition-all duration-200
    ${
-     isActive ? "bg-[#FF92A5] text-white" : "bg-white text-[#581838]"
+      isActive ? "bg-vmb-secondary text-white shadow-sm" : "bg-transparent text-vmb-primary hover:bg-vmb-secondary/10"
    } text-center `
             }
             style={{

@@ -22,10 +22,10 @@ export default function VmbLogo({
 
   const palette =
     {
-      black: { mark: "#1F1B1A", script: "#3A3432", accent: "#1F1B1A" },
-      gold: { mark: "#B08D57", script: "#6B6460", accent: "#B08D57" },
-      blackGold: { mark: "#1F1B1A", script: "#3A3432", accent: "#B08D57" },
-    }[variant] ?? { mark: "#1F1B1A", script: "#3A3432", accent: "#B08D57" };
+      black: { mark: "var(--vmb-primary)", script: "var(--vmb-primary)", accent: "var(--vmb-primary)" },
+      gold: { mark: "var(--vmb-secondary)", script: "var(--vmb-text-muted)", accent: "var(--vmb-secondary)" },
+      blackGold: { mark: "var(--vmb-primary)", script: "var(--vmb-primary)", accent: "var(--vmb-secondary)" },
+    }[variant] ?? { mark: "var(--vmb-primary)", script: "var(--vmb-primary)", accent: "var(--vmb-secondary)" };
 
   return (
     <svg

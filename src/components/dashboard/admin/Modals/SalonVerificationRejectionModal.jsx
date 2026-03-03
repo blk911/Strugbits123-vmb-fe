@@ -21,7 +21,7 @@ const holdReasonSchema = z
     {
       message: "Please select at least one reason or write your own.",
       path: ["otherReason"],
-    }
+    },
   );
 
 export default function SalonVerificationRejectionModal({
@@ -63,8 +63,9 @@ export default function SalonVerificationRejectionModal({
 
   const toggleReason = (reason) => {
     const current = selectedReasons || [];
-    const updated = current.includes(reason)
-      ? current.filter((r) => r !== reason)
+    const updated =
+      current.includes(reason) ?
+        current.filter((r) => r !== reason)
       : [...current, reason];
     setValue("reasons", updated, { shouldValidate: true });
   };
@@ -141,20 +142,20 @@ export default function SalonVerificationRejectionModal({
       <div
         ref={dropdownRef}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-[450px] rounded-[12px] p-6 font-[Poppins] shadow-lg relative max-h-[90vh] overflow-y-auto custom-scrollbar"
+        className="bg-white w-full max-w-[450px] rounded-[12px] p-6 font-poppins shadow-lg relative max-h-[90vh] overflow-y-auto custom-scrollbar"
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#581838] text-[22px] cursor-pointer hover:opacity-70"
+          className="absolute top-4 right-4 text-vmb-primary text-[22px] cursor-pointer hover:opacity-70"
         >
           <IoClose />
         </button>
 
-        <h2 className="text-center text-[22px] font-bold text-[#FF92A5] mt-2">
+        <h2 className="text-center text-[22px] font-bold text-vmb-secondary mt-2">
           Salon Hold Rejection
         </h2>
 
-        <p className="text-center text-[14px] text-[#00000080] mt-2 leading-[20px]">
+        <p className="text-center text-[14px] text-vmb-text-muted mt-2 leading-[20px]">
           You are about to hold this salon’s verification request. Choose a
           reason from the list below.
         </p>
@@ -168,13 +169,13 @@ export default function SalonVerificationRejectionModal({
                   onClick={() =>
                     setOpenSection(openSection === index ? null : index)
                   }
-                  className="flex justify-between items-center bg-[#F8F8F8] px-4 py-3 rounded-[8px] border border-[#E5E5E5] cursor-pointer hover:bg-[#f0f0f0] transition"
+                  className="flex justify-between items-center bg-vmb-bg-soft px-4 py-3 rounded-[8px] border border-vmb-primary/10 cursor-pointer hover:bg-vmb-bg-soft/50 transition"
                 >
-                  <span className="text-[14px] text-[#404040] font-medium">
+                  <span className="text-[14px] text-vmb-text-main font-medium">
                     {section.title}
                   </span>
                   <IoChevronDown
-                    className={`text-[#581838] transition-transform duration-300 ${
+                    className={`text-vmb-primary transition-transform duration-300 ${
                       openSection === index ? "rotate-180" : ""
                     }`}
                   />
@@ -185,7 +186,7 @@ export default function SalonVerificationRejectionModal({
                     openSection === index ? "max-h-[500px] mt-2" : "max-h-0"
                   }`}
                 >
-                  <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 flex flex-col gap-2">
+                  <div className="border border-vmb-primary/10 bg-white rounded-[8px] p-3 flex flex-col gap-2">
                     {section.reasons.map((reason) => (
                       <CustomCheckbox
                         key={reason}
@@ -200,7 +201,7 @@ export default function SalonVerificationRejectionModal({
             ))}
 
             <div className="flex flex-col gap-2 mt-2">
-              <label className="text-[14px] text-[#404040] font-medium">
+              <label className="text-[14px] text-vmb-text-main font-medium">
                 Write your reason (optional)
               </label>
               <Controller
@@ -209,7 +210,7 @@ export default function SalonVerificationRejectionModal({
                 render={({ field }) => (
                   <textarea
                     {...field}
-                    className="border border-[#E5E5E5] bg-white rounded-[8px] p-3 text-[13px] resize-none min-h-[90px] focus:outline-none focus:ring-2 focus:ring-[#FF92A5]"
+                    className="border border-vmb-primary/10 bg-white rounded-[8px] p-3 text-[13px] resize-none min-h-[90px] focus:outline-none focus:ring-2 focus:ring-vmb-secondary"
                     placeholder="Add any additional details..."
                   />
                 )}

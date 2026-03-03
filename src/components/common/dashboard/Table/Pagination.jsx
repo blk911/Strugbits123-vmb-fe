@@ -9,7 +9,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1 || isFetching}
-        className="px-3 py-1 text-sm border border-[#D1D5DB] rounded-md text-[#4B5563] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+        className="px-3 py-1 text-sm border border-vmb-primary/10 rounded-md text-vmb-text-muted disabled:opacity-50 disabled:cursor-not-allowed hover:bg-vmb-bg-soft transition"
       >
         Prev
       </button>
@@ -20,9 +20,9 @@ export default function Pagination({
             key={page}
             onClick={() => onPageChange(page)}
             className={`w-8 h-8 flex items-center justify-center rounded-md border ${
-              currentPage === page
-                ? "bg-[#FF92A5] text-white border-[#FF92A5]"
-                : "border-[#E5E7EB] text-[#4B5563]"
+              currentPage === page ?
+                "bg-vmb-secondary text-white border-vmb-secondary"
+              : "border-vmb-primary/10 text-vmb-text-muted"
             }`}
           >
             {page}
@@ -33,7 +33,7 @@ export default function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages || isFetching}
-        className="px-3 py-1 text-sm border border-[#D1D5DB] rounded-md text-[#4B5563] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition"
+        className="px-3 py-1 text-sm border border-vmb-primary/10 rounded-md text-vmb-text-muted disabled:opacity-50 disabled:cursor-not-allowed hover:bg-vmb-bg-soft transition"
       >
         Next
       </button>

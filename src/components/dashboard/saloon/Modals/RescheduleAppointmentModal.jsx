@@ -85,7 +85,7 @@ export default function RescheduleAppointmentModal({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const totalPrice = (data.services || []).reduce(
     (s, it) => s + (it.price || 0),
-    0
+    0,
   );
   const type = data?.appointment?.type;
   let finalTotal;
@@ -168,7 +168,7 @@ export default function RescheduleAppointmentModal({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeModal}
         >
           <Transition.Child
@@ -180,7 +180,7 @@ export default function RescheduleAppointmentModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -194,10 +194,10 @@ export default function RescheduleAppointmentModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-[#5818381A] bg-[#FFF2F4] p-[30px] shadow-xl transition-all">
+                <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all">
                   <IoClose
                     onClick={closeModal}
-                    className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                    className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
                   />
 
                   <div
@@ -210,26 +210,26 @@ export default function RescheduleAppointmentModal({
                       } items-start`}
                     >
                       <div ref={step1Ref} className="w-1/2 p-0 px-0">
-                        <h2 className="text-[#581838] text-center font-bold text-[22px] mb-4">
+                        <h2 className="text-vmb-primary text-center font-bold text-[22px] mb-4">
                           Reschedule Request
                         </h2>
 
-                        <div className="bg-white border border-[#0000001A] rounded-[10px] p-[20px] flex flex-col gap-[20px]">
-                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col gap-4">
+                        <div className="bg-vmb-bg-soft border border-vmb-primary/10 rounded-[10px] p-[20px] flex flex-col gap-[20px]">
+                          <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-3 flex flex-col gap-4">
                             <div>
-                              <p className="text-[#581838] font-medium text-[14px] mb-2">
+                              <p className="text-vmb-primary font-medium text-[14px] mb-2">
                                 Treat To:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
                                   src={data.treatTo?.image}
-                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-vmb-primary/10"
                                 />
                                 <div>
-                                  <p className="font-semibold text-[14px] text-[#4B5563]">
+                                  <p className="font-semibold text-[14px] text-vmb-text-muted">
                                     {data.treatTo?.name}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatTo?.email}
                                   </p>
                                 </div>
@@ -237,19 +237,19 @@ export default function RescheduleAppointmentModal({
                             </div>
 
                             <div>
-                              <p className="text-[#581838] font-medium text-[14px] mb-2">
+                              <p className="text-vmb-primary font-medium text-[14px] mb-2">
                                 Treat By:
                               </p>
                               <div className="flex items-center gap-3 flex-wrap">
                                 <img
                                   src={data.treatBy?.image}
-                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-gray-200"
+                                  className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0 border border-vmb-primary/10"
                                 />
                                 <div>
-                                  <p className="font-semibold text-[14px] text-[#581838]">
+                                  <p className="font-semibold text-[14px] text-vmb-primary">
                                     {data.treatBy?.name}
                                   </p>
-                                  <p className="text-[12px] text-[#4B5563]">
+                                  <p className="text-[12px] text-vmb-text-muted">
                                     {data.treatBy?.email}
                                   </p>
                                 </div>
@@ -257,44 +257,42 @@ export default function RescheduleAppointmentModal({
                             </div>
                           </div>
 
-                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+                          <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-[10px] flex flex-col gap-[20px]">
                             <div
                               className="flex items-center justify-between cursor-pointer"
                               onClick={() => setDropdownOpen(!dropdownOpen)}
                             >
-                              <p className="text-[#581838] font-medium text-[14px]">
+                              <p className="text-vmb-primary font-medium text-[14px]">
                                 Previous Appointment Details
                               </p>
 
-                              {dropdownOpen ? (
-                                <FaChevronUp className="text-[#581838]" />
-                              ) : (
-                                <FaChevronDown className="text-[#581838]" />
-                              )}
+                              {dropdownOpen ?
+                                <FaChevronUp className="text-vmb-primary" />
+                              : <FaChevronDown className="text-vmb-primary" />}
                             </div>
 
                             {dropdownOpen && (
                               <div className="flex flex-col gap-[20px] overflow-hidden animate-fadeIn">
                                 <div className="grid grid-cols-2 gap-4">
                                   <div>
-                                    <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                    <label className="text-[14px] font-medium text-vmb-text-main block mb-2">
                                       Date
                                     </label>
-                                    <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
-                                      <FaCalendarAlt className="text-[#581838]" />
-                                      <span className="text-[14px] text-[#404040]">
+                                    <div className="flex items-center gap-2 border border-vmb-primary/10 bg-white rounded-[8px] p-3">
+                                      <FaCalendarAlt className="text-vmb-primary" />
+                                      <span className="text-[14px] text-vmb-text-main">
                                         {data?.appointment?.date || "N/A"}
                                       </span>
                                     </div>
                                   </div>
 
                                   <div>
-                                    <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                    <label className="text-[14px] font-medium text-vmb-text-main block mb-2">
                                       Time
                                     </label>
-                                    <div className="flex items-center gap-2 border border-[#E5E5E5] bg-white rounded-[8px] p-3">
-                                      <FaClock className="text-[#581838]" />
-                                      <span className="text-[14px] text-[#404040]">
+                                    <div className="flex items-center gap-2 border border-vmb-primary/10 bg-white rounded-[8px] p-3">
+                                      <FaClock className="text-vmb-primary" />
+                                      <span className="text-[14px] text-vmb-text-main">
                                         {data?.appointment?.time || "N/A"}
                                       </span>
                                     </div>
@@ -303,34 +301,34 @@ export default function RescheduleAppointmentModal({
                               </div>
                             )}
                           </div>
-                          <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-                            <p className="text-[#581838] font-medium text-[14px]">
+                          <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                            <p className="text-vmb-primary font-medium text-[14px]">
                               Reason for Rescheduling
                             </p>
 
-                            <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-[12px]">
-                              <p className="text-[12px] italic text-[#00000080] leading-[18px]">
+                            <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] p-[12px]">
+                              <p className="text-[12px] italic text-vmb-text-muted leading-[18px]">
                                 {data?.appointment?.message ||
                                   "No reason provided."}
                               </p>
                             </div>
                           </div>
 
-                          <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-                            <p className="text-[#581838] text-[14px] font-medium">
+                          <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                            <p className="text-vmb-primary text-[14px] font-medium">
                               Services:
                             </p>
                             <ServicesTable
                               services={data?.services}
-                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
                               scrollbarClass="custom-scrollbar"
                               maxHeightClass="max-h-32"
                               headerClass="px-1"
-                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                              rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-primary text-[11px] sm:text-[12px]"
                             />
 
                             <div className="flex justify-end">
-                              <p className="text-[#FF92A5] font-bold text-[13px]">
+                              <p className="text-vmb-secondary font-bold text-[13px]">
                                 Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
@@ -360,42 +358,42 @@ export default function RescheduleAppointmentModal({
                       </div>
 
                       <div ref={step2Ref} className="w-1/2 p-0 px-0">
-                        <h2 className="text-[#581838] text-center font-bold text-[22px] mb-4">
+                        <h2 className="text-vmb-primary text-center font-bold text-[22px] mb-4">
                           Reschedule Appointment
                         </h2>
 
                         <form
                           onSubmit={handleSubmit(onScheduleNow)}
-                          className="bg-white border border-[#0000001A] overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
+                          className="bg-white/50 border border-vmb-primary/10 overflow-y-auto custom-scrollbar rounded-[10px] p-[20px] flex flex-col gap-[20px]"
                         >
-                          <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-                            <p className="text-[#581838] text-[14px] font-medium">
+                          <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                            <p className="text-vmb-primary text-[14px] font-medium">
                               Services:
                             </p>
                             <ServicesTable
                               services={data?.services}
-                              containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                              containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
                               scrollbarClass="custom-scrollbar"
                               maxHeightClass="max-h-32"
                               headerClass="px-1"
-                              rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+                              rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-primary text-[11px] sm:text-[12px]"
                             />
 
                             <div className="flex justify-end">
-                              <p className="text-[#FF92A5] font-bold text-[13px]">
+                              <p className="text-vmb-secondary font-bold text-[13px]">
                                 Amount Paid: ${finalTotal.toFixed(2)}
                               </p>
                             </div>
                           </div>
 
                           <div>
-                            <p className="text-[#581838] font-medium text-[14px] mb-2">
+                            <p className="text-vmb-primary font-medium text-[14px] mb-2">
                               Choose schedule Date & Time
                             </p>
 
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="text-[14px] font-medium text-[#404040] block mb-2">
+                                <label className="text-[14px] font-medium text-vmb-text-main block mb-2">
                                   Date
                                 </label>
 
@@ -410,9 +408,9 @@ export default function RescheduleAppointmentModal({
                                         new Date().toISOString().split("T")[0]
                                       }
                                       className={`w-full border rounded-[8px] p-3 ${
-                                        errors.appointmentDate
-                                          ? "border-red-500"
-                                          : "border-[#E5E5E5]"
+                                        errors.appointmentDate ?
+                                          "border-red-500"
+                                          : "border-vmb-primary/10"
                                       }`}
                                     />
                                   )}

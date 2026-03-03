@@ -14,7 +14,7 @@ function Card({ img, title, desc, btnText, type, mode }) {
         w-full max-w-[630px]
         flex flex-col
         rounded-[20px]
-        border border-[#58183833] hover:border-[#5C8374]
+        border border-vmb-primary/20 hover:border-vmb-secondary
         bg-white
         hover:shadow-2xl
         overflow-hidden
@@ -31,11 +31,11 @@ function Card({ img, title, desc, btnText, type, mode }) {
       </div>
 
       <div className="flex flex-col gap-[27px] px-6 sm:px-10 pt-6  ">
-        <h3 className="font-poppins font-medium text-[22px] sm:text-[25px] text-[#0F3D3E] leading-snug">
+        <h3 className="font-poppins font-medium text-[22px] sm:text-[25px] text-vmb-primary leading-snug">
           {title}
         </h3>
 
-        <p className="font-poppins font-normal text-[14px] text-[#5C8374] leading-relaxed">
+        <p className="font-poppins font-normal text-[14px] text-vmb-secondary leading-relaxed">
           {desc}
         </p>
         <PrimaryButton

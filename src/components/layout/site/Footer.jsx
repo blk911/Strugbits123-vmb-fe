@@ -3,7 +3,7 @@ import logo from "../../../assets/footer_logo.png";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-[#0F3D3E] border-t border-[#5C8374]">
+    <footer className="w-full bg-vmb-primary border-t border-vmb-secondary">
       <div className="max-w-[1200px] mx-auto px-4 py-10 flex flex-col items-center">
         <div className="w-[140px] sm:w-[160px] h-auto">
           <img
@@ -13,7 +13,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className="w-full max-w-[976px] h-[1px] bg-[#FFFFFF1A] mt-8"></div>
+        <div className="w-full max-w-[976px] h-[1px] bg-white/10 mt-8"></div>
 
         <div className="w-full max-w-[976px] mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-white font-inter text-[12px]">
           <span className="text-center sm:text-left">

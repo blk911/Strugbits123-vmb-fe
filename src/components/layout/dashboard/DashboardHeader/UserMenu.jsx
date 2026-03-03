@@ -65,10 +65,9 @@ function UserMenu() {
   return (
     <div className="relative" ref={ref}>
       <div
-        className="h-[40px] w-[40px] rounded-full overflow-hidden cursor-pointer"
+        className="h-[40px] w-[40px] rounded-full overflow-hidden cursor-pointer border-b border-vmb-primary/10"
         style={{
           backdropFilter: "blur(10px)",
-          borderBottom: "1px solid #E5E7EB",
         }}
         onClick={toggle}
       >

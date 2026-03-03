@@ -317,7 +317,7 @@ export default function Appointments({
 
   return (
     <>
-      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-[#EFEFEF]">
+      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
         <TabbedTable
           tabs={tabs}
           tabOrder={[

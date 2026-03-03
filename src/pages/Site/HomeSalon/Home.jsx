@@ -10,7 +10,7 @@ import TopSalons from "../Home/TopSalons";
 import SalonChoice from "../Home/SalonChoice";
 function HomeSalon() {
   return (
-    <div className="flex flex-col items-center bg-[#FAFFFD] gap-[60px]">
+    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px]">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits

@@ -10,7 +10,7 @@ import loyaltyImg from "../../../assets/brand/benefits/loyalty.png";
 import advocateImg from "../../../assets/brand/benefits/advocate.png";
 function Home() {
   return (
-    <div className="flex flex-col items-center bg-[#FAFFFD] gap-[60px]">
+    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px]">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits

@@ -2,30 +2,54 @@
 @import "tailwindcss";
 
 .font-lato {
-  font-family: "Lato", sans-serif;
+  font-family: var(--font-lato);
 }
 
 .font-poppins {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-poppins);
 }
 
 .font-inter {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-inter);
 }
 /* === VMB "Milk+Honey" Theme Layer === */
 :root {
-  --vmb-bg: #fbfaf8;
-  --vmb-surface: #ffffff;
-  --vmb-ink: #1f1b1a;
-  --vmb-muted: #6b6460;
-  --vmb-border: rgba(31, 27, 26, 0.1);
-  --vmb-accent: #6b1f3a;
-  --vmb-accent-2: #b08d57;
-  --vmb-cream-overlay: rgba(245, 241, 235, 0.55);
-  --vmb-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  --vmb-gold-flake-shadow:
-    0 6px 14px rgba(176, 141, 87, 0.12), 0 14px 28px rgba(176, 141, 87, 0.08),
-    0 1px 2px rgba(31, 27, 26, 0.04);
+  /* Centralized Core Colors (New Teal Theme) */
+  --vmb-primary: #0f3d3e;
+  --vmb-secondary: #5c8374;
+  --vmb-text-main: #333333;
+  --vmb-text-muted: #4b5563;
+  --vmb-bg-soft: #efefef;
+  --vmb-bg: #ffffff;
+  --vmb-pending: #ff9500;
+  --vmb-success: #4fcf00;
+  --vmb-error: #dc2626;
+  --vmb-info: #4376c0;
+  --vmb-muted: #64748b;
+  --vmb-primary-soft: rgba(15, 61, 62, 0.1);
+  --vmb-modal-bg: #e8e8e8;
+}
+
+@theme {
+  --font-lato: "Lato", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --color-vmb-primary: var(--vmb-primary);
+  --color-vmb-secondary: var(--vmb-secondary);
+  --color-vmb-text-main: var(--vmb-text-main);
+  --color-vmb-text-muted: var(--vmb-text-muted);
+  --color-vmb-bg-soft: var(--vmb-bg-soft);
+  --color-vmb-pending: var(--vmb-pending);
+  --color-vmb-success: var(--vmb-success);
+  --color-vmb-error: var(--vmb-error);
+  --color-vmb-info: var(--vmb-info);
+  --color-vmb-muted: var(--vmb-muted);
+  --color-vmb-modal-bg: var(--vmb-modal-bg);
+  /* Compatibility with existing tokens */
+  --color-vmb-bg: var(--vmb-bg);
+  --color-vmb-accent: var(--vmb-primary);
+  --color-vmb-accent-pink: var(--vmb-secondary);
 }
 
 html,
@@ -63,7 +87,7 @@ body {
 }
 
 @utility vmb-title {
-  color: #581838;
+  color: var(--vmb-primary);
 }
 
 @utility vmb-btn {
@@ -86,7 +110,7 @@ body {
 
 @utility vmb-photo {
   @apply relative overflow-hidden rounded-2xl border;
-  border-color: rgba(31, 27, 26, 0.12);
+  border-color: var(--vmb-primary-soft);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
@@ -188,11 +212,11 @@ body {
 }
 
 .custom-table td {
-  @apply block w-full px-4 py-3 text-[#4B5563] text-sm border-b border-gray-100 last:border-b-0;
+  @apply block w-full px-4 py-3 text-vmb-text-main text-sm border-b border-vmb-primary/5 last:border-b-0;
 }
 
 .custom-table td .label {
-  @apply font-medium text-xs text-gray-700 block mb-1;
+  @apply font-medium text-xs text-vmb-text-muted block mb-1;
 }
 
 .custom-table td .value {
@@ -201,7 +225,7 @@ body {
 
 @media (min-width: 1030px) {
   .custom-table thead {
-    @apply table-header-group bg-[#F8F8F8];
+    @apply table-header-group bg-vmb-bg-soft;
   }
 
   .custom-table tbody {
@@ -209,7 +233,7 @@ body {
   }
 
   .custom-table tr {
-    @apply table-row hover:bg-gray-50 transition-colors;
+    @apply table-row hover:bg-vmb-bg-soft transition-colors;
   }
 
   .custom-table th,
@@ -244,17 +268,17 @@ body {
   }
 
   .custom-table td {
-    border-top: 1px solid #9ca3af4d;
-    border-bottom: 1px solid #9ca3af4d;
+    border-top: 1px solid var(--vmb-primary-soft);
+    border-bottom: 1px solid var(--vmb-primary-soft);
   }
 
   .custom-table tr td:first-child {
-    border-left: 1px solid #9ca3af4d;
+    border-left: 1px solid var(--vmb-primary-soft);
     border-radius: 5px 0 0 5px;
   }
 
   .custom-table tr td:last-child {
-    border-right: 1px solid #9ca3af4d;
+    border-right: 1px solid var(--vmb-primary-soft);
     border-radius: 0 5px 5px 0;
   }
 }
@@ -282,7 +306,7 @@ body {
   }
 
   .advanced-table-desktop thead tr {
-    background: #f8f8f8;
+    background: var(--vmb-bg-soft);
   }
 
   .advanced-table-desktop thead th:first-child {
@@ -295,21 +319,21 @@ body {
 
   .advanced-table-desktop tbody tr {
     background: white;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px var(--vmb-primary-soft);
   }
 
   .advanced-table-desktop tbody td {
-    border-top: 1px solid #9ca3af4d;
-    border-bottom: 1px solid #9ca3af4d;
+    border-top: 1px solid var(--vmb-primary-soft);
+    border-bottom: 1px solid var(--vmb-primary-soft);
   }
 
   .advanced-table-desktop tbody tr td:first-child {
-    border-left: 1px solid #9ca3af4d;
+    border-left: 1px solid var(--vmb-primary-soft);
     border-radius: 5px 0 0 5px;
   }
 
   .advanced-table-desktop tbody tr td:last-child {
-    border-right: 1px solid #9ca3af4d;
+    border-right: 1px solid var(--vmb-primary-soft);
     border-radius: 0 5px 5px 0;
   }
 }
@@ -320,21 +344,21 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--vmb-bg-soft);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: var(--vmb-muted);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: var(--vmb-primary);
 }
 
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #c1c1c1 #f1f1f1;
+  scrollbar-color: var(--vmb-muted) var(--vmb-bg-soft);
 }

@@ -37,8 +37,8 @@ export default function SalonDetail() {
   const { openModal } = useDashboardModal();
 
   return (
-    <div className=" bg-[#EFEFEF] p-7 font-[Poppins] gap-8 flex flex-col">
-      <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
+    <div className=" bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+      <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-sm p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative">
           <AutoCarousel
             images={user?.salonPhotos}
@@ -70,7 +70,7 @@ export default function SalonDetail() {
       bottom-2 right-3 sm:bottom-2.5 sm:right-5
       w-6 h-6 sm:w-8 sm:h-8 
       rounded-full 
-      bg-[#FF92A5]
+      bg-vmb-secondary
       flex items-center justify-center
       shrink-0
       shadow-md
@@ -86,10 +86,10 @@ export default function SalonDetail() {
         <div className="flex flex-col md:flex-row w-full mt-[80px] sm:mt-[20px] md:mt-[30px]">
           <div className="flex flex-col px-3 sm:px-6 md:px-8 text-center sm:text-left w-full lg:w-[70%]">
             <div className="sm:pl-[150px] md:pl-[160px]">
-              <h1 className="text-[#581838] font-bold text-[20px] sm:text-[26px] md:text-[30px] leading-tight">
+              <h1 className="text-vmb-primary font-bold text-[20px] sm:text-[26px] md:text-[30px] leading-tight">
                 {user?.salonName}
               </h1>
-              <p className="text-[#4B5563] text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
+              <p className="text-vmb-text-muted text-[14px] sm:text-[16px] md:text-[18px] leading-[22px] mt-1">
                 {user?.description || "Where beauty meets luxury ✨"}
               </p>
             </div>
@@ -98,7 +98,7 @@ export default function SalonDetail() {
               className="
           flex flex-wrap justify-center sm:justify-start 
           items-center gap-3 sm:gap-4
-          text-[12px] sm:text-[13px] text-[#00000080] 
+          text-[12px] sm:text-[13px] text-vmb-text-muted/50 
           mt-3 sm:mt-4
           sm:pl-[150px] md:pl-[160px]
         "
@@ -119,13 +119,13 @@ export default function SalonDetail() {
               <div className="flex items-center gap-2">
                 <BsClockFill />
                 <span>
-                  {user?.startTime && user?.endTime
-                    ? `${user.startTime} - ${user.endTime}`
-                    : "09:00 AM - 05:00 PM"}
+                  {user?.startTime && user?.endTime ?
+                    `${user.startTime} - ${user.endTime}`
+                  : "09:00 AM - 05:00 PM"}
                 </span>
               </div>
 
-              <div className="bg-[#FF92A54D] rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-[#581838] whitespace-nowrap">
+              <div className="bg-vmb-secondary/30 rounded-[5px] px-2 py-[4px] text-[11px] sm:text-[12px] text-vmb-primary whitespace-nowrap">
                 {/* {user?.workingDays.map((day) => day.slice(0, 3)).join("-") ||
                   "Mon - Thu - Fri"} */}
                 {(() => {

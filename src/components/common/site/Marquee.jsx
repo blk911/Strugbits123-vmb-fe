@@ -48,7 +48,7 @@ export default function LogoMarquee() {
               />
             </div>
 
-            <span className="mt-2 text-center font-['Poppins'] text-[16px] font-normal text-[#0F3D3E] leading-none">
+            <span className="mt-2 text-center font-poppins text-[16px] font-normal text-vmb-primary leading-none">
               {service.label}
             </span>
           </div>

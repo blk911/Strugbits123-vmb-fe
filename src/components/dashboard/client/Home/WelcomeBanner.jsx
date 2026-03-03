@@ -11,22 +11,21 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
 
   const hasPendingInvites = pendingData?.data?.items?.length > 0;
   return (
-    <div className="relative bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D]  w-full max-w-full p-4 md:p-0">
+    <div className="relative bg-white/50 border border-vmb-primary/10 rounded-[12px] shadow-sm  w-full max-w-full p-4 md:p-0">
       <div className="flex flex-col h-full md:flex-row items-start md:items-center justify-between gap-4 py-4">
         <div className="w-full sm:w-auto  px-0 md:px-4">
-          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-[#581838]">
+          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-vmb-primary">
             Hey {user?.name || "there"}!
           </h1>
-          <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-[#4B5563]">
+          <p className="text-[14px] sm:text-[15px] md:text-[16px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-vmb-text-muted">
             Good to see you back.
           </p>
-          {loadingPending ? (
+          {loadingPending ?
             <div className="mt-3 md:hidden flex justify-center">
               <LoadingIndicator size="sm" />
             </div>
-          ) : (
-            hasPendingInvites && (
-              <div className="relative mt-3 md:hidden bg-[#FF92A5] rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px]">
+          : hasPendingInvites && (
+              <div className="relative mt-3 md:hidden bg-vmb-secondary rounded-[10px] px-3 py-2 text-white text-[14px] leading-[22px]">
                 You have a new salon invitation!{" "}
                 <span
                   className="font-bold underline cursor-pointer"
@@ -36,27 +35,26 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
                 </span>
               </div>
             )
-          )}
+          }
         </div>
 
         <AppButton
-          leftIcon={<FaGift className="text-[#FF97A7] text-[18px]" />}
+          leftIcon={<FaGift className="text-vmb-secondary text-[18px]" />}
           variant="ghost-pink"
           size="custom"
           fullWidth={false}
           onClick={onGiftClick}
-          className="px-3 sm:px-4 py-2 text-[14px] sm:text-[15px] md:text-[16px] font-medium text-[#581838] mr-4"
+          className="px-3 sm:px-4 py-2 text-[14px] sm:text-[15px] md:text-[16px] font-medium text-vmb-primary mr-4"
         >
           Request a Gift
         </AppButton>
       </div>
-      {loadingPending ? (
+      {loadingPending ?
         <div className="hidden md:flex absolute bottom-[-4px] left-6">
           <LoadingIndicator size="sm" />
         </div>
-      ) : (
-        hasPendingInvites && (
-          <div className="relative hidden md:block absolute bottom-[18px] left-[-1px] bg-[#FF92A5] rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px] overflow-hidden">
+      : hasPendingInvites && (
+          <div className="relative hidden md:block absolute bottom-[18px] left-[-1px] bg-vmb-secondary rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px] px-3 sm:px-4 py-1 w-[350px] md:w-[400px] text-white text-[15px] md:text-[16px] leading-[23px] md:leading-[24px] overflow-hidden">
             <div className="shine-line"></div>
             <div className="relative z-10">
               You have a new salon invitation!{" "}
@@ -69,7 +67,7 @@ export default function WelcomeBanner({ user, onGiftClick, onInviteClick }) {
             </div>
           </div>
         )
-      )}
+      }
     </div>
   );
 }

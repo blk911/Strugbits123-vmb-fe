@@ -173,8 +173,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
 
   const toggleDay = (day) => {
     const current = watch("selectedDays") || [];
-    const updated = current.includes(day)
-      ? current.filter((d) => d !== day)
+    const updated =
+      current.includes(day) ?
+        current.filter((d) => d !== day)
       : [...current, day];
     setValue("selectedDays", updated, { shouldValidate: true });
   };
@@ -185,7 +186,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
     try {
       const fileName = `${folder}/${Date.now()}_${file.name.replace(
         /[^a-zA-Z0-9.-]/g,
-        "_"
+        "_",
       )}`;
       const { data } = await getUploadUrl({
         fileName,
@@ -306,7 +307,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
 
         toast.success(
           res?.message ||
-            "Application resubmitted successfully! Awaiting approval."
+            "Application resubmitted successfully! Awaiting approval.",
         );
         await logout().unwrap();
         dispatch(clearRole());
@@ -339,10 +340,10 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-black/30">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-black/80">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -353,14 +354,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-[#E8E8E8] p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-vmb-bg-soft p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-[#581838] font-bold text-[24px]">
+                  <h2 className="text-vmb-primary font-bold text-[24px]">
                     Profile Settings
                   </h2>
                   <IoClose
                     onClick={closeModal}
-                    className="text-[#581838] text-[28px] cursor-pointer"
+                    className="text-vmb-primary text-[28px] cursor-pointer"
                   />
                 </div>
 
@@ -369,12 +370,12 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
                   <div className="flex flex-col gap-5">
-                    <h3 className="text-[#581838] font-semibold text-[18px]">
+                    <h3 className="text-vmb-primary font-semibold text-[18px]">
                       Personal Information
                     </h3>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Full Name
                       </label>
                       <input
@@ -387,7 +388,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("fullName").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.fullName && (
                         <p className="text-red-500 text-xs mt-1">
@@ -397,7 +398,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Email
                       </label>
                       <input
@@ -412,7 +413,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("email").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.email && (
                         <p className="text-red-500 text-xs mt-1">
@@ -422,7 +423,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Phone
                       </label>
                       <input
@@ -435,7 +436,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("phone").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1 text-[14px]"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
                       />
                       {errors.phone && (
                         <p className="text-red-500 text-xs mt-1">
@@ -446,7 +447,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   </div>
 
                   <div className="flex flex-col gap-5">
-                    <h3 className="text-[#581838] font-semibold text-[18px]">
+                    <h3 className="text-vmb-primary font-semibold text-[18px]">
                       Salon Information
                     </h3>
 
@@ -455,13 +456,13 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         <img
                           src={previewLogo || defaultSalonImg}
                           alt="Salon logo"
-                          className="w-full h-full rounded-md object-cover border border-gray-300"
+                          className="w-full h-full rounded-md object-cover border border-vmb-primary/10"
                         />
                         <button
                           type="button"
                           onClick={() => logoRef.current.click()}
                           disabled={uploading}
-                          className={`absolute bottom-[-6px] right-[-6px] w-[32px] h-[32px] rounded-full bg-[#FF92A5] flex justify-center items-center shadow ${
+                          className={`absolute bottom-[-6px] right-[-6px] w-[32px] h-[32px] rounded-full bg-vmb-secondary flex justify-center items-center shadow ${
                             uploading ? "opacity-50" : ""
                           }`}
                         >
@@ -476,13 +477,13 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         />
                       </div>
                       <div>
-                        <p className="text-[#581838] font-medium">
+                        <p className="text-vmb-primary font-medium">
                           {watch("salonName") || "Salon Name"}
                         </p>
                         <button
                           type="button"
                           onClick={() => logoRef.current.click()}
-                          className="text-[#737373] text-sm cursor-pointer"
+                          className="text-vmb-text-muted text-sm cursor-pointer"
                         >
                           Upload Logo
                         </button>
@@ -490,7 +491,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Salon Name
                       </label>
                       <input
@@ -503,7 +504,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("salonName").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
                       />
                       {errors.salonName && (
                         <p className="text-red-500 text-xs mt-1">
@@ -513,7 +514,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Address
                       </label>
                       <input
@@ -526,7 +527,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("address").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
                       />
                       {errors.address && (
                         <p className="text-red-500 text-xs mt-1">
@@ -535,7 +536,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       )}
                     </div>
                     <div>
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-main text-[14px] font-medium">
                         Zip Code
                       </label>
                       <input
@@ -548,7 +549,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           }
                           register("zipcode").onChange(e);
                         }}
-                        className="w-full border border-[#E5E5E5] bg-white p-3 rounded-[8px] mt-1"
+                        className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
                       />
                       {errors.zipcode && (
                         <p className="text-red-500 text-xs mt-1">
@@ -575,11 +576,11 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           Start Time
                         </label>
                         <div className="relative">
-                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] z-10" />
+                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
                           <input
                             type="time"
                             {...register("startTime")}
-                            className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4
+                            className="w-full bg-white/50 border border-gray-300 rounded-md py-3 pl-10 pr-4
                             transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute
@@ -594,11 +595,11 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           End Time
                         </label>
                         <div className="relative">
-                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] z-10" />
+                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
                           <input
                             type="time"
                             {...register("endTime")}
-                            className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 
+                            className="w-full bg-white/50 border border-gray-300 rounded-md py-3 pl-10 pr-4 
                             transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute
@@ -617,15 +618,15 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div> */}
 
                     <div>
-                      <label className="block text-[#374151] text-[14px] font-semibold mb-1">
+                      <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
                         Working Days
                       </label>
                       <div className="relative" ref={wrapperRef}>
                         <div
                           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                          className="bg-white border border-gray-300 rounded-md py-3 px-4 flex justify-between cursor-pointer"
+                          className="bg-white/50 border border-vmb-primary/10 rounded-md py-3 px-4 flex justify-between cursor-pointer"
                         >
-                          <span className="text-[14px] text-gray-600">
+                          <span className="text-[14px] text-vmb-text-muted">
                             {/* {watch("selectedDays").length > 0
                               ? watch("selectedDays")
                                   .map((d) => d.slice(0, 3))
@@ -645,7 +646,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           <RiArrowDropDownLine className="text-[24px]" />
                         </div>
                         {isDropdownOpen && (
-                          <div className="absolute w-full  mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto custom-scrollbar p-3">
+                          <div className="absolute w-full  mt-1 bg-white/50 border border-vmb-primary/10 rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto custom-scrollbar p-3">
                             {days.map((day) => (
                               <CustomCheckbox
                                 key={day}
@@ -665,18 +666,18 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
                     <div className="flex flex-col sm:flex-row justify-between mb-2 gap-2">
                       <div>
-                        <label className="block text-[#374151] text-[16px] font-semibold">
+                        <label className="block text-vmb-text-main text-[16px] font-semibold">
                           View License Document
                         </label>
                         {watch("licenseDocument") && (
-                          <p className="text-sm text-[#581838] mt-1 break-all">
+                          <p className="text-sm text-vmb-primary mt-1 break-all">
                             Uploaded:{" "}
                             {decodeURIComponent(
                               watch("licenseDocument")
                                 .split("/")
                                 .pop()
                                 .split("?")[0]
-                                .replace(/^\d+_/, "")
+                                .replace(/^\d+_/, ""),
                             )}
                           </p>
                         )}
@@ -689,7 +690,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           window.open(watch("licenseDocument"), "_blank")
                         }
                         disabled={!watch("licenseDocument")}
-                        className="bg-[#FF92A54D] text-[#FF92A5] px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-[#FF92A580]"
+                        className="bg-vmb-secondary/30 text-vmb-secondary px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-vmb-secondary/50"
                       >
                         <FaFileAlt /> View
                       </button>
@@ -698,10 +699,10 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       <div>
                         <div className="flex flex-col sm:flex-row justify-between mb-2 gap-2">
                           <div>
-                            <label className="block text-[#374151] text-[16px] font-semibold">
+                            <label className="block text-vmb-text-main text-[16px] font-semibold">
                               Upload Licensed Document
                             </label>
-                            <span className="text-xs italic text-[#00000080]">
+                            <span className="text-xs italic text-vmb-text-muted">
                               (png, jpeg, pdf)
                             </span>
                           </div>
@@ -709,7 +710,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           <button
                             type="button"
                             onClick={() => docRef.current.click()}
-                            className="bg-[#FF92A54D] text-[#FF92A5] px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-[#FF92A580]"
+                            className="bg-vmb-secondary/30 text-vmb-secondary px-4 py-2 rounded-xl flex items-center gap-2 cursor-pointer hover:bg-vmb-secondary/50"
                           >
                             <FaFileAlt /> Upload
                           </button>
@@ -722,7 +723,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           onChange={handleLicenseUpload}
                         />
                         {watch("licenseDocument") && (
-                          <p className="text-sm text-[#581838] mt-1">
+                          <p className="text-sm text-vmb-primary mt-1">
                             Selected: {watch("licenseDocName")}
                           </p>
                         )}
@@ -730,7 +731,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     )}
 
                     <div>
-                      <label className="block text-[#404040] font-medium mb-2">
+                      <label className="block text-vmb-text-main font-medium mb-2">
                         Description
                       </label>
                       <textarea
@@ -744,7 +745,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("description").onChange(e);
                         }}
                         rows={4}
-                        className="w-full border border-[#E5E5E5] bg-white rounded-lg p-3"
+                        className="w-full border border-vmb-primary/10 bg-white/50 rounded-lg p-3"
                       />
                       {errors.description && (
                         <p className="text-red-500 text-xs mt-1">
@@ -754,14 +755,14 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="block text-[#374151] font-semibold mb-2">
+                      <label className="block text-vmb-text-main font-semibold mb-2">
                         Salon Photos
                       </label>
                       <div className="flex  items-center gap-3">
                         <button
                           type="button"
                           onClick={() => photosRef.current.click()}
-                          className="flex-shrink-0 w-[94px] h-[90px] border border-[#C0C0C0] bg-white rounded-md flex flex-col items-center justify-center hover:bg-[#FFF4F6] cursor-pointer"
+                          className="flex-shrink-0 w-[94px] h-[90px] border border-vmb-primary/10 bg-white rounded-md flex flex-col items-center justify-center hover:bg-vmb-bg-soft cursor-pointer"
                         >
                           <img
                             src={uploadIcon}
@@ -795,7 +796,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                                 <button
                                   type="button"
                                   onClick={() => removeSalonPhoto(i)}
-                                  className="absolute top-0 right-0 bg-[#FF92A5] text-white w-5 h-5 rounded-full text-xs cursor-pointer"
+                                  className="absolute top-0 right-0 bg-vmb-secondary text-white w-5 h-5 rounded-full text-xs cursor-pointer"
                                 >
                                   ×
                                 </button>
@@ -805,7 +806,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                                       .split("/")
                                       .pop()
                                       .split("?")[0]
-                                      .replace(/^\d+_/, "")
+                                      .replace(/^\d+_/, ""),
                                   )}
                                 </p>
                               </div>
@@ -828,11 +829,11 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                   disabled={isSubmitting}
                   onClick={handleSubmit(onSubmit)}
                 >
-                  {isSubmitting
-                    ? "Submitting..."
-                    : isHold
-                    ? "Resubmit Application"
-                    : "Update Profile"}
+                  {isSubmitting ?
+                    "Submitting..."
+                  : isHold ?
+                    "Resubmit Application"
+                  : "Update Profile"}
                 </AppButton>
               </Dialog.Panel>
             </Transition.Child>

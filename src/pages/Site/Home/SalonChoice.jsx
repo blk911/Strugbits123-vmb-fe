@@ -33,11 +33,11 @@ function FeatureBlock({
       </div>
 
       <div className="w-full lg:w-[556px] flex flex-col gap-6">
-        <span className="font-poppins font-medium text-[16px] tracking-[5px] text-[#5C8374] uppercase">
+        <span className="font-poppins font-medium text-[16px] tracking-[5px] text-vmb-secondary uppercase">
           {label}
         </span>
 
-        <h2 className="font-poppins font-normal text-[26px] sm:text-[30px] text-[#0F3D3E] leading-snug">
+        <h2 className="font-poppins font-normal text-[26px] sm:text-[30px] text-vmb-primary leading-snug">
           {title}
         </h2>
 
@@ -45,10 +45,10 @@ function FeatureBlock({
           <div className="flex flex-col gap-5">
             {descriptionBlock.map((item, index) => (
               <div key={index}>
-                <h4 className="font-poppins font-semibold text-[14px] text-[#0F3D3E]">
+                <h4 className="font-poppins font-semibold text-[14px] text-vmb-primary">
                   {item.heading}
                 </h4>
-                <p className="font-poppins font-normal text-[14px] text-[#5C8374] leading-relaxed">
+                <p className="font-poppins font-normal text-[14px] text-vmb-secondary leading-relaxed">
                   {item.text}
                 </p>
               </div>
@@ -58,14 +58,14 @@ function FeatureBlock({
 
         {bulletPoints && (
           <div className="flex flex-col gap-4">
-            <p className="font-lato font-bold text-[14px] text-[#0F3D3E]">
+            <p className="font-lato font-bold text-[14px] text-vmb-primary">
               The salons you love. The friends you trust. All connected.
             </p>
             <ul className="list-disc pl-5 space-y-2">
               {bulletPoints.map((point, i) => (
                 <li
                   key={i}
-                  className="font-poppins font-normal text-[14px] text-[#5C8374]"
+                  className="font-poppins font-normal text-[14px] text-vmb-secondary"
                 >
                   {point}
                 </li>
