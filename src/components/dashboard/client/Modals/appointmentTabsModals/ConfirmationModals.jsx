@@ -1,9 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect } from "react";
-import holdImg from "../../../../../assets/holdImg.png";
+import holdImg from "../../../../../assets/hold.gif";
 import confirmGif from "../../../../../assets/successGif.gif";
 import declineGif from "../../../../../assets/declineGif.gif";
-import rescheduleSentImg from "../../../../../assets/rescheduleSent.png";
+import rescheduleSentImg from "../../../../../assets/send.gif";
 
 export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
   useEffect(() => {
@@ -17,11 +17,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
   }, [open]);
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-50 font-poppins"
-        onClose={onClose}
-      >
+      <Dialog as="div" className="relative z-50 font-poppins" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-250"

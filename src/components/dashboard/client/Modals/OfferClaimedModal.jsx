@@ -31,7 +31,7 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
     { id: salonId },
     {
       skip: !isOpen || !salonId,
-    }
+    },
   );
   const handleViewSalon = () => {
     if (!salonId) return;
@@ -81,9 +81,7 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel
-                className="relative w-full max-w-[480px] rounded-[20px] bg-vmb-bg-soft p-[30px] shadow-xl flex flex-col gap-6"
-              >
+              <Dialog.Panel className="relative w-full max-w-[480px] rounded-[20px] bg-vmb-bg-soft p-[30px] shadow-xl flex flex-col gap-6">
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-6 right-6 text-vmb-primary text-3xl cursor-pointer hover:opacity-80"
@@ -92,7 +90,7 @@ export default function OfferClaimedModal({ isOpen, closeModal, data }) {
                 <div className="text-center mt-3 flex flex-col items-center">
                   <img
                     src={claimGif}
-                    className="w-[138px] h-[138px] "
+                    className="w-[138px] h-[138px]  "
                     alt="Offer Claimed"
                   />
 

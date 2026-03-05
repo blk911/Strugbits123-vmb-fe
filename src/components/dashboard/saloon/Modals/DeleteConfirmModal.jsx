@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import deleteImg from "../../../../assets/delete-icon.png";
+import deleteImg from "../../../../assets/trash.gif";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useDeleteServiceMutation } from "../../../../store/api";

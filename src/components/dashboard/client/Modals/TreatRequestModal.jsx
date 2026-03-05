@@ -59,7 +59,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
     { id: salonId },
     {
       skip: !isOpen || !salonId,
-    }
+    },
   );
   const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
@@ -91,8 +91,9 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
 
   if (!isOpen && !showSuccessModal) return null;
 
-  const totalPrice = Array.isArray(info.services)
-    ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
+  const totalPrice =
+    Array.isArray(info.services) ?
+      info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
   const vmbFee = totalPrice * 0.1;
   // const handleAccept = async () => {
@@ -122,7 +123,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
 
     const serviceTotal = info.services.reduce(
       (acc, s) => acc + (s.price || 0),
-      0
+      0,
     );
     const vmbFee = serviceTotal * 0.1;
     const totalAmount = serviceTotal + vmbFee;
@@ -226,14 +227,15 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       className="w-[77px] h-[76px] object-cover "
                     />
                     <h2 className="text-vmb-primary font-bold text-[22px] mt-3 text-center">
-                      {gift.status === "accepted"
-                        ? "Treat Confirmed!"
-                        : "You’ve a Treat Request!"}
+                      {gift.status === "accepted" ?
+                        "Treat Confirmed!"
+                      : "You’ve a Treat Request!"}
                     </h2>
                     <p className="text-vmb-text-muted/50 text-[12px] text-center mt-2">
-                      {gift.status === "accepted"
-                        ? "Your payment was successful. The salon has been notified and the treat is confirmed."
-                        : "A friend wants you to treat them! Check the details below and complete the payment to confirm."}
+                      {gift.status === "accepted" ?
+                        "Your payment was successful. The salon has been notified and the treat is confirmed."
+                      : "A friend wants you to treat them! Check the details below and complete the payment to confirm."
+                      }
                     </p>
                   </div>
 

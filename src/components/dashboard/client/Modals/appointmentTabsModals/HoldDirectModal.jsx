@@ -5,7 +5,7 @@ import AppButton from "../../../../common/site/AppButton";
 import AppointmentDetailsSection from "./AppointmentDetailsSection";
 
 import RescheduleDirectModal from "./RescheduleDirectModal";
-import holdImg from "../../../../../assets/holdImg.png";
+import holdImg from "../../../../../assets/hold.gif";
 import { useDashboardModal } from "../../../../../pages/ModalProvider";
 import {
   useConfirmAppointmentMutation,

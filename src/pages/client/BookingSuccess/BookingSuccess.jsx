@@ -97,7 +97,7 @@ export default function BookingSuccess() {
             <img
               src={successGif}
               alt="Success"
-              className="w-32 h-32 mx-auto mb-6"
+              className="w-32 h-32 mx-auto "
             />
             <h1 className="text-[24px] font-bold text-vmb-primary mb-3">
               {isGift ? "Treat Paid Successfully!" : "Appointment Booked"}

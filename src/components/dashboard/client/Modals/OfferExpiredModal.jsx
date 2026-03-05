@@ -85,7 +85,7 @@ export default function OfferExpiredModal({ isOpen, closeModal, data }) {
                 <div className="text-center mt-3 flex flex-col items-center">
                   <img
                     src={declineGif}
-                    className="w-[212px] h-[212px]"
+                    className="w-[140px] h-[140px]"
                     alt="Offer Expired"
                   />
 
