@@ -1,101 +1,186 @@
-import React, { useState } from "react";
-import logo from "../../../assets/logo.png";
-import Button from "../../common/site/Button";
-import { useNavigate } from "react-router-dom";
+// import React from "react";
+// import { useNavigate, useLocation } from "react-router-dom";
+// import PrimaryButton from "../../common/site/PrimaryButton";
 
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+// const Header = () => {
+//   const navigate = useNavigate();
+//   const { pathname } = useLocation();
+
+//   const selected = pathname === "/salon" ? "salon" : "customer";
+
+//   return (
+//     <div
+//       className="
+//         fixed top-0 left-0 w-full z-50
+//         h-[60px] sm:h-[70px] md:h-[79px]
+//         bg-white/80 backdrop-blur-xl
+//         border-b border-black/10
+//         px-2 sm:px-6 md:px-12
+//         flex items-center justify-between
+//       "
+//     >
+//       {/* Logo */}
+//       <img
+//         src="/logo.png"
+//         alt="Logo"
+//         className="
+//           w-[60px] sm:w-[75px] md:w-[84px]
+//           h-auto object-contain
+//           cursor-pointer
+//         "
+//         onClick={() => navigate("/")}
+//       />
+
+//       {/* Buttons */}
+//       <div className="flex items-center gap-2 sm:gap-4">
+//         <PrimaryButton
+//           text="For Salon"
+//           variant="header"
+//           isActive={selected === "salon"}
+//           onClick={() => navigate("/salon")}
+//           className="min-w-[110px] sm:min-w-[140px]"
+//         />
+
+//         <PrimaryButton
+//           text="For Customer"
+//           variant="header"
+//           isActive={selected === "customer"}
+//           onClick={() => navigate("/")}
+//           className="min-w-[110px] sm:min-w-[140px]"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Header;
+
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
+import PrimaryButton from "../../common/site/PrimaryButton";
+
+const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const selected = pathname === "/salon" ? "salon" : "customer";
+
+  const handleNav = (path) => {
+    navigate(path);
+    setMenuOpen(false);
+  };
+
   return (
-    <nav className="w-full bg-white py-[20px] px-[50px]">
-      <div className="flex gap-2 flex-col sm:flex-row justify-between items-center">
-        <img
-          src={logo}
-          alt="Logo"
-          className="h-[69px] w-[108px] cursor-pointer"
-          onClick={() => navigate("/")}
+    <div
+      className="
+        fixed top-0 left-0 w-full z-50
+        h-[60px] sm:h-[70px] md:h-[79px]
+        bg-white/80 backdrop-blur-xl
+        border-b border-black/10
+        px-3 sm:px-6 md:px-12
+        flex items-center justify-between
+      "
+    >
+      {/* Logo */}
+      <img
+        src="/logo.png"
+        alt="Logo"
+        className="
+          w-[60px] sm:w-[75px] md:w-[84px]
+          h-auto object-contain
+          cursor-pointer
+        "
+        onClick={() => handleNav("/")}
+      />
+
+      {/* Desktop Buttons */}
+      <div className="hidden sm:flex items-center gap-3 md:gap-4">
+        <PrimaryButton
+          text="For Salon"
+          variant="header"
+          isActive={selected === "salon"}
+          onClick={() => handleNav("/salon")}
+          className="min-w-[140px]"
         />
-        {/* <div className="lg:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="flex flex-col justify-center items-center w-12 h-12 rounded focus:outline-none"
-            aria-label="Open menu"
-          >
-            <span className="block w-8 h-1 bg-[#7a2c3a] mb-2 rounded"></span>
-            <span className="block w-8 h-1 bg-[#7a2c3a] mb-2 rounded"></span>
-            <span className="block w-8 h-1 bg-[#7a2c3a] rounded"></span>
-          </button>
-        </div> */}
-        <div>
-          <ul className="flex items-center gap-[20px] text-[#4B5563]">
-            {/* <li>
-              <a href="" className="text-[#4B5563]">
-                Salon Owner
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                For Customers
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                Contact
-              </a>
-            </li> */}
-            <li>
-              <Button
-                text={"Register Your Salon Today"}
-                navigateTo={"register"}
-                type={"salon"}
-              />
-            </li>
-          </ul>
-        </div>
+
+        <PrimaryButton
+          text="For Customer"
+          variant="header"
+          isActive={selected === "customer"}
+          onClick={() => handleNav("/")}
+          className="min-w-[150px]"
+        />
       </div>
+
+      {/* Mobile Hamburger */}
+      <div className="sm:hidden">
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="
+            w-[38px] h-[38px]
+            flex items-center justify-center
+            rounded-lg
+            bg-vmb-primary
+            text-white
+          "
+        >
+          {menuOpen ?
+            <FaTimes size={18} />
+          : <FaBars size={18} />}
+        </button>
+      </div>
+
+      {/* Mobile Dropdown */}
       {menuOpen && (
-        <div className="fixed inset-0 bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center">
-          <ul className="flex flex-col gap-8 text-2xl text-[#4B5563]">
-            {/* <li>
-              <a href="" className="text-[#4B5563]">
-                Salon Owner
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                For Customers
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="" className="text-[#4B5563]">
-                Contact
-              </a>
-            </li> */}
-            <li>
-              <Button text={"Register Your Salon Today"} />
-            </li>
-          </ul>
-          <button
-            onClick={() => setMenuOpen(false)}
-            className="absolute top-6 right-6 text-4xl text-[#7a2c3a] font-bold"
-            aria-label="Close menu"
-          >
-            &times;
-          </button>
+        <div
+          className="
+            absolute top-full left-0 w-full
+            bg-white/95 backdrop-blur-xl
+            border-b border-black/10
+            shadow-lg
+            sm:hidden
+            animate-fadeIn
+          "
+        >
+          <div className="flex flex-col p-3 gap-2">
+            <button
+              onClick={() => handleNav("/salon")}
+              className={`
+                w-full text-left px-4 py-3 rounded-lg
+                font-poppins text-[14px]
+                flex items-center justify-between
+                ${
+                  selected === "salon" ?
+                    "bg-vmb-primary text-white"
+                  : "bg-transparent text-vmb-primary"
+                }
+              `}
+            >
+              <span>For Salon</span>
+            </button>
+
+            <button
+              onClick={() => handleNav("/")}
+              className={`
+                w-full text-left px-4 py-3 rounded-lg
+                font-poppins text-[14px]
+                flex items-center justify-between
+                ${
+                  selected === "customer" ?
+                    "bg-vmb-primary text-white"
+                  : "bg-transparent text-vmb-primary"
+                }
+              `}
+            >
+              <span>For Customer</span>
+            </button>
+          </div>
         </div>
       )}
-    </nav>
+    </div>
   );
-}
+};
 
 export default Header;

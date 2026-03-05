@@ -91,7 +91,7 @@ export default function AddServiceModal({
     try {
       const fileName = `services/${Date.now()}_${file.name.replace(
         /[^a-zA-Z0-9.-]/g,
-        "_"
+        "_",
       )}`;
       const { data } = await getUploadUrl({
         fileName,
@@ -147,10 +147,10 @@ export default function AddServiceModal({
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 bg-black/30" />
+        <div className="fixed inset-0 bg-black/80" />
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -160,14 +160,14 @@ export default function AddServiceModal({
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              <Dialog.Panel className="w-full max-w-[480px] rounded-[12px] bg-[#e8e8e8] p-[30px] shadow-xl">
+              <Dialog.Panel className="w-full max-w-[480px] rounded-[12px] bg-vmb-bg-soft p-[30px] shadow-xl">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-[24px] font-bold text-[#581838]">
+                  <h2 className="text-[24px] font-bold text-vmb-primary">
                     {initialData?.salonId ? "Edit Service" : "Add Service"}
                   </h2>
                   <IoClose
                     onClick={closeModal}
-                    className="text-[#581838] text-3xl cursor-pointer hover:opacity-70"
+                    className="text-vmb-primary text-3xl cursor-pointer hover:opacity-70"
                   />
                 </div>
 
@@ -176,9 +176,10 @@ export default function AddServiceModal({
                     name="serviceImage"
                     control={control}
                     rules={{
-                      required: initialData?.serviceImage
-                        ? false
-                        : "Service image is required",
+                      required:
+                        initialData?.serviceImage ? false : (
+                          "Service image is required"
+                        ),
                     }}
                     render={({ field }) => (
                       <div className="flex items-center gap-5">
@@ -186,18 +187,18 @@ export default function AddServiceModal({
                           <img
                             src={
                               watchedImage?.[0]?.url ||
-                              (watchedImage?.[0]
-                                ? URL.createObjectURL(watchedImage[0])
-                                : initialData?.serviceImage || defaultImg)
+                              (watchedImage?.[0] ?
+                                URL.createObjectURL(watchedImage[0])
+                              : initialData?.serviceImage || defaultImg)
                             }
                             alt="Service"
-                            className="w-24 h-24 rounded-lg object-cover border-2 border-dashed border-gray-300"
+                            className="w-24 h-24 rounded-lg object-cover border-2 border-dashed border-vmb-primary/10"
                           />
                           <button
                             type="button"
                             onClick={() => imgRef.current?.click()}
                             disabled={uploading}
-                            className={`absolute bottom-0 right-0 cursor-pointer w-9 h-9 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg ${
+                            className={`absolute bottom-0 right-0 cursor-pointer w-9 h-9 bg-vmb-secondary rounded-full flex items-center justify-center shadow-lg ${
                               uploading ? "opacity-50" : ""
                             }`}
                           >
@@ -212,10 +213,10 @@ export default function AddServiceModal({
                           />
                         </div>
                         <div>
-                          <p className="font-medium text-[#581838]">
+                          <p className="font-medium text-vmb-primary">
                             Service Picture
                           </p>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-vmb-text-muted">
                             {watchedImage?.[0]?.name ||
                               (watchedImage?.[0] ? "Image selected" : "Upload")}
                           </p>
@@ -229,7 +230,7 @@ export default function AddServiceModal({
                     </p>
                   )}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-vmb-text-main">
                       Service Name *
                     </label>
                     <input
@@ -251,7 +252,7 @@ export default function AddServiceModal({
 
                         register("serviceName").onChange(e);
                       }}
-                      className="mt-1 w-full px-4 py-3 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                      className="mt-1 w-full px-4 py-3 bg-white border border-vmb-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
                       placeholder="e.g. Classic Haircut"
                     />
                     {errors.serviceName && (
@@ -263,7 +264,7 @@ export default function AddServiceModal({
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-vmb-text-main">
                         Price ($)*
                       </label>
                       <input
@@ -276,7 +277,7 @@ export default function AddServiceModal({
                             message: "Price must be greater than 0",
                           },
                         })}
-                        className="mt-1 w-full bg-white px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                        className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
                         placeholder="50.00"
                       />
                       {errors.servicePrice && (
@@ -287,7 +288,7 @@ export default function AddServiceModal({
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-vmb-text-main">
                         Duration *
                       </label>
                       <Controller
@@ -297,7 +298,7 @@ export default function AddServiceModal({
                         render={({ field }) => (
                           <select
                             {...field}
-                            className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none"
+                            className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
                           >
                             <option value="">Select duration</option>
                             {durations.map((d) => (
@@ -324,14 +325,14 @@ export default function AddServiceModal({
                         <label className="flex items-center gap-3 ">
                           <div
                             onClick={() => setValue("isDefault", !field.value)}
-                            className="w-4 h-4 rounded border-2 border-[#FF92A5] flex items-center justify-center"
+                            className="w-4 h-4 rounded border-2 border-vmb-secondary flex items-center justify-center"
                           >
                             {field.value && (
-                              <FaCheck className="text-[#FF92A5] text-sm cursor-pointer" />
+                              <FaCheck className="text-vmb-secondary text-sm cursor-pointer" />
                             )}
                           </div>
                           <span
-                            className="text-gray-700 cursor-pointer"
+                            className="text-vmb-text-main cursor-pointer"
                             onClick={() => setValue("isDefault", !field.value)}
                           >
                             Set as default service
@@ -339,7 +340,7 @@ export default function AddServiceModal({
                         </label>
                       )}
                     />
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-vmb-text-main">
                       Service Discount (%)
                     </label>
                     <input
@@ -347,13 +348,13 @@ export default function AddServiceModal({
                       min="0"
                       max="100"
                       {...register("serviceDiscount")}
-                      className="mt-1 w-full bg-[#9CA3AF4D] px-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg"
+                      className="mt-1 w-full bg-vmb-bg-soft px-4 py-3 border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none rounded-lg"
                       placeholder="10"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-vmb-text-main">
                       Description
                     </label>
                     <textarea
@@ -369,7 +370,7 @@ export default function AddServiceModal({
 
                         register("description").onChange(e);
                       }}
-                      className="mt-1 bg-white w-full px-4 py-3 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-none rounded-lg"
+                      className="mt-1 bg-white w-full px-4 py-3 border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none rounded-lg"
                       placeholder="Describe your service..."
                     />
                   </div>
@@ -380,11 +381,11 @@ export default function AddServiceModal({
                     className="w-full py-4 text-lg font-medium"
                     disabled={isLoading}
                   >
-                    {isLoading
-                      ? "Saving Service..."
-                      : initialData?.salonId
-                      ? "Update Service"
-                      : "Add Service"}
+                    {isLoading ?
+                      "Saving Service..."
+                    : initialData?.salonId ?
+                      "Update Service"
+                    : "Add Service"}
                   </AppButton>
                 </form>
               </Dialog.Panel>

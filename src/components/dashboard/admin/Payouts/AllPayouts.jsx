@@ -61,7 +61,7 @@ export default function AllPayouts({
     { id: selectedSalonId },
     {
       skip: !selectedSalonId,
-    }
+    },
   );
   useEffect(() => {
     if (salonSuccess && salonResponse?.data && selectedSalonId) {
@@ -78,9 +78,9 @@ export default function AllPayouts({
   const totalPages = payoutsData?.data?.pages || 1;
   const transformedData = payouts.map((payout) => ({
     id: `${payout.salon._id}-${crypto.randomUUID()}-${
-      payout.payoutDate
-        ? new Date(payout.payoutDate).toISOString()
-        : "pending" + crypto.randomUUID()
+      payout.payoutDate ?
+        new Date(payout.payoutDate).toISOString()
+      : "pending" + crypto.randomUUID()
     }`,
     salonId: payout.salon._id.toString(),
     salonImage: payout.salon?.profilePic || SalonImage,
@@ -90,8 +90,9 @@ export default function AllPayouts({
     vmbFee: payout.vmbFee,
     totalCharged: payout.totalCharged,
     payoutStatus: payout.payoutStatus,
-    payoutDate: payout.payoutDate
-      ? new Date(payout.payoutDate).toLocaleDateString("en-GB")
+    payoutDate:
+      payout.payoutDate ?
+        new Date(payout.payoutDate).toLocaleDateString("en-GB")
       : "N/A",
   }));
 
@@ -147,7 +148,7 @@ export default function AllPayouts({
       key: "totalCharged",
       header: "Total Charged",
       render: (row) => (
-        <span className="font-bold text-lg text-[#FF92A5] ">
+        <span className="font-bold text-lg text-vmb-secondary ">
           $
           {row.totalCharged.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -164,9 +165,9 @@ export default function AllPayouts({
         return (
           <span
             className={`inline-block px-3 py-1.5 rounded-md text-xs font-medium ${
-              isPaid
-                ? "bg-green-100 text-green-700"
-                : "bg-orange-100 text-orange-700"
+              isPaid ?
+                "bg-green-100 text-green-700"
+              : "bg-orange-100 text-orange-700"
             }`}
           >
             {isPaid ? "Paid" : "Pending"}
@@ -188,16 +189,16 @@ export default function AllPayouts({
             }}
             disabled={!isPending || processingId === row.salonId}
             className={`px-4 py-2 rounded-lg text-[10px] sm:text-sm font-medium transition ${
-              isPending
-                ? "bg-[#FF92A5] hover:bg-[#FF92A5]/60 text-white cursor-pointer"
-                : "bg-gray-300 text-gray-600 cursor-not-allowed"
+              isPending ?
+                "bg-vmb-secondary hover:bg-vmb-secondary/60 text-white cursor-pointer"
+              : "bg-gray-300 text-gray-600 cursor-not-allowed"
             } ${processingId === row.salonId ? "opacity-70" : ""}`}
           >
-            {processingId === row.salonId
-              ? "Processing..."
-              : isPending
-              ? "Mark as Paid"
-              : "Paid"}
+            {processingId === row.salonId ?
+              "Processing..."
+            : isPending ?
+              "Mark as Paid"
+            : "Paid"}
           </button>
         );
       },
@@ -233,7 +234,7 @@ export default function AllPayouts({
   };
 
   return (
-    <div className="w-full flex flex-col gap-y-8 py-6 bg-[#EFEFEF]">
+    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
         <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-gray-200">
           {["All", "Pending", "Paid"].map((tab) => (
@@ -244,9 +245,9 @@ export default function AllPayouts({
                 setPage(1);
               }}
               className={`pb-3 cursor-pointer text-sm sm:text-lg font-semibold transition-colors border-b-2 ${
-                activeTab === tab
-                  ? "text-[#FF92A5] border-[#FF92A5]"
-                  : "text-gray-500 border-transparent hover:text-gray-700"
+                activeTab === tab ?
+                  "text-vmb-secondary border-vmb-secondary"
+                : "text-gray-500 border-transparent hover:text-gray-700"
               }`}
             >
               {tab}
@@ -255,16 +256,15 @@ export default function AllPayouts({
         </div>
 
         <div className="p-4 md:p-6">
-          {isLoading ? (
+          {isLoading ?
             <div className="flex items-center justify-center py-12 text-gray-500">
               <LoadingIndicator />
             </div>
-          ) : payouts.length === 0 ? (
+          : payouts.length === 0 ?
             <div className="text-center py-12 text-gray-500 text-sm">
               No payouts found
             </div>
-          ) : (
-            <>
+          : <>
               <AdvancedTable
                 data={transformedData}
                 columns={columns}
@@ -282,7 +282,7 @@ export default function AllPayouts({
                 </div>
               )}
             </>
-          )}
+          }
         </div>
       </div>
     </div>

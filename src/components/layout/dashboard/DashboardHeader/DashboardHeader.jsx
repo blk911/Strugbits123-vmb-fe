@@ -5,10 +5,10 @@ import UserMenu from "./UserMenu";
 
 function DashboardHeader({ toggleSidebar }) {
   return (
-    <header className="h-[70px] w-full bg-[#FFFFFF99] backdrop-blur-md shadow-sm sticky top-0 z-50 flex items-center justify-between px-6">
+    <header className="h-[70px] w-full bg-white/60 backdrop-blur-md shadow-sm sticky top-0 z-50 flex items-center justify-between px-6">
       <button
         onClick={toggleSidebar}
-        className="text-2xl text-gray-700 hover:text-gray-900 focus:outline-none transition-colors  cursor-pointer"
+        className="text-2xl text-vmb-primary hover:text-vmb-secondary focus:outline-none transition-colors  cursor-pointer"
         aria-label="Toggle sidebar"
       >
         <HiMenuAlt2 />

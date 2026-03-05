@@ -244,7 +244,7 @@ function DashboardLayout() {
         <aside
           className={`
             fixed inset-y-0 left-0 z-40
-            bg-white/70 backdrop-blur-md
+            bg-white/50 backdrop-blur-md
             flex flex-col
             transition-transform duration-300 ease-in-out
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
@@ -270,7 +270,7 @@ function DashboardLayout() {
           <DashboardHeader toggleSidebar={toggleSidebar} />
 
           <main
-            className="flex-1 overflow-y-auto bg-[#EFEFEF] no-scrollbar"
+            className="flex-1 overflow-y-auto bg-vmb-bg-soft no-scrollbar"
             style={{
               scrollbarWidth: "none",
             }}

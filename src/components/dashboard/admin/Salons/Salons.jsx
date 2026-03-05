@@ -126,43 +126,28 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   ]);
 
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Approved"
-      ? approvedData
-      : activeTab === "Hold"
-      ? holdData
-      : activeTab === "Deactivated"
-      ? deactivatedData
-      : rejectedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Approved" ? approvedData
+    : activeTab === "Hold" ? holdData
+    : activeTab === "Deactivated" ? deactivatedData
+    : rejectedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Approved"
-      ? loadingApproved
-      : activeTab === "Hold"
-      ? loadingHold
-      : activeTab === "Deactivated"
-      ? loadingDeactivated
-      : loadingRejected;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Approved" ? loadingApproved
+    : activeTab === "Hold" ? loadingHold
+    : activeTab === "Deactivated" ? loadingDeactivated
+    : loadingRejected;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Approved"
-      ? fetchingApproved
-      : activeTab === "Hold"
-      ? fetchingHold
-      : activeTab === "Deactivated"
-      ? fetchingDeactivated
-      : fetchingRejected;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Approved" ? fetchingApproved
+    : activeTab === "Hold" ? fetchingHold
+    : activeTab === "Deactivated" ? fetchingDeactivated
+    : fetchingRejected;
 
   const salons = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -175,11 +160,13 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     email: salon.email || "N/A",
     phone: salon.phoneNumber || "N/A",
     ownerPhone: salon.ownerPhone || "N/A",
-    submittedDate: salon.createdAt
-      ? new Date(salon.createdAt).toLocaleDateString("en-GB")
+    submittedDate:
+      salon.createdAt ?
+        new Date(salon.createdAt).toLocaleDateString("en-GB")
       : "N/A",
-    status: salon.status
-      ? salon.status.charAt(0).toUpperCase() + salon.status.slice(1)
+    status:
+      salon.status ?
+        salon.status.charAt(0).toUpperCase() + salon.status.slice(1)
       : "Pending",
     address: salon.address || "N/A",
     timing: `${salon.startTime || "N/A"} - ${salon.endTime || "N/A"}`,
@@ -197,9 +184,11 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
           <img
             src={row.image}
             alt={row.salonName}
-            className="w-12 h-12 rounded-xl object-cover border border-gray-200 shadow-sm"
+            className="w-12 h-12 rounded-xl object-cover border border-vmb-primary/10 shadow-sm"
           />
-          <span className="font-medium text-gray-800">{row.salonName}</span>
+          <span className="font-medium text-vmb-text-main">
+            {row.salonName}
+          </span>
         </div>
       ),
     },
@@ -211,16 +200,16 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       header: "Status",
       render: (row) => {
         const styles = {
-          Approved: "bg-[#4FCF0033] text-[#4FCF00]",
-          Pending: "bg-[#FF950033] text-[#FF9500]",
-          Hold: "bg-[#4B556333] text-[#4B5563]",
-          Deactivated: "bg-[#4376C033] text-[#4376C0]",
-          Rejected: "bg-[#DC262633] text-[#DC2626]",
+          Approved: "bg-vmb-success/20 text-vmb-success",
+          Pending: "bg-vmb-pending/20 text-vmb-pending",
+          Hold: "bg-vmb-muted/20 text-vmb-muted",
+          Deactivated: "bg-vmb-info/20 text-vmb-info",
+          Rejected: "bg-vmb-error/20 text-vmb-error",
         };
         return (
           <span
             className={`inline-block px-2 py-1.5 rounded-md text-[10px] font-medium ${
-              styles[row.status] || "bg-gray-200 text-gray-600"
+              styles[row.status] || "bg-vmb-bg-soft text-vmb-text-muted"
             }`}
           >
             {row.status}
@@ -239,12 +228,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
               onActionClick?.("view", row);
             }}
             disabled={processingId === row.id}
-            className={`w-10 h-10 flex items-center justify-center rounded-lg border border-[#9CA3AFCC] hover:bg-gray-50 transition cursor-pointer ${
+            className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
               processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
             }`}
             title="View"
           >
-            <FiEye className="w-4 h-4 text-[#9CA3AFCC]" />
+            <FiEye className="w-4 h-4 text-vmb-text-muted" />
           </button>
 
           {row.status === "Pending" && (
@@ -255,12 +244,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                   onActionClick?.("approve", row);
                 }}
                 disabled={processingId === row.id}
-                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-[#9CA3AFCC] hover:bg-gray-50 transition cursor-pointer ${
+                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
                   processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 title="Approve"
               >
-                <FiCheck className="w-4 text-[#9CA3AFCC]" />
+                <FiCheck className="w-4 text-vmb-text-muted" />
               </button>
               <button
                 onClick={(e) => {
@@ -268,12 +257,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                   onActionClick?.("reject", row);
                 }}
                 disabled={processingId === row.id}
-                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-[#9CA3AFCC] hover:bg-gray-50 transition cursor-pointer ${
+                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
                   processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 title="Reject"
               >
-                <FiX className="w-4 h-4 text-[#9CA3AFCC]" />
+                <FiX className="w-4 h-4 text-vmb-text-muted" />
               </button>
             </>
           )}
@@ -285,12 +274,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                 onActionClick?.("reactivate", row);
               }}
               disabled={processingId === row.id}
-              className={`w-10 h-10 flex items-center justify-center rounded-lg border border-[#9CA3AFCC] hover:bg-gray-50 transition cursor-pointer ${
+              className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
                 processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
               }`}
               title="Reactivate"
             >
-              <FiCheck className="w-4 h-4 text-[#9CA3AFCC]" />
+              <FiCheck className="w-4 h-4 text-vmb-text-muted" />
             </button>
           )}
         </div>
@@ -361,22 +350,17 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Approved"
-      ? approvedPage
-      : activeTab === "Hold"
-      ? holdPage
-      : activeTab === "Deactivated"
-      ? deactivatedPage
-      : rejectedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Approved" ? approvedPage
+    : activeTab === "Hold" ? holdPage
+    : activeTab === "Deactivated" ? deactivatedPage
+    : rejectedPage;
 
   return (
-    <div className="w-full flex flex-col gap-y-8 py-6 bg-[#EFEFEF]">
+    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
-        <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-gray-200">
+        <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-vmb-primary/10">
           {[
             "All",
             "Pending",
@@ -389,9 +373,9 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`pb-3 cursor-pointer text-sm sm:text-lg font-semibold transition-colors border-b-2 ${
-                activeTab === tab
-                  ? "text-[#FF92A5] border-[#FF92A5]"
-                  : "text-gray-500 border-transparent hover:text-gray-700"
+                activeTab === tab ?
+                  "text-vmb-secondary border-vmb-secondary"
+                : "text-vmb-text-muted/50 border-transparent hover:text-vmb-text-main"
               }`}
             >
               {tab}
@@ -400,16 +384,15 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
         </div>
 
         <div className="p-4 md:p-6">
-          {isLoading ? (
-            <div className="text-center py-12 text-gray-500">
+          {isLoading ?
+            <div className="text-center py-12 text-vmb-text-muted">
               Loading salons...
             </div>
-          ) : salons.length === 0 ? (
-            <div className="text-center py-12 text-gray-500 text-sm">
+          : salons.length === 0 ?
+            <div className="text-center py-12 text-vmb-text-muted text-sm">
               No salons found in this category
             </div>
-          ) : (
-            <>
+          : <>
               <AdvancedTable
                 data={transformedData}
                 columns={columns}
@@ -418,7 +401,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
               />
 
               {totalPages > 1 && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="mt-6 pt-6 border-t border-vmb-primary/10">
                   <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
@@ -428,7 +411,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                 </div>
               )}
             </>
-          )}
+          }
         </div>
       </div>
     </div>

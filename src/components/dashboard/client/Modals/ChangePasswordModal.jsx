@@ -58,7 +58,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
 
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-[#404040] text-[14px] font-medium">
+        <label className="text-vmb-text-main text-[14px] font-medium">
           {label}
         </label>
         <div className="relative">
@@ -96,13 +96,13 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
               };
               register(name).onChange(event);
             }}
-            className="w-full border border-[#E5E5E5] rounded-[8px] py-[10px] pl-2 pr-12 text-sm focus:outline-none focus:border-[#581838] transition"
+            className="w-full border border-vmb-primary/10 rounded-[8px] py-[10px] pl-2 pr-12 text-sm focus:outline-none focus:border-vmb-primary transition"
             placeholder={`Enter ${label.toLowerCase()}`}
           />
           <button
             type="button"
             onClick={() => setShow(!show)}
-            className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-[#FF92A5] hover:text-[#ff7a8a] transition"
+            className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-vmb-secondary hover:opacity-80 transition"
           >
             {show ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
           </button>
@@ -117,7 +117,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
         <Transition.Child
@@ -143,14 +143,14 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[460px] bg-[#E8E8E8] rounded-[10px] p-[20px] shadow-xl flex flex-col gap-6">
+              <Dialog.Panel className="w-full max-w-[460px] bg-vmb-bg-soft rounded-[10px] p-[20px] shadow-xl flex flex-col gap-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[18px] font-semibold text-[#581838]">
+                  <h2 className="text-[18px] font-semibold text-vmb-primary">
                     Change Password
                   </h2>
                   <IoClose
                     onClick={closeModal}
-                    className="text-[#581838] text-3xl cursor-pointer hover:opacity-80 transition ml-auto"
+                    className="text-vmb-primary text-3xl cursor-pointer hover:opacity-80 transition ml-auto"
                   />
                 </div>
 
@@ -158,7 +158,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
                   onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-6"
                 >
-                  <div className="bg-white border border-[#0000001A] rounded-[20px] p-[20px] flex flex-col gap-6">
+                  <div className="bg-white/50 border border-vmb-primary/10 rounded-[20px] p-[20px] flex flex-col gap-6">
                     <PasswordInput
                       label="Current Password"
                       name="currentPassword"

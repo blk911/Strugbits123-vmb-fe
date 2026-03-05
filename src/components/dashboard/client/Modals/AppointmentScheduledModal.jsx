@@ -111,7 +111,7 @@ export default function AppointmentScheduledModal({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeModal}
         >
           <Transition.Child
@@ -123,7 +123,7 @@ export default function AppointmentScheduledModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -137,56 +137,56 @@ export default function AppointmentScheduledModal({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Panel className="relative w-full max-w-[460px] transform overflow-hidden rounded-[20px] border border-[#5818381A] bg-[#FFF2F4] p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
+                <Dialog.Panel className="relative w-full max-w-[460px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
                   <IoClose
                     onClick={closeModal}
-                    className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                    className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
                   />
 
                   <div className="flex flex-col items-center text-center">
-                    <h2 className="text-[#581838] font-bold text-[22px]">
+                    <h2 className="text-vmb-primary font-bold text-[22px]">
                       Great News! <br />
                       {status === "pending"
                         ? "Your Treat Request is Fulfilled."
                         : "Your Appointment is Scheduled."}
                     </h2>
-                    <p className="text-[#00000080] text-[14px] mt-2 leading-[20px]">
+                    <p className="text-vmb-text-muted text-[14px] mt-2 leading-[20px]">
                       {status === "pending"
                         ? "Your treat request has been successfully fulfilled. The salon has been notified and will schedule your appointment."
                         : "The salon has successfully scheduled your appointment. Please review the details below and confirm your appointment."}
                     </p>
                   </div>
 
-                  <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 flex flex-col gap-4">
-                    <div className="border border-[#0000001A] rounded-[10px] p-3 flex items-center gap-3 flex-wrap sm:flex-nowrap">
+                  <div className="bg-white/50 border border-vmb-primary/10 rounded-[10px] p-5 flex flex-col gap-4">
+                    <div className="border border-vmb-primary/10 rounded-[10px] p-3 flex items-center gap-3 flex-wrap sm:flex-nowrap">
                       <img
                         src={mock?.salon?.image}
                         alt="Salon"
                         className="w-[40px] h-[40px] rounded-md object-cover flex-shrink-0"
                       />
                       <div className="min-w-0">
-                        <p className="text-[#4B5563] font-semibold text-[14px] break-words">
+                        <p className="text-vmb-text-main font-semibold text-[14px] break-words">
                           {mock?.salon?.name}
                         </p>
-                        <p className="text-[#4B5563] text-[12px] break-words">
+                        <p className="text-vmb-text-main text-[12px] break-words">
                           {mock?.salon?.description}
                         </p>
                       </div>
                     </div>
-                    <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-                      <h3 className="text-[#581838] text-[14px] font-medium">
+                    <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+                      <h3 className="text-vmb-primary text-[14px] font-medium">
                         Services:
                       </h3>
                       <ServicesTable
                         services={mock?.services}
-                        containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+                        containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
                         scrollbarClass="custom-scrollbar"
                         maxHeightClass="max-h-32"
                         headerClass="px-1"
-                        rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#4B5563] text-[11px] sm:text-[12px]"
+                        rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-text-main text-[11px] sm:text-[12px]"
                       />
                       <div className="flex justify-end">
-                        <p className="text-[#FF92A5] font-bold text-[13px]">
+                        <p className="text-vmb-secondary font-bold text-[13px]">
                           Amount Paid: ${finalTotal}
                         </p>
                       </div>
@@ -194,28 +194,28 @@ export default function AppointmentScheduledModal({
 
                     {status !== "pending" && (
                       <>
-                        <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
-                          <p className="text-[#581838] font-medium text-[14px]">
+                        <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+                          <p className="text-vmb-primary font-medium text-[14px]">
                             Appointment Details
                           </p>
 
                           <div className="flex flex-col sm:flex-row justify-between gap-4 w-full">
                             <div className="flex-1">
-                              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                              <p className="text-vmb-text-main text-[14px] font-medium mb-1">
                                 Date
                               </p>
-                              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-                                <IoCalendarOutline className="text-[#00000080]" />
+                              <div className="flex items-center gap-2 text-vmb-text-muted text-[14px]">
+                                <IoCalendarOutline className="text-vmb-text-muted" />
                                 <span>{mock?.appointment?.date}</span>
                               </div>
                             </div>
 
                             <div className="flex-1">
-                              <p className="text-[#404040] text-[14px] font-medium mb-1">
+                              <p className="text-vmb-text-main text-[14px] font-medium mb-1">
                                 Time
                               </p>
-                              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
-                                <IoTimeOutline className="text-[#00000080]" />
+                              <div className="flex items-center gap-2 text-vmb-text-muted text-[14px]">
+                                <IoTimeOutline className="text-vmb-text-muted" />
                                 <span>{mock?.appointment?.time}</span>
                               </div>
                             </div>

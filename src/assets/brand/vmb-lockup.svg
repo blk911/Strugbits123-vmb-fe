@@ -1,0 +1,39 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 720 160"
+  fill="none"
+>
+  <g transform="translate(8,8)">
+    <circle cx="72" cy="72" r="62" fill="var(--vmb-mark, #1F1B1A)" opacity="0.12" />
+    <path
+      d="M34 106L56 42L72 84L88 42L110 106H94L84 76L72 106L60 76L50 106H34Z"
+      fill="var(--vmb-mark, #1F1B1A)"
+    />
+    <circle cx="122" cy="26" r="8" fill="var(--vmb-accent, #B08D57)" />
+  </g>
+
+  <g transform="translate(170,28)">
+    <path
+      d="M18 97V23H35L62 66L89 23H106V97H89V50L62 98L35 50V97H18Z"
+      fill="var(--vmb-script, #3A3432)"
+    />
+    <path
+      d="M128 97V23H192V39H146V50H182V66H146V81H194V97H128Z"
+      fill="var(--vmb-script, #3A3432)"
+    />
+    <path
+      d="M216 97V23H234V62L266 23H288L255 61L290 97H267L234 63V97H216Z"
+      fill="var(--vmb-script, #3A3432)"
+    />
+    <path
+      d="M310 97V23H328V81H367V97H310Z"
+      fill="var(--vmb-script, #3A3432)"
+    />
+    <path d="M388 97V23H406V97H388Z" fill="var(--vmb-script, #3A3432)" />
+    <path
+      d="M452 97V23H470L502 73L534 23H552V97H535V52L502 99L470 52V97H452Z"
+      fill="var(--vmb-script, #3A3432)"
+      opacity="0.92"
+    />
+  </g>
+</svg>

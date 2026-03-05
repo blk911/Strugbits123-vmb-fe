@@ -42,9 +42,9 @@ export default function TabbedTable({
             className={`
               cursor-pointer pb-2 text-sm sm:text-[20px] font-medium transition-colors
               ${
-                currentTab === key
-                  ? "text-[#FF92A5] border-b-2 border-[#FF92A5]"
-                  : "text-gray-400 hover:text-gray-600"
+                currentTab === key ?
+                  "text-vmb-secondary border-b-2 border-vmb-secondary"
+                : "text-gray-400 hover:text-gray-600"
               }
             `}
             style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600 }}
@@ -54,17 +54,11 @@ export default function TabbedTable({
         ))}
       </div>
 
-      {/* <Table
-        data={tabs[currentTab] ?? []}
-        cellRenderers={cellRenderers}
-        onRowClick={onRowClick?.[currentTab]}
-      /> */}
-      {isLoading ? (
+      {isLoading ?
         <div className="flex justify-center">
           <LoadingIndicator />
         </div>
-      ) : (
-        <>
+      : <>
           <Table
             data={tabs[currentTab] ?? []}
             cellRenderers={cellRenderers || {}}
@@ -81,7 +75,7 @@ export default function TabbedTable({
             />
           )}
         </>
-      )}
+      }
     </div>
   );
 }

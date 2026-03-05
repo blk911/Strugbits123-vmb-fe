@@ -34,7 +34,7 @@ const bookingSchema = z.object({
       (date) => date && new Date(date) >= new Date().setHours(0, 0, 0, 0),
       {
         message: "Date cannot be in the past",
-      }
+      },
     ),
   appointmentTime: z
     .string()
@@ -91,9 +91,8 @@ export default function BookAppointmentModal({
   useEffect(() => {
     if (isOpen && salon) {
       const prefilledServiceName = prefilledService?.serviceName;
-      const defaultServices = prefilledServiceName
-        ? [prefilledServiceName]
-        : [];
+      const defaultServices =
+        prefilledServiceName ? [prefilledServiceName] : [];
 
       reset({
         fullName: user?.name || "",
@@ -106,8 +105,9 @@ export default function BookAppointmentModal({
 
   const toggleService = (serviceName) => {
     const current = selectedServices || [];
-    const updated = current.includes(serviceName)
-      ? current.filter((s) => s !== serviceName)
+    const updated =
+      current.includes(serviceName) ?
+        current.filter((s) => s !== serviceName)
       : [...current, serviceName];
     setValue("selectedServices", updated, { shouldValidate: true });
   };
@@ -166,23 +166,23 @@ export default function BookAppointmentModal({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeModal}
         >
           <Transition.Child as={Fragment}>
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
               <Transition.Child as={Fragment}>
-                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-white p-10 shadow-xl flex flex-col gap-8">
+                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-vmb-bg-soft p-10 shadow-xl flex flex-col gap-8">
                   <div className="flex justify-between items-center">
-                    <h2 className="text-[#581838] font-bold text-[24px]">
+                    <h2 className="text-vmb-primary font-bold text-[24px]">
                       Book Your Appointment
                     </h2>
                     <IoClose
-                      className="text-[#581838] text-2xl cursor-pointer"
+                      className="text-vmb-primary text-2xl cursor-pointer"
                       onClick={closeModal}
                     />
                   </div>
@@ -198,10 +198,10 @@ export default function BookAppointmentModal({
                       className="w-[60px] h-[60px] rounded-md object-cover"
                     />
                     <div>
-                      <p className="text-[#4B5563] font-semibold text-[20px]">
+                      <p className="text-vmb-text-main font-semibold text-[20px]">
                         {salon?.salonName}
                       </p>
-                      <p className="text-[#4B5563] text-[12px]">
+                      <p className="text-vmb-text-muted text-[12px]">
                         {salon?.description || "Premium Beauty Services"}
                       </p>
                     </div>
@@ -212,7 +212,7 @@ export default function BookAppointmentModal({
                     className="space-y-6"
                   >
                     <div className="flex flex-col gap-2">
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-muted text-[14px] font-medium">
                         Full Name
                       </label>
                       <Controller
@@ -235,10 +235,10 @@ export default function BookAppointmentModal({
                             }}
                             type="text"
                             placeholder="Enter your full name"
-                            className={`border rounded-[8px] px-3 py-3 text-[16px] focus:outline-none focus:border-[#FF92A5] ${
-                              errors.fullName
-                                ? "border-red-500"
-                                : "border-[#E5E5E5]"
+                            className={`border rounded-[8px] px-3 py-3 text-[16px] focus:outline-none focus:border-vmb-secondary ${
+                              errors.fullName ? "border-red-500" : (
+                                "border-vmb-primary/10"
+                              )
                             }`}
                           />
                         )}
@@ -251,19 +251,19 @@ export default function BookAppointmentModal({
                     </div>
 
                     <div className="flex flex-col gap-2 relative">
-                      <label className="text-[#404040] text-[14px] font-medium">
+                      <label className="text-vmb-text-muted text-[14px] font-medium">
                         Select Services
                       </label>
                       <div
                         onClick={() => setDropdownOpen(!dropdownOpen)}
-                        className="w-full border border-[#E5E5E5] rounded-[8px] py-2 px-3 pr-8 text-sm text-[#00000080] flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]  max-h-28 overflow-y-auto custom-scrollbar"
+                        className="w-full border border-vmb-primary/10 rounded-[8px] py-2 px-3 pr-8 text-sm text-vmb-text-muted flex justify-between items-center cursor-pointer mt-1 flex-wrap gap-2 min-h-[42px]  max-h-28 overflow-y-auto custom-scrollbar"
                       >
-                        {selectedServices.length > 0 ? (
+                        {selectedServices.length > 0 ?
                           <div className="flex flex-wrap gap-2">
                             {selectedServices.map((srv) => (
                               <div
                                 key={srv}
-                                className="flex items-center gap-2 bg-[#64748B] text-white rounded-md px-3 py-[6px] text-[13px]"
+                                className="flex items-center gap-2 bg-vmb-muted text-white rounded-md px-3 py-[6px] text-[13px]"
                               >
                                 <span>{srv}</span>
                                 <button
@@ -279,11 +279,9 @@ export default function BookAppointmentModal({
                               </div>
                             ))}
                           </div>
-                        ) : (
-                          <span>Choose services...</span>
-                        )}
+                        : <span>Choose services...</span>}
                         <IoChevronDown
-                          className={`ml-auto text-[#581838] transition-transform ${
+                          className={`ml-auto text-vmb-primary transition-transform ${
                             dropdownOpen ? "rotate-180" : ""
                           }`}
                         />
@@ -292,7 +290,7 @@ export default function BookAppointmentModal({
                       {dropdownOpen && salon?.services && (
                         <div
                           ref={dropdownRef}
-                          className="absolute top-full mt-2 w-full bg-white border border-[#E5E5E5] rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto custom-scrollbar"
+                          className="absolute top-full mt-2 w-full bg-white border border-vmb-primary/10 rounded-[8px] shadow-md z-10 p-3 max-h-[180px] overflow-y-auto custom-scrollbar"
                         >
                           {salon.services.map((s) => (
                             <CustomCheckbox
@@ -312,8 +310,8 @@ export default function BookAppointmentModal({
                     </div>
 
                     {selectedServices.length > 0 && (
-                      <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-md p-4  max-h-32 overflow-y-auto custom-scrollbar">
-                        <div className=" grid grid-cols-3 gap-2 font-medium text-[#000]  text-xs  mb-2 ">
+                      <div className="border border-vmb-primary/10 bg-white/50 rounded-md p-4  max-h-32 overflow-y-auto custom-scrollbar">
+                        <div className=" grid grid-cols-3 gap-2 font-medium text-vmb-primary  text-xs  mb-2 ">
                           <span>Service</span>
                           <span>Duration</span>
                           <span>Price</span>
@@ -323,7 +321,7 @@ export default function BookAppointmentModal({
                           return (
                             <div
                               key={name}
-                              className="text-[#4B5563] border-b border-[#D9D9D9] py-2  grid grid-cols-3 gap-2  text-[12px] text-[#4B5563]"
+                              className="text-vmb-text-muted border-b border-vmb-primary/10 py-2  grid grid-cols-3 gap-2  text-[12px] text-vmb-text-muted"
                             >
                               <span>{s?.serviceName}</span>
                               <span>{s?.serviceDuration} min</span>
@@ -332,14 +330,14 @@ export default function BookAppointmentModal({
                           );
                         })}
 
-                        <div className="flex justify-end font-bold text-[#581838] mt-3">
+                        <div className="flex justify-end font-bold text-vmb-primary mt-3">
                           Total: ${total.toFixed(2)}
                         </div>
                       </div>
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col">
-                        <label className="text-[#404040] text-[14px] font-semibold mb-1">
+                        <label className="text-vmb-text-muted text-[14px] font-semibold mb-1">
                           Booking Date
                         </label>
                         <Controller
@@ -347,14 +345,14 @@ export default function BookAppointmentModal({
                           control={control}
                           render={({ field }) => (
                             <div className="relative">
-                              <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+                              <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
 
                               <input
                                 type="date"
                                 {...field}
                                 min={new Date().toISOString().split("T")[0]}
                                 className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
-                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                   focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                    transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute
@@ -379,7 +377,7 @@ export default function BookAppointmentModal({
                       />
 
                       {/* <div className="flex flex-col gap-2">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                        <label className="text-vmb-text-muted text-[14px] font-medium">
                           Booking Time
                         </label>
                         <Controller
@@ -387,13 +385,13 @@ export default function BookAppointmentModal({
                           control={control}
                           render={({ field }) => (
                             <div className="relative">
-                              <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+                              <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
 
                               <input
                                 type="time"
                                 {...field}
                                 className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
-                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                   focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                    transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute
@@ -433,23 +431,23 @@ export default function BookAppointmentModal({
       <Transition appear show={showSuccessModal} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={() => setShowSuccessModal(false)}
         >
           <Transition.Child as={Fragment}>
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
           <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel className="bg-white rounded-[10px] p-[30px] flex flex-col items-center gap-[12px] w-full max-w-[420px] text-center shadow-lg">
+            <Dialog.Panel className="bg-vmb-bg-soft rounded-[10px] p-[30px] flex flex-col items-center gap-[12px] w-full max-w-[420px] text-center shadow-lg">
               <img
                 src={successGif}
                 alt="Success"
                 className="w-[138px] h-[138px]"
               />
-              <h3 className="text-[#FF92A5] text-[20px] font-semibold">
+              <h3 className="text-vmb-secondary text-[20px] font-semibold">
                 Thank you for your booking!
               </h3>
-              <p className="text-[#404040] text-[14px] font-medium">
+              <p className="text-vmb-text-muted text-[14px] font-medium">
                 We’ve shared your details with the salon — you’ll get a
                 confirmation soon!
               </p>

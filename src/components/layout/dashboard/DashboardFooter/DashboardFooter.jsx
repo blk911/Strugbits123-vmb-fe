@@ -8,11 +8,11 @@ function DashboardFooter() {
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 400,
-          color: "#581838",
+          color: "var(--vmb-primary)",
         }}
       >
         All Copyrights Reserved 2025.{" "}
-        <span style={{ color: "#FF92A5" }}>VMB Ven Me Baby</span>
+        <span className="text-vmb-secondary">VMB Ven Me Baby</span>
       </span>
     </div>
   );

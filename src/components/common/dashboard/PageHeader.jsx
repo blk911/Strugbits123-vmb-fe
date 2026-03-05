@@ -20,13 +20,13 @@ export default function PageHeader({
   };
 
   return (
-    <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full relative">
+    <div className="bg-white/50 border border-vmb-primary/10 rounded-[12px] shadow-sm p-4 sm:p-5 md:p-6 w-full max-w-full relative">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
         <div className="flex flex-col w-full sm:w-auto">
-          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-[#581838]">
+          <h1 className="text-[22px] sm:text-[26px] md:text-[30px] font-bold leading-[30px] sm:leading-[34px] md:leading-[36px] text-vmb-primary">
             {title}
           </h1>
-          <p className="text-[13px] md:text-[14px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-[#4B5563]">
+          <p className="text-[13px] md:text-[14px] leading-[22px] sm:leading-[23px] md:leading-[24px] mt-1 text-vmb-text-muted">
             {description}
           </p>
         </div>
@@ -40,29 +40,29 @@ export default function PageHeader({
               e.target.value = value;
               onSearch && onSearch(value);
             }}
-            className="w-full border border-[#9CA3AF4D] bg-[#F8F8F8] rounded-[10px] px-4 py-2 text-[#4B5563] text-[15px] placeholder-[#9CA3AF] outline-none focus:ring-2 focus:ring-[#FF92A5]/30 transition-all"
+            className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] px-4 py-2 text-vmb-text-muted text-[15px] placeholder-vmb-text-muted/50 outline-none focus:ring-2 focus:ring-vmb-secondary/30 transition-all"
           />
         </div>
 
         <div className="relative">
           <div
             onClick={() => setSortOpen((prev) => !prev)}
-            className="flex items-center gap-4 justify-between border border-[#9CA3AF4D] rounded-[10px] px-4 py-2 cursor-pointer hover:bg-[#F9FAFB] transition-all bg-white"
+            className="flex items-center gap-4 justify-between border border-vmb-primary/10 rounded-[10px] px-4 py-2 cursor-pointer hover:bg-vmb-bg-soft transition-all bg-white/50"
           >
-            <span className="text-[16px] font-semibold text-[#6B7280]">
+            <span className="text-[16px] font-semibold text-vmb-text-muted">
               {selectedSort}
             </span>
-            <IoFilter className="text-[#6B7280] text-[16px] ml-2" />
+            <IoFilter className="text-vmb-text-muted text-[16px] ml-2" />
           </div>
 
           {sortOpen && (
-            <div className="absolute top-[105%] right-0 mt-1 w-full bg-white border border-[#9CA3AF4D] rounded-[10px] shadow-md z-20">
+            <div className="absolute top-[105%] right-0 mt-1 w-full bg-vmb-bg-soft border border-vmb-primary/10 rounded-[10px] shadow-md z-20">
               {sortOptions.map((option) => (
                 <div
                   key={option}
                   onClick={() => handleSortSelect(option)}
-                  className={`px-4 py-2 text-[14px] text-[#6B7280] cursor-pointer hover:bg-[#F9FAFB] rounded-[10px] transition ${
-                    selectedSort === option ? "bg-[#FF92A54D]" : ""
+                  className={`px-4 py-2 text-[14px] text-vmb-text-muted cursor-pointer hover:bg-vmb-secondary/10 rounded-[10px] transition ${
+                    selectedSort === option ? "bg-vmb-secondary/30" : ""
                   }`}
                 >
                   {option}

@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")).render(
           style: {
             fontSize: "15px",
             background: "white",
-            color: "#1F2937",
+            color: "#333333", // vmb-text-main
             fontFamily: "Poppins, sans-serif",
             padding: "16px 20px",
             borderRadius: "12px",
@@ -28,37 +28,36 @@ createRoot(document.getElementById("root")).render(
           },
 
           success: {
-            duration: 3500,
-            iconTheme: {
-              primary: "#16A34A",
+            duration: 3000,
+            theme: {
+              primary: "#4FCF00",
               secondary: "#fff",
             },
             style: {
-              background: "#ECFDF5",
-              color: "#065F46",
-              border: "1px solid #6EE7B7",
+              background: "#F2FDF2", // Success soft
+              color: "#0F3D3E", // vmb-primary
+              border: "1px solid #4FCF004D",
             },
           },
 
           error: {
-            duration: 3500,
-            iconTheme: {
+            duration: 4000,
+            theme: {
               primary: "#DC2626",
               secondary: "#fff",
             },
             style: {
-              background: "#FEF2F2",
-              color: "#991B1B",
-              border: "1px solid #FCA5A5",
+              background: "#FEF2F2", // Error soft
+              color: "#DC2626", // vmb-error
+              border: "1px solid #DC26264D",
             },
           },
 
           loading: {
-            duration: Infinity,
             style: {
-              background: "#F3F4F6",
-              color: "#374151",
-              border: "1px solid #D1D5DB",
+              background: "#FAFFFD", // vmb-bg-soft
+              color: "#0F3D3E", // vmb-primary
+              border: "1px solid #0F3D3E4D",
             },
           },
         }}

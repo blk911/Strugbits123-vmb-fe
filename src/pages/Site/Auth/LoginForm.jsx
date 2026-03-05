@@ -33,7 +33,7 @@ export default function LoginForm() {
 
       <div className="w-full text-left">
         <p
-          className="text-[14px] text-[#FF92A5] cursor-pointer font-medium"
+          className="text-[14px] text-vmb-secondary cursor-pointer font-medium"
           onClick={() => navigate("/forget-password")}
         >
           Forgot Password?

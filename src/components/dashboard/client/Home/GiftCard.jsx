@@ -6,7 +6,7 @@ import { capitalizeFirst } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 function EmptyState({ message }) {
   return (
-    <div className="text-center py-5 text-[#9CA3AF]">
+    <div className="text-center py-5 text-vmb-text-muted/50">
       <p className="text-[14px] font-medium">{message}</p>
     </div>
   );
@@ -55,7 +55,7 @@ export default function GiftCard({
       });
     }
 
-    if (title === "Appointments" && item) {
+    if (title === "Pending Appointments" && item) {
       openModal("appointmentScheduled", {
         salon: {
           name: item?.salon?.salonName,
@@ -90,99 +90,94 @@ export default function GiftCard({
   };
 
   return (
-    <div className="w-full  rounded-[12px] border border-[#F3F4F6] bg-white shadow-[0_4px_6px_#0000000D] p-5 flex flex-col ">
+    <div className="w-full  rounded-[12px] border border-vmb-primary/10 bg-white/50 shadow-sm p-5 flex flex-col ">
       <div className="flex flex-col md:flex-row items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <Icon size={20} className="text-[#FF92A5] shrink-0" />
-          <span className="text-[15px] md:text-[18px] font-semibold text-[#581838]">
+          <Icon size={20} className="text-vmb-secondary shrink-0" />
+          <span className="text-[15px] md:text-[18px] font-semibold text-vmb-primary">
             {title}
           </span>
         </div>
         <span
           onClick={handleViewAll}
-          className="text-[14px] font-medium text-[#9CA3AF] underline cursor-pointer hover:text-[#FF92A5] transition-all"
+          className="text-[14px] font-medium text-vmb-text-muted underline cursor-pointer hover:text-vmb-secondary transition-all"
         >
           View All
         </span>
       </div>
 
-      <div className="h-[1px] bg-[#D9D9D9] mb-4"></div>
+      <div className="h-[1px] bg-vmb-primary/10 mb-4"></div>
 
-      {isLoading ? (
+      {isLoading ?
         <div className="flex-1 flex items-center justify-center">
           <LoadingIndicator size="md" />
         </div>
-      ) : items.length === 0 ? (
+      : items.length === 0 ?
         <EmptyState message={emptyMessage} />
-      ) : (
-        <div className="space-y-3 flex-1">
+      : <div className="space-y-3 flex-1">
           {items.map((item, index) => {
             const userName =
-              title === "Appointments"
-                ? item.salon?.salonName || "Unknown"
-                : title === "My Requests"
-                ? item.receiverEmail || "Unknown"
-                : title === "Received Requests"
-                ? `From: ${item.requesterId?.name || "Someone"}`
-                : item.requestedBy?.name || "Client";
+              title === "Appointments" ? item.salon?.salonName || "Unknown"
+              : title === "My Requests" ? item.receiverEmail || "Unknown"
+              : title === "Received Requests" ?
+                `From: ${item.requesterId?.name || "Someone"}`
+              : item.requestedBy?.name || "Client";
 
             const packageName =
-              item.services?.length > 0
-                ? `${item.services.length} service${
-                    item.services.length > 1 ? "s" : ""
-                  } • $${item.services.reduce(
-                    (a, b) => a + (b.servicePrice || b.price || 0),
-                    0
-                  )}`
-                : "No services";
+              item.services?.length > 0 ?
+                `${item.services.length} service${
+                  item.services.length > 1 ? "s" : ""
+                } • $${item.services.reduce(
+                  (a, b) => a + (b.servicePrice || b.price || 0),
+                  0,
+                )}`
+              : "No services";
 
             const status = capitalizeFirst(
-              item.status || (title === "Appointments" ? "pending" : "")
+              item.status || (title === "Appointments" ? "pending" : ""),
             );
-            const statusColor =
-              status === "Pending"
-                ? "#FF9500"
-                : status === "Accepted" ||
-                  status === "Confirmed" ||
-                  status === "Scheduled"
-                ? "#4FCF00"
-                : status === "Hold"
-                ? "#64748B"
-                : status === "Reschedule-requested" || status === "Reschedule"
-                ? "#FF92A5"
-                : "#EF4444";
-            const statusBg = `${statusColor}33`;
+            const statusStyles = {
+              Pending: "bg-vmb-pending/20 text-vmb-pending",
+              Accepted: "bg-vmb-success/20 text-vmb-success",
+              Confirmed: "bg-vmb-success/20 text-vmb-success",
+              Scheduled: "bg-vmb-success/20 text-vmb-success",
+              Hold: "bg-vmb-text-muted/20 text-vmb-text-muted",
+              "Reschedule-requested": "bg-vmb-secondary/20 text-vmb-secondary",
+              Reschedule: "bg-vmb-secondary/20 text-vmb-secondary",
+            };
+            const currentStatusClass =
+              statusStyles[status] || "bg-vmb-error/20 text-vmb-error";
 
             const timeAgo = formatTimeAgo(
-              item.createdAt || item.timeline[0].timestamp
+              item.createdAt || item.timeline[0].timestamp,
             );
 
             return (
               <div
                 key={item._id || index}
-                className="p-3 border border-[#0000001A] rounded-[10px] flex  flex-col md:flex-row  items-center justify-between cursor-pointer hover:border-2 hover:border-[#FF92A5] transition-all"
+                className="p-3 border border-vmb-primary/10 rounded-[10px] flex  flex-col md:flex-row  items-center justify-between cursor-pointer hover:border-2 hover:border-vmb-secondary transition-all"
                 onClick={() => handleCardClick(item)}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-vmb-bg-soft flex items-center justify-center shrink-0">
                     <img
                       src={
-                        title === "Appointments"
-                          ? item?.salon?.salonImage
-                          : item.salonId?.profilePic ||
-                            item.requestedBy?.image ||
-                            item.salonImage ||
-                            defaultUser
+                        title === "Appointments" ?
+                          item?.salon?.salonImage
+                        : item.salonId?.profilePic ||
+                          item.requestedBy?.image ||
+                          item.salonImage ||
+                          defaultUser
                       }
                       alt="User"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div>
-                    <p className="text-[#4B5563] font-semibold text-[14px] leading-[18px] break-all">
+                    <p className="text-vmb-text-muted font-semibold text-[14px] leading-[18px] break-all">
                       {userName}
                     </p>
-                    <p className="text-[12px] text-[#4B5563]/70">
+                    <p className="text-[12px] text-vmb-text-muted/70">
                       {packageName}
                     </p>
                   </div>
@@ -190,18 +185,19 @@ export default function GiftCard({
 
                 <div className="text-center">
                   <p
-                    className="font-semibold text-[10px] rounded-[5px] p-[5px]"
-                    style={{ color: statusColor, backgroundColor: statusBg }}
+                    className={`font-semibold text-[10px] rounded-[5px] p-[5px] ${currentStatusClass}`}
                   >
                     {status}
                   </p>
-                  <p className="text-[10px] text-[#00000080] mt-1">{timeAgo}</p>
+                  <p className="text-[10px] text-vmb-text-muted/50 mt-1">
+                    {timeAgo}
+                  </p>
                 </div>
               </div>
             );
           })}
         </div>
-      )}
+      }
     </div>
   );
 }

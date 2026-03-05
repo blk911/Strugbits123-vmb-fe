@@ -50,7 +50,7 @@ export default function ExclusiveInviteModal({
     { id: salonId },
     {
       skip: !isOpen || !salonId,
-    }
+    },
   );
   // useEffect(() => setInviteOpen(isOpen), [isOpen]);
   useEffect(() => {
@@ -162,7 +162,7 @@ export default function ExclusiveInviteModal({
       <Transition appear show={inviteOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeAll}
         >
           <Transition.Child
@@ -174,7 +174,7 @@ export default function ExclusiveInviteModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -188,22 +188,19 @@ export default function ExclusiveInviteModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel
-                  style={{ background: "#FFF2F4" }}
-                  className="relative w-full max-w-[448px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
-                >
+                <Dialog.Panel className="relative w-full max-w-[448px] rounded-[20px] bg-vmb-bg-soft border border-vmb-primary/10 p-[30px] shadow-xl flex flex-col gap-6">
                   <IoClose
                     onClick={closeAll}
-                    className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
+                    className="absolute top-6 right-6 text-vmb-primary text-3xl cursor-pointer hover:opacity-80"
                   />
 
                   <div className="text-center">
-                    <h3 className="text-[#FF92A5] font-bold text-[22px] leading-tight">
+                    <h3 className="text-vmb-secondary font-bold text-[22px] leading-tight">
                       You’ve Got an Exclusive
                       <br />
                       Salon Invite!
                     </h3>
-                    <p className="text-[#00000080] text-[14px] mt-3">
+                    <p className="text-vmb-text-muted text-[14px] mt-3">
                       {salon?.name} Salon has invited you to enjoy their
                       services with a special discount just for you. <br />{" "}
                       Review the offer details below and confirm your booking to
@@ -211,43 +208,43 @@ export default function ExclusiveInviteModal({
                     </p>
                   </div>
 
-                  <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 space-y-5">
-                    <div className="flex items-center justify-between border border-[#9CA3AF4D] rounded-xl p-3">
+                  <div className="bg-white/50 border border-vmb-primary/10 rounded-[10px] p-5 space-y-5">
+                    <div className="flex items-center justify-between border border-vmb-primary/10 rounded-xl p-3">
                       <div className="flex items-center gap-4">
                         <img
                           src={salon?.image}
                           alt={salon?.name}
-                          className="w-10 h-10 rounded-lg object-cover border border-gray-200"
+                          className="w-10 h-10 rounded-lg object-cover border border-vmb-primary/10"
                         />
                         <div>
-                          <div className="font-semibold text-[14px] sm:text-[16px] text-[#4B5563]">
+                          <div className="font-semibold text-[14px] sm:text-[16px] text-vmb-text-main">
                             {salon?.name}
                           </div>
-                          <div className=" text-[12px] sm:text-sm text-[#4B5563]">
+                          <div className=" text-[12px] sm:text-sm text-vmb-text-main">
                             {salon?.description}
                           </div>
                         </div>
                       </div>
                       <button
-                        className="text-xs px-3 py-1 bg-[#FF92A54D] text-[#581838] rounded cursor-pointer"
+                        className="text-xs px-3 py-1 bg-vmb-secondary/30 text-vmb-primary rounded cursor-pointer"
                         onClick={handleViewSalon}
                       >
                         View Salon
                       </button>
                     </div>
 
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-4 space-y-3">
-                      <h4 className="font-medium text-[#581838]">
+                    <div className="border border-vmb-primary/10 rounded-lg p-4 space-y-3">
+                      <h4 className="font-medium text-vmb-primary">
                         Exclusive Offer
                       </h4>
                       <ServicesTable
                         services={services}
-                        containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
+                        containerClass="border border-vmb-primary/10 rounded-lg p-3 text-[11px] sm:text-[12px]"
                         scrollbarClass="custom-scrollbar"
                         maxHeightClass="max-h-32"
                       />
 
-                      <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
+                      <div className="flex flex-col items-end gap-1 text-vmb-secondary font-bold text-[12px] sm:text-sm">
                         <div>Discount (%): &nbsp; {discountPercent}%</div>
                         <div>
                           Price After Discount: ${finalPrice.toFixed(2)}
@@ -262,7 +259,7 @@ export default function ExclusiveInviteModal({
                       size="custom"
                       variant="custom"
                       onClick={closeAll}
-                      className="text-[10px] text-[12px] text-white bg-[#FF92A5] hover:bg-[#FF92A5] px-[20px] py-[15px] rounded-[8px]"
+                      className="text-[12px] text-vmb-bg bg-vmb-secondary hover:opacity-90 px-[20px] py-[15px] rounded-[8px]"
                     >
                       Maybe Later
                     </AppButton>
@@ -271,7 +268,7 @@ export default function ExclusiveInviteModal({
                       variant="custom"
                       size="custom"
                       onClick={handleAccept}
-                      className="border border-[#581838] text-[12px] text-[#581838] bg-white hover:bg-white px-[20px] py-[15px] rounded-[8px]"
+                      className="text-[12px]  border border-vmb-primary/20 text-vmb-primary bg-white/50 hover:bg-vmb-bg-soft px-[20px] py-[15px] rounded-[8px]"
                     >
                       Accept & Book Now
                     </AppButton>
@@ -286,7 +283,7 @@ export default function ExclusiveInviteModal({
       <Transition appear show={scheduleOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeAll}
         >
           <Transition.Child
@@ -298,7 +295,7 @@ export default function ExclusiveInviteModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-black/80" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -312,38 +309,35 @@ export default function ExclusiveInviteModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel
-                  style={{ background: "#FFF2F4" }}
-                  className="relative w-full max-w-[480px] rounded-[20px]  p-[30px] shadow-xl flex flex-col gap-6"
-                >
+                <Dialog.Panel className="relative w-full max-w-[480px] rounded-[20px] bg-vmb-bg-soft border border-vmb-primary/10 p-[30px] shadow-xl flex flex-col gap-6">
                   <IoClose
                     onClick={closeAll}
-                    className="absolute top-6 right-6 text-[#581838] text-3xl cursor-pointer hover:opacity-80"
+                    className="absolute top-6 right-6 text-vmb-primary text-3xl cursor-pointer hover:opacity-80"
                   />
 
                   <div className="text-center mt-8">
-                    <h3 className="text-[#FF92A5] font-bold text-[22px]">
+                    <h3 className="text-vmb-secondary font-bold text-[22px]">
                       Thank you for accepting the invite!
                     </h3>
-                    <p className="text-[#00000080] text-[14px] mt-3">
+                    <p className="text-vmb-text-muted text-[14px] mt-3">
                       Choose a suitable date and time to confirm your salon
                       appointment.
                     </p>
                   </div>
 
-                  <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 space-y-5">
-                    <div className="border border-[#9CA3AF4D] rounded-lg p-4 space-y-3">
-                      <h4 className="font-medium text-[#581838]">
+                  <div className="bg-white/50 border border-vmb-primary/10 rounded-[10px] p-5 space-y-5">
+                    <div className="border border-vmb-primary/10 rounded-lg p-4 space-y-3">
+                      <h4 className="font-medium text-vmb-primary">
                         Exclusive Offer
                       </h4>
                       <ServicesTable
                         services={services}
-                        containerClass="border border-[#9CA3AF4D] rounded-lg p-3 text-[11px] sm:text-[12px]"
+                        containerClass="border border-vmb-primary/10 rounded-lg p-3 text-[11px] sm:text-[12px]"
                         scrollbarClass="custom-scrollbar"
                         maxHeightClass="max-h-32"
                       />
 
-                      <div className="flex flex-col items-end gap-1 text-[#FF92A5] font-bold text-[12px] sm:text-sm">
+                      <div className="flex flex-col items-end gap-1 text-vmb-secondary font-bold text-[12px] sm:text-sm">
                         <div>Discount: {discountPercent}%</div>
                         <div>
                           Price After Discount: ${finalPrice.toFixed(2)}
@@ -351,20 +345,20 @@ export default function ExclusiveInviteModal({
                       </div>
                     </div>
                     <div>
-                      <p className="font-medium text-[#581838] mb-3">
+                      <p className="font-medium text-vmb-primary mb-3">
                         Select Appointment Schedule
                       </p>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="relative">
-                          <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-[#FF92A5] pointer-events-none z-10" />
+                          <FaCalendar className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
 
                           <input
                             type="date"
                             value={selectedDate}
                             onChange={(e) => setSelectedDate(e.target.value)}
                             min={new Date().toISOString().split("T")[0]}
-                            className="w-full bg-white border border-gray-300 rounded-md py-3 pl-10 pr-4 text-gray-700
-                   focus:outline-none focus:ring-2 focus:ring-[#FF92A5] focus:border-[#FF92A5]
+                            className="w-full bg-white border border-vmb-primary/10 rounded-md py-3 pl-10 pr-4 text-vmb-text-main
+                   focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                    transition-all cursor-pointer
                    [&::-webkit-calendar-picker-indicator]:opacity-0
                    [&::-webkit-calendar-picker-indicator]:absolute

@@ -2,14 +2,14 @@ import React from "react";
 
 export const CellRenderers = {
   salonEmail: (value) => (
-    <span className="text-sm font-medium text-[#4B5563]">{value}</span>
+    <span className="text-sm font-medium text-vmb-text-main">{value}</span>
   ),
 
   message: (value) => (
     <p
-      className="italic text-[12px] text-black/92 max-w-[340px] line-clamp-3"
+      className="italic text-[12px] text-vmb-text-main/50 max-w-[340px] line-clamp-3"
       title={value}
-      style={{ fontStyle: "italic", opacity: 0.5 }}
+      style={{ fontStyle: "italic" }}
     >
       {value}
     </p>
@@ -20,7 +20,7 @@ export const CellRenderers = {
       {/* {options.map((option, index) => ( */}
       <span
         // key={index}
-        className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+        className="px-1.5 py-0.5 bg-white border border-vmb-secondary text-vmb-secondary rounded text-[10px] whitespace-nowrap"
       >
         {options}
       </span>
@@ -29,25 +29,25 @@ export const CellRenderers = {
   ),
 
   discount: (value) => (
-    <span className="inline-block px-2.5 py-1 bg-[#FF92A533] text-[#FF92A5] rounded-md text-sm font-semibold">
+    <span className="inline-block px-2.5 py-1 bg-vmb-secondary/20 text-vmb-secondary rounded-md text-sm font-semibold">
       {value}
     </span>
   ),
 
   inviteDate: (value) => (
-    <span className="text-sm text-[#4B5563] font-medium">{value}</span>
+    <span className="text-sm text-vmb-text-muted font-medium">{value}</span>
   ),
 
   status: (value) => {
     const styles = {
-      Claimed: "bg-[#4FCF0033] text-[#4FCF00]",
-      Pending: "bg-[#FF950033] text-[#FF9500]",
+      Claimed: "bg-vmb-success/20 text-vmb-success",
+      Pending: "bg-vmb-pending/20 text-vmb-pending",
     };
 
     return (
       <span
         className={`inline-block p-[5px] rounded-[5px] text-[10px] font-medium break-all text-wrap ${
-          styles[value] || "bg-red-100 text-red-800"
+          styles[value] || "bg-vmb-error/20 text-vmb-error"
         }`}
       >
         {value}

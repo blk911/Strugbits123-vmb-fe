@@ -14,7 +14,7 @@ export default function RadioField({
   return (
     <div className="flex flex-col gap-y-[8px]">
       {label && (
-        <label className="text-[14px] lg:text-[16px] font-poppins font-medium text-[#374151]">
+        <label className="text-[14px] lg:text-[16px] font-poppins font-medium text-vmb-text-main">
           {label}
         </label>
       )}
@@ -32,16 +32,14 @@ export default function RadioField({
                   <div
                     className={`flex h-4 w-4 items-center justify-center rounded-full border border-gray-300
                       ${
-                        checked
-                          ? "bg-[#E6E6E6] text-[#FF92A5]"
-                          : "bg-[#E6E6E6] text-transparent"
+                        checked ?
+                          "bg-vmb-bg-soft text-vmb-secondary"
+                        : "bg-vmb-bg-soft text-transparent"
                       }
                       ${classes}`}
                   >
                     {checked &&
-                      (tickIcon ? (
-                        tickIcon
-                      ) : (
+                      (tickIcon ? tickIcon : (
                         <svg
                           width="13"
                           height="13"
@@ -54,18 +52,18 @@ export default function RadioField({
                             cy="6.5"
                             r="6"
                             fill="white"
-                            stroke="#581838"
+                            stroke="var(--vmb-primary)"
                           />
                           <circle
                             cx="6.49996"
                             cy="6.49996"
                             r="4.29"
-                            fill="#581838"
+                            fill="var(--vmb-primary)"
                           />
                         </svg>
                       ))}
                   </div>
-                  <span className="text-sm text-[#4B1837] font-poppins font-normal">
+                  <span className="text-sm text-vmb-primary font-poppins font-normal">
                     {opt}
                   </span>
                 </>

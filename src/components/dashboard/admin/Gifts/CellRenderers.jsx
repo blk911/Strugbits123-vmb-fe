@@ -4,7 +4,7 @@ export const CellRenderers = {
       {services.map((service, index) => (
         <span
           key={index}
-          className="px-1.5 py-0.5  bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+          className="px-1.5 py-0.5  bg-white border border-vmb-secondary text-vmb-secondary rounded text-[10px] whitespace-nowrap"
         >
           {service}
         </span>
@@ -14,9 +14,9 @@ export const CellRenderers = {
 
   status: (status) => {
     const styles = {
-      Accepted: "bg-[#4FCF0033] text-[#4FCF00]",
-      Pending: "bg-[#FF950033] text-[#FF9500]",
-      Declined: "bg-[#DC26264D] text-[#DC2626]",
+      Accepted: "bg-vmb-success/20 text-vmb-success",
+      Pending: "bg-vmb-pending/20 text-vmb-pending",
+      Declined: "bg-vmb-error/20 text-vmb-error",
     };
 
     return (

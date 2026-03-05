@@ -38,17 +38,17 @@ export default function SalonProfilePanel() {
   return (
     <SectionWrapper className="p-6 flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <p className="text-[18px] font-semibold text-[#581838]">
+        <p className="text-[18px] font-semibold text-vmb-primary">
           Salon Profile
         </p>
         <FaEdit
-          className="text-[#FF92A5] shrink-0 cursor-pointer"
+          className="text-vmb-secondary shrink-0 cursor-pointer"
           onClick={() => openModal("salonprofileSettings")}
         />
       </div>
 
       <div className="flex flex-col items-center text-center gap-2">
-        <div className="w-[80px] h-[80px] rounded-full border border-[#E5E7EB] overflow-hidden">
+        <div className="w-[80px] h-[80px] rounded-full border border-vmb-primary/10 overflow-hidden">
           <img
             src={user?.profilePic || salonImg}
             alt="Salon"
@@ -56,28 +56,28 @@ export default function SalonProfilePanel() {
           />
         </div>
 
-        <p className="text-[18px] font-semibold text-[#581838]">
+        <p className="text-[18px] font-semibold text-vmb-primary">
           {user?.salonName}
         </p>
-        <p className="text-[14px] text-[#4B5563]">{user?.description}</p>
+        <p className="text-[14px] text-vmb-text-muted">{user?.description}</p>
       </div>
 
       <div className="flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
-          <FaMapMarkerAlt className="text-[#9CA3AF] shrink-0" />
-          <p className="text-[14px] text-[#4B5563]">
+          <FaMapMarkerAlt className="text-vmb-text-muted shrink-0" />
+          <p className="text-[14px] text-vmb-text-muted">
             {user?.address}, {user?.zipcode}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <FaPhone className="text-[#9CA3AF] shrink-0" />
-          <p className="text-[14px] text-[#4B5563]">{user?.phoneNumber}</p>
+          <FaPhone className="text-vmb-text-muted shrink-0" />
+          <p className="text-[14px] text-vmb-text-muted">{user?.phoneNumber}</p>
         </div>
 
         <div className="flex items-center gap-3">
-          <FaClock className="text-[#9CA3AF]  shrink-0" />
-          <p className="text-[14px] text-[#4B5563]">
+          <FaClock className="text-vmb-text-muted  shrink-0" />
+          <p className="text-[14px] text-vmb-text-muted">
             {user?.startTime && user?.endTime
               ? `${user.startTime} - ${user.endTime}`
               : "09:00 AM - 05:00 PM"}
@@ -85,8 +85,8 @@ export default function SalonProfilePanel() {
         </div>
 
         <div className="flex items-center gap-3">
-          <FaCalendar className="text-[#9CA3AF] shrink-0" />
-          <p className="text-[14px] text-[#4B5563]">
+          <FaCalendar className="text-vmb-text-muted shrink-0" />
+          <p className="text-[14px] text-vmb-text-muted">
             {" "}
             {/* {user?.workingDays.map((day) => day.slice(0, 3)).join("-")} */}
             {(() => {

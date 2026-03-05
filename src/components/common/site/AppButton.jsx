@@ -19,25 +19,25 @@ export default function AppButton({
   let variantClasses = "";
   switch (variant) {
     case "primary":
-      variantClasses = "bg-[#FF92A5] text-white hover:opacity-90 border-none";
+      variantClasses = "bg-vmb-secondary text-white hover:opacity-90 border-none";
       break;
     case "primary-bordered":
       variantClasses =
-        "bg-[#FF92A5] text-white hover:opacity-90 border border-[#E5E7EB]";
+        "bg-vmb-secondary text-white hover:opacity-90 border border-gray-200";
       break;
     case "outline-dark":
       variantClasses =
-        "border border-[#581838] bg-transparent text-[#581838] hover:bg-[#581838]/10";
+        "border border-vmb-primary bg-transparent text-vmb-primary hover:bg-vmb-primary/10";
       break;
     case "outline-pink":
       variantClasses =
-        "border border-[#FF92A5] bg-transparent text-[#FF92A5] hover:bg-[#FF92A50D]";
+        "border border-vmb-secondary bg-transparent text-vmb-secondary hover:bg-vmb-secondary/5";
       break;
     case "ghost-pink":
-      variantClasses = "bg-[#FF92A54D] text-[#581838] hover:bg-[#FF92A566]";
+      variantClasses = "bg-vmb-secondary/30 text-vmb-primary hover:bg-vmb-secondary/40";
       break;
     case "ghost-pink-light":
-      variantClasses = "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A533]";
+      variantClasses = "bg-vmb-secondary/30 text-vmb-secondary hover:bg-vmb-secondary/20";
       break;
     default:
       variantClasses = "";

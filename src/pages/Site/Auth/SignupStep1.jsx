@@ -65,23 +65,23 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
 
   return (
     <div className="w-full space-y-4">
-      <label className="block text-[#581838] font-medium">I am</label>
+      <label className="block text-vmb-primary font-medium">I am</label>
       <div className="flex gap-6 mb-2">
-        <label className="flex items-center gap-2 text-[#581838] font-medium cursor-pointer">
+        <label className="flex items-center gap-2 text-vmb-primary font-medium cursor-pointer">
           <input
             type="radio"
             checked={userType === "customer"}
             onChange={() => setUserType("customer")}
-            className="accent-[#581838] w-4 h-4"
+            className="accent-vmb-primary w-4 h-4"
           />
           Customer
         </label>
-        <label className="flex items-center gap-2 text-[#581838] font-medium cursor-pointer">
+        <label className="flex items-center gap-2 text-vmb-primary font-medium cursor-pointer">
           <input
             type="radio"
             checked={userType === "salon"}
             onChange={() => setUserType("salon")}
-            className="accent-[#581838] w-4 h-4"
+            className="accent-vmb-primary w-4 h-4"
           />
           Salon Owner
         </label>
@@ -102,7 +102,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         error={errors.email}
       />
       <InputWithIcon
-        type="number"
+        type="tel"
         label="Phone Number"
         icon={FaPhoneAlt}
         name="phone"
@@ -131,7 +131,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
       <div>
         <div className="flex justify-between items-start">
           <div className="w-[69%]">
-            <label className="block text-[#374151] text-[16px] font-semibold">
+            <label className="block text-vmb-text-main text-[16px] font-semibold">
               Upload Picture
             </label>
           </div>
@@ -140,9 +140,9 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
             onClick={() => picRef.current.click()}
             disabled={uploading}
             className={`flex items-center cursor-pointer gap-2 px-4 py-3 rounded-xl font-medium transition ${
-              uploading
-                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : "bg-[#FF92A54D] text-[#FF92A5] hover:bg-[#FF92A580]"
+              uploading ?
+                "bg-vmb-bg-soft text-vmb-text-muted cursor-not-allowed"
+              : "bg-vmb-secondary/30 text-vmb-secondary hover:bg-vmb-secondary/50"
             }`}
           >
             <FaFileImage /> {uploading ? "Uploading..." : "Upload"}
@@ -186,11 +186,9 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         error={errors.confirmPassword}
       />
 
-      {userType === "salon" ? (
+      {userType === "salon" ?
         <AuthButton text="Next" onClick={handleNext} disabled={isSubmitting} />
-      ) : (
-        <AuthButton text="Sign Up" disabled={isSubmitting} />
-      )}
+      : <AuthButton text="Sign Up" disabled={isSubmitting} />}
     </div>
   );
 }

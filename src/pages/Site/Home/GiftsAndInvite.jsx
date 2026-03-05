@@ -1,83 +1,79 @@
 import React from "react";
 
-import pic1 from "../../../assets/gift-1.png";
-import pic2 from "../../../assets/gift-2.png";
+import pic1 from "../../../assets/brand/benefits/girls-night.jpg";
+import pic2 from "../../../assets/brand/benefits/invite_sent.jpeg";
 import Button from "../../../components/common/site/Button";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
-function Card({ img, title, desc, style, border, btnText }) {
+function Card({ img, title, desc, btnText, type, mode }) {
+  const navigate = useNavigate();
   return (
     <div
-      className="w-[526px] flex flex-col rounded-[20px] overflow-hidden"
-      style={{
-        ...style,
-        border: border,
-      }}
+      className="
+        w-full max-w-[630px]
+        flex flex-col
+        rounded-[20px]
+        border border-vmb-primary/20 hover:border-vmb-secondary
+        bg-white
+        hover:shadow-2xl
+        overflow-hidden
+        pb-[20px] sm:pb-[30px]
+      "
     >
-      <div className="h-[223px] w-full overflow-hidden rounded-t-[20px]">
-        <img src={img} alt="" className="h-full w-full object-cover" />
+      <div className="w-full h-[223px] overflow-hidden">
+        <img
+          src={img}
+          alt={title}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
-      <div className="w-full flex flex-col px-[30px] pt-[27px] pb-[40px]">
-        <span
-          className="max-xl:text-[25px] xl:text-[30px] text-[#581838] mt-[24px] mb-[10px]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 520,
-          }}
-        >
+
+      <div className="flex flex-col gap-[27px] px-6 sm:px-10 pt-6  ">
+        <h3 className="font-poppins font-medium text-[22px] sm:text-[25px] text-vmb-primary leading-snug">
           {title}
-        </span>
-        <span
-          className="max-xl:text-[14px] xl:text-[16px] max-xl:leading-[20px] mt-[10px]"
-          style={{
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-          }}
-        >
+        </h3>
+
+        <p className="font-poppins font-normal text-[14px] text-vmb-secondary leading-relaxed">
           {desc}
-        </span>
-        <div className="mt-[30px]">
-          <Button
-            text={btnText}
-            classes={"w-max capitalize"}
-            textclass={"text-[16px]"}
-            navigateTo={"register"}
-          />
-        </div>
+        </p>
+        <PrimaryButton
+          text={btnText}
+          variant="pillLight"
+          className="w-fit p-[5px] pl-[15px]"
+          onClick={() => navigate("/register")}
+          authType={type}
+          authMode={mode}
+        />
       </div>
     </div>
   );
 }
 
-function GiftsAndInvite() {
-  const card1Shadow = {
-    boxShadow: `
-      -4px 10px 24px 0px #FF92A51A,
-      -14px 42px 44px 0px #FF92A517,
-      -32px 94px 60px 0px #FF92A50D,
-      -57px 167px 71px 0px #FF92A503,
-      -89px 262px 77px 0px #FF92A500
-    `,
-  };
-
+function GiftsAndInvite({ cards }) {
   return (
-    <div className="flex flex-wrap justify-center items-center gap-[25px] px-[10px]">
-      <Card
-        img={pic1}
-        title="Gifting Made Easy"
-        desc="Give the gift of essential self-care and glow-from-within moments."
-        style={card1Shadow}
-        border="1px solid #581838"
-        btnText="Gift a NMB gift card"
-      />
-      <Card
-        img={pic2}
-        title="Invite & Earn"
-        desc="Salon owners can invite others to join and grow together."
-        style={{}}
-        border="1px solid #58183833"
-        btnText="Invite the best salon"
-      />
-    </div>
+    <section className="w-full px-4">
+      <div className="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center items-stretch">
+        <Card
+          img={pic1}
+          title={cards[0].title}
+          desc={cards[0].desc}
+          btnText="Gift A VMB Gift Card"
+          type={cards[0].type}
+          mode={cards[0].mode}
+        />
+
+        <Card
+          img={pic2}
+          title={cards[1].title}
+          desc={cards[1].desc}
+          btnText="Invite The Best Salon"
+          type={cards[1].type}
+          mode={cards[1].mode}
+        />
+      </div>
+    </section>
   );
 }
 

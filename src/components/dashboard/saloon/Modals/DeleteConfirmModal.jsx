@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import deleteImg from "../../../../assets/delete-icon.png";
+import deleteImg from "../../../../assets/trash.gif";
 import AppButton from "../../../common/site/AppButton";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { useDeleteServiceMutation } from "../../../../store/api";
@@ -24,7 +24,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
         <Transition.Child
@@ -44,18 +44,18 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              <Dialog.Panel className="w-full max-w-[360px] bg-white rounded-[10px] p-[30px] flex flex-col items-center gap-3 shadow-lg">
+              <Dialog.Panel className="w-full max-w-[360px] bg-vmb-bg-soft rounded-[10px] p-[30px] flex flex-col items-center gap-3 shadow-lg">
                 <img
                   src={deleteImg}
                   alt="Delete"
                   className="w-[79px] h-[93px] mx-auto"
                 />
 
-                <h2 className="text-center text-[#FF92A5] font-bold text-[20px] leading-tight">
+                <h2 className="text-center text-vmb-secondary font-bold text-[20px] leading-tight">
                   Are you sure you want <br /> to delete this?
                 </h2>
 
-                <p className="text-center text-[#404040] text-[14px] font-medium leading-[20px]">
+                <p className="text-center text-vmb-text-main text-[14px] font-medium leading-[20px]">
                   This action can’t be undone. Once deleted, this record will be
                   permanently removed.
                 </p>
@@ -64,7 +64,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
                   <AppButton
                     leftIcon={<FaTimes />}
                     variant="custom"
-                    className="flex-1 bg-[#581838] text-white"
+                    className="flex-1 bg-vmb-primary text-white"
                     onClick={closeModal}
                   >
                     No
@@ -72,7 +72,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
                   <AppButton
                     leftIcon={<FaCheck />}
                     variant="custom"
-                    className="flex-1 bg-[#FF92A5] text-white"
+                    className="flex-1 bg-vmb-secondary text-white"
                     onClick={handleDeleteClick}
                     disabled={isDeleting}
                   >

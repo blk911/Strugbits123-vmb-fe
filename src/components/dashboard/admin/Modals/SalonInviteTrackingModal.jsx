@@ -21,7 +21,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
     { id: salonId },
     {
       skip: !isOpen || !salonId,
-    }
+    },
   );
   const handleViewSalon = () => {
     if (!salonId) return;
@@ -43,21 +43,21 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
   };
   const status = data.status || "pending";
   const statusStyles = {
-    claimed: { bg: "bg-[#4FCF0033]", text: "text-[#4FCF00]", label: "Claimed" },
+    claimed: { bg: "bg-vmb-success/20", text: "text-vmb-success", label: "Claimed" },
     accepted: {
-      bg: "bg-[#4FCF0033]",
-      text: "text-[#4FCF00]",
+      bg: "bg-vmb-success/20",
+      text: "text-vmb-success",
       label: "Claimed",
     },
-    pending: { bg: "bg-[#FF950033]", text: "text-[#FF9500]", label: "Pending" },
+    pending: { bg: "bg-vmb-pending/20", text: "text-vmb-pending", label: "Pending" },
     unclaimed: {
-      bg: "bg-[#DC262633]",
-      text: "text-[#DC2626]",
-      label: "Unclaimed",
+      bg: "bg-vmb-error/20",
+      text: "text-vmb-error",
+      label: "Unused",
     },
     default: {
-      bg: "bg-gray-200",
-      text: "text-gray-600",
+      bg: "bg-vmb-bg-soft",
+      text: "text-vmb-text-muted",
       label: status.charAt(0).toUpperCase() + status.slice(1),
     },
   };
@@ -69,22 +69,22 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] font-[Poppins] overflow-y-auto custom-scrollbar bg-[#e8e8e8] rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
+        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar bg-vmb-bg-soft rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-[#581838] font-bold text-[20px] sm:text-[24px]">
+          <h3 className="text-vmb-primary font-bold text-[20px] sm:text-[24px]">
             Salon Invite Tracking
           </h3>
           <button
             onClick={onClose}
-            className="text-[#581838] text-[26px] sm:text-[28px] p-1 hover:bg-white/30 rounded"
+            className="text-vmb-primary text-[26px] sm:text-[28px] p-1 hover:bg-white/30 rounded"
           >
             <IoClose />
           </button>
         </div>
 
-        <div className="w-full border border-[#5818381A] bg-[#F2F2F2] rounded-[10px] p-4 sm:p-5 flex flex-col gap-6">
+        <div className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-4 sm:p-5 flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
             <img
               src={salonInfo.image}
@@ -93,10 +93,10 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
             />
 
             <div className="flex-1">
-              <p className="text-[#4B5563] font-semibold text-[22px] sm:text-[30px] leading-tight">
+              <p className="text-vmb-text-main font-semibold text-[22px] sm:text-[30px] leading-tight">
                 {salonInfo.name}
               </p>
-              <p className="text-[#4B5563] text-[16px] mt-1">
+              <p className="text-vmb-text-muted text-[16px] mt-1">
                 {salonInfo.desc}
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
               fullWidth={false}
               variant="custom"
               size="custom"
-              className="bg-[#FF92A54D] text-[#581838] py-[12px] px-[20px] rounded-[10px] font-medium hover:bg-[#ff92a5]/20 transition whitespace-nowrap"
+              className="bg-vmb-secondary/30 text-vmb-primary py-[12px] px-[20px] rounded-[10px] font-medium hover:bg-vmb-secondary/20 transition whitespace-nowrap"
               onClick={handleViewSalon}
             >
               View Salon
@@ -113,7 +113,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-6">
-            <div className="flex-1 bg-white border border-[#0000001A] rounded-[10px] p-4 sm:p-5">
+            <div className="flex-1 bg-white border border-vmb-primary/10 rounded-[10px] p-4 sm:p-5">
               <div className="flex justify-end">
                 <span
                   className={`px-3 py-1.5 rounded-full text-xs font-semibold ${currentStyle.bg} ${currentStyle.text}`}
@@ -131,18 +131,18 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                     <div className="flex flex-col items-center">
                       <div
                         className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
-                          item.iconBg || "bg-[#FF92A54D]"
+                          item.iconBg || "bg-vmb-secondary/30"
                         }`}
                         style={{
-                          borderColor: item.iconBorderColor || "#FF92A5",
+                          borderColor: item.iconBorderColor || "var(--vmb-secondary)",
                         }}
                       >
-                        <div className="text-[#FF92A5]">{item.icon}</div>
+                        <div className="text-vmb-secondary">{item.icon}</div>
                       </div>
 
                       {idx < timelineItems.length - 1 && (
                         <div
-                          className="w-0.5 mt-2 bg-[#FF92A5]"
+                          className="w-0.5 mt-2 bg-vmb-secondary"
                           style={{ height: 50 }}
                         />
                       )}
@@ -151,18 +151,18 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                     <div className="flex-1 pb-1">
                       <p
                         className={`font-bold ${
-                          item.titleColor || "text-[#1F2937]"
+                          item?.barColor || "bg-vmb-secondary/30"
                         } text-sm sm:text-base`}
                       >
                         {item.title}
                       </p>
                       {item.dateBy && (
-                        <p className="text-[#6B7280] text-xs mt-1">
+                        <p className="text-vmb-text-muted text-xs mt-1">
                           {item.dateBy}
                         </p>
                       )}
                       {item.body && (
-                        <p className="text-[#4B5563] text-sm mt-2">
+                        <p className="text-vmb-text-main text-sm mt-2">
                           {item.body}
                         </p>
                       )}
@@ -174,20 +174,20 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
 
             <div className="w-full lg:w-[360px] flex flex-col gap-6">
               <div className="flex flex-col gap-4">
-                <p className="text-[#581838] font-semibold text-[18px]">
+                <p className="text-vmb-primary font-semibold text-[18px]">
                   Salon Information
                 </p>
 
-                <div className="grid grid-cols-2 gap-4 text-[14px] text-[#000000]">
+                <div className="grid grid-cols-2 gap-4 text-[14px] text-vmb-text-main">
                   <div>
                     <p className="font-medium">Salon Name:</p>
-                    <p className="text-[#00000080] text-[16px]">
+                    <p className="text-vmb-text-muted text-[16px]">
                       {salonInfo.name}
                     </p>
                   </div>
                   <div>
                     <p className="font-medium">Email:</p>
-                    <p className="text-[#00000080] text-[16px] break-all">
+                    <p className="text-vmb-text-muted text-[16px] break-all">
                       {salonInfo.email}
                     </p>
                   </div>
@@ -195,7 +195,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                     {salonInfo?.phone && (
                       <>
                         <p className="font-medium">Phone:</p>
-                        <p className="text-[#00000080] text-[16px]">
+                        <p className="text-vmb-text-muted text-[16px]">
                           {salonInfo.phone}
                         </p>
                       </>
@@ -203,28 +203,28 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                   </div>
                   <div className={`${salonInfo?.phone === "" && "col-span-2"}`}>
                     <p className="font-medium">Service:</p>
-                    <p className="text-[#00000080] text-[16px]">
+                    <p className="text-vmb-text-muted text-[16px]">
                       {salonInfo.service}
                     </p>
                   </div>
                   <div>
                     <p className="font-medium">Discount:</p>
-                    <p className="text-[#00000080] text-[16px]">
+                    <p className="text-vmb-text-muted text-[16px]">
                       {salonInfo.discount}
                     </p>
                   </div>
                 </div>
 
                 <p className="font-medium text-sm mt-2">Message:</p>
-                <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-3">
-                  <p className="text-[12px] italic text-[#00000080] whitespace-pre-line">
+                <div className="border border-vmb-primary/10 bg-white rounded-[8px] p-3">
+                  <p className="text-[12px] italic text-vmb-text-muted whitespace-pre-line">
                     {salonInfo.message}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col gap-4 mt-4">
-                <p className="text-[#581838] font-semibold text-[18px]">
+                <p className="text-vmb-primary font-semibold text-[18px]">
                   Client Information
                 </p>
 
@@ -232,27 +232,27 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                   <img
                     src={clientInfo.avatar}
                     alt={clientInfo.name}
-                    className="w-[101px] h-[101px] border border-gray-200 rounded-full object-cover"
+                    className="w-[101px] h-[101px] border border-vmb-primary/10 rounded-full object-cover"
                   />
 
                   <div className="text-sm">
                     {clientInfo.name && (
                       <>
-                        <p className="font-medium text-[#000000]">Full Name</p>
-                        <p className="text-[#00000080] mb-2 text-[16px]">
+                        <p className="font-medium text-vmb-text-main">Full Name</p>
+                        <p className="text-vmb-text-muted mb-2 text-[16px]">
                           {clientInfo.name}
                         </p>
                       </>
                     )}
 
-                    <p className="font-medium text-[#000000]">Email</p>
-                    <p className="text-[#00000080] mb-2 text-[16px] break-all">
+                    <p className="font-medium text-vmb-text-main">Email</p>
+                    <p className="text-vmb-text-muted mb-2 text-[16px] break-all">
                       {clientInfo.email}
                     </p>
                     {clientInfo?.phone && (
                       <>
-                        <p className="font-medium text-[#000000]">Phone</p>
-                        <p className="text-[#00000080] text-[16px]">
+                        <p className="font-medium text-vmb-text-main">Phone</p>
+                        <p className="text-vmb-text-muted text-[16px]">
                           {clientInfo.phone}
                         </p>
                       </>

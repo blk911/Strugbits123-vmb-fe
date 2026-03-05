@@ -25,7 +25,7 @@ function ProfileAvatar({
   return (
     <div className="w-full flex flex-col gap-y-[20px]">
       <span
-        className="max-xl:text-[18px] text-[#581838] xl:text-[20px] max-xl:leading-[20px]"
+        className="max-xl:text-[18px] text-vmb-primary xl:text-[20px] max-xl:leading-[20px]"
         style={{
           fontFamily: "Poppins, sans-serif",
           fontWeight: 600,
@@ -43,7 +43,7 @@ function ProfileAvatar({
           >
             <img src={profile} alt="" />
           </div>
-          <div className="rounded-full absolute bottom-0 right-0 h-[32px] w-[32px] bg-[#FF92A5] flex justify-center items-center">
+          <div className="rounded-full absolute bottom-0 right-0 h-[32px] w-[32px] bg-vmb-secondary flex justify-center items-center">
             <img src={cameraIcon} alt="Camera" />
           </div>
           <input
@@ -56,7 +56,7 @@ function ProfileAvatar({
         </div>
         <div className="flex flex-col">
           <span
-            className={`max-xl:text-[16px] text-[#581838] xl:text-[18px] max-xl:leading-[20px] ${nameClass}`}
+            className={`max-xl:text-[16px] text-vmb-primary xl:text-[18px] max-xl:leading-[20px] ${nameClass}`}
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 500,
@@ -65,7 +65,7 @@ function ProfileAvatar({
             {name}
           </span>
           <span
-            className="max-xl:text-[16px] text-[#737373] xl:text-[18px] max-xl:leading-[20px]"
+            className="max-xl:text-[16px] text-vmb-text-muted xl:text-[18px] max-xl:leading-[20px]"
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 400,

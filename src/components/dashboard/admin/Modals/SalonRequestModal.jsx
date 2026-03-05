@@ -33,7 +33,7 @@ export default function SalonRequestModal({
     } catch (err) {
       console.error("Decline failed:", err);
       toastError(
-        err?.data?.message || "Failed to decline salon. Please try again."
+        err?.data?.message || "Failed to decline salon. Please try again.",
       );
     }
   };
@@ -51,30 +51,30 @@ export default function SalonRequestModal({
     } catch (err) {
       console.error("Approve failed:", err);
       toastError(
-        err?.data?.message || "Failed to approve salon. Please try again."
+        err?.data?.message || "Failed to approve salon. Please try again.",
       );
     }
   };
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80"
       onClick={closeModal}
     >
       <div
-        className="bg-[#e8e8e8] w-full max-w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-[10px] p-[30px] flex flex-col gap-[32px] font-[Poppins]"
+        className="bg-vmb-bg-soft w-full max-w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-[10px] p-[30px] flex flex-col gap-[32px] font-poppins"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-[#581838] font-bold text-[24px]">
+          <h2 className="text-vmb-primary font-bold text-[24px]">
             Salon Request
           </h2>
           <IoClose
             onClick={closeModal}
-            className="text-[#581838] text-[28px] cursor-pointer"
+            className="text-vmb-primary text-[28px] cursor-pointer"
           />
         </div>
 
-        <div className="border border-[#5818381A] bg-[#F2F2F2] rounded-[10px] p-[20px] flex flex-col gap-[24px]">
+        <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-[20px] flex flex-col gap-[24px]">
           <div className="flex gap-4 flex-col sm:flex-row">
             <img
               src={data?.profilePic || defaultImg}
@@ -83,22 +83,22 @@ export default function SalonRequestModal({
             />
 
             <div className="flex flex-col gap-3 w-full">
-              <h3 className="text-[#581838] font-semibold text-[18px]">
+              <h3 className="text-vmb-primary font-semibold text-[18px]">
                 Salon Information
               </h3>
 
               <div>
-                <p className="text-[#000] text-[14px] font-medium">
+                <p className="text-vmb-text-main text-[14px] font-medium">
                   Salon Name
                 </p>
-                <p className="text-[#00000080] text-[16px]">
+                <p className="text-vmb-text-muted text-[16px]">
                   {data?.salonName}
                 </p>
               </div>
 
               <div>
-                <p className="text-[#000] text-[14px] font-medium">Address</p>
-                <p className="text-[#00000080] text-[16px]">
+                <p className="text-vmb-text-main text-[14px] font-medium">Address</p>
+                <p className="text-vmb-text-muted text-[16px]">
                   {data?.address ||
                     "123 Beauty Street, Fashion District, NY 10001"}
                 </p>
@@ -106,33 +106,33 @@ export default function SalonRequestModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="text-[#000] text-[14px] font-medium">Phone</p>
-                  <p className="text-[#00000080] text-[16px]">
+                  <p className="text-vmb-text-main text-[14px] font-medium">Phone</p>
+                  <p className="text-vmb-text-muted text-[16px]">
                     {data?.phone || "+1 (555) 123-4567"}
                   </p>
 
-                  <p className="text-[#000] text-[14px] font-medium mt-3">
+                  <p className="text-vmb-text-main text-[14px] font-medium mt-3">
                     Timing
                   </p>
-                  <p className="text-[#00000080] text-[16px]">
+                  <p className="text-vmb-text-muted text-[16px]">
                     {/* {data?.startTime + " - " + data?.endTime ||
                       "09:00 AM - 05:00 PM"} */}
-                    {data?.startTime && data?.endTime
-                      ? data.startTime + " - " + data.endTime
-                      : "09:00 AM - 05:00 PM"}
+                    {data?.startTime && data?.endTime ?
+                      data.startTime + " - " + data.endTime
+                    : "09:00 AM - 05:00 PM"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-[#000] text-[14px] font-medium">
+                  <p className="text-vmb-text-main text-[14px] font-medium">
                     Licensed Document
                   </p>
 
                   <div className="flex items-center gap-2 mt-1">
-                    <p className="text-[#00000080] text-[12px] font-medium break-all">
-                      {data?.licenseDocument
-                        ? data.licenseDocument.split("/").pop()
-                        : "license-document.pdf"}
+                    <p className="text-vmb-text-muted text-[12px] font-medium break-all">
+                      {data?.licenseDocument ?
+                        data.licenseDocument.split("/").pop()
+                      : "license-document.pdf"}
                     </p>
 
                     <button
@@ -140,15 +140,15 @@ export default function SalonRequestModal({
                         data?.licenseDocument &&
                         window.open(data.licenseDocument, "_blank")
                       }
-                      className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium cursor-pointer"
+                      className="bg-vmb-secondary/30 rounded-[5px] px-[10px] py-[5px] text-vmb-primary text-[12px] font-medium cursor-pointer"
                     >
                       View
                     </button>
                   </div>
-                  <p className="text-[#000] text-[14px] font-medium mt-3">
+                  <p className="text-vmb-text-main text-[14px] font-medium mt-3">
                     Working Days
                   </p>
-                  <button className="bg-[#FF92A54D] rounded-[5px] px-[10px] py-[5px] text-[#581838] text-[12px] font-medium">
+                  <button className="bg-vmb-secondary/30 rounded-[5px] px-[10px] py-[5px] text-vmb-primary text-[12px] font-medium">
                     {data?.workingDays
                       .map((day) => day.slice(0, 3))
                       .join("-") || "Mon - Thu - Fri"}
@@ -157,38 +157,38 @@ export default function SalonRequestModal({
               </div>
 
               <div className="mt-2">
-                <p className="text-[#000] text-[14px] font-medium">
+                <p className="text-vmb-text-main text-[14px] font-medium">
                   Description
                 </p>
                 <textarea
                   rows={4}
                   readOnly
-                  className="w-full border border-[#E5E5E5] rounded-[8px] p-3 mt-2 text-[14px] text-[#00000080] resize-none"
+                  className="w-full border border-vmb-primary/10 rounded-[8px] p-3 mt-2 text-[14px] text-vmb-text-muted resize-none"
                   value={
                     data?.description ||
                     "A premium beauty salon offering top-tier hair, nail, and spa services with a focus on luxury and relaxation."
                   }
                 />
               </div>
-              <div className="h-[1px] bg-[#D9D9D9]"></div>
+              <div className="h-[1px] bg-vmb-primary/10"></div>
 
-              <h3 className="text-[#581838] font-semibold text-[18px]">
+              <h3 className="text-vmb-primary font-semibold text-[18px]">
                 Owner Information
               </h3>
 
               <div>
-                <p className="text-[#000] text-[14px] font-medium">Full Name</p>
-                <p className="text-[#00000080] text-[16px]">{data?.name}</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">Full Name</p>
+                <p className="text-vmb-text-muted text-[16px]">{data?.name}</p>
               </div>
 
               <div>
-                <p className="text-[#000] text-[14px] font-medium">Email</p>
-                <p className="text-[#00000080] text-[16px]">{data?.email}</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">Email</p>
+                <p className="text-vmb-text-muted text-[16px]">{data?.email}</p>
               </div>
 
               <div>
-                <p className="text-[#000] text-[14px] font-medium">Phone</p>
-                <p className="text-[#00000080] text-[16px]">
+                <p className="text-vmb-text-main text-[14px] font-medium">Phone</p>
+                <p className="text-vmb-text-muted text-[16px]">
                   {data?.phoneNumber || "+1 (555) 987-6543"}
                 </p>
               </div>
@@ -203,7 +203,7 @@ export default function SalonRequestModal({
                 key={i}
                 src={i || defaultImg}
                 alt={`Gallery ${i}`}
-                className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-gray-300"
+                className="w-[94px] h-[100px] rounded-[10px] object-cover flex-shrink-0 border border-vmb-primary/10"
               />
             ))}
           </div>
@@ -214,7 +214,7 @@ export default function SalonRequestModal({
               fullWidth={false}
               variant="custom"
               size="custom"
-              className="py-[15px] px-[20px] text-[14px] bg-[#FF92A5] text-white hover:opacity-90"
+              className="py-[15px] px-[20px] text-[14px] bg-vmb-secondary text-white hover:opacity-90"
               leftIcon={<FiX size={16} />}
               onClick={handleDecline}
               disabled={isDeclining}
@@ -228,7 +228,7 @@ export default function SalonRequestModal({
               onClick={handleApprove}
               variant="custom"
               size="custom"
-              className="py-[15px] px-[20px] bg-white text-[14px] border border-[#581838] text-[#581838] hover:bg-[#581838]/10"
+              className="py-[15px] px-[20px] bg-white/50 text-[14px] border border-vmb-primary text-vmb-primary hover:bg-vmb-primary/10"
               leftIcon={<FiCheck size={16} />}
             >
               {isApproving ? "Approving..." : "Approve"}

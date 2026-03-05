@@ -20,58 +20,58 @@ export default function AppointmentDetailsSection({ data }) {
     finalTotal = total;
   }
   return (
-    <div className="bg-white border border-[#0000001A] rounded-[10px] p-5 flex flex-col gap-4">
-      <div className="border border-[#0000001A] rounded-[10px] p-3 flex items-center gap-3">
+    <div className="bg-white/50 border border-vmb-primary/10 rounded-[10px] p-5 flex flex-col gap-4">
+      <div className="border border-vmb-primary/10 rounded-[10px] p-3 flex items-center gap-3">
         <img
           src={data.salon.image}
           alt={data.salon.name}
           className="w-[40px] h-[40px] rounded-md object-cover"
         />
         <div>
-          <p className="text-[#4B5563] font-semibold text-[14px]">
+          <p className="text-vmb-text-main font-semibold text-[14px]">
             {data.salon.name}
           </p>
-          <p className="text-[#4B5563] text-[12px]">{data.salon.description}</p>
+          <p className="text-vmb-text-main text-[12px]">{data.salon.description}</p>
         </div>
       </div>
 
-      <div className="border border-[#9CA3AF4D] rounded-[10px] p-[10px] flex flex-col gap-[10px]">
-        <h3 className="text-[#581838] text-[14px] font-medium">Services:</h3>
+      <div className="border border-vmb-primary/10 rounded-[10px] p-[10px] flex flex-col gap-[10px]">
+        <h3 className="text-vmb-primary text-[14px] font-medium">Services:</h3>
         <ServicesTable
           services={data?.services}
-          containerClass="border border-[#9CA3AF4D] rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
+          containerClass="border border-vmb-primary/10 rounded-[10px] p-2 sm:p-3 text-[11px] sm:text-[12px]"
           scrollbarClass="custom-scrollbar"
           maxHeightClass="max-h-32"
           headerClass="px-1"
-          rowClass="border-t border-[#9CA3AF4D] pt-2 text-[#581838] text-[11px] sm:text-[12px]"
+          rowClass="border-t border-vmb-primary/10 pt-2 text-vmb-primary text-[11px] sm:text-[12px]"
         />
 
         <div className="flex justify-end">
-          <p className="text-[#FF92A5] font-bold text-[13px]">
+          <p className="text-vmb-secondary font-bold text-[13px]">
             Amount Paid: ${finalTotal.toFixed(2)}
           </p>
         </div>
       </div>
       {status !== "declined" && (
-        <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-[10px] flex flex-col gap-[20px]">
-          <p className="text-[#581838] font-medium text-[14px]">
+        <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-[10px] flex flex-col gap-[20px]">
+          <p className="text-vmb-primary font-medium text-[14px]">
             Appointment Details
           </p>
           <div className="flex flex-col sm:flex-row justify-between gap-4">
             <div className="flex-1">
-              <p className="text-[#404040] text-[14px] font-medium mb-1">
+              <p className="text-vmb-text-main text-[14px] font-medium mb-1">
                 Date
               </p>
-              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+              <div className="flex items-center gap-2 text-vmb-text-muted text-[14px]">
                 <IoCalendarOutline />
                 <span>{data?.appointment?.date}</span>
               </div>
             </div>
             <div className="flex-1">
-              <p className="text-[#404040] text-[14px] font-medium mb-1">
+              <p className="text-vmb-text-main text-[14px] font-medium mb-1">
                 Time
               </p>
-              <div className="flex items-center gap-2 text-[#00000080] text-[14px]">
+              <div className="flex items-center gap-2 text-vmb-text-muted text-[14px]">
                 <IoTimeOutline />
                 <span>{data?.appointment?.time}</span>
               </div>

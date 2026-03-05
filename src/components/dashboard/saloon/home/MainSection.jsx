@@ -64,7 +64,7 @@ export default function MainSection() {
     salon: item.fullName,
     service: item?.services?.serviceName || "No Service",
     statusText: "Pending",
-    statusColor: "#FF9500",
+    statusClass: "bg-vmb-pending/20 text-vmb-pending",
     timeAgo: formatTimeAgo(item.createdAt || item.createdAt),
     data: item,
   });
@@ -77,7 +77,7 @@ export default function MainSection() {
       item.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0
     }`,
     statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
-    statusColor: item.status === "pending" ? "#FF9500" : "#FF92A5",
+    statusClass: item.status === "pending" ? "bg-vmb-pending/20 text-vmb-pending" : "bg-vmb-secondary/20 text-vmb-secondary",
     timeAgo: formatTimeAgo(item?.timeline[0]?.timestamp || item.createdAt),
     data: item,
   });
@@ -98,14 +98,13 @@ export default function MainSection() {
         onViewAll={() => navigate(navigateTo)}
       />
 
-      {isLoading ? (
+      {isLoading ?
         <div className="flex justify-center py-6">
           <LoadingIndicator size="sm" />
         </div>
-      ) : items.length === 0 ? (
+      : items.length === 0 ?
         <EmptyState message={emptyMessage} />
-      ) : (
-        <div className="flex flex-col gap-4">
+      : <div className="flex flex-col gap-4">
           {items.slice(0, 2).map((item) => (
             <CardComponent
               key={item._id}
@@ -114,7 +113,7 @@ export default function MainSection() {
             />
           ))}
         </div>
-      )}
+      }
     </SectionWrapper>
   );
   return (
@@ -123,7 +122,7 @@ export default function MainSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           {renderCardSection({
             title: "Invites",
-            icon: <FaUser className="text-[#FF92A5]" />,
+            icon: <FaUser className="text-vmb-secondary" />,
             items: pendingInvites,
             isLoading: loadingInvites,
             emptyMessage: "No pending invites received",
@@ -134,7 +133,7 @@ export default function MainSection() {
 
           {renderCardSection({
             title: "Pending Appointments",
-            icon: <FaCalendarAlt className="text-[#FF92A5]" />,
+            icon: <FaCalendarAlt className="text-vmb-secondary" />,
             items: selectedAppointments,
             isLoading: loadingAppointments || loadingReschedule,
             emptyMessage: "No appointments to show",
@@ -146,33 +145,32 @@ export default function MainSection() {
 
         <SectionWrapper className="p-6 flex flex-col gap-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <h3 className="text-[18px] font-semibold text-[#581838]">
+            <h3 className="text-[18px] font-semibold text-vmb-primary">
               Services
             </h3>
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => navigate("/salon-detail")}
-                className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
+                className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
               >
                 View All
               </button>
               <button
                 onClick={() => navigate("/salon-detail")}
-                className="bg-[#FF92A5] text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:bg-[#ff7a8a] transition cursor-pointer"
+                className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
               >
                 Manage Services
               </button>
             </div>
           </div>
 
-          {loadingServices ? (
+          {loadingServices ?
             <div className="flex justify-center py-6">
               <LoadingIndicator />
             </div>
-          ) : services.length === 0 ? (
-            <p className="text-gray-500 text-center">No services added yet</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-6">
+          : services.length === 0 ?
+            <p className="bg-vmb-pending/20 text-vmb-pending text-center">No services added yet</p>
+          : <div className="grid grid-cols-1 gap-6">
               {services.map((service) => (
                 <ServiceCard
                   key={service._id}
@@ -183,7 +181,7 @@ export default function MainSection() {
                 />
               ))}
             </div>
-          )}
+          }
         </SectionWrapper>
       </div>
 
@@ -200,11 +198,11 @@ function Header({ icon, title, onViewAll }) {
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
       <div className="flex items-center justify-center sm:justify-start gap-3">
         {icon}
-        <p className="text-[18px] font-semibold text-[#581838]">{title}</p>
+        <p className="text-[18px] font-semibold text-vmb-primary">{title}</p>
       </div>
       <p
         onClick={onViewAll}
-        className="underline text-[14px] font-medium text-[#9CA3AF] cursor-pointer text-center sm:text-right hover:text-[#FF92A5] transition"
+        className="underline text-[14px] font-medium text-vmb-text-muted/50 cursor-pointer text-center sm:text-right hover:text-vmb-secondary transition"
       >
         View All
       </p>
@@ -214,7 +212,7 @@ function Header({ icon, title, onViewAll }) {
 
 function EmptyState({ message }) {
   return (
-    <div className="text-center py-6 text-gray-500">
+    <div className="text-center py-6 text-vmb-text-muted">
       <p className="text-[14px]">{message}</p>
     </div>
   );

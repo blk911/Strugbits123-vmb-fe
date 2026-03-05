@@ -107,7 +107,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-50 font-[Poppins]"
+        className="relative z-50 font-poppins"
         onClose={closeModal}
       >
         <Transition.Child
@@ -133,14 +133,14 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[480px] bg-white rounded-[10px] p-[30px] shadow-xl flex flex-col gap-8">
+              <Dialog.Panel className="w-full max-w-[480px] bg-vmb-bg-soft rounded-[10px] p-[30px] shadow-xl flex flex-col gap-8">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-[24px] font-bold text-[#581838]">
+                  <h2 className="text-[24px] font-bold text-vmb-primary">
                     Profile Settings
                   </h2>
                   <IoClose
                     onClick={closeModal}
-                    className="text-[#581838] text-3xl cursor-pointer hover:opacity-80 transition-opacity"
+                    className="text-vmb-primary text-3xl cursor-pointer hover:opacity-80 transition-opacity"
                   />
                 </div>
 
@@ -150,7 +150,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                 >
                   <div className="flex justify-center">
                     <div className="relative">
-                      <div className="w-[126px] h-[126px] rounded-full overflow-hidden border-4 border-white shadow-lg">
+                      <div className="w-[126px] h-[126px] rounded-full overflow-hidden border-4 border-vmb-bg-soft shadow-lg">
                         <img
                           src={
                             previewImage || "https://via.placeholder.com/126"
@@ -163,10 +163,10 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                         type="button"
                         onClick={() => imgRef.current?.click()}
                         disabled={uploading}
-                        className={`absolute cursor-pointer bottom-0 right-0 w-10 h-10 bg-[#FF92A5] rounded-full flex items-center justify-center shadow-lg border-4 border-white transition ${
+                        className={`absolute cursor-pointer bottom-0 right-0 w-10 h-10 bg-vmb-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-vmb-bg-soft transition ${
                           uploading
                             ? "opacity-70 cursor-not-allowed"
-                            : "hover:bg-[#e07a8c]"
+                            : "hover:bg-vmb-secondary/80"
                         }`}
                       >
                         <IoCamera className="text-white text-xl" />
@@ -182,12 +182,12 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                   </div>
 
                   <div>
-                    <h3 className="text-[18px] font-semibold text-[#581838] mb-4">
+                    <h3 className="text-[18px] font-semibold text-vmb-primary mb-4">
                       Personal Information
                     </h3>
                     <div className="space-y-5">
                       <div className="flex flex-col gap-1">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                        <label className="text-vmb-text-main text-[14px] font-medium">
                           Full Name
                         </label>
                         <input
@@ -202,7 +202,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           onChange={preventLeadingSpace(
                             register("fullName").onChange
                           )}
-                          className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
+                          className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter full name"
                         />
                         {errors.fullName && (
@@ -213,7 +213,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                        <label className="text-vmb-text-main text-[14px] font-medium">
                           Email
                         </label>
                         <input
@@ -230,7 +230,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           onChange={preventLeadingSpace(
                             register("email").onChange
                           )}
-                          className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
+                          className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter email"
                         />
                         {errors.email && (
@@ -241,7 +241,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <label className="text-[#404040] text-[14px] font-medium">
+                        <label className="text-vmb-text-main text-[14px] font-medium">
                           Phone
                         </label>
                         <input
@@ -256,7 +256,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           onChange={preventLeadingSpace(
                             register("phone").onChange
                           )}
-                          className="border border-[#E5E5E5] rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-[#FF92A5] transition-colors"
+                          className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter phone number"
                         />
                         {errors.phone && (

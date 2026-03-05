@@ -71,10 +71,10 @@ const ResetPassword = () => {
           </div>
 
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-[#581838]">
+            <h2 className="text-2xl font-bold text-vmb-primary">
               Reset Password
             </h2>
-            <p className="text-gray-600 text-sm mt-2">
+            <p className="text-vmb-text-muted text-sm mt-2">
               Enter your new password below.
             </p>
           </div>
@@ -124,11 +124,11 @@ const ResetPassword = () => {
           </form>
 
           <div className="text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-vmb-text-muted">
               Remember your password?{" "}
               <a
                 href="/register"
-                className="text-[#581838] font-medium hover:underline"
+                className="text-vmb-primary font-medium hover:underline"
               >
                 Back to Login
               </a>

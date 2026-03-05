@@ -1,48 +1,59 @@
 import Marquee from "react-fast-marquee";
-import logo1 from "../../../assets/logos/logo-1.png";
-import logo2 from "../../../assets/logos/logo-2.png";
-import logo3 from "../../../assets/logos/logo-3.png";
-import logo4 from "../../../assets/logos/logo-4.png";
-import logo5 from "../../../assets/logos/logo-5.png";
-import logo6 from "../../../assets/logos/logo-6.png";
-import logo7 from "../../../assets/logos/logo-7.png";
-import logo8 from "../../../assets/logos/logo-8.png";
-import logo9 from "../../../assets/logos/logo-9.png";
-import logo10 from "../../../assets/logos/logo-10.png";
-import logo11 from "../../../assets/logos/logo-11.png";
+import waxingImg from "../../../assets/scroller/wax.png";
+import stylingImg from "../../../assets/scroller/styling.png";
+import spaImg from "../../../assets/scroller/spa.png";
+import nailsImg from "../../../assets/scroller/nails.png";
+import makeupImg from "../../../assets/scroller/makeup.png";
+import lipsImg from "../../../assets/scroller/lips.png";
+import lashingImg from "../../../assets/scroller/lashes.png";
+import facialImg from "../../../assets/scroller/facial.png";
+import browsImg from "../../../assets/scroller/brows.png";
+
+const services = [
+  { image: waxingImg, label: "WAXING" },
+  { image: lipsImg, label: "LIPS" },
+  { image: browsImg, label: "BROWS" },
+  { image: spaImg, label: "SPA" },
+  { image: nailsImg, label: "NAILS" },
+  { image: stylingImg, label: "STYLING" },
+  { image: makeupImg, label: "MAKEUP" },
+  { image: facialImg, label: "FACIAL" },
+  { image: lashingImg, label: "LASHES" },
+];
 
 export default function LogoMarquee() {
   return (
-    <div className="flex justify-center items-center w-full">
-      <div className="relative my-8 w-full max-w-[1920px] bg-white overflow-hidden">
-        <div
-          className="absolute left-0 top-0 h-full w-[120px] pointer-events-none z-10"
-          style={{
-            background:
-              "linear-gradient(90deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
-          }}
-        />
-        <div
-          className="absolute right-0 top-0 h-full w-[120px] pointer-events-none z-10"
-          style={{
-            background:
-              "linear-gradient(270deg, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
-          }}
-        />
-        <Marquee gradient={false} speed={50}>
-          <img src={logo1} alt="Logo 1" className="h-12 mx-4" />
-          <img src={logo2} alt="Logo 2" className="h-12 mx-4" />
-          <img src={logo3} alt="Logo 3" className="h-12 mx-4" />
-          <img src={logo4} alt="Logo 4" className="h-12 mx-4" />
-          <img src={logo5} alt="Logo 5" className="h-12 mx-4" />
-          <img src={logo6} alt="Logo 6" className="h-12 mx-4" />
-          <img src={logo7} alt="Logo 7" className="h-12 mx-4" />
-          <img src={logo8} alt="Logo 8" className="h-12 mx-4" />
-          <img src={logo9} alt="Logo 9" className="h-12 mx-4" />
-          <img src={logo10} alt="Logo 10" className="h-12 mx-4" />
-          <img src={logo11} alt="Logo 11" className="h-12 mx-4" />
-        </Marquee>
-      </div>
+    <div className="w-full h-[146px]  flex items-center overflow-hidden">
+      <Marquee gradient={false} speed={40} autoFill pauseOnHover>
+        {services.map((service, index) => (
+          <div
+            key={`${service.label}-${index}`}
+            className="mx-3 w-[120px] h-[146px] flex flex-col items-center justify-center flex-shrink-0"
+          >
+            <div
+              className="
+                w-[100px] h-[100px]
+                rounded-full
+                border-[1px] border-white
+                flex items-center justify-center
+                overflow-hidden
+                bg-white/30 backdrop-blur-sm
+                shadow-xl
+              "
+            >
+              <img
+                src={service.image}
+                alt={service.label}
+                className="w-[90%] h-[90%] object-cover rounded-full"
+              />
+            </div>
+
+            <span className="mt-2 text-center font-poppins text-[16px] font-normal text-vmb-primary leading-none">
+              {service.label}
+            </span>
+          </div>
+        ))}
+      </Marquee>
     </div>
   );
 }

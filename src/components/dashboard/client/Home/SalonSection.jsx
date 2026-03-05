@@ -41,7 +41,7 @@ export default function SalonSection({
     },
     {
       refetchOnMountOrArgChange: true,
-    }
+    },
   );
   useEffect(() => {
     setCurrentPage(1);
@@ -64,7 +64,7 @@ export default function SalonSection({
 
   if (isLoading) {
     return (
-      <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-6">
+      <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-md p-6">
         <div className="animate-pulse">
           <div className="h-6 bg-gray-200 rounded w-48 mb-6"></div>
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -78,10 +78,10 @@ export default function SalonSection({
   }
 
   return (
-    <div className="bg-white border border-[#F3F4F6] rounded-[12px] shadow-[0_4px_6px_#0000000D] p-4 sm:p-5 md:p-6 w-full max-w-full">
+    <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-md p-4 sm:p-5 md:p-6 w-full max-w-full">
       {!isSalonPage && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 relative">
-          <h2 className="text-[#581838] text-[18px] font-semibold">
+          <h2 className="text-vmb-primary text-[18px] font-semibold">
             Nearby Salons
           </h2>
 
@@ -89,21 +89,21 @@ export default function SalonSection({
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setFilterOpen((prev) => !prev)}
-                className="cursor-pointer border border-[#0000001A] text-[#9CA3AF] text-[14px] rounded-full px-4 py-1 hover:bg-[#FF92A54D] hover:text-[#581838] transition"
+                className="cursor-pointer border border-vmb-primary/10 text-vmb-text-muted text-[14px] rounded-full px-4 py-1 hover:bg-vmb-secondary/30 hover:text-vmb-primary transition"
               >
                 {selectedMiles ? `${selectedMiles} Miles` : "Filter by miles"}
               </button>
 
               <span
                 onClick={() => navigate("/salons")}
-                className="text-[#FF92A5] text-[14px] font-medium underline cursor-pointer hover:opacity-80"
+                className="text-vmb-secondary text-[14px] font-medium underline cursor-pointer hover:opacity-80"
               >
                 View All
               </span>
             </div>
 
             {filterOpen && (
-              <div className="w-[150px] absolute top-[110%] left-0 md:right-20 rounded-[12px] border border-[#F3F4F6] bg-white p-[12px] flex flex-col gap-2 z-20 shadow-lg">
+              <div className="w-[150px] absolute top-[110%] left-0 md:right-20 rounded-[12px] border border-vmb-primary/10 bg-white p-[12px] flex flex-col gap-2 z-20 shadow-lg">
                 {milesOptions.map((mile) => (
                   <div
                     key={mile}
@@ -111,10 +111,10 @@ export default function SalonSection({
                       setSelectedMiles(mile);
                       setFilterOpen(false);
                     }}
-                    className={`w-[120px] cursor-pointer text-center text-[#581838] text-[14px] p-2 rounded-full transition ${
-                      selectedMiles === mile
-                        ? "bg-[#FF92A5] text-white"
-                        : "bg-[#FF92A54D] hover:bg-[#FF92A566]"
+                    className={`w-[120px] cursor-pointer text-center text-vmb-primary text-[14px] p-2 rounded-full transition ${
+                      selectedMiles === mile ?
+                        "bg-vmb-secondary text-white"
+                      : "bg-vmb-secondary/30 hover:bg-vmb-secondary/40"
                     }`}
                   >
                     {mile} Miles
@@ -126,21 +126,20 @@ export default function SalonSection({
         </div>
       )}
 
-      {salons.length === 0 ? (
-        <p className="text-center text-gray-500 py-10">
+      {salons.length === 0 ?
+        <p className="text-center text-vmb-text-muted py-10">
           Currently within this distance there are no salons.
         </p>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 px-2 sm:px-4 md:px-6">
+      : <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 px-2 sm:px-4 md:px-6">
           {salons.map((salon) => (
             <SalonCard key={salon._id} salon={salon} />
           ))}
         </div>
-      )}
+      }
 
       {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-[#E5E7EB]">
-          <p className="text-sm text-[#6B7280]">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pt-6 border-t border-vmb-primary/10">
+          <p className="text-sm text-vmb-text-muted">
             Showing {(currentPage - 1) * LIMIT + 1} to{" "}
             {Math.min(currentPage * LIMIT, totalItems)} of {totalItems} salons
           </p>
@@ -149,7 +148,7 @@ export default function SalonSection({
             <button
               disabled={currentPage === 1}
               onClick={() => handlePageChange(currentPage - 1)}
-              className="px-4 py-2 text-sm border border-[#D1D5DB] rounded-lg text-[#4B5563] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+              className="px-4 py-2 text-sm border border-vmb-primary/10 rounded-lg text-vmb-text-muted disabled:opacity-50 disabled:cursor-not-allowed hover:bg-vmb-bg-soft transition"
             >
               Previous
             </button>
@@ -161,21 +160,21 @@ export default function SalonSection({
                     key={page}
                     onClick={() => handlePageChange(page)}
                     className={`w-10 h-10 rounded-lg border transition ${
-                      currentPage === page
-                        ? "bg-[#FF92A5] text-white border-[#FF92A5]"
-                        : "border-[#E5E7EB] text-[#4B5563] hover:bg-gray-100"
+                      currentPage === page ?
+                        "bg-vmb-secondary text-white border-vmb-secondary"
+                      : "border-vmb-primary/10 text-vmb-text-muted hover:bg-vmb-bg-soft"
                     }`}
                   >
                     {page}
                   </button>
-                )
+                ),
               )}
             </div>
 
             <button
               disabled={currentPage === totalPages}
               onClick={() => handlePageChange(currentPage + 1)}
-              className="px-4 py-2 text-sm border border-[#D1D5DB] rounded-lg text-[#4B5563] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+              className="px-4 py-2 text-sm border border-vmb-primary/10 rounded-lg text-vmb-text-muted disabled:opacity-50 disabled:cursor-not-allowed hover:bg-vmb-bg-soft transition"
             >
               Next
             </button>

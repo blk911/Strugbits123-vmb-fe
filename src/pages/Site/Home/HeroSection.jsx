@@ -1,85 +1,104 @@
-import React from "react";
-import pic1 from "../../../assets/pic-1.png";
-import pic2 from "../../../assets/pic-2.png";
-import pic3 from "../../../assets/pic-3.png";
-import pic4 from "../../../assets/pic-4.png";
-import Button from "../../../components/common/site/Button";
+import { useNavigate } from "react-router-dom";
+import PrimaryButton from "../../../components/common/site/PrimaryButton";
 
-function HeroSection() {
+const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <div
-      className="h-auto lg:h-[658px] xl:h-[700px] w-full py-12 px-[26px]"
-      style={{
-        background: `linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), linear-gradient(180deg, #FF92A5 0%, #FFFFFF 100%)`,
-      }}
+      className="
+        w-full max-w-[1280px]
+        mx-auto
+        px-3 sm:px-6 md:px-8
+        py-6 sm:py-8
+        min-h-[420px] sm:min-h-[480px] md:min-h-[543px]
+        rounded-none sm:rounded-2xl
+        bg-cover bg-center
+      "
+      style={{ backgroundImage: "url('/hero-bg.png')" }}
     >
-      <div className="flex flex-row h-full w-full justify-center gap-x-[20px]">
-        <div className="max-lg:hidden h-full flex flex-col justify-between">
-          <img
-            src={pic1}
-            alt=""
-            className="max-xl:h-[179px] max-xl:w-[195px] xl:h-[220px] xl:w-[240px]"
-          />
-          <img
-            src={pic3}
-            alt=""
-            className="max-xl:h-[118px] max-xl:w-[129px] xl:h-[145px] xl:w-[160px] ml-[21px]"
-          />
-        </div>
-        <div className="h-full flex flex-col justify-center items-center gap-y-[31px] xl:gap-y-[45px]">
+      <div
+        className="
+          w-full md:max-w-[610px]
+          bg-white/80 backdrop-blur-sm
+          rounded-xl sm:rounded-2xl
+          p-4 sm:p-6 md:p-[30px]
+          flex flex-col gap-4 sm:gap-5
+        "
+      >
+        <div className="flex flex-col gap-2 sm:gap-[10px]">
+          <h1
+            className="
+            font-lato font-bold
+            text-2xl sm:text-3xl md:text-[45px]
+            text-vmb-primary
+            leading-tight
+          "
+          >
+            Why VMB?
+          </h1>
+
           <h2
-            className="text-[70px] sm:text-[100px] xl:text-[140px] font-normal text-center  text-[#581838] leading-[70px] lg:leading-[90px] xl:leading-[100px]"
-            style={{
-              fontFamily: "Italianno, cursive",
-              fontWeight: 400,
-              fontStyle: "normal",
-              letterSpacing: "0%",
-            }}
+            className="
+            font-lato font-semibold
+            text-lg sm:text-2xl md:text-[35px]
+            text-vmb-primary
+            leading-snug
+          "
           >
-            Connecting Salons & Customers
+            Priority Access. Exclusive Perks.
           </h2>
-          <h3
-            className="text-[20px] max-sm:leading-[30px] sm:text-[35px] xl:text-[50px] font-medium text-center text-[#581838]"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 500,
-              fontStyle: "normal",
-              letterSpacing: "0%",
-            }}
+
+          <h2
+            className="
+            font-lato font-semibold
+            text-lg sm:text-2xl md:text-[35px]
+            text-vmb-primary
+            leading-snug
+          "
           >
-            the Smart Way – Through Gifting & Invites
-          </h3>
+            Insider Benefits.
+          </h2>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:gap-[10px]">
           <p
-            className="lg:text-[20px] xl:text-[22px] font-normal text-center text-[#581838]"
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 400,
-              fontStyle: "normal",
-              lineHeight: "28px",
-              letterSpacing: "0%",
-            }}
+            className="
+            font-lato font-bold
+            text-sm sm:text-base md:text-[18px]
+            text-vmb-secondary
+          "
           >
-            Send salon services as gifts to friends & family, and let every
-            occasion shine. Salon owners <br /> can also invite each other to
-            grow together on one platform.
+            VMB rewards loyalty with priority booking, referral rewards, and
+            member-only benefits.
           </p>
-          <Button text={"Share the Gift of Beauty"} navigateTo={"register"} />
+
+          <p
+            className="
+            font-lato
+            text-sm sm:text-base md:text-[18px]
+            text-vmb-text-main
+            leading-relaxed
+          "
+          >
+            VMB members secure their preferred appointments, unlock service
+            credits and upgrades for referrals, and strengthen their connection
+            with the salons they love. Thoughtful incentives turn loyal clients
+            into insiders — delivering more value with every visit.
+          </p>
         </div>
-        <div className="max-lg:hidden h-full flex flex-col justify-between">
-          <img
-            src={pic2}
-            alt=""
-            className="max-xl:h-[118px] max-xl:w-[129px] xl:h-[145px] xl:w-[160px]"
-          />
-          <img
-            src={pic4}
-            alt=""
-            className="max-xl:h-[186px] max-xl:w-[202px] xl:h-[230px] xl:w-[250px]"
-          />
-        </div>
+
+        <PrimaryButton
+          text="Join as Customer"
+          variant="pill"
+          onClick={() => navigate("/register")}
+          className="w-fit p-[5px] pl-[15px] "
+          authMode={"signup"}
+          authType={"customer"}
+        />
       </div>
     </div>
   );
-}
+};
 
 export default HeroSection;

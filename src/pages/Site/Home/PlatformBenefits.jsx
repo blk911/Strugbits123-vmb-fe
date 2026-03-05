@@ -1,64 +1,80 @@
 import React from "react";
-import pic1 from "../../../assets/logos/platform-logo-1.png";
-import pic2 from "../../../assets/logos/platform-logo-2.png";
-import pic3 from "../../../assets/logos/platform-logo-3.png";
 
-function Card({ img, title, desc }) {
+function Card({ photo, title, desc }) {
   return (
-    <div className="max-xl:max-w-[274px] xl:w-[360px] flex flex-col justify-center items-center">
-      <img src={img} alt="" className="w-[60px] h-[60px]" />
+    <div
+      className="
+        w-full
+        rounded-[20px]
+        bg-white
+        flex flex-col
+        p-[10px] pb-[30px]
+        gap-4
+     shadow-2xl
+        transition-transform duration-300
+        hover:-translate-y-1
+      "
+    >
+      <div className="w-full aspect-[288/133] overflow-hidden rounded-[12px]">
+        <img
+          src={photo}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
       <span
-        className="max-xl:text-[20px] xl:text-[25px] text-[#581838] mt-[24px] mb-[10px]"
-        style={{
-          fontFamily: "Poppins, sans-serif",
-          fontWeight: 520,
-        }}
+        className="
+          text-center
+          font-lato
+          font-semibold
+          text-lg sm:text-[20px]
+          text-vmb-primary
+        "
       >
         {title}
       </span>
+
       <span
-        className="max-xl:text-[14px] xl:text-[16px] text-[#4B5563] max-xl:leading-[20px]"
-        style={{
-          fontFamily: "Poppins, sans-serif",
-          fontWeight: 500,
-        }}
+        className="
+          text-center
+          font-inter
+          text-sm sm:text-[14px]
+          text-vmb-secondary
+          leading-relaxed
+        "
       >
         {desc}
       </span>
     </div>
   );
 }
-
-function PlatformBenefits() {
+function PlatformBenefits({ heading, subheading, cards }) {
   return (
-    <div className="w-full text-center flex flex-col justify-center items-center gap-y-[50px]  py-12 px-[10px]">
-      <h3
-        className="max-xl:text-[25px] xl:text-[35px] capitalize text-[#581838]"
-        style={{
-          fontFamily: "Poppins, sans-serif",
-          fontWeight: 600,
-        }}
-      >
-        The smarter way to gift & grow salons
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-[100px] gap-y-[50px]">
-        <Card
-          img={pic1}
-          title="Send Beauty as a Gift"
-          desc="Surprise friends & family with salon services – a unique way to share care."
-        />
-        <Card
-          img={pic2}
-          title="Salon Owner Invites"
-          desc="Salon owners can invite others to join and grow together."
-        />
-        <Card
-          img={pic3}
-          title="One Platform, Many Salons"
-          desc="Discover salons, connect, and be part of a growing beauty network."
-        />
+    <section className="w-full ">
+      <div className="vmb-container text-center flex flex-col gap-[30px]">
+        <div>
+          <h3 className="text-[30px] sm:text-[40px] font-lato text-vmb-primary capitalize font-semibold">
+            {heading}
+          </h3>
+          <p className="mt-2 text-sm font-inter sm:text-[18px] text-vmb-secondary font-medium">
+            {subheading}
+          </p>
+        </div>
+        <div className=" sm:mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              photo={card.photo}
+              title={card.title}
+              desc={card.desc}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

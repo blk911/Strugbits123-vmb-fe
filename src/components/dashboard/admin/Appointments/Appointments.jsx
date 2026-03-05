@@ -49,20 +49,20 @@ export default function Appointments({
   const formatDate = (date) =>
     !date ? "" : new Date(date).toLocaleDateString("en-GB");
   const formatTime = (date) =>
-    !date
-      ? ""
-      : new Date(date).toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
+    !date ? "" : (
+      new Date(date).toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    );
   const mapTimeline = (timeline = [], appt) => {
     return timeline.map((item, index) => {
       const isLast = index === timeline.length - 1;
       const tag = item.tag?.toLowerCase();
       const base = {
-        iconBg: isLast ? "bg-[#F3F4F6]" : "bg-[#FF92A54D]",
-        barColor: isLast ? "bg-[#E5E7EB]" : "bg-[#FF92A5]",
-        titleColor: isLast ? "text-[#6B7280]" : "text-[#581838]",
+        iconBg: isLast ? "bg-vmb-bg-soft" : "bg-vmb-secondary/30",
+        barColor: isLast ? "bg-vmb-primary/10" : "bg-vmb-secondary",
+        titleColor: isLast ? "text-vmb-text-muted" : "text-vmb-primary",
       };
 
       switch (tag) {
@@ -96,7 +96,7 @@ export default function Appointments({
           return {
             ...base,
             icon: <FaCalendarCheck className="w-4 h-4" color="white" />,
-            iconBg: "bg-[#FF92A5]",
+            iconBg: "bg-vmb-secondary",
             title: "Appointment Confirmed",
             dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
             body: item.description || "Client confirmed the appointment.",
@@ -106,11 +106,11 @@ export default function Appointments({
         case "scheduled":
           return {
             ...base,
-            icon: <GiCheckMark className="w-4 h-4" color="#9CA3AF66" />,
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#E5E7EB",
+            icon: <GiCheckMark className="w-4 h-4 text-vmb-muted/40" />,
+            iconBg: "bg-vmb-bg-soft",
+            iconBorderColor: "var(--vmb-primary-soft)",
             title: "Appointment Scheduled",
-            titleColor: "text-[#6B7280]",
+            titleColor: "text-vmb-text-muted",
             dateBy: `${formatDate(item.timestamp)} | Status: Confirmed`,
             body: item.description || "Appointment scheduled successfully.",
             smallTopLabel: true,
@@ -121,12 +121,12 @@ export default function Appointments({
           return {
             ...base,
             icon: (
-              <RiCalendarScheduleLine className="w-4 h-4" color="#9CA3AF66" />
+              <RiCalendarScheduleLine className="w-4 h-4 text-vmb-muted/40" />
             ),
-            iconBg: "bg-[#F3F4F6]",
-            iconBorderColor: "#9CA3AF66",
+            iconBg: "bg-vmb-bg-soft",
+            iconBorderColor: "var(--vmb-primary-soft)",
             title: "Reschedule Requested",
-            titleColor: "text-[#6B7280]",
+            titleColor: "text-vmb-text-muted",
             dateBy: "",
             body: null,
             reschedule: {
@@ -160,8 +160,8 @@ export default function Appointments({
           return {
             ...base,
             icon: <FaClock className="w-4 h-4" />,
-            iconBg: "bg-[#FFAA0033]",
-            barColor: "bg-[#FFAA00]",
+            iconBg: "bg-vmb-pending/20",
+            barColor: "bg-vmb-pending",
             title: "On Hold",
             dateBy: `${formatDate(item.timestamp)}`,
             body: item.description || "Appointment is on hold.",
@@ -185,12 +185,14 @@ export default function Appointments({
     salonName: appt?.salon.salonName || "Unknown Salon",
     serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
     clientEmail: appt.requestedBy?.email || "N/A",
-    appointmentDate: appt.appointmentDate
-      ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
+    appointmentDate:
+      appt.appointmentDate ?
+        new Date(appt.appointmentDate).toLocaleDateString("en-GB")
       : "N/A",
     appointmentTime: appt.startTime || "N/A",
-    status: appt.status
-      ? appt.status.charAt(0).toUpperCase() +
+    status:
+      appt.status ?
+        appt.status.charAt(0).toUpperCase() +
         appt.status.slice(1).replace("-", " ")
       : "Pending",
     _modalData: {

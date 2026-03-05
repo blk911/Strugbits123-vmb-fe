@@ -59,7 +59,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
     { id: salonId },
     {
       skip: !isOpen || !salonId,
-    }
+    },
   );
   const [rejectGift, { isLoading: rejecting }] = useRejectGiftMutation();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
@@ -91,8 +91,9 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
 
   if (!isOpen && !showSuccessModal) return null;
 
-  const totalPrice = Array.isArray(info.services)
-    ? info.services.reduce((acc, s) => acc + (s.price || 0), 0)
+  const totalPrice =
+    Array.isArray(info.services) ?
+      info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
   const vmbFee = totalPrice * 0.1;
   // const handleAccept = async () => {
@@ -122,7 +123,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
 
     const serviceTotal = info.services.reduce(
       (acc, s) => acc + (s.price || 0),
-      0
+      0,
     );
     const vmbFee = serviceTotal * 0.1;
     const totalAmount = serviceTotal + vmbFee;
@@ -187,7 +188,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50   font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={closeModal}
         >
           <Transition.Child
@@ -213,10 +214,10 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[448px] transform overflow-hidden rounded-[20px] border border-[#5818381A] bg-[#FFF2F4] p-[30px] shadow-xl transition-all">
+                <Dialog.Panel className="relative w-full max-w-[448px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all">
                   <IoClose
                     onClick={closeModal}
-                    className="absolute top-4 right-4 text-[#581838] text-2xl cursor-pointer"
+                    className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
                   />
 
                   <div className="flex flex-col items-center">
@@ -225,20 +226,21 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       alt="Treat"
                       className="w-[77px] h-[76px] object-cover "
                     />
-                    <h2 className="text-[#581838] font-bold text-[22px] mt-3 text-center">
-                      {gift.status === "accepted"
-                        ? "Treat Confirmed!"
-                        : "You’ve a Treat Request!"}
+                    <h2 className="text-vmb-primary font-bold text-[22px] mt-3 text-center">
+                      {gift.status === "accepted" ?
+                        "Treat Confirmed!"
+                      : "You’ve a Treat Request!"}
                     </h2>
-                    <p className="text-[#00000080] text-[12px] text-center mt-2">
-                      {gift.status === "accepted"
-                        ? "Your payment was successful. The salon has been notified and the treat is confirmed."
-                        : "A friend wants you to treat them! Check the details below and complete the payment to confirm."}
+                    <p className="text-vmb-text-muted/50 text-[12px] text-center mt-2">
+                      {gift.status === "accepted" ?
+                        "Your payment was successful. The salon has been notified and the treat is confirmed."
+                      : "A friend wants you to treat them! Check the details below and complete the payment to confirm."
+                      }
                     </p>
                   </div>
 
-                  <div className="mt-6 bg-white border border-[#0000001A] rounded-[10px] p-5 flex flex-col gap-4">
-                    <div className="border border-[#0000001A] rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="mt-6 bg-white border border-vmb-primary/10 rounded-[10px] p-5 flex flex-col gap-4">
+                    <div className="border border-vmb-primary/10 rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="flex items-center gap-3 flex-wrap sm:flex-nowrap">
                         <img
                           src={info.salon.image}
@@ -246,24 +248,24 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                           className="w-[40px] h-[40px] rounded-md object-cover flex-shrink-0 border border-gray-200 "
                         />
                         <div className="min-w-0">
-                          <p className="text-[#4B5563] font-semibold text-[14px] break-words">
+                          <p className="text-vmb-text-muted font-semibold text-[14px] break-words">
                             {info.salon.name}
                           </p>
-                          <p className="text-[#4B5563] text-[12px] break-words">
+                          <p className="text-vmb-text-muted text-[12px] break-words">
                             {info.salon.description}
                           </p>
                         </div>
                       </div>
                       <button
-                        className="bg-[#FF92A54D] text-[#581838] text-[12px] rounded-[5px] px-[10px] py-[5px] w-fit self-end sm:self-auto cursor-pointer"
+                        className="bg-vmb-secondary/30 text-vmb-primary text-[12px] rounded-[5px] px-[10px] py-[5px] w-fit self-end sm:self-auto cursor-pointer"
                         onClick={handleViewSalon}
                       >
                         View Salon
                       </button>
                     </div>
 
-                    <div className="border border-[#9CA3AF4D] rounded-[10px] p-4">
-                      <h3 className="text-[#581838] text-[14px] font-medium mb-3">
+                    <div className="border border-vmb-primary/10 rounded-[10px] p-4">
+                      <h3 className="text-vmb-primary text-[14px] font-medium mb-3">
                         Requested Services
                       </h3>
 
@@ -271,18 +273,18 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         {info.services.map((srv, i) => (
                           <div
                             key={i}
-                            className="border border-[#9CA3AF4D] bg-[#F0F0F0] rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 "
+                            className="border border-vmb-bg-soft bg-vmb-bg-soft rounded-[10px] p-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 "
                           >
                             <div className="min-w-0">
-                              <p className="text-[#581838] font-medium text-[14px] break-words">
+                              <p className="text-vmb-primary font-medium text-[14px] break-words">
                                 {srv.name}
                               </p>
-                              <div className="flex items-center gap-1 mt-1 text-[12px] text-[#581838]">
-                                <IoTimeOutline className="text-[#FF92A5] text-[12px]" />
+                              <div className="flex items-center gap-1 mt-1 text-[12px] text-vmb-primary">
+                                <IoTimeOutline className="text-vmb-secondary text-[12px]" />
                                 <span>{srv.duration}</span>
                               </div>
                             </div>
-                            <p className="text-[#581838] font-semibold text-[16px] text-right sm:text-left">
+                            <p className="text-vmb-primary font-semibold text-[16px] text-right sm:text-left">
                               ${srv.price}
                             </p>
                           </div>
@@ -290,14 +292,14 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                       </div>
 
                       <div className="flex flex-col items-end mt-3">
-                        <p className="text-[#FF92A5] font-bold text-[18px] text-right sm:text-left">
+                        <p className="text-vmb-secondary font-bold text-[18px] text-right sm:text-left">
                           Total Price: ${totalPrice + vmbFee}
                         </p>
                       </div>
                     </div>
 
-                    <div className="border border-[#0000001A] bg-[#F0F0F0] rounded-[10px] p-4">
-                      <p className="text-[#581838] text-[14px] font-medium mb-2">
+                    <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[10px] p-4">
+                      <p className="text-vmb-primary text-[14px] font-medium mb-2">
                         Message from:
                       </p>
 
@@ -308,17 +310,17 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                           className="w-[40px] h-[40px] rounded-full object-cover flex-shrink-0"
                         /> */}
                         <div className="min-w-0">
-                          <p className="text-[#4B5563] font-semibold text-[14px] break-words">
+                          <p className="text-vmb-text-muted font-semibold text-[14px] break-words">
                             {info.sender.name}
                           </p>
-                          <p className="text-[#4B5563] text-[12px] break-words">
+                          <p className="text-vmb-text-muted text-[12px] break-words">
                             {info.sender.email}
                           </p>
                         </div>
                       </div>
 
-                      <div className="border border-[#E5E5E5] bg-white rounded-[8px] p-3">
-                        <p className="text-[#00000080] text-[12px] italic leading-[18px] break-words">
+                      <div className="border border-vmb-primary/10 bg-white rounded-[8px] p-3">
+                        <p className="text-vmb-text-muted/50 text-[12px] italic leading-[18px] break-words">
                           {info.sender.message}
                         </p>
                       </div>
@@ -360,7 +362,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       <Transition appear show={showSuccessModal} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-50 font-[Poppins]"
+          className="relative z-50 font-poppins"
           onClose={() => setShowSuccessModal(false)}
         >
           <Transition.Child
@@ -382,10 +384,10 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                 alt="Success"
                 className="w-[96px] h-[96px] object-contain"
               />
-              <h2 className="text-[#FF92A5] font-bold text-[20px] mt-2">
+              <h2 className="text-vmb-secondary font-bold text-[20px] mt-2">
                 Payment Successful!
               </h2>
-              <p className="text-[#404040] text-[14px] font-medium mt-1 leading-[20px]">
+              <p className="text-vmb-text-main text-[14px] font-medium mt-1 leading-[20px]">
                 All set! Your payment is done — let them enjoy their special
                 treat! ✨
               </p>

@@ -24,7 +24,7 @@ export default function CheckboxField({
   return (
     <div className="flex flex-col gap-y-[8px]">
       {label && (
-        <label className="text-[14px] lg:text-[16px] font-poppins font-medium text-[#404040]">
+        <label className="text-[14px] lg:text-[16px] font-poppins font-medium text-vmb-text-main">
           {label}
         </label>
       )}
@@ -37,11 +37,11 @@ export default function CheckboxField({
           >
             <div
               onClick={() => handleSelect(opt)}
-              className={`group flex h-4 w-4 items-center justify-center rounded border border-gray-300 cursor-pointer
+              className={`group flex h-4 w-4 items-center justify-center rounded border border-vmb-primary/10 cursor-pointer
                 ${
                   value.includes(opt)
-                    ? "bg-[#E6E6E6] text-[#FF92A5]"
-                    : "bg-[#E6E6E6] text-transparent"
+                    ? "bg-vmb-bg-soft text-vmb-secondary"
+                    : "bg-vmb-bg-soft text-transparent"
                 } 
                 ${classes}`}
             >
@@ -50,7 +50,7 @@ export default function CheckboxField({
                   tickIcon
                 ) : (
                   <svg
-                    className="h-3 w-3 text-[#FF92A5]"
+                    className="h-3 w-3 text-vmb-secondary"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -62,7 +62,7 @@ export default function CheckboxField({
                   </svg>
                 ))}
             </div>
-            <span className="text-sm text-[#4B1837] font-poppins font-normal">
+            <span className="text-sm text-vmb-primary font-poppins font-normal">
               {opt}
             </span>
           </div>

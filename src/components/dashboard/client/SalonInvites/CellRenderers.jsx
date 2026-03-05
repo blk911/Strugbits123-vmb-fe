@@ -6,7 +6,7 @@ export const CellRenderers = {
       {/* {options.map((option, index) => ( */}
       <span
         // key={index}
-        className="px-1.5 py-0.5 bg-white border border-[#FF92A5] text-[#FF92A5] rounded text-[10px] whitespace-nowrap"
+        className="px-1.5 py-0.5 bg-white border border-vmb-secondary text-vmb-secondary rounded text-[10px] whitespace-nowrap"
       >
         {options}
       </span>
@@ -15,16 +15,16 @@ export const CellRenderers = {
   ),
 
   discount: (value) => (
-    <span className="inline-block px-2 py-0.5 bg-[#FF92A533] text-[#FF92A5] rounded text-xs font-medium">
+    <span className="inline-block px-2 py-0.5 bg-vmb-secondary/20 text-vmb-secondary rounded text-xs font-medium">
       {value}
     </span>
   ),
 
   status: (value) => {
     const styles = {
-      Pending: "bg-[#FF950033] text-[#FF9500]",
-      Claimed: "bg-[#4FCF0033] text-[#4FCF00]",
-      Unclaimed: "bg-[#64748B33] text-[#64748B]",
+      Pending: "bg-vmb-pending/20 text-vmb-pending",
+      Claimed: "bg-vmb-success/20 text-vmb-success",
+      Unclaimed: "bg-vmb-bg-soft text-vmb-text-muted",
     };
 
     return (
