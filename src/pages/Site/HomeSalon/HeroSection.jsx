@@ -60,7 +60,7 @@ export default function WhyVMBHero() {
               text="Be Part of Something More Personal"
               variant="pill"
               onClick={() => navigate("/register")}
-              className="w-full sm:w-auto px-5 py-2 text-[10px] sm:text-[16px]"
+              className="w-full sm:w-auto px-5 py-2 text-[12px] sm:text-[16px]"
               authMode={"signup"}
               authType={"salon"}
             />
