@@ -7,7 +7,7 @@ export default function SiteLayout() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      <main className="flex-1  mt-[60px] sm:mt-[70px] md:mt-[79px]">
+      <main className="flex-1  mt-[60px] sm:mt-[70px] md:mt-[79px] overflow-hidden">
         <Outlet />
       </main>
 
