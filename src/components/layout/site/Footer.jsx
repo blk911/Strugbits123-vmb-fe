@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="w-full max-w-[976px] h-[1px] bg-white/10 mt-8"></div>
 
         <div className="w-full max-w-[976px] mt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-white font-inter text-[12px]">
-          <span className="text-center sm:text-left">
+          <span className="text-center sm:text-left ">
             © 2026 VMB. All rights reserved.
           </span>
 

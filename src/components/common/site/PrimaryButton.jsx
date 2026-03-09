@@ -115,7 +115,7 @@ export default function PrimaryButton({
           ${arrowStyles[variant]}
         `}
       >
-        <FaArrowRight className="w-[7px] h-[10px] sm:w-[9px] sm:h-[12px]" />
+        <FaArrowRight className="w-[7px] h-[10px]  sm:w-[9px] sm:h-[12px]" />
       </span>
     </button>
   );

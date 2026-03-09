@@ -43,13 +43,21 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
   };
   const status = data.status || "pending";
   const statusStyles = {
-    claimed: { bg: "bg-vmb-success/20", text: "text-vmb-success", label: "Claimed" },
+    claimed: {
+      bg: "bg-vmb-success/20",
+      text: "text-vmb-success",
+      label: "Claimed",
+    },
     accepted: {
       bg: "bg-vmb-success/20",
       text: "text-vmb-success",
       label: "Claimed",
     },
-    pending: { bg: "bg-vmb-pending/20", text: "text-vmb-pending", label: "Pending" },
+    pending: {
+      bg: "bg-vmb-pending/20",
+      text: "text-vmb-pending",
+      label: "Pending",
+    },
     unclaimed: {
       bg: "bg-vmb-error/20",
       text: "text-vmb-error",
@@ -134,7 +142,8 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                           item.iconBg || "bg-vmb-secondary/30"
                         }`}
                         style={{
-                          borderColor: item.iconBorderColor || "var(--vmb-secondary)",
+                          borderColor:
+                            item.iconBorderColor || "var(--vmb-secondary)",
                         }}
                       >
                         <div className="text-vmb-secondary">{item.icon}</div>
@@ -149,11 +158,7 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                     </div>
 
                     <div className="flex-1 pb-1">
-                      <p
-                        className={`font-bold ${
-                          item?.barColor || "bg-vmb-secondary/30"
-                        } text-sm sm:text-base`}
-                      >
+                      <p className={`font-bold  text-sm sm:text-base`}>
                         {item.title}
                       </p>
                       {item.dateBy && (
@@ -238,7 +243,9 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
                   <div className="text-sm">
                     {clientInfo.name && (
                       <>
-                        <p className="font-medium text-vmb-text-main">Full Name</p>
+                        <p className="font-medium text-vmb-text-main">
+                          Full Name
+                        </p>
                         <p className="text-vmb-text-muted mb-2 text-[16px]">
                           {clientInfo.name}
                         </p>

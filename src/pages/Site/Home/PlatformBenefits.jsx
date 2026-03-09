@@ -5,6 +5,7 @@ function Card({ photo, title, desc }) {
     <div
       className="
         w-full
+        max-w-[308px]
         rounded-[20px]
         bg-white
         flex flex-col
@@ -44,6 +45,7 @@ function Card({ photo, title, desc }) {
           text-sm sm:text-[14px]
           text-vmb-secondary
           leading-relaxed
+          px-2
         "
       >
         {desc}
@@ -54,16 +56,16 @@ function Card({ photo, title, desc }) {
 function PlatformBenefits({ heading, subheading, cards }) {
   return (
     <section className="w-full ">
-      <div className="vmb-container text-center flex flex-col gap-[30px]">
+      <div className="w-full max-w-[1024px]  mx-auto text-center flex flex-col gap-[30px]">
         <div>
           <h3 className="text-[30px] sm:text-[40px] font-lato text-vmb-primary capitalize font-semibold">
             {heading}
           </h3>
-          <p className="mt-2 text-sm font-inter sm:text-[18px] text-vmb-secondary font-medium">
+          <p className="mt-2 text-sm font-inter sm:text-[18px] text-vmb-secondary ">
             {subheading}
           </p>
         </div>
-        <div className=" sm:mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-stretch">
+        <div className=" sm:mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 justify-items-center items-stretch">
           {cards.map((card, index) => (
             <Card
               key={index}
