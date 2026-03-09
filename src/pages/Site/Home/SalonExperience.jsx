@@ -20,16 +20,14 @@ function SalonExperience() {
   const navigate = useNavigate();
   return (
     <div
-      className="max-lg:h-auto lg:h-auto lg:pt-[50px] w-full bg-no-repeat bg-right bg-cover max-lg:pt-[60px] lg:px-[15px] px-[10px]"
+      className=" w-screen bg-no-repeat bg-right bg-cover  lg:px-[15px] px-[10px] h-full lg:h-[406px]"
       style={{
         backgroundImage: `url(${pic1})`,
       }}
     >
-      <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-center items-center lg:gap-x-[50px] xl:gap-x-[145px]">
-        <div className="flex flex-col w-full lg:w-[506px]">
-          <h4
-            className="max-xl:text-[35px] xl:text-[40px] text-white mb-[10px] font-poppins font-bold"
-          >
+      <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-center items-center lg:gap-x-[10px] ">
+        <div className="flex flex-col items-center p-3 w-full lg:w-[640px]">
+          <h4 className=" text-[25px] sm:text-[30px] md:text-[35px] xl:text-[40px] text-center text-white mb-[10px] font-poppins font-bold">
             Ready to Experience the
             <br />
             New Era of Salon Invites?

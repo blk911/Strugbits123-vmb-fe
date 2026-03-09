@@ -12,7 +12,7 @@ const HeroSection = () => {
         px-3 sm:px-6 md:px-8
         py-6 sm:py-8
         min-h-[420px] sm:min-h-[480px] md:min-h-[543px]
-        rounded-none sm:rounded-2xl
+        rounded-2xl
         bg-cover bg-center
       "
       style={{ backgroundImage: "url('/hero-bg.png')" }}

@@ -10,7 +10,7 @@ import TopSalons from "../Home/TopSalons";
 import SalonChoice from "../Home/SalonChoice";
 function HomeSalon() {
   return (
-    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px]">
+    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px] px-4 py-6">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits
@@ -20,17 +20,35 @@ function HomeSalon() {
           {
             photo: priorityImg,
             title: "Empowering",
-            desc: "Replace cancellations with committed clients and fill empty chairs through international invitations.",
+            desc: (
+              <>
+                Replace cancellations with committed <br />
+                clients and fill empty chairs through <br />
+                international invitations.
+              </>
+            ),
           },
           {
             photo: loyaltyImg,
             title: "Personal",
-            desc: "Experience beauty through personal invitations designed with intention.",
+            desc: (
+              <>
+                Experience beauty through <br />
+                personal invitations designed <br />
+                with intention.
+              </>
+            ),
           },
           {
             photo: advocateImg,
             title: "Connection",
-            desc: "Build long-term relationships that grow through trust, referrals, and repeat visits.",
+            desc: (
+              <>
+                Build long-term relationships <br />
+                that grow through trust, <br />
+                referrals, and repeat visits.
+              </>
+            ),
           },
         ]}
       />

@@ -10,7 +10,7 @@ import loyaltyImg from "../../../assets/brand/benefits/loyalty.png";
 import advocateImg from "../../../assets/brand/benefits/advocate.png";
 function Home() {
   return (
-    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px]">
+    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px] px-4 py-6">
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits
@@ -20,17 +20,38 @@ function Home() {
           {
             photo: priorityImg,
             title: "Priority",
-            desc: "VMB members enjoy better access, smoother scheduling, and a relationship built on mutual respect.",
+            desc: (
+              <>
+                VMB members enjoy better access, <br />
+                smoother scheduling, and a <br />
+                relationship built on mutual respect.
+              </>
+            ),
           },
           {
             photo: loyaltyImg,
             title: "Loyalty",
-            desc: "It's shared trust over time. VMB rewards that trust with upgrades, credits, and thoughtful perks designed to make every appointment feel even better.",
+            desc: (
+              <>
+                It's shared trust over time. VMB rewards <br />
+                that trust with upgrades, credits, and <br />
+                thoughtful perks designed to make every <br />
+                appointment feel even better.
+              </>
+            ),
           },
           {
             photo: advocateImg,
             title: "Advocate",
-            desc: "Share the salon you trust. VMB converts referrals into earned credits and exclusive upgrades - built to reward loyalty.",
+            desc: (
+              <>
+                Share the salon you trust. VMB
+                <br />
+                converts referrals into earned credits <br />
+                and exclusive upgrades - built to <br />
+                reward loyalty.
+              </>
+            ),
           },
         ]}
       />

@@ -28,24 +28,26 @@ function FeatureBlock({
         py-12
       `}
     >
-      <div className="w-full lg:w-[556px] h-[300px] sm:h-[350px] lg:h-[400px] overflow-hidden rounded-[20px]">
+      <div className="w-full lg:w-[556px] h-[300px] sm:h-[350px] lg:h-[400px] overflow-hidden rounded-[20px] self-start">
         <img src={img} alt="" className="w-full h-full object-cover" />
       </div>
 
-      <div className="w-full lg:w-[556px] flex flex-col gap-6">
-        <span className="font-poppins font-medium text-[16px] tracking-[5px] text-vmb-secondary uppercase">
-          {label}
-        </span>
+      <div className="w-full lg:w-[556px] flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[6px]">
+          <span className="font-poppins font-medium text-[16px] tracking-[5px] text-vmb-secondary uppercase">
+            {label}
+          </span>
 
-        <h2 className="font-poppins font-normal text-[26px] sm:text-[30px] text-vmb-primary leading-snug">
-          {title}
-        </h2>
+          <h2 className="font-poppins font-normal text-[26px] sm:text-[30px] text-vmb-primary leading-snug">
+            {title}
+          </h2>
+        </div>
 
         {descriptionBlock && (
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-[5px]">
             {descriptionBlock.map((item, index) => (
-              <div key={index}>
-                <h4 className="font-poppins font-semibold text-[14px] text-vmb-primary">
+              <div key={index} className="flex flex-col gap-[5px]">
+                <h4 className="font-lato font-semibold text-[14px] text-vmb-primary">
                   {item.heading}
                 </h4>
                 <p className="font-poppins font-normal text-[14px] text-vmb-secondary leading-relaxed">
@@ -57,7 +59,7 @@ function FeatureBlock({
         )}
 
         {bulletPoints && (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-[10px]">
             <p className="font-lato font-bold text-[14px] text-vmb-primary">
               The salons you love. The friends you trust. All connected.
             </p>
@@ -74,7 +76,7 @@ function FeatureBlock({
           </div>
         )}
 
-        <div className="pt-4">
+        <div className="mt-2">
           <PrimaryButton
             text={buttonText}
             variant="pillLight"
@@ -91,7 +93,7 @@ function FeatureBlock({
 
 export default function SalonChoice({ blocks }) {
   return (
-    <section className="w-full px-4">
+    <section className="w-full ">
       <FeatureBlock img={salonDashboardImg} {...blocks[0]} />
 
       <FeatureBlock img={customerDashboardImg} reverse {...blocks[1]} />

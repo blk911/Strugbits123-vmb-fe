@@ -30,7 +30,7 @@ function Card({ img, title, desc, btnText, type, mode }) {
         />
       </div>
 
-      <div className="flex flex-col gap-[27px] px-6 sm:px-10 pt-6  ">
+      <div className="flex flex-col gap-[20px] px-6 sm:px-10 pt-6  ">
         <h3 className="font-poppins font-medium text-[22px] sm:text-[25px] text-vmb-primary leading-snug">
           {title}
         </h3>
@@ -53,7 +53,7 @@ function Card({ img, title, desc, btnText, type, mode }) {
 
 function GiftsAndInvite({ cards }) {
   return (
-    <section className="w-full px-4">
+    <section className="w-full ">
       <div className="max-w-[1300px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center items-stretch">
         <Card
           img={pic1}

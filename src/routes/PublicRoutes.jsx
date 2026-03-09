@@ -2,7 +2,7 @@ import { Route } from "react-router-dom";
 import SiteLayout from "../components/layout/site/SiteLayout";
 import Home from "../pages/Site/Home/Home";
 import HomeSalon from "../pages/Site/HomeSalon/Home";
-import HomeClient from "../pages/Site/HomeClient/Home";
+// import HomeClient from "../pages/Site/HomeClient/Home";
 import About from "../pages/Site/About/About";
 import AuthForm from "../pages/Site/Auth/AuthForm";
 import ForgetPassword from "../pages/Site/Auth/ForgetPassword";
