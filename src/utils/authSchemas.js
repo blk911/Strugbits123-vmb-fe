@@ -14,10 +14,8 @@ export const customerSignupSchema = z
       .min(1, "Name is required")
       .regex(nameRegex, "Invalid name"),
     email: z.string().email("Invalid email"),
-    address: z
-      .string()
-      .min(5, "Enter a valid address")
-      .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
+    address: z.string().min(5, "Enter a valid address"),
+    // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
     zipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
     phone: z
       .string()
@@ -44,10 +42,8 @@ export const salonStep2Schema = z.object({
     .string()
     .min(2, "Salon name required")
     .regex(nameRegex, "Invalid salon name"),
-  saloonAddress: z
-    .string()
-    .min(5, "Enter salon address")
-    .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
+  saloonAddress: z.string().min(5, "Enter salon address"),
+  // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
   saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
   salonPhone: z
     .string()

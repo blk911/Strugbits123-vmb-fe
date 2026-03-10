@@ -56,10 +56,8 @@ const salonProfileSchema = z.object({
     .string()
     .min(2, "Salon name is required")
     .regex(/^[a-zA-Z\s]+$/, "Invalid salon name"),
-  address: z
-    .string()
-    .min(5, "Address is required")
-    .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
+  address: z.string().min(5, "Address is required"),
+  // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
   zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
   phone: z
     .string()
