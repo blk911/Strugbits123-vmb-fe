@@ -81,7 +81,7 @@ function FeatureBlock({
             text={buttonText}
             variant="pillLight"
             onClick={() => navigate("/register")}
-            className="w-fit px-4 py-2"
+            className="w-fit pl-[15px] p-[5px] "
             authMode={authMode}
             authType={authType}
           />
