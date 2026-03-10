@@ -34,8 +34,8 @@ export default function PrimaryButton({
       font-normal
       ${
         isActive ?
-          "bg-vmb-primary text-white hover:bg-white hover:text-vmb-primary"
-        : "bg-transparent text-vmb-primary hover:bg-vmb-primary hover:text-white"
+          "bg-vmb-primary text-white "
+        : "bg-transparent text-vmb-primary"
       }
     `,
 

@@ -17,7 +17,7 @@ export const customerSignupSchema = z
     address: z
       .string()
       .min(5, "Enter a valid address")
-      .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
+      .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
     zipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
     phone: z
       .string()
@@ -47,7 +47,7 @@ export const salonStep2Schema = z.object({
   saloonAddress: z
     .string()
     .min(5, "Enter salon address")
-    .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid address"),
+    .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
   saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
   salonPhone: z
     .string()
@@ -70,13 +70,13 @@ export const salonStep2Schema = z.object({
   description: z
     .string()
     .min(10, "Description must be at least 10 characters")
-    .regex(/^[a-zA-Z0-9\s,.'-]+$/, "Invalid description"),
+    .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid description"),
   salonPhotos: z
     .array(
       z.object({
         url: z.string().url(),
         name: z.string(),
-      })
+      }),
     )
     .min(1, "At least one salon photo is required"),
 });
