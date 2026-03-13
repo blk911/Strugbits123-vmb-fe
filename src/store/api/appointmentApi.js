@@ -7,6 +7,14 @@ export const appointmentApi = createApi({
       import.meta.env.VITE_BACKEND_URL + "appointment" ||
       "http://localhost:5000/",
     credentials: "include",
+    prepareHeaders: (headers, { getState }) => {
+      const token =
+        getState().user?.token || localStorage.getItem("auth_token");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Appointment"],
   endpoints: (builder) => ({
