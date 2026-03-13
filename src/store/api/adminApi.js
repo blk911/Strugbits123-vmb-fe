@@ -13,6 +13,14 @@ export const adminApi = createApi({
     //   }
     //   return headers;
     // },
+    prepareHeaders: (headers, { getState }) => {
+      const token =
+        getState().user?.token || localStorage.getItem("auth_token");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   tagTypes: ["Salon"],
   endpoints: (builder) => ({
