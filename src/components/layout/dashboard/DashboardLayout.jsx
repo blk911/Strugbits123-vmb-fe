@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import DashboardSidebar from "./DashboardSidebar/DashboardSidebar";
 import DashboardFooter from "./DashboardFooter/DashboardFooter";
@@ -252,7 +252,9 @@ function DashboardLayout() {
           `}
         >
           <div className="h-[70px] flex items-center px-[20px]">
-            <img src={logo} alt="Logo" className="h-[50px]" />
+            <Link to="/">
+              <img src={logo} alt="Logo" className="h-[50px] cursor-pointer" />
+            </Link>
           </div>
 
           <div className="flex-1 overflow-y-auto custom-scrollbar">
