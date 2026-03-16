@@ -205,7 +205,9 @@ export default function SendTreatModal({
                           readOnly={!!prefilledEmail}
                           placeholder="Enter email"
                           className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-vmb-secondary ${
-                            errors.email ? "border-red-500" : "border-vmb-primary/10"
+                            errors.email ? "border-red-500" : (
+                              "border-vmb-primary/10"
+                            )
                           } ${prefilledEmail ? "bg-vmb-bg-soft" : ""}`}
                         />
                       )}
@@ -442,7 +444,9 @@ export default function SendTreatModal({
                     variant="primary"
                     size="custom"
                     className="w-full text-[16px] font-medium py-3"
-                    disabled={!isValid || isSubmitting}
+                    disabled={
+                      !isValid || isSubmitting || !filteredservices?.length
+                    }
                   >
                     {isSubmitting ? "Sending Invite..." : "Invite Now"}
                   </AppButton>
