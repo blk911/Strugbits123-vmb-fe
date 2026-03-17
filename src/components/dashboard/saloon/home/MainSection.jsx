@@ -77,7 +77,10 @@ export default function MainSection() {
       item.services?.reduce((sum, s) => sum + (s.price || 0), 0) || 0
     }`,
     statusText: item.status === "pending" ? "Pending" : "Reschedule requested",
-    statusClass: item.status === "pending" ? "bg-vmb-pending/20 text-vmb-pending" : "bg-vmb-secondary/20 text-vmb-secondary",
+    statusClass:
+      item.status === "pending" ?
+        "bg-vmb-pending/20 text-vmb-pending"
+      : "bg-vmb-secondary/20 text-vmb-secondary",
     timeAgo: formatTimeAgo(item?.timeline[0]?.timestamp || item.createdAt),
     data: item,
   });
@@ -127,7 +130,7 @@ export default function MainSection() {
             isLoading: loadingInvites,
             emptyMessage: "No pending invites received",
             CardComponent: InviteCard,
-            navigateTo: "/saloninvites",
+            navigateTo: "/salon-invites",
             getCardProps: getInviteProps,
           })}
 
@@ -169,7 +172,9 @@ export default function MainSection() {
               <LoadingIndicator />
             </div>
           : services.length === 0 ?
-            <p className="bg-vmb-pending/20 text-vmb-pending text-center">No services added yet</p>
+            <p className="bg-vmb-pending/20 text-vmb-pending text-center">
+              No services added yet
+            </p>
           : <div className="grid grid-cols-1 gap-6">
               {services.map((service) => (
                 <ServiceCard
