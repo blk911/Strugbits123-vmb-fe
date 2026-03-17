@@ -21,7 +21,7 @@ export default function AdminStatsSection() {
       icon: <IoMailOutline className="w-5 h-5 text-vmb-secondary" />,
       label: "Weekly Invites",
       value: data?.data?.invitesCount || 0,
-      path: "/saloninvites",
+      path: "/salon-invites",
     },
     {
       icon: <FaGift className="w-5 h-5 text-vmb-secondary" />,
