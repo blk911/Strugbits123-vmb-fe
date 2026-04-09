@@ -49,7 +49,15 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
       toastError(err?.data?.message || "Failed to change password.");
     }
   };
-  const PasswordInput = ({ label, name, register, errors, show, setShow }) => {
+  const PasswordInput = ({
+    label,
+    name,
+    register,
+    errors,
+    show,
+    setShow,
+    placeholder,
+  }) => {
     let autoCompleteValue = "new-password";
 
     if (label.includes("Current")) {
@@ -58,31 +66,30 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
 
     return (
       <div className="flex flex-col gap-1">
-        <label className="text-vmb-text-main text-[14px] font-medium">
+        {/* <label className="text-vmb-text-main text-[14px] font-medium">
           {label}
-        </label>
+        </label> */}
         <div className="relative">
           <input
             type={show ? "text" : "password"}
             autoComplete={autoCompleteValue}
             {...register(name, {
-              required: label.includes("Current")
-                ? "Current password is required"
-                : label.includes("New")
-                ? "New password is required"
+              required:
+                label.includes("Current") ? "Current password is required"
+                : label.includes("New") ? "New password is required"
                 : "Please confirm your new password",
               minLength:
-                name === "newPassword"
-                  ? {
-                      value: 6,
-                      message: "Password must be at least 6 characters",
-                    }
-                  : undefined,
+                name === "newPassword" ?
+                  {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  }
+                : undefined,
               validate:
-                name === "confirmPassword"
-                  ? (value) =>
-                      value === watch("newPassword") || "Passwords do not match"
-                  : undefined,
+                name === "confirmPassword" ?
+                  (value) =>
+                    value === watch("newPassword") || "Passwords do not match"
+                : undefined,
             })}
             onChange={(e) => {
               let value = e.target.value;
@@ -97,14 +104,16 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
               register(name).onChange(event);
             }}
             className="w-full border border-vmb-primary/10 rounded-[8px] py-[10px] pl-2 pr-12 text-sm focus:outline-none focus:border-vmb-primary transition"
-            placeholder={`Enter ${label.toLowerCase()}`}
+            placeholder={placeholder}
           />
           <button
             type="button"
             onClick={() => setShow(!show)}
             className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-vmb-secondary hover:opacity-80 transition"
           >
-            {show ? <FaEye size={18} /> : <FaEyeSlash size={18} />}
+            {show ?
+              <FaEye size={18} />
+            : <FaEyeSlash size={18} />}
           </button>
         </div>
         {errors[name] && (
@@ -166,6 +175,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
                       errors={errors}
                       show={showCurrent}
                       setShow={setShowCurrent}
+                      placeholder="Type Current Password"
                     />
 
                     <PasswordInput
@@ -175,6 +185,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
                       errors={errors}
                       show={showNew}
                       setShow={setShowNew}
+                      placeholder="Type New Password"
                     />
 
                     <PasswordInput
@@ -184,6 +195,7 @@ export default function ChangePasswordModal({ isOpen, closeModal }) {
                       errors={errors}
                       show={showConfirm}
                       setShow={setShowConfirm}
+                      placeholder="Re-type New Password"
                     />
                   </div>
 

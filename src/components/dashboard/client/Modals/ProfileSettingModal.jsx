@@ -51,7 +51,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
     try {
       const fileName = `profiles/${Date.now()}_${file.name.replace(
         /[^a-zA-Z0-9.-]/g,
-        "_"
+        "_",
       )}`;
       const { data } = await getUploadUrl({
         fileName,
@@ -164,9 +164,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                         onClick={() => imgRef.current?.click()}
                         disabled={uploading}
                         className={`absolute cursor-pointer bottom-0 right-0 w-10 h-10 bg-vmb-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-vmb-bg-soft transition ${
-                          uploading
-                            ? "opacity-70 cursor-not-allowed"
-                            : "hover:bg-vmb-secondary/80"
+                          uploading ?
+                            "opacity-70 cursor-not-allowed"
+                          : "hover:bg-vmb-secondary/80"
                         }`}
                       >
                         <IoCamera className="text-white text-xl" />
@@ -187,9 +187,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                     </h3>
                     <div className="space-y-5">
                       <div className="flex flex-col gap-1">
-                        <label className="text-vmb-text-main text-[14px] font-medium">
+                        {/* <label className="text-vmb-text-main text-[14px] font-medium">
                           Full Name
-                        </label>
+                        </label> */}
                         <input
                           type="text"
                           {...register("fullName", {
@@ -200,7 +200,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                             },
                           })}
                           onChange={preventLeadingSpace(
-                            register("fullName").onChange
+                            register("fullName").onChange,
                           )}
                           className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter full name"
@@ -213,9 +213,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <label className="text-vmb-text-main text-[14px] font-medium">
+                        {/* <label className="text-vmb-text-main text-[14px] font-medium">
                           Email
-                        </label>
+                        </label> */}
                         <input
                           type="text"
                           readOnly
@@ -228,7 +228,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                             },
                           })}
                           onChange={preventLeadingSpace(
-                            register("email").onChange
+                            register("email").onChange,
                           )}
                           className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter email"
@@ -241,9 +241,9 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <label className="text-vmb-text-main text-[14px] font-medium">
+                        {/* <label className="text-vmb-text-main text-[14px] font-medium">
                           Phone
-                        </label>
+                        </label> */}
                         <input
                           type="tel"
                           {...register("phone", {
@@ -254,7 +254,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                             },
                           })}
                           onChange={preventLeadingSpace(
-                            register("phone").onChange
+                            register("phone").onChange,
                           )}
                           className="border border-vmb-primary/10 rounded-[8px] px-4 py-3 text-sm focus:outline-none focus:border-vmb-secondary transition-colors"
                           placeholder="Enter phone number"

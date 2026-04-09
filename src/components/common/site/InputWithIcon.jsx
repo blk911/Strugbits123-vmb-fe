@@ -37,13 +37,13 @@ export default function InputWithIcon({
 
   return (
     <div className="w-full">
-      {label && (
+      {/* {label && (
         <label
           className="block text-vmb-text-main font-semibold mb-1 text-[14px] font-poppins"
         >
           {label}
         </label>
-      )}
+      )} */}
 
       <div className="relative">
         {Icon && (
@@ -59,7 +59,7 @@ export default function InputWithIcon({
             `w-full border rounded-md py-4 pr-12 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none transition-all`,
             Icon ? "pl-10" : "pl-4",
             error ? "border-red-500" : "border-gray-300",
-            className
+            className,
           )}
           {...rest}
         />
@@ -71,11 +71,9 @@ export default function InputWithIcon({
             className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-vmb-secondary hover:brightness-90 transition-colors z-10"
             tabIndex={-1}
           >
-            {showPassword ? (
+            {showPassword ?
               <FaEye className="w-5 h-5" />
-            ) : (
-              <FaEyeSlash className="w-5 h-5" />
-            )}
+            : <FaEyeSlash className="w-5 h-5" />}
           </button>
         )}
       </div>

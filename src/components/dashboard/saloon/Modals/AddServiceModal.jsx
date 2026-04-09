@@ -230,9 +230,9 @@ export default function AddServiceModal({
                     </p>
                   )}
                   <div>
-                    <label className="block text-sm font-medium text-vmb-text-main">
+                    {/* <label className="block text-sm font-medium text-vmb-text-main">
                       Service Name *
-                    </label>
+                    </label> */}
                     <input
                       {...register("serviceName", {
                         required: "Service name is required",
@@ -252,7 +252,7 @@ export default function AddServiceModal({
                         register("serviceName").onChange(e);
                       }}
                       className="mt-1 w-full px-4 py-3 bg-white border border-vmb-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
-                      placeholder="e.g. Classic Haircut"
+                      placeholder="Service Name e.g. Classic Haircut"
                     />
                     {errors.serviceName && (
                       <p className="text-red-500 text-xs mt-1">
@@ -263,9 +263,9 @@ export default function AddServiceModal({
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-vmb-text-main">
+                      {/* <label className="block text-sm font-medium text-vmb-text-main">
                         Price ($)*
-                      </label>
+                      </label> */}
                       <input
                         type="number"
                         step="0.01"
@@ -277,7 +277,7 @@ export default function AddServiceModal({
                           },
                         })}
                         className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
-                        placeholder="50.00"
+                        placeholder="Price"
                       />
                       {errors.servicePrice && (
                         <p className="text-red-500 text-xs mt-1">
@@ -287,9 +287,9 @@ export default function AddServiceModal({
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-vmb-text-main">
+                      {/* <label className="block text-sm font-medium text-vmb-text-main">
                         Duration *
-                      </label>
+                      </label> */}
                       <Controller
                         name="serviceDuration"
                         control={control}
@@ -353,9 +353,9 @@ export default function AddServiceModal({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-vmb-text-main">
+                    {/* <label className="block text-sm font-medium text-vmb-text-main">
                       Description
-                    </label>
+                    </label> */}
                     <textarea
                       rows={4}
                       {...register("description")}
