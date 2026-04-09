@@ -17,6 +17,7 @@ import { RiCalendarScheduleLine } from "react-icons/ri";
 import userAvatar from "../../../../assets/user_icon.png";
 import SalonImage from "../../../../assets/salon-1.png";
 import { FiX } from "react-icons/fi";
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
@@ -44,18 +45,6 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   }, [refetch]);
   const gifts = response?.data?.items || [];
   const totalPages = response?.data?.pages || 1;
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("en-GB");
-  };
-
-  const formatTime = (dateString) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const mapTimeline = (timeline = [], gift) => {
     return timeline.map((item, index) => {

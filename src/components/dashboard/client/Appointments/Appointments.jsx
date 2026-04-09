@@ -13,6 +13,8 @@ import HoldDirectModal from "../Modals/appointmentTabsModals/HoldDirectModal";
 import DeclineDirectModal from "../Modals/appointmentTabsModals/DeclineDirectModal";
 import ConfirmDirectModal from "../Modals/appointmentTabsModals/ConfirmDirectModal";
 import SalonImage from "../../../../assets/salon-1.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
+
 const PAGE_SIZE = 10;
 
 export default function Appointments({
@@ -185,9 +187,7 @@ export default function Appointments({
       : appt?.type === "gift" ? (appt?.requestedFrom?.email ?? "N/A")
       : "N/A",
     appointmentDate:
-      appt?.appointmentDate ?
-        new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
-      : "N/A",
+      appt?.appointmentDate ? formatDate(appt?.appointmentDate) : "N/A",
     appointmentTime: appt?.startTime || "N/A",
     status:
       appt.status ?

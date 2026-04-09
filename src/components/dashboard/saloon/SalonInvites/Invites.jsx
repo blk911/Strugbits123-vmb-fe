@@ -4,7 +4,7 @@ import TabbedTable from "../../../common/dashboard/Table/TabbedTable";
 import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonInvitesQuery } from "../../../../store/api";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
@@ -82,31 +82,22 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     refetchUnclaimed();
   }, [refetchAll, refetchPending, refetchClaimed, refetchUnclaimed]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Claimed"
-      ? claimedData
-      : unclaimedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Claimed" ? claimedData
+    : unclaimedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Claimed"
-      ? loadingClaimed
-      : loadingUnclaimed;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Claimed" ? loadingClaimed
+    : loadingUnclaimed;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Claimed"
-      ? fetchingClaimed
-      : fetchingUnclaimed;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Claimed" ? fetchingClaimed
+    : fetchingUnclaimed;
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -117,9 +108,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     message: invite.message || "No message",
     serviceName: invite.services?.serviceName || "N/A",
     discount: `${invite.discountPercentage}%`,
-    inviteDate: invite.createdAt
-      ? new Date(invite.createdAt).toLocaleDateString("en-GB")
-      : "N/A",
+    inviteDate: invite.createdAt ? formatDate(invite.createdAt) : "N/A",
     status: invite.status.charAt(0).toUpperCase() + invite.status.slice(1),
     _modalData: invite,
   }));
@@ -149,13 +138,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Claimed"
-      ? claimedPage
-      : unclaimedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Claimed" ? claimedPage
+    : unclaimedPage;
 
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">

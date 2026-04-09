@@ -60,9 +60,9 @@ export default function PrimaryButton({
     pillGreen: `
       rounded-full
       text-sm sm:text-[16px]
-      font-medium
+      font-semibold
       bg-vmb-secondary text-white
-      hover:bg-vmb-primary hover:text-white
+     
       border border-vmb-secondary
     `,
 
@@ -83,8 +83,7 @@ export default function PrimaryButton({
     pillLight:
       "bg-vmb-secondary text-white group-hover:bg-white group-hover:text-vmb-primary",
 
-    pillGreen:
-      "bg-white text-vmb-secondary group-hover:bg-white group-hover:text-vmb-primary",
+    pillGreen: "bg-white text-vmb-secondary ",
 
     pillOutline:
       "bg-vmb-primary text-white group-hover:bg-white group-hover:text-vmb-primary",

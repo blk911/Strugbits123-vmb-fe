@@ -1,10 +1,11 @@
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
@@ -12,10 +13,23 @@ import SaloonRoutes from "./routes/SaloonRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
 import ScrollToTop from "./components/common/site/ScrollToTop";
 import { BookingCancel, BookingSuccess } from "./pages/client";
-
+import { clearRole } from "./store/features/roleSlice";
+import { logout as logoutAction } from "./store/features/userSlice";
 export default function App() {
   const role = useSelector((state) => state.role.role);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if ((e.key === "auth_token" || e.key === "user_role") && !e.newValue) {
+        dispatch(clearRole());
+        dispatch(logoutAction());
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, [dispatch]);
   return (
     <Router>
       <ScrollToTop />

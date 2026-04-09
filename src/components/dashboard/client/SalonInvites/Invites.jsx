@@ -4,7 +4,7 @@ import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetUserInvitesQuery } from "../../../../store/api";
 import { ConfirmConfirmation } from "../Modals/appointmentTabsModals/ConfirmationModals";
-import { formatDuration } from "../../../../utils/HelperFunctions";
+import { formatDuration, formatDate } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
@@ -85,29 +85,20 @@ export default function Invites({
     refetchUnclaimed();
   }, [refetchAll, refetchClaimed, refetchPending, refetchUnclaimed]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Claimed"
-      ? claimedData
-      : unclaimedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Claimed" ? claimedData
+    : unclaimedData;
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Claimed"
-      ? loadingClaimed
-      : loadingUnclaimed;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Claimed" ? loadingClaimed
+    : loadingUnclaimed;
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Claimed"
-      ? fetchingClaimed
-      : fetchingUnclaimed;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Claimed" ? fetchingClaimed
+    : fetchingUnclaimed;
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -118,9 +109,7 @@ export default function Invites({
     salonEmail: invite.salonEmail || "N/A",
     serviceName: invite.services?.serviceName || "N/A",
     discount: `${invite.discountPercentage}%`,
-    expiresOn: invite.expiresOn
-      ? new Date(invite.expiresOn).toLocaleDateString("en-GB")
-      : "N/A",
+    expiresOn: invite.expiresOn ? formatDate(invite.expiresOn) : "N/A",
     status: invite.status.charAt(0).toUpperCase() + invite.status.slice(1),
     _modalData: {
       name: invite.salonName,
@@ -128,8 +117,9 @@ export default function Invites({
       description: invite.salonDesc || "N/A",
       salonId: invite.salonId,
       inviteId: invite._id,
-      services: invite.services
-        ? [
+      services:
+        invite.services ?
+          [
             {
               id: invite.services._id,
               name: invite.services.serviceName,
@@ -198,13 +188,10 @@ export default function Invites({
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Claimed"
-      ? claimedPage
-      : unclaimedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Claimed" ? claimedPage
+    : unclaimedPage;
 
   return (
     <>

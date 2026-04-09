@@ -8,21 +8,43 @@ import AuthForm from "../pages/Site/Auth/AuthForm";
 import ForgetPassword from "../pages/Site/Auth/ForgetPassword";
 import ResetPassword from "../pages/Site/Auth/ResetPassword";
 import { SalonDetail } from "../pages/client";
-
+import RedirectIfAuthenticated from "./RedirectIfAuthenticated";
 export default function PublicRoutes() {
   return (
     <>
       <Route element={<SiteLayout />}>
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/client" element={<HomeClient />} /> */}
-        <Route path="/salon" element={<HomeSalon />} />
+        <Route
+          path="/"
+          element={
+            <RedirectIfAuthenticated>
+              <Home />
+            </RedirectIfAuthenticated>
+          }
+        />
+
+        <Route
+          path="/salon"
+          element={
+            <RedirectIfAuthenticated>
+              <HomeSalon />
+            </RedirectIfAuthenticated>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/salon-detail/:id" element={<SalonDetail />} />
       </Route>
       <Route>
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/register" element={<AuthForm />} />
+
+        <Route
+          path="/register"
+          element={
+            <RedirectIfAuthenticated>
+              <AuthForm />
+            </RedirectIfAuthenticated>
+          }
+        />
       </Route>
     </>
   );

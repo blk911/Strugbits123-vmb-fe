@@ -88,7 +88,7 @@ export default function AdvancedTable({
                 </div>
               ))}
 
-            <div className="flex items-center justify-between pt-3 border-t border-vmb-primary/10">
+            <div className="flex flex-col gap-2 items-start justify-between pt-3 border-t border-vmb-primary/10">
               <div className="text-xs font-medium text-vmb-text-muted">
                 Actions
               </div>

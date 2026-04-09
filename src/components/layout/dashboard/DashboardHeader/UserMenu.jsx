@@ -9,7 +9,7 @@ import { setAuthMode } from "../../../../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
 
 import { useLogoutMutation } from "../../../../store/api/authApi";
-import { clearUser } from "../../../../store/features/userSlice";
+import { logout as logoutAction } from "../../../../store/features/userSlice";
 import { useUser } from "../../../../hooks/useUser";
 function UserMenu() {
   const [open, setOpen] = useState(false);
@@ -33,13 +33,14 @@ function UserMenu() {
     try {
       await logout().unwrap();
       dispatch(clearRole());
-      dispatch(clearUser());
+      dispatch(logoutAction());
       dispatch(setAuthMode("login"));
       navigate("/register");
     } catch (error) {
       console.error("Logout failed:", error);
 
       dispatch(clearRole());
+      dispatch(logoutAction());
       dispatch(setAuthMode("login"));
       navigate("/register");
     }

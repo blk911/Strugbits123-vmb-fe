@@ -17,7 +17,7 @@ import { RiCalendarScheduleLine } from "react-icons/ri";
 import userAvatar from "../../../../assets/person_icon.png";
 import SalonImage from "../../../../assets/salon-1.png";
 import { FiX } from "react-icons/fi";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Appointments({
@@ -46,15 +46,7 @@ export default function Appointments({
   }, [refetch]);
   const appointments = response?.data?.items || [];
   const totalPages = response?.data?.pages || 1;
-  const formatDate = (date) =>
-    !date ? "" : new Date(date).toLocaleDateString("en-GB");
-  const formatTime = (date) =>
-    !date ? "" : (
-      new Date(date).toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    );
+
   const mapTimeline = (timeline = [], appt) => {
     return timeline.map((item, index) => {
       const isLast = index === timeline.length - 1;
@@ -186,9 +178,7 @@ export default function Appointments({
     serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
     clientEmail: appt.requestedBy?.email || "N/A",
     appointmentDate:
-      appt.appointmentDate ?
-        new Date(appt.appointmentDate).toLocaleDateString("en-GB")
-      : "N/A",
+      appt.appointmentDate ? formatDate(appt.appointmentDate) : "N/A",
     appointmentTime: appt.startTime || "N/A",
     status:
       appt.status ?

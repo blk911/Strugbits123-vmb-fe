@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice";
 import { useGetSalonByIdQuery } from "../../../../store/api";
 import SalonImage from "../../../../assets/salon-1.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function AllPayouts({
@@ -90,10 +91,7 @@ export default function AllPayouts({
     vmbFee: payout.vmbFee,
     totalCharged: payout.totalCharged,
     payoutStatus: payout.payoutStatus,
-    payoutDate:
-      payout.payoutDate ?
-        new Date(payout.payoutDate).toLocaleDateString("en-GB")
-      : "N/A",
+    payoutDate: payout.payoutDate ? formatDate(payout.payoutDate) : "N/A",
   }));
 
   const columns = [

@@ -13,6 +13,7 @@ import SalonImage from "../../../../assets/salon-1.png";
 import userAvatar from "../../../../assets/user.png";
 import { FiX } from "react-icons/fi";
 import { RiCalendarScheduleLine } from "react-icons/ri";
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
@@ -108,7 +109,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
-  const formatDate = (date) => new Date(date).toLocaleDateString("en-GB");
+
   const formatTime = (date) =>
     new Date(date).toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -239,10 +240,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     serviceName: invite.services?.serviceName || "N/A",
     discount:
       invite.discountPercentage ? `${invite.discountPercentage}%` : "0%",
-    inviteDate:
-      invite.createdAt ?
-        new Date(invite.createdAt).toLocaleDateString("en-GB")
-      : "N/A",
+    inviteDate: invite.createdAt ? formatDate(invite.createdAt) : "N/A",
     status:
       invite.status?.charAt(0).toUpperCase() + invite.status?.slice(1) ||
       "Pending",

@@ -5,7 +5,7 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonAppointmentsQuery } from "../../../../store/api";
 import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
 import userAvatar from "../../../../assets/user.png";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Appointments({
@@ -138,49 +138,31 @@ export default function Appointments({
     refetchDeclined,
   ]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Scheduled"
-      ? scheduledData
-      : activeTab === "Reschedule"
-      ? rescheduleData
-      : activeTab === "Hold"
-      ? holdData
-      : activeTab === "Confirmed"
-      ? confirmedData
-      : declinedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Scheduled" ? scheduledData
+    : activeTab === "Reschedule" ? rescheduleData
+    : activeTab === "Hold" ? holdData
+    : activeTab === "Confirmed" ? confirmedData
+    : declinedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Scheduled"
-      ? loadingScheduled
-      : activeTab === "Reschedule"
-      ? loadingReschedule
-      : activeTab === "Hold"
-      ? loadingHold
-      : activeTab === "Confirmed"
-      ? loadingConfirmed
-      : loadingDeclined;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Scheduled" ? loadingScheduled
+    : activeTab === "Reschedule" ? loadingReschedule
+    : activeTab === "Hold" ? loadingHold
+    : activeTab === "Confirmed" ? loadingConfirmed
+    : loadingDeclined;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Scheduled"
-      ? fetchingScheduled
-      : activeTab === "Reschedule"
-      ? fetchingReschedule
-      : activeTab === "Hold"
-      ? fetchingHold
-      : activeTab === "Confirmed"
-      ? fetchingConfirmed
-      : fetchingDeclined;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Scheduled" ? fetchingScheduled
+    : activeTab === "Reschedule" ? fetchingReschedule
+    : activeTab === "Hold" ? fetchingHold
+    : activeTab === "Confirmed" ? fetchingConfirmed
+    : fetchingDeclined;
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
   const transformedAppointments = appointments.map((appt) => ({
@@ -188,12 +170,12 @@ export default function Appointments({
     salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
     payersEmail: appt?.requestedBy?.email || "N/A",
-    appointmentDate: appt.appointmentDate
-      ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
-      : "N/A",
+    appointmentDate:
+      appt.appointmentDate ? formatDate(appt.appointmentDate) : "N/A",
     appointmentTime: appt.startTime || "N/A",
-    status: appt.status
-      ? appt.status.charAt(0).toUpperCase() +
+    status:
+      appt.status ?
+        appt.status.charAt(0).toUpperCase() +
         appt.status.slice(1).replace("-", " ")
       : "Pending",
     _modalData: {
@@ -219,9 +201,9 @@ export default function Appointments({
         email: appt.requestedFrom.email || "N/A",
         phone: appt.requestedFrom.phone || "N/A",
         image:
-          appt?.requestedFrom?.name === appt?.salon?.salonName
-            ? appt?.salon?.salonImage
-            : appt.requestedFrom.image || userAvatar,
+          appt?.requestedFrom?.name === appt?.salon?.salonName ?
+            appt?.salon?.salonImage
+          : appt.requestedFrom.image || userAvatar,
       },
       appointment: {
         id: appt._id,
@@ -301,19 +283,13 @@ export default function Appointments({
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Scheduled"
-      ? scheduledPage
-      : activeTab === "Reschedule"
-      ? reschedulePage
-      : activeTab === "Hold"
-      ? holdPage
-      : activeTab === "Confirmed"
-      ? confirmedPage
-      : declinedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Scheduled" ? scheduledPage
+    : activeTab === "Reschedule" ? reschedulePage
+    : activeTab === "Hold" ? holdPage
+    : activeTab === "Confirmed" ? confirmedPage
+    : declinedPage;
 
   return (
     <>

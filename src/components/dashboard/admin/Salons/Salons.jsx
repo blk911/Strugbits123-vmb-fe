@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../../../common/dashboard/Table/Pagination";
 import { FiEye, FiCheck, FiX } from "react-icons/fi";
+import { HiHandRaised } from "react-icons/hi2";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import {
   useApproveSalonMutation,
@@ -15,6 +16,8 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import SalonImage from "../../../../assets/salon-1.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
+
 const PAGE_SIZE = 10;
 
 export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
@@ -160,10 +163,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     email: salon.email || "N/A",
     phone: salon.phoneNumber || "N/A",
     ownerPhone: salon.ownerPhone || "N/A",
-    submittedDate:
-      salon.createdAt ?
-        new Date(salon.createdAt).toLocaleDateString("en-GB")
-      : "N/A",
+    submittedDate: salon.createdAt ? formatDate(salon.createdAt) : "N/A",
     status:
       salon.status ?
         salon.status.charAt(0).toUpperCase() + salon.status.slice(1)
@@ -254,6 +254,19 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  onActionClick?.("hold", row);
+                }}
+                disabled={processingId === row.id}
+                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
+                  processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                title="Hold"
+              >
+                <HiHandRaised className="w-4 h-4 text-vmb-text-muted" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
                   onActionClick?.("reject", row);
                 }}
                 disabled={processingId === row.id}
@@ -316,6 +329,13 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       }
     }
 
+    if (action === "hold") {
+      const selectedRow = salons.find((salon) => salon._id === row.id);
+      openModal("salonRejection", {
+        salonId: selectedRow._id,
+        salonName: selectedRow.salonName,
+      });
+    }
     if (action === "reject") {
       const selectedRow = salons.find((salon) => salon._id === row.id);
       const salonId = selectedRow._id;

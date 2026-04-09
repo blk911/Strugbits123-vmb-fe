@@ -12,7 +12,6 @@
 .font-inter {
   font-family: var(--font-inter);
 }
-/* === VMB "Milk+Honey" Theme Layer === */
 :root {
   /* Centralized Core Colors (New Teal Theme) */
   --vmb-primary: #0f3d3e;
@@ -28,6 +27,13 @@
   --vmb-muted: #64748b;
   --vmb-primary-soft: rgba(15, 61, 62, 0.1);
   --vmb-modal-bg: #e8e8e8;
+  --vmb-waitlist-bg: #f5f6f7;
+  --vmb-text-gray: #9ca3af;
+  --vmb-green: #1f6f5b;
+  --vmb-text-dark: #1a1a1a;
+  --vmb-text-light: #666666;
+  --vmb-border-light: #f3f4f6;
+  --vmb-border-gray: #e5e7eb;
 }
 
 @theme {
@@ -46,6 +52,14 @@
   --color-vmb-info: var(--vmb-info);
   --color-vmb-muted: var(--vmb-muted);
   --color-vmb-modal-bg: var(--vmb-modal-bg);
+
+  --color-vmb-waitlist-bg: var(--vmb-waitlist-bg);
+  --color-vmb-text-gray: var(--vmb-text-gray);
+  --color-vmb-green: var(--vmb-green);
+  --color-vmb-text-dark: var(--vmb-text-dark);
+  --color-vmb-text-light: var(--vmb-text-light);
+  --color-vmb-border-light: var(--vmb-border-light);
+  --color-vmb-border-gray: var(--vmb-border-gray);
   /* Compatibility with existing tokens */
   --color-vmb-bg: var(--vmb-bg);
   --color-vmb-accent: var(--vmb-primary);

@@ -7,7 +7,7 @@ import {
   useRequestedGiftsQuery,
   useRecievedGiftsQuery,
 } from "../../../../store/api";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
@@ -15,7 +15,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
 
   const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab || "myRequests"
+    location.state?.activeTab || "myRequests",
   );
 
   const [myRequestsPage, setMyRequestsPage] = useState(1);
@@ -59,7 +59,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     payersEmail: gift.receiverEmail,
     salonName: gift.salonId?.salonName || "Unknown Salon",
     serviceName: gift.services.map((s) => s.serviceName || s.name),
-    requestDate: new Date(gift.createdAt).toLocaleDateString("en-GB"),
+    requestDate: formatDate(gift.createdAt),
     status: gift.status.charAt(0).toUpperCase() + gift.status.slice(1),
     _modalData: {
       isSubmitted: true,
@@ -76,28 +76,28 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
       id: gift._id,
       senderEmail: gift.requesterId?.email || "Unknown",
       giftedServices: gift.services.map((s) => s.serviceName || s.name),
-      dateReceived: new Date(gift.createdAt).toLocaleDateString("en-GB"),
+      dateReceived: formatDate(gift.createdAt),
       price: `$${gift.services.reduce(
         (sum, s) => sum + Number(s.servicePrice || 0),
-        0
+        0,
       )}`,
-      paidPrice: gift.isPaid
-        ? `$${
+      paidPrice:
+        gift.isPaid ?
+          `$${
             gift.services.reduce(
               (sum, s) => sum + Number(s.servicePrice || 0),
-              0
+              0,
             ) *
               0.1 +
             gift.services.reduce(
               (sum, s) => sum + Number(s.servicePrice || 0),
-              0
+              0,
             )
           } `
         : "-",
-      giftStatus: gift.isPaid
-        ? "Accepted"
-        : gift.status === "pending"
-        ? "Pending"
+      giftStatus:
+        gift.isPaid ? "Accepted"
+        : gift.status === "pending" ? "Pending"
         : "Declined",
       _modalData: {
         gift,
@@ -117,7 +117,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           message: gift.message,
         },
       },
-    })
+    }),
   );
 
   const cleanDataForTable = (data) =>
@@ -147,7 +147,7 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     },
     receivedRequests: (cleanRow) => {
       const row = originalRows.receivedRequests.find(
-        (r) => r.id === cleanRow.id
+        (r) => r.id === cleanRow.id,
       );
       if (row?._modalData) {
         openModal("treatRequest", row._modalData);
