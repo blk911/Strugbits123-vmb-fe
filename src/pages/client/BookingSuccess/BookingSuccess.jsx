@@ -44,7 +44,7 @@ export default function BookingSuccess() {
 
   if (status === "verifying") {
     return (
-      <div className="min-h-screen bg-vmb-bg-soft flex items-center justify-center">
+      <div className="min-h-screen  flex items-center justify-center">
         <div className=" flex flex-col items-center justify-center gap-2 text-center">
           <LoadingIndicator />
           <p className="text-xl font-medium text-vmb-text-main">

@@ -232,7 +232,7 @@ export default function AllPayouts({
   };
 
   return (
-    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
         <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-gray-200">
           {["All", "Pending", "Paid"].map((tab) => (

@@ -7,7 +7,7 @@ export default function Salons() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("Nearest");
   return (
-    <div className=" bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+    <div className="  p-7 font-poppins gap-8 flex flex-col">
       <PageHeader
         title="Salons"
         description="Find your favorite salon."

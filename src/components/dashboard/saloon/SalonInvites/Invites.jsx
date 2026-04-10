@@ -151,7 +151,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     : unclaimedPage;
 
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-[31px] py-6 rounded-[10px] bg-vmb-bg-soft">
       <TabbedTable
         tabs={tabs}
         tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}

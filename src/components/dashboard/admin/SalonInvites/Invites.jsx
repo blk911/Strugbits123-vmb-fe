@@ -314,7 +314,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     : 1;
 
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
       <TabbedTable
         tabs={tabs}
         tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}

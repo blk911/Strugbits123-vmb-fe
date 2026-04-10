@@ -24,7 +24,7 @@ const DashboardHome = () => {
   if (!user) return null;
   return (
     <div
-      className="h-full flex flex-col  bg-vmb-bg-soft mb-6 p-2 sm:p-7 font-poppins gap-8 no-scrollbar"
+      className="h-full flex flex-col   mb-6 p-2 sm:p-7 font-poppins gap-8 no-scrollbar"
       style={{
         scrollbarWidth: "none",
       }}

@@ -7,7 +7,7 @@ export default function BookingCancel() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-vmb-bg-soft px-4 font-poppins">
+    <div className="min-h-screen flex items-center justify-center  px-4 font-poppins">
       <div className="w-full max-w-[547px]">
         <div className="bg-white flex flex-col items-center gap-4 p-6 sm:p-8 rounded-3xl shadow-2xl text-center">
           <img

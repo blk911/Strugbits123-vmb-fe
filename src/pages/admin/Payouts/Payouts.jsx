@@ -7,7 +7,7 @@ export default function Payouts() {
   const [sortOption, setSortOption] = useState("Newest");
 
   return (
-    <div className="bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+    <div className="p-7 font-poppins gap-8 flex flex-col">
       <PageHeader
         title="Manage Payouts"
         description="Track and manage salon earnings"

@@ -34,6 +34,7 @@
   --vmb-text-light: #666666;
   --vmb-border-light: #f3f4f6;
   --vmb-border-gray: #e5e7eb;
+  --vmb-dashboard-bg: #efefef;
 }
 
 @theme {
@@ -52,7 +53,7 @@
   --color-vmb-info: var(--vmb-info);
   --color-vmb-muted: var(--vmb-muted);
   --color-vmb-modal-bg: var(--vmb-modal-bg);
-
+  --color-vmb-dashboard-bg: var(--vmb-dashboard-bg);
   --color-vmb-waitlist-bg: var(--vmb-waitlist-bg);
   --color-vmb-text-gray: var(--vmb-text-gray);
   --color-vmb-green: var(--vmb-green);

@@ -378,7 +378,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     : rejectedPage;
 
   return (
-    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
         <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-vmb-primary/10">
           {[

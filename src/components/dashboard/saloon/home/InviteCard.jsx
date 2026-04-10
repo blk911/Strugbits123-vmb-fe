@@ -9,13 +9,14 @@ export default function InviteCard({
   timeAgo,
   isLoading,
   onClick,
+  className = "",
 }) {
   return (
     <div
       onClick={onClick}
       className={`border border-vmb-primary/10 rounded-[10px] p-3 
-      flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 hover:border-2 hover:border-vmb-secondary  transition-all 
-      ${onClick ? "cursor-pointer hover:bg-vmb-bg-soft" : ""}`}
+      flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 hover:border-2 hover:border-vmb-secondary transition-all
+      ${onClick ? "cursor-pointer hover:bg-vmb-bg-soft" : ""} ${className}`}
     >
       {isLoading ?
         <div>
