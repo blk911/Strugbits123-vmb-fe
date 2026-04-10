@@ -6,6 +6,7 @@ import TextAreaField from "../../../common/dashboard/TextAreaField";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useSuspendUserMutation } from "../../../../store/api/adminApi";
 import { toastSuccess, toastError } from "../../../../utils/toast";
+import { MdEmail } from "react-icons/md";
 
 export default function SuspendModal({ isOpen, onClose, data }) {
   const [reason, setReason] = useState("");
@@ -34,7 +35,7 @@ export default function SuspendModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="bg-vmb-bg-soft w-full max-w-[500px] rounded-[20px] p-[24px] flex flex-col gap-[20px] font-poppins relative"
+        className="bg-vmb-modal-bg w-full max-w-[500px] rounded-[20px] p-[24px] flex flex-col gap-[20px] font-poppins relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -60,7 +61,7 @@ export default function SuspendModal({ isOpen, onClose, data }) {
             value={data?.email}
             disabled
             type="email"
-            icon={<span className="text-vmb-secondary">📧</span>}
+            icon={<MdEmail size={20} className="text-vmb-secondary" />}
           />
 
           <TextAreaField
