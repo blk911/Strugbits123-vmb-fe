@@ -5,6 +5,7 @@ import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
 import { LuUserRoundPlus } from "react-icons/lu";
+import { IoIosPeople } from "react-icons/io";
 export const menus = {
   admin: [
     {
@@ -36,6 +37,11 @@ export const menus = {
       name: "Payouts",
       path: "/payouts",
       icon: <MdPayments className="h-5 w-5" />,
+    },
+    {
+      name: "Customers",
+      path: "/customers",
+      icon: <IoIosPeople className="h-5 w-5" />,
     },
   ],
   salonOwner: [

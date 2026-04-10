@@ -8,6 +8,7 @@ import {
   Payouts,
   SalonInvites,
   Salons,
+  Customers,
 } from "../pages/admin";
 import { SalonDetail } from "../pages/client";
 
@@ -28,6 +29,7 @@ export default function AdminRoutes() {
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/payouts" element={<Payouts />} />
+      <Route path="/customers" element={<Customers />} />
     </Route>
   );
 }
