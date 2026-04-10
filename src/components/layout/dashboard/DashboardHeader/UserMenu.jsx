@@ -2,12 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { clearRole } from "../../../../store/features/roleSlice";
 import { setAuthMode } from "../../../../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
-
+import { TbLogout2 } from "react-icons/tb";
 import { useLogoutMutation } from "../../../../store/api/authApi";
 import { logout as logoutAction } from "../../../../store/features/userSlice";
 import { useUser } from "../../../../hooks/useUser";
@@ -56,30 +55,40 @@ function UserMenu() {
       label: "Change Password",
       onClick: () => openModal("changePassword"),
     },
-    {
-      label: isLoading ? "Logging out..." : "Log Out",
-      onClick: handleLogout,
-      danger: true,
-    },
   ];
 
   return (
-    <div className="relative" ref={ref}>
-      <div
-        className="h-[40px] w-[40px] rounded-full overflow-hidden cursor-pointer border-b border-vmb-primary/10"
-        style={{
-          backdropFilter: "blur(10px)",
-        }}
-        onClick={toggle}
-      >
-        <img
-          src={user?.userProfile || user?.profilePic || profile}
-          alt="profile"
-          className="h-full w-full"
-        />
+    <div className="flex items-center gap-x-6" ref={ref}>
+      <div className="relative">
+        <div
+          className="h-[40px] w-[40px] rounded-full overflow-hidden cursor-pointer border-b border-vmb-primary/10"
+          style={{
+            backdropFilter: "blur(10px)",
+          }}
+          onClick={toggle}
+        >
+          <img
+            src={user?.userProfile || user?.profilePic || profile}
+            alt="profile"
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        {open && <Dropdown items={menuItems} />}
       </div>
 
-      {open && <Dropdown items={menuItems} />}
+      <button
+        onClick={handleLogout}
+        className={`flex items-center justify-center w-auto h-[36px] sm:w-[128px] sm:h-[48px] rounded-[10px] gap-2 sm:gap-[12px] bg-vmb-secondary/30 px-3 sm:px-[10px] py-1 sm:py-[12px] text-vmb-primary hover:opacity-80 transition-all ${
+          isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+        }`}
+        disabled={isLoading}
+      >
+        <TbLogout2 className="text-[18px] sm:text-[21px]" />
+        <span className="text-[13px] sm:text-[16px] font-poppins">
+          {isLoading ? "Logging out..." : "Log Out"}
+        </span>
+      </button>
     </div>
   );
 }

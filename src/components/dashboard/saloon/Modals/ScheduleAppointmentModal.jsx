@@ -63,10 +63,12 @@ export default function ScheduleAppointmentModal({
 
   const [step, setStep] = useState(1);
 
-  const totalPrice = (data?.services || []).reduce(
-    (s, it) => s + (it.price || 0),
-    0,
-  );
+  const services =
+    Array.isArray(data?.services) ? data.services
+    : data?.services ? [data.services]
+    : [];
+
+  const totalPrice = services.reduce((s, it) => s + (it.price || 0), 0);
 
   const type = data?.appointment?.type;
   let finalTotal;

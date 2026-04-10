@@ -5,6 +5,7 @@ import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonInvitesQuery } from "../../../../store/api";
 import { formatDate } from "../../../../utils/HelperFunctions";
+
 const PAGE_SIZE = 10;
 
 export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
@@ -117,17 +118,23 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     data.map(({ _modalData, ...rest }) => rest);
 
   const tabs = {
-    All: cleanDataForTable(transformedData),
-    Pending: cleanDataForTable(transformedData),
-    Claimed: cleanDataForTable(transformedData),
-    Unclaimed: cleanDataForTable(transformedData),
+    All: transformedData,
+    Pending: transformedData.filter((i) => i.status === "Pending"),
+    Claimed: transformedData.filter((i) => i.status === "Claimed"),
+    Unclaimed: transformedData.filter((i) => i.status === "Unclaimed"),
+  };
+
+  const onRowClick = (row) => {
+    if (row._modalData) {
+      openModal("sendTreat", row._modalData);
+    }
   };
 
   const handleRowClick = {
-    All: null,
-    Pending: null,
-    Claimed: null,
-    Unclaimed: null,
+    All: onRowClick,
+    Pending: onRowClick,
+    Claimed: onRowClick,
+    Unclaimed: onRowClick,
   };
 
   const handlePageChange = (page) => {
@@ -164,7 +171,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         onPageChange={handlePageChange}
         isLoading={isLoading}
         isFetching={isFetching}
-        showPointer={false}
+        showPointer={true}
       />
     </div>
   );

@@ -6,7 +6,9 @@ const Table = ({ data, cellRenderers, onRowClick, showPointer }) => {
   if (!data || data.length === 0)
     return <p className="p-4 text-gray-500 text-center">No data available</p>;
 
-  const keys = Object.keys(data[0]).filter((key) => key !== "id");
+  const keys = Object.keys(data[0]).filter(
+    (key) => key !== "id" && !key.startsWith("_"),
+  );
 
   return (
     <div className="w-full overflow-x-auto">

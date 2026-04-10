@@ -46,7 +46,21 @@ export default function SendTreatModal({
   const [page, setPage] = useState(1);
   const [toastId, setToastId] = useState(null);
 
-  const prefilledEmail = initialData?.email || "";
+  const isViewMode = !!initialData?.status;
+
+  const getStatusContent = () => {
+    if (!isViewMode) return null;
+    const status = initialData.status?.toLowerCase();
+    if (status === "pending")
+      return "Your invite has been delivered. They’ll receive your salon offer shortly. 💖";
+    if (status === "claimed")
+      return "Your invite has been claimed. They’ve successfully joined your salon! 💖";
+    if (status === "unclaimed")
+      return "Your invite has expired or remained unclaimed. 💖";
+    return null;
+  };
+
+  const prefilledEmail = initialData?.email || initialData?.inviteeEmail || "";
 
   const {
     data: response,
@@ -101,32 +115,47 @@ export default function SendTreatModal({
   }, [isOpen, services, setValue]);
 
   useEffect(() => {
-    if (selectedServiceId && firstName) {
+    if (!isViewMode && selectedServiceId && firstName) {
       const selectedService = services.find((s) => s._id === selectedServiceId);
       if (selectedService) {
-        setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
-          shouldValidate: true,
-        });
         const name = firstName.trim() || "FirstName";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
         setValue("message", message);
       }
     }
-  }, [firstName, selectedServiceId, services, setValue]);
+  }, [firstName, selectedServiceId, services, setValue, isViewMode]);
 
   useEffect(() => {
     if (isOpen) {
+      // Fallback for names if firstName/lastName are missing but fullName exists
+      const fullName = initialData?.fullName || "";
+      const [fName, ...lNameParts] = fullName.split(" ");
+      const lName = lNameParts.join(" ");
+
+      const firstName = initialData?.firstName || fName || "";
+      const lastName = initialData?.lastName || lName || "";
+
+      // Fallback for service selection
+      const serviceId =
+        initialData?.services?._id ||
+        (Array.isArray(initialData?.services) ?
+          initialData?.services[0]?._id
+        : null) ||
+        initialData?.serviceId ||
+        "";
+
       reset({
-        firstName: "",
-        lastName: "",
+        firstName,
+        lastName,
         email: prefilledEmail,
-        serviceId: "",
-        discountPercentage: services[0]?.serviceDiscount || 10,
-        message: "",
+        serviceId,
+        discountPercentage:
+          initialData?.discountPercentage || services[0]?.serviceDiscount || 10,
+        message: initialData?.message || "",
       });
       setPage(1);
     }
-  }, [isOpen, prefilledEmail, reset]);
+  }, [isOpen, prefilledEmail, reset, initialData, services]);
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
       setPage(newPage);
@@ -181,13 +210,16 @@ export default function SendTreatModal({
                 />
 
                 <h2 className="text-center text-vmb-secondary font-bold text-[20px] sm:text-[22px]">
-                  Send a Special Treat To Your Customer
+                  {isViewMode ?
+                    "You Have Sent Special Treat To Your Customer"
+                  : "Send a Special Treat To Your Customer"}
                 </h2>
 
                 <p className="text-center text-vmb-text-muted text-[13px] sm:text-[14px] leading-[20px] max-w-[600px] mx-auto">
-                  Invite your customer to enjoy one of your salon services. Add
-                  a discount, include a short message, and send your invite
-                  instantly. 💖
+                  {isViewMode ?
+                    getStatusContent()
+                  : "Invite your customer to enjoy one of your salon services. Add a discount, include a short message, and send your invite instantly. 💖"
+                  }
                 </p>
 
                 <form
@@ -204,13 +236,16 @@ export default function SendTreatModal({
                             <input
                               {...field}
                               type="email"
-                              readOnly={!!prefilledEmail}
+                              readOnly={!!prefilledEmail || isViewMode}
                               placeholder="Email"
                               className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
                                 errors.email ? "border-red-500" : (
                                   "border-vmb-primary/10"
                                 )
-                              } ${prefilledEmail ? "bg-vmb-bg-soft" : ""}`}
+                              } ${
+                                prefilledEmail || isViewMode ? "bg-vmb-bg-soft"
+                                : ""
+                              }`}
                             />
                           )}
                         />
@@ -224,19 +259,21 @@ export default function SendTreatModal({
                               type="number"
                               min="0"
                               max="99"
+                              readOnly={isViewMode}
                               value={
                                 field.value === 0 ? "" : (field.value ?? "")
                               }
                               onChange={(e) => {
+                                if (isViewMode) return;
                                 const val = e.target.value;
                                 field.onChange(val === "" ? "" : Number(val));
                               }}
                               placeholder="Discount %"
-                              className={`w-full bg-white border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
                                 errors.discountPercentage ? "border-red-500" : (
                                   "border-vmb-primary/10"
                                 )
-                              }`}
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
                             />
                           )}
                         />
@@ -249,12 +286,13 @@ export default function SendTreatModal({
                           render={({ field }) => (
                             <input
                               {...field}
+                              readOnly={isViewMode}
                               placeholder="First Name"
-                              className={`w-full bg-white border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
                                 errors.firstName ? "border-red-500" : (
                                   "border-vmb-primary/10"
                                 )
-                              }`}
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
                             />
                           )}
                         />
@@ -265,12 +303,13 @@ export default function SendTreatModal({
                           render={({ field }) => (
                             <input
                               {...field}
+                              readOnly={isViewMode}
                               placeholder="Last Name"
-                              className={`w-full bg-white border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
                                 errors.lastName ? "border-red-500" : (
                                   "border-vmb-primary/10"
                                 )
-                              }`}
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
                             />
                           )}
                         />
@@ -283,8 +322,11 @@ export default function SendTreatModal({
                           <textarea
                             {...field}
                             rows={5}
+                            readOnly={isViewMode}
                             placeholder="Type your message..."
-                            className="w-full h-[156px] bg-white border border-vmb-primary/10 rounded-[8px] p-3 text-[12px] italic text-vmb-text-muted resize-none outline-none focus:border-vmb-secondary focus:border-vmb-secondary"
+                            className={`w-full h-[156px] border border-vmb-primary/10 rounded-[8px] p-3 text-[12px] italic text-vmb-text-muted resize-none outline-none focus:border-vmb-secondary ${
+                              isViewMode ? "bg-vmb-bg-soft" : ""
+                            }`}
                           />
                         )}
                       />
@@ -307,12 +349,20 @@ export default function SendTreatModal({
                           {filteredservices.map((srv) => (
                             <label
                               key={srv._id}
-                              className="flex items-center gap-3 p-2 rounded-lg cursor-pointer hover:bg-vmb-bg-soft transition"
+                              className={`flex items-center gap-3 p-2 rounded-lg transition ${
+                                selectedServiceId === srv._id ?
+                                  "bg-vmb-secondary/10 border border-vmb-secondary/20"
+                                : "hover:bg-vmb-bg-soft border border-transparent"
+                              } ${
+                                isViewMode ? "cursor-default" : "cursor-pointer"
+                              }`}
                             >
                               <input
                                 type="radio"
+                                disabled={isViewMode}
                                 checked={selectedServiceId === srv._id}
                                 onChange={() => {
+                                  if (isViewMode) return;
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
@@ -352,17 +402,19 @@ export default function SendTreatModal({
                     </div>
                   </div>
 
-                  <AppButton
-                    type="submit"
-                    variant="primary"
-                    size="custom"
-                    className="w-full max-w-[745px] mx-auto text-[16px] font-medium py-3"
-                    disabled={
-                      !isValid || isSubmitting || !filteredservices?.length
-                    }
-                  >
-                    {isSubmitting ? "Sending Invite..." : "Invite Now"}
-                  </AppButton>
+                  {!isViewMode && (
+                    <AppButton
+                      type="submit"
+                      variant="primary"
+                      size="custom"
+                      className="w-full max-w-[745px] mx-auto text-[16px] font-medium py-3"
+                      disabled={
+                        !isValid || isSubmitting || !filteredservices?.length
+                      }
+                    >
+                      {isSubmitting ? "Sending Invite..." : "Invite Now"}
+                    </AppButton>
+                  )}
                 </form>
               </Dialog.Panel>
             </Transition.Child>

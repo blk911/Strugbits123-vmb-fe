@@ -16,9 +16,11 @@ import {
 import { formatTimeAgo } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
 
 export default function MainSection() {
   const navigate = useNavigate();
+  const { openModal } = useDashboardModal();
 
   const { data: servicesRes, isLoading: loadingServices } =
     useGetServicesQuery();
@@ -113,6 +115,9 @@ export default function MainSection() {
               key={item._id}
               {...getCardProps(item)}
               isLoading={false}
+              onClick={
+                title === "Invites" ? () => openModal("sendTreat", item) : null
+              }
             />
           ))}
         </div>
@@ -130,7 +135,7 @@ export default function MainSection() {
             isLoading: loadingInvites,
             emptyMessage: "No pending invites received",
             CardComponent: InviteCard,
-            navigateTo: "/salon-invites",
+            navigateTo: "/saloninvites",
             getCardProps: getInviteProps,
           })}
 
