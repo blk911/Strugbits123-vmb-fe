@@ -3,19 +3,28 @@ import { IoClose } from "react-icons/io5";
 import AppButton from "../../../common/site/AppButton";
 import TextField from "../../../common/dashboard/TextField";
 import TextAreaField from "../../../common/dashboard/TextAreaField";
-import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useSuspendUserMutation } from "../../../../store/api/adminApi";
-import { toastSuccess, toastError } from "../../../../utils/toast";
+import {
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../../utils/toast";
 import { MdEmail } from "react-icons/md";
-
+import declineGif from "../../../../assets/declineGif.gif";
+import { useEffect } from "react";
 export default function SuspendModal({ isOpen, onClose, data }) {
   const [reason, setReason] = useState("");
   const [suspendUser, { isLoading }] = useSuspendUserMutation();
-
+  useEffect(() => {
+    if (isOpen) {
+      setReason("");
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
 
   const handleSuspend = async () => {
     if (!reason.trim()) {
+      toastDismiss();
       toastError("Please provide a reason for suspension");
       return;
     }
@@ -45,7 +54,9 @@ export default function SuspendModal({ isOpen, onClose, data }) {
           <IoClose size={24} />
         </button>
 
-        <div className="text-center mt-4">
+        <div className="flex flex-col items-center mt-4">
+          <img src={declineGif} alt="Suspend" className="w-32 h-32 mb-4" />
+
           <h2 className="text-[#0F3D3E] font-bold text-[24px]">
             Suspend This Account
           </h2>
@@ -71,17 +82,16 @@ export default function SuspendModal({ isOpen, onClose, data }) {
             onChange={(e) => setReason(e.target.value)}
             rows={4}
           />
+          <AppButton
+            variant="secondary"
+            onClick={handleSuspend}
+            isLoading={isLoading}
+            disabled={isLoading}
+            className="bg-[#0F3D3E] hover:bg-[#0F3D3E]/90 text-white font-semibold py-3 rounded-[10px]"
+          >
+            {isLoading ? "Suspending..." : "Suspend Now"}
+          </AppButton>
         </div>
-
-        <AppButton
-          variant="secondary"
-          onClick={handleSuspend}
-          isLoading={isLoading}
-          disabled={isLoading}
-          className="bg-[#0F3D3E] hover:bg-[#0F3D3E]/90 text-white font-semibold py-3 rounded-[10px]"
-        >
-          {isLoading ? "Suspending..." : "Suspend Now"}
-        </AppButton>
       </div>
     </div>
   );

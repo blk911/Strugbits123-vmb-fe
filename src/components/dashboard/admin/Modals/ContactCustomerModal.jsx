@@ -4,16 +4,26 @@ import AppButton from "../../../common/site/AppButton";
 import TextField from "../../../common/dashboard/TextField";
 import TextAreaField from "../../../common/dashboard/TextAreaField";
 import { useContactUserMutation } from "../../../../store/api/adminApi";
-import { toastSuccess, toastError } from "../../../../utils/toast";
+import {
+  toastSuccess,
+  toastError,
+  toastDismiss,
+} from "../../../../utils/toast";
+import { useEffect } from "react";
 import { MdEmail } from "react-icons/md";
 export default function ContactCustomerModal({ isOpen, onClose, data }) {
   const [message, setMessage] = useState("");
   const [contactUser, { isLoading }] = useContactUserMutation();
-
+  useEffect(() => {
+    if (isOpen) {
+      setMessage("");
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
 
   const handleSend = async () => {
     if (!message.trim()) {
+      toastDismiss();
       toastError("Please provide a message");
       return;
     }
@@ -69,17 +79,16 @@ export default function ContactCustomerModal({ isOpen, onClose, data }) {
             onChange={(e) => setMessage(e.target.value)}
             rows={4}
           />
+          <AppButton
+            variant="secondary"
+            onClick={handleSend}
+            isLoading={isLoading}
+            disabled={isLoading}
+            className="bg-[#0F3D3E] hover:bg-[#0F3D3E]/90 text-white font-semibold py-3 rounded-[10px]"
+          >
+            {isLoading ? "Sending..." : "Send"}
+          </AppButton>
         </div>
-
-        <AppButton
-          variant="secondary"
-          onClick={handleSend}
-          isLoading={isLoading}
-          disabled={isLoading}
-          className="bg-[#0F3D3E] hover:bg-[#0F3D3E]/90 text-white font-semibold py-3 rounded-[10px]"
-        >
-          {isLoading ? "Sending..." : "Send"}
-        </AppButton>
       </div>
     </div>
   );

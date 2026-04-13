@@ -25,7 +25,7 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
       onClick={onClose}
     >
       <div
-        className="bg-vmb-bg-soft w-full max-w-[450px] rounded-[20px] p-[32px] flex flex-col gap-[32px] font-poppins relative"
+        className="bg-vmb-modal-bg w-full max-w-[460px] rounded-[20px] p-[32px] flex flex-col gap-[32px] font-poppins relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -34,9 +34,8 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
         >
           <IoClose size={24} />
         </button>
-
-        <div className="text-center">
-          <h2 className="text-[#00282C] font-bold text-[24px] leading-tight px-4">
+        <div className="w-full text-center mt-2">
+          <h2 className="text-vmb-primary font-bold font-poppins text-[22px] leading-tight px-4">
             Are You Sure To Unsuspend This Account
           </h2>
         </div>
@@ -44,8 +43,9 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
         <div className="flex gap-[16px]">
           <AppButton
             variant="custom"
-            className="flex-1 bg-[#BDCECC] text-[#0F3D3E] font-semibold py-3 rounded-[10px] border-none"
+            className="flex-1 bg-[#BDCECC] text-[#0F3D3E] font-semibold py-3 rounded-[10px] border-none disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={onClose}
+            disabled={isLoading}
           >
             No
           </AppButton>
