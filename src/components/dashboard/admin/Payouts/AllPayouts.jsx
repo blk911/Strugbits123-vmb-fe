@@ -26,6 +26,10 @@ export default function AllPayouts({
 }) {
   const [activeTab, setActiveTab] = useState("All");
   const [page, setPage] = useState(1);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "latestCreatedAt",
+    order: -1,
+  });
   const [processingId, setProcessingId] = useState(null);
   const [selectedSalonId, setSelectedSalonId] = useState(null);
   const navigate = useNavigate();
@@ -50,6 +54,8 @@ export default function AllPayouts({
     sort: sortValue,
     search: searchQuery,
     status: statusMap[activeTab],
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const [markAsPaid] = useMarkAsPaidMutation();
@@ -98,6 +104,8 @@ export default function AllPayouts({
     {
       key: "salonName",
       header: "Salon",
+      sortable: true,
+      sortField: "salonName",
       render: (row) => (
         <div className="flex items-center gap-3">
           <img
@@ -119,6 +127,8 @@ export default function AllPayouts({
     {
       key: "subtotal",
       header: "Subtotal",
+      sortable: true,
+      sortField: "subtotal",
       render: (row) => (
         <span className="font-medium">
           $
@@ -132,6 +142,8 @@ export default function AllPayouts({
     {
       key: "vmbFee",
       header: "VMB Fee",
+      sortable: true,
+      sortField: "vmbFee",
       render: (row) => (
         <span className="font-medium">
           $
@@ -145,6 +157,8 @@ export default function AllPayouts({
     {
       key: "totalCharged",
       header: "Total Charged",
+      sortable: true,
+      sortField: "totalCharged",
       render: (row) => (
         <span className="font-bold text-lg text-vmb-secondary ">
           $
@@ -158,6 +172,8 @@ export default function AllPayouts({
     {
       key: "payoutStatus",
       header: "Payout Status",
+      sortable: true,
+      sortField: "payoutStatus",
       render: (row) => {
         const isPaid = row.payoutStatus === "paid";
         return (
@@ -173,7 +189,12 @@ export default function AllPayouts({
         );
       },
     },
-    { key: "payoutDate", header: "Payout Date" },
+    {
+      key: "payoutDate",
+      header: "Payout Date",
+      sortable: true,
+      sortField: "payoutDate",
+    },
     {
       key: "actions",
       header: "Actions",
@@ -231,6 +252,10 @@ export default function AllPayouts({
     setPage(newPage);
   };
 
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setPage(1);
+  };
   return (
     <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
@@ -267,6 +292,13 @@ export default function AllPayouts({
                 data={transformedData}
                 columns={columns}
                 onRowClick={handleRowClick}
+                sortBy={
+                  advancedSort.field === "latestCreatedAt" ?
+                    "createdAt"
+                  : advancedSort.field
+                }
+                sortOrder={advancedSort.order}
+                onSort={handleSort}
               />
 
               {totalPages > 1 && (

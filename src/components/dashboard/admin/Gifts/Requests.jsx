@@ -24,7 +24,10 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
 
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
 
@@ -38,6 +41,8 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -234,7 +239,17 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setCurrentPage(1);
+  };
 
+  const sortFields = {
+    clientName: "clientName",
+    salonName: "salonName",
+    clientEmail: "clientEmail",
+    status: "status",
+  };
   if (isLoading) {
     return (
       <div className="flex items-center flex-1 bg-white w-full justify-center rounded-[10px] p-6 shadow-sm">
@@ -250,6 +265,10 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           data={cleanData}
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

@@ -23,7 +23,10 @@ export default function Invites({
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
   const [activeTab, setActiveTab] = useState(initialTab);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
   const [claimedPage, setClaimedPage] = useState(1);
@@ -39,6 +42,8 @@ export default function Invites({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -51,6 +56,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: claimedData,
@@ -63,6 +70,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "claimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -76,6 +85,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "unclaimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -192,6 +203,21 @@ export default function Invites({
     : activeTab === "Pending" ? pendingPage
     : activeTab === "Claimed" ? claimedPage
     : unclaimedPage;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setClaimedPage(1);
+    setUnclaimedPage(1);
+  };
+
+  const sortFields = {
+    salonName: "salonName",
+    salonEmail: "salonEmail",
+    discount: "discount",
+    expiresOn: "expiresOn",
+    status: "status",
+  };
 
   return (
     <>
@@ -208,6 +234,10 @@ export default function Invites({
           onPageChange={handlePageChange}
           isLoading={isLoading}
           isFetching={isFetching}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

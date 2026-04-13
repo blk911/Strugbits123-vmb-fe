@@ -28,7 +28,10 @@ export default function Appointments({
   const [holdPage, setHoldPage] = useState(1);
   const [confirmedPage, setConfirmedPage] = useState(1);
   const [declinedPage, setDeclinedPage] = useState(1);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [statusModalType, setStatusModalType] = useState("hold");
   const [modalData, setModalData] = useState(null);
@@ -43,6 +46,8 @@ export default function Appointments({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -55,6 +60,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: scheduledData,
@@ -67,6 +74,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "scheduled",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -80,6 +89,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "reschedule-requested",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: holdData,
@@ -92,6 +103,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "hold",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -105,6 +118,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "confirmed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -118,6 +133,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "declined",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -290,7 +307,24 @@ export default function Appointments({
     : activeTab === "Hold" ? holdPage
     : activeTab === "Confirmed" ? confirmedPage
     : declinedPage;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setScheduledPage(1);
+    setReschedulePage(1);
+    setHoldPage(1);
+    setConfirmedPage(1);
+    setDeclinedPage(1);
+  };
 
+  const sortFields = {
+    salonName: "salonName",
+    payersEmail: "clientEmail",
+    appointmentDate: "appointmentDate",
+    appointmentTime: "appointmentTime",
+    status: "status",
+  };
   return (
     <>
       <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
@@ -323,6 +357,10 @@ export default function Appointments({
           onPageChange={handlePageChange}
           isLoading={isLoading}
           isFetching={isFetching}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

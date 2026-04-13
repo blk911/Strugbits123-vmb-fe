@@ -76,8 +76,7 @@ export default function CustomerTable({
               sortOrder === 1 ?
                 <LuArrowUp className="w-4 h-4 text-vmb-secondary" />
               : <LuArrowDown className="w-4 h-4 text-vmb-secondary" />
-            : <LuArrowUpDown className="text-vmb-text-gray w-4 h-4 opacity-30 group-hover:opacity-100 transition-opacity" />
-            }
+            : <LuArrowUpDown className="text-vmb-secondary w-4 h-4 " />}
           </div>
         )}
       </div>

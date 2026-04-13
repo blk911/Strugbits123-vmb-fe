@@ -26,6 +26,10 @@ export default function Appointments({
 }) {
   const { openModal } = useDashboardModal();
   const [currentPage, setCurrentPage] = useState(1);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
 
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
@@ -40,6 +44,8 @@ export default function Appointments({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   useEffect(() => {
     refetch();
@@ -228,7 +234,19 @@ export default function Appointments({
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setCurrentPage(1);
+  };
 
+  const sortFields = {
+    clientName: "clientName",
+    salonName: "salonName",
+    clientEmail: "clientEmail",
+    appointmentDate: "appointmentDate",
+    appointmentTime: "appointmentTime",
+    status: "status",
+  };
   if (isLoading) {
     return (
       <div className=" flex items-center justify-center bg-white rounded-[10px] p-10 shadow-sm ">
@@ -244,6 +262,10 @@ export default function Appointments({
           data={cleanData}
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

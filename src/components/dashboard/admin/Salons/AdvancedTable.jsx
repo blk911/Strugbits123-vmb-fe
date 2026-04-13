@@ -56,7 +56,7 @@ export default function AdvancedTable({
                             <LuArrowUp className="w-4 h-4 text-vmb-secondary" />
                           : <LuArrowDown className="w-4 h-4 text-vmb-secondary" />
 
-                        : <LuArrowUpDown className="text-[#9CA3AF] w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity" />
+                        : <LuArrowUpDown className="text-vmb-secondary w-3 h-3  " />
                         }
                       </div>
                     )}

@@ -23,7 +23,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const [pendingPage, setPendingPage] = useState(1);
   const [claimedPage, setClaimedPage] = useState(1);
   const [unclaimedPage, setUnclaimedPage] = useState(1);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const {
     data: allData,
     isLoading: loadingAll,
@@ -35,6 +38,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -48,6 +53,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -61,6 +68,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "claimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -74,6 +83,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "unclaimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -150,6 +161,20 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     : activeTab === "Claimed" ? claimedPage
     : unclaimedPage;
 
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setClaimedPage(1);
+    setUnclaimedPage(1);
+  };
+
+  const sortFields = {
+    Email: "Email",
+    discount: "discount",
+    inviteDate: "inviteDate",
+    status: "status",
+  };
   return (
     <div className="w-full flex flex-col gap-y-[31px] py-6 rounded-[10px] bg-vmb-bg-soft">
       <TabbedTable
@@ -171,6 +196,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         onPageChange={handlePageChange}
         isLoading={isLoading}
         isFetching={isFetching}
+        onSort={handleSort}
+        sortBy={advancedSort.field}
+        sortOrder={advancedSort.order}
+        sortFields={sortFields}
         showPointer={true}
       />
     </div>

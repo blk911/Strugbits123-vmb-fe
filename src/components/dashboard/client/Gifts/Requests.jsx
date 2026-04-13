@@ -20,6 +20,10 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
 
   const [myRequestsPage, setMyRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const sortMap = {
     Newest: "newest",
     Oldest: "oldest",
@@ -36,6 +40,8 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -48,6 +54,8 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -164,7 +172,21 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     activeTab === "myRequests" ? loadingRequested : loadingReceived;
   const isFetching =
     activeTab === "myRequests" ? fetchingRequested : fetchingReceived;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setMyRequestsPage(1);
+    setReceivedRequestsPage(1);
+  };
 
+  const sortFields = {
+    salonName: "salonName",
+    payersEmail: "clientEmail",
+    requestDate: "createdAt",
+    status: "status",
+    senderEmail: "clientEmail",
+    dateReceived: "createdAt",
+    giftStatus: "status",
+  };
   return (
     <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
       <TabbedTable
@@ -186,6 +208,10 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
         onPageChange={(page) => handlePageChange(activeTab, page)}
         isLoading={isLoading}
         isFetching={isFetching}
+        onSort={handleSort}
+        sortBy={advancedSort.field}
+        sortOrder={advancedSort.order}
+        sortFields={sortFields}
       />
     </div>
   );

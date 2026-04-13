@@ -18,6 +18,10 @@ export default function TabbedTable({
   isLoading,
   isFetching,
   showPointer,
+  onSort,
+  sortBy,
+  sortOrder,
+  sortFields,
 }) {
   const urlActive = location?.state?.activeTab;
   const initial = urlActive || defaultTab || tabOrder[0];
@@ -64,6 +68,10 @@ export default function TabbedTable({
             cellRenderers={cellRenderers || {}}
             onRowClick={onRowClick?.[currentTab]}
             showPointer={showPointer}
+            onSort={onSort}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            sortFields={sortFields}
           />
 
           {totalPages > 1 && (
