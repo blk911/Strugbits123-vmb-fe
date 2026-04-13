@@ -32,6 +32,14 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const [deactivatedPage, setDeactivatedPage] = useState(1);
   const [rejectedPage, setRejectedPage] = useState(1);
   const [processingId, setProcessingId] = useState(null);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
+
+  const handleTableSort = (field, order) => {
+    setAdvancedSort({ field, order });
+  };
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
   const [approveSalon] = useApproveSalonMutation();
@@ -46,6 +54,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -58,6 +68,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -71,6 +83,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "approved",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -84,6 +98,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "hold",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -97,6 +113,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "deactivated",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -110,6 +128,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "rejected",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -126,6 +146,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     refetchHold,
     refetchDeactivated,
     refetchRejected,
+    advancedSort,
+    sortValue,
   ]);
 
   const currentData =
@@ -179,6 +201,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     {
       key: "salonName",
       header: "Salon Name",
+      sortable: true,
+      sortField: "salonName",
       render: (row) => (
         <div className="flex items-center gap-3">
           <img
@@ -192,9 +216,19 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
         </div>
       ),
     },
-    { key: "ownerName", header: "Owner Name" },
-    { key: "email", header: "Email" },
-    { key: "submittedDate", header: "Submitted" },
+    {
+      key: "ownerName",
+      header: "Owner Name",
+      sortable: true,
+      sortField: "name",
+    },
+    { key: "email", header: "Email", sortable: true, sortField: "email" },
+    {
+      key: "submittedDate",
+      header: "Submitted",
+      sortable: true,
+      sortField: "createdAt",
+    },
     {
       key: "status",
       header: "Status",
@@ -418,6 +452,9 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                 columns={columns}
                 onRowClick={handleRowClick}
                 onActionClick={handleAction}
+                sortBy={advancedSort.field}
+                sortOrder={advancedSort.order}
+                onSort={handleTableSort}
               />
 
               {totalPages > 1 && (

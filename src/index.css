@@ -36,6 +36,7 @@
   --vmb-border-gray: #e5e7eb;
   --vmb-dashboard-bg: #efefef;
   --vmb-modal-bg: #e7edea;
+  --vmb-table-header: #f8f8f8;
 }
 
 @theme {
@@ -62,6 +63,7 @@
   --color-vmb-text-light: var(--vmb-text-light);
   --color-vmb-border-light: var(--vmb-border-light);
   --color-vmb-border-gray: var(--vmb-border-gray);
+  --color-vmb-table-header: var(--vmb-table-header);
   /* Compatibility with existing tokens */
   --color-vmb-bg: var(--vmb-bg);
   --color-vmb-accent: var(--vmb-primary);

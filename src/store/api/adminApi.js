@@ -59,9 +59,11 @@ export const adminApi = createApi({
         sort = "newest",
         search = "",
         status,
+        sortBy = "createdAt",
+        sortOrder = -1,
       } = {}) => ({
         url: "/get-all-salons",
-        params: { page, limit, sort, search, status },
+        params: { page, limit, sort, search, status, sortBy, sortOrder },
       }),
       providesTags: ["Salon"],
     }),

@@ -17,8 +17,8 @@ const TableHeader = ({ keys }) => (
         return (
           <th
             key={key}
-            className={` bg-vmb-bg-soft
-              text-vmb-secondary font-semibold px-2 py-2 text-left text-[13px]  sm:text-[16px]
+            className={` bg-vmb-table-header rounded-[10px]
+              text-vmb-secondary font-semibold px-6 py-3 text-left text-[13px]  sm:text-[16px]
               ${widthClass}
               ${
                 noTruncate ? "whitespace-nowrap" : (
