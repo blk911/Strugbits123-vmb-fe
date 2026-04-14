@@ -39,11 +39,11 @@ export default function ContactCustomerModal({ isOpen, onClose, data }) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-vmb-overlay-bg backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="bg-vmb-modal-bg w-full max-w-[500px] rounded-[20px] p-[24px] flex flex-col gap-[20px] font-poppins relative"
+        className="bg-vmb-modal-bg w-full max-w-[500px]  rounded-[20px] p-[24px] flex flex-col gap-[20px] font-poppins relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button

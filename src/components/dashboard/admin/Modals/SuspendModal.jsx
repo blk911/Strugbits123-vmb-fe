@@ -40,7 +40,7 @@ export default function SuspendModal({ isOpen, onClose, data }) {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-vmb-overlay-bg backdrop-blur-sm"
       onClick={onClose}
     >
       <div

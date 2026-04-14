@@ -341,7 +341,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
         className="relative z-50 font-poppins"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-black/80">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-vmb-overlay-bg">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -352,7 +352,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-vmb-bg-soft p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <div className="flex justify-between items-center">
                   <h2 className="text-vmb-primary font-bold text-[24px]">
                     Profile Settings

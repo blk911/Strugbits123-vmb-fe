@@ -47,7 +47,7 @@ export default function DeleteConfirmModal({
           enterFrom="opacity-0"
           enterTo="opacity-100"
         >
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -58,7 +58,7 @@ export default function DeleteConfirmModal({
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              <Dialog.Panel className="w-full max-w-[360px] bg-vmb-bg-soft rounded-[10px] p-[30px] flex flex-col items-center gap-3 shadow-lg">
+              <Dialog.Panel className="w-full max-w-[360px] backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[10px] p-[30px] flex flex-col items-center gap-3 shadow-lg">
                 <img
                   src={deleteImg}
                   alt="Delete"

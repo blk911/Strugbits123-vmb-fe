@@ -102,11 +102,11 @@ export default function AppointmentRequestHistoryModal({
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/50"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar bg-vmb-bg-soft rounded-[20px] p-[30px] flex flex-col gap-8"
+        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar backdrop-blur-[1px]  bg-white/90 rounded-[20px] p-[30px] flex flex-col gap-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between">

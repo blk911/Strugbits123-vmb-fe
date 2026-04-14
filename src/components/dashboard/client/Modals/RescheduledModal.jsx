@@ -36,7 +36,7 @@ export default function RescheduleRequestModal({ isOpen, onClose, data }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -50,7 +50,7 @@ export default function RescheduleRequestModal({ isOpen, onClose, data }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[470px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
+                <Dialog.Panel className="relative w-full max-w-[470px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
                   <IoClose
                     onClick={onClose}
                     className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"

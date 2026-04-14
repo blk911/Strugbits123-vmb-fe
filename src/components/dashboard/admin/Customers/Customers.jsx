@@ -32,7 +32,7 @@ export default function Customers() {
   };
 
   return (
-    <div className="bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+    <div className=" p-7 font-poppins gap-8 flex flex-col">
       <PageHeader
         title="Customers"
         description="Manage your salon efficiently"

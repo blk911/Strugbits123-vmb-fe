@@ -10,15 +10,11 @@ export default function DeclineDirectModal({ isOpen, onClose, data }) {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-50 font-poppins"
-        onClose={onClose}
-      >
-        <div className="fixed inset-0 bg-black/30" />
+      <Dialog as="div" className="relative z-50 font-poppins" onClose={onClose}>
+        <div className="fixed inset-0 bg-vmb-overlay-bg" />
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
-            <Dialog.Panel className="relative w-full max-w-[460px] rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl flex flex-col gap-[23px]">
+            <Dialog.Panel className="relative w-full max-w-[460px] rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl flex flex-col gap-[23px]">
               <IoClose
                 onClick={onClose}
                 className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"

@@ -2,9 +2,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { FiPlusSquare, FiSearch } from "react-icons/fi";
+import { FiClipboard, FiPlusCircle } from "react-icons/fi";
 
-export default function AddServiceChoiceModal({ isOpen, onClose, onStartFromScratch }) {
+export default function AddServiceChoiceModal({
+  isOpen,
+  onClose,
+  onStartFromScratch,
+}) {
   const navigate = useNavigate();
 
   const handleBrowsePresets = () => {
@@ -14,17 +18,21 @@ export default function AddServiceChoiceModal({ isOpen, onClose, onStartFromScra
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-[60]" onClose={onClose}>
+      <Dialog
+        as="div"
+        className="relative z-[60] font-poppins"
+        onClose={onClose}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
           enterTo="opacity-100"
         >
-          <div className="fixed inset-0 bg-black/80" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -32,42 +40,50 @@ export default function AddServiceChoiceModal({ isOpen, onClose, onStartFromScra
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              <Dialog.Panel className="w-full max-w-[450px] transform overflow-hidden rounded-[20px] bg-white p-6 shadow-xl transition-all font-poppins">
-                <div className="flex justify-between items-center mb-6">
-                  <Dialog.Title className="text-[22px] font-bold text-vmb-primary">
-                    Add New Service
-                  </Dialog.Title>
+              <Dialog.Panel className="w-full max-w-[447px] min-h-[248px] transform overflow-hidden rounded-[10px] backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] flex flex-col gap-[12px] shadow-xl transition-all relative">
+                {/* Close Button */}
+                <div className="absolute top-[20px] right-[20px]">
                   <IoClose
                     onClick={onClose}
-                    className="text-vmb-primary text-3xl cursor-pointer hover:opacity-70"
+                    className="text-vmb-primary text-[24px] cursor-pointer hover:opacity-70"
                   />
                 </div>
 
-                <div className="flex flex-col gap-4">
+                {/* Content */}
+                <div className="flex flex-col items-center text-center gap-[4px] mt-2">
+                  <Dialog.Title className="text-[20px] font-bold text-vmb-primary">
+                    Add a Service
+                  </Dialog.Title>
+                  <p className="text-[14px] text-[#404040] leading-[20px] max-w-[340px]">
+                    Choose how you’d like to create your service. Start from
+                    scratch or use a preset to save time.
+                  </p>
+                </div>
+
+                {/* Options Grid */}
+                <div className="w-full max-w-[387px] grid grid-cols-2 gap-[10px] mx-auto mt-2">
                   <button
                     onClick={onStartFromScratch}
-                    className="group p-5 rounded-[15px] border-2 border-vmb-primary/5 hover:border-vmb-secondary/50 hover:bg-vmb-secondary/5 transition-all text-left flex items-start gap-4"
+                    className="h-[97px] bg-white cursor-pointer border border-vmb-primary/10 rounded-[10px] flex flex-col items-center justify-center gap-[6px] hover:border-vmb-secondary hover:bg-vmb-bg-soft transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-vmb-secondary/10 flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
-                       <FiPlusSquare size={24} />
+                    <div className="w-[44px] h-[44px] flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
+                      <FiClipboard size={28} />
                     </div>
-                    <div>
-                      <h4 className="font-bold text-vmb-primary text-[17px]">Start from scratch</h4>
-                      <p className="text-[14px] text-vmb-text-muted mt-0.5">Create a completely new service manually</p>
-                    </div>
+                    <span className="text-[14px] font-medium text-vmb-primary">
+                      Start from Scratch
+                    </span>
                   </button>
 
                   <button
                     onClick={handleBrowsePresets}
-                    className="group p-5 rounded-[15px] border-2 border-vmb-primary/5 hover:border-vmb-secondary/50 hover:bg-vmb-secondary/5 transition-all text-left flex items-start gap-4"
+                    className="h-[97px] bg-white cursor-pointer border border-vmb-primary/10 rounded-[10px] flex flex-col items-center justify-center gap-[6px] hover:border-vmb-secondary hover:bg-vmb-bg-soft transition-all group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-vmb-secondary/10 flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
-                       <FiSearch size={24} />
+                    <div className="w-[44px] h-[44px] flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
+                      <FiPlusCircle size={28} />
                     </div>
-                    <div>
-                      <h4 className="font-bold text-vmb-primary text-[17px]">Browse presets</h4>
-                      <p className="text-[14px] text-vmb-text-muted mt-0.5">Choose from templates assigned by admin</p>
-                    </div>
+                    <span className="text-[14px] font-medium text-vmb-primary">
+                      Browse Presets
+                    </span>
                   </button>
                 </div>
               </Dialog.Panel>

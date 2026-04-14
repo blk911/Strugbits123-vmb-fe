@@ -3,10 +3,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const templateApi = createApi({
   reducerPath: "templateApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_URL + "template" || "http://localhost:5000/template",
+    baseUrl:
+      import.meta.env.VITE_BACKEND_URL + "template" ||
+      "http://localhost:5000/template",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().user?.token || localStorage.getItem("auth_token");
+      const token =
+        getState().user?.token || localStorage.getItem("auth_token");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -16,9 +19,9 @@ export const templateApi = createApi({
   tagTypes: ["Template", "SalonTemplates"],
   endpoints: (builder) => ({
     getTemplates: builder.query({
-      query: ({ page = 1, limit = 10, search = "" } = {}) => ({
+      query: ({ page = 1, limit = 12, search = "", sort = "Newest" } = {}) => ({
         url: "/get-templates",
-        params: { page, limit, search },
+        params: { page, limit, search, sort },
       }),
       providesTags: ["Template"],
     }),
@@ -55,7 +58,10 @@ export const templateApi = createApi({
     }),
     getSalonAssignedTemplates: builder.query({
       query: (salonId) => ({
-        url: salonId ? `/get-assigned-templates/${salonId}` : "/get-assigned-templates",
+        url:
+          salonId ?
+            `/get-assigned-templates/${salonId}`
+          : "/get-assigned-templates",
       }),
       providesTags: ["SalonTemplates"],
     }),

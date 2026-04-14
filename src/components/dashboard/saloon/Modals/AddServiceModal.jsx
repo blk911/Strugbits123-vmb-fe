@@ -164,7 +164,7 @@ export default function AddServiceModal({
         className="relative z-50 font-poppins"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 bg-black/80" />
+        <div className="fixed inset-0 bg-vmb-overlay-bg" />
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -174,7 +174,7 @@ export default function AddServiceModal({
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
             >
-              <Dialog.Panel className="w-full max-w-[480px] rounded-[12px] bg-vmb-bg-soft p-[30px] shadow-xl">
+              <Dialog.Panel className="w-full max-w-[480px] rounded-[12px] backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl">
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-[24px] font-bold text-vmb-primary">
                     {adoptionMode ?
@@ -182,7 +182,7 @@ export default function AddServiceModal({
                     : isTemplate ?
                       isEdit ?
                         "Edit Template"
-                      : "Add Template"
+                      : "Create Service Template"
                     : initialData?.salonId ?
                       "Edit Service"
                     : "Add Service"}
@@ -252,9 +252,6 @@ export default function AddServiceModal({
                     </p>
                   )}
                   <div>
-                    <label className="block text-sm font-medium text-vmb-text-main">
-                      Service Name *
-                    </label>
                     <input
                       {...register("serviceName", {
                         required: "Service name is required",
@@ -274,7 +271,7 @@ export default function AddServiceModal({
                         register("serviceName").onChange(e);
                       }}
                       className="mt-1 w-full px-4 py-3 bg-white border border-vmb-primary/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
-                      placeholder="e.g. Classic Haircut"
+                      placeholder="Your Service Name"
                     />
                     {errors.serviceName && (
                       <p className="text-red-500 text-xs mt-1">
@@ -285,9 +282,6 @@ export default function AddServiceModal({
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-vmb-text-main">
-                        Price ($)*
-                      </label>
                       <input
                         type="number"
                         step="0.01"
@@ -299,7 +293,7 @@ export default function AddServiceModal({
                           },
                         })}
                         className="mt-1 bg-white w-full px-4 py-3  rounded-lg border border-vmb-primary/10 focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-none"
-                        placeholder="50.00"
+                        placeholder="Price"
                       />
                       {errors.servicePrice && (
                         <p className="text-red-500 text-xs mt-1">
@@ -309,11 +303,8 @@ export default function AddServiceModal({
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-vmb-text-main">
-                        Duration *
-                      </label>
                       <Controller
-                        name="serviceDuration"
+                        name="Duration"
                         control={control}
                         rules={{ required: "Please select a duration" }}
                         render={({ field }) => (
@@ -375,9 +366,6 @@ export default function AddServiceModal({
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-vmb-text-main">
-                      Description
-                    </label>
                     <textarea
                       rows={4}
                       {...register("description")}
@@ -411,7 +399,7 @@ export default function AddServiceModal({
                     : isTemplate ?
                       isEdit ?
                         "Update Template"
-                      : "Create Template"
+                      : "Create Template Now"
                     : initialData?.salonId ?
                       "Update Service"
                     : "Add Service"}

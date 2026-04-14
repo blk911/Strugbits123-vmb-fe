@@ -6,6 +6,7 @@ import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
 import { LuUserRoundPlus } from "react-icons/lu";
 import { IoIosPeople } from "react-icons/io";
+import { BsArchiveFill } from "react-icons/bs";
 export const menus = {
   admin: [
     {
@@ -46,7 +47,7 @@ export const menus = {
     {
       name: "Service Presets",
       path: "/service-presets",
-      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
+      icon: <BsArchiveFill className="h-5 w-5" />,
     },
   ],
   salonOwner: [
@@ -68,7 +69,7 @@ export const menus = {
     {
       name: "Service Presets",
       path: "/service-presets",
-      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
+      icon: <BsArchiveFill className="h-5 w-5" />,
     },
   ],
   customer: [

@@ -119,7 +119,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -133,7 +133,7 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-[480px] bg-vmb-bg-soft rounded-[10px] p-[30px] shadow-xl flex flex-col gap-8">
+              <Dialog.Panel className="w-full max-w-[480px] backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[10px] p-[30px] shadow-xl flex flex-col gap-8">
                 <div className="flex items-center justify-between">
                   <h2 className="text-[24px] font-bold text-vmb-primary">
                     Profile Settings

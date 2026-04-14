@@ -185,7 +185,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">

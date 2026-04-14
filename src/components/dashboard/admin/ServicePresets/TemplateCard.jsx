@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { FiEdit3, FiTrash2 } from "react-icons/fi";
-import { 
-  useUpdateTemplateMutation, 
-  useDeleteTemplateMutation 
+import { FiTrash2 } from "react-icons/fi";
+import { FaEdit } from "react-icons/fa";
+import {
+  useUpdateTemplateMutation,
+  useDeleteTemplateMutation,
 } from "../../../../store/api/templateApi";
 import AddServiceModal from "../../saloon/Modals/AddServiceModal";
 import DeleteConfirmModal from "../../saloon/Modals/DeleteConfirmModal";
-import { 
-  useCreateServiceMutation 
-} from "../../../../store/api/salonApi";
+import { useCreateServiceMutation } from "../../../../store/api/salonApi";
 import toast from "react-hot-toast";
+import AppButton from "../../../common/site/AppButton";
 
 export default function TemplateCard({ template, isAdmin, onUpdate }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -18,7 +18,8 @@ export default function TemplateCard({ template, isAdmin, onUpdate }) {
 
   const [updateTemplate] = useUpdateTemplateMutation();
   const [deleteTemplate] = useDeleteTemplateMutation();
-  const [createSalonService, { isLoading: isAdopting }] = useCreateServiceMutation();
+  const [createSalonService, { isLoading: isAdopting }] =
+    useCreateServiceMutation();
 
   const handleUpdate = async (formData) => {
     try {
@@ -43,71 +44,81 @@ export default function TemplateCard({ template, isAdmin, onUpdate }) {
   };
 
   const handleAddService = async (formData) => {
-     try {
-       await createSalonService(formData).unwrap();
-       setIsAddServiceModalOpen(false);
-       toast.success("Preset added to your services!");
-     } catch (error) {
-       toast.error(error?.data?.message || "Failed to adopt preset");
-     }
+    try {
+      await createSalonService(formData).unwrap();
+      setIsAddServiceModalOpen(false);
+      toast.success("Preset added to your services!");
+    } catch (error) {
+      toast.error(error?.data?.message || "Failed to adopt preset");
+    }
   };
 
   return (
-    <div className="bg-white border border-vmb-primary/10 rounded-[15px] overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col h-full">
-      {/* Image Section */}
-      <div className="relative h-[200px] w-full overflow-hidden">
-        <img
-          src={template.serviceImage}
-          alt={template.serviceName}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-[11px] px-2 py-1 rounded-[5px] font-medium">
-          {template.serviceDuration} min
+    <>
+      <div className="border border-vmb-primary/50 rounded-[12px] p-4 sm:p-5 flex flex-col gap-4 h-full hover:shadow-md transition-all duration-300 bg-white">
+        {/* Image Section */}
+        <div className="relative w-full h-[200px] shrink-0">
+          <img
+            src={template.serviceImage}
+            alt={template.serviceName}
+            className="w-full h-full object-cover rounded-md"
+          />
+          <div className="absolute top-3 right-3 bg-white text-vmb-text-muted text-[12px] px-3 py-[4px] rounded-[8px] shadow-sm">
+            {template.serviceDuration} min
+          </div>
         </div>
-      </div>
 
-      {/* Content Section */}
-      <div className="p-5 flex flex-col flex-grow gap-3">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-vmb-primary font-bold text-[18px] leading-tight line-clamp-1">
+        {/* Content Section */}
+        <div className="flex justify-between items-start gap-2">
+          <h4 className="text-vmb-primary font-semibold text-[16px] sm:text-[18px] leading-[22px] line-clamp-2 max-w-[70%]">
             {template.serviceName}
-          </h3>
-          <span className="text-vmb-primary font-bold text-[18px]">
+          </h4>
+          <span className="text-vmb-text-muted font-bold text-[16px] sm:text-[18px]">
             ${template.servicePrice}
           </span>
         </div>
-        
-        <p className="text-vmb-text-muted text-[13px] leading-[20px] line-clamp-2 h-[40px]">
-          {template.description || "No description provided."}
+
+        <p className="text-vmb-text-main text-[14px] sm:text-[15px] leading-[18px] line-clamp-2 flex-grow">
+          {template.description || "\u00A0"}
         </p>
 
         {/* Action Buttons */}
-        <div className="mt-auto flex items-center gap-2 pt-2">
-          {isAdmin ? (
+        <div className="flex flex-col sm:flex-row items-center gap-3 mt-2">
+          {isAdmin ?
             <>
-              <button
+              <AppButton
+                leftIcon={
+                  <FaEdit className="text-vmb-secondary text-[18px] flex-shrink-0" />
+                }
+                variant="outline-dark"
+                size="custom"
                 onClick={() => setIsEditModalOpen(true)}
-                className="flex-grow h-[42px] border border-vmb-primary/10 rounded-[8px] flex items-center justify-center gap-2 text-vmb-primary text-[14px] font-medium hover:bg-vmb-bg-soft transition-colors"
+                className="flex-1 py-2 px-3 text-[15px] sm:text-[16px] font-medium"
               >
-                <FiEdit3 className="text-lg" />
-                Edit This Template
-              </button>
+                Edit Template
+              </AppButton>
               <button
                 onClick={() => setIsDeleteModalOpen(true)}
-                className="w-[42px] h-[42px] border border-vmb-primary/10 rounded-[8px] flex items-center justify-center text-vmb-text-muted hover:text-red-500 hover:bg-red-50 transition-colors"
+                className="w-full sm:w-[34px] h-[36px] rounded-[5px] bg-vmb-secondary/30 flex items-center justify-center cursor-pointer gap-2"
               >
-                <FiTrash2 className="text-lg" />
+                <FiTrash2 className="text-vmb-primary text-[16px]" />
+                <span className="block sm:hidden text-vmb-primary text-[16px]">
+                  Delete
+                </span>
               </button>
             </>
-          ) : (
-            <button
+          : <AppButton
+              leftIcon={
+                <FaEdit className="text-vmb-secondary text-[18px] flex-shrink-0" />
+              }
+              variant="outline-dark"
+              size="custom"
               onClick={() => setIsAddServiceModalOpen(true)}
-              className="w-full h-[42px] border border-vmb-primary/10 rounded-[8px] flex items-center justify-center gap-2 text-vmb-primary text-[14px] font-medium hover:bg-vmb-bg-soft transition-colors"
+              className="flex-1 py-2 px-3 text-[15px] sm:text-[16px] font-medium"
             >
-              <FiEdit3 className="text-lg" />
-              Add to Services
-            </button>
-          )}
+              Add Service
+            </AppButton>
+          }
         </div>
       </div>
 
@@ -137,11 +148,11 @@ export default function TemplateCard({ template, isAdmin, onUpdate }) {
         <AddServiceModal
           isOpen={isAddServiceModalOpen}
           onClose={() => setIsAddServiceModalOpen(false)}
-          onSubmit={handleAddService} // We'll finalize this adoption logic later
+          onSubmit={handleAddService}
           initialData={template}
           adoptionMode={true}
         />
       )}
-    </div>
+    </>
   );
 }

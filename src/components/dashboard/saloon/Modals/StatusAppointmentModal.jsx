@@ -45,7 +45,7 @@ export default function StatusAppointmentModal({
 
   const totalPrice = (merged.services || []).reduce(
     (s, it) => s + (it.price || 0),
-    0
+    0,
   );
   const appointmentType = data?.appointment?.type;
   let finalTotal;
@@ -241,7 +241,7 @@ export default function StatusAppointmentModal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/80" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -254,7 +254,7 @@ export default function StatusAppointmentModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all">
+              <Dialog.Panel className="relative w-full max-w-[450px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl transition-all">
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"

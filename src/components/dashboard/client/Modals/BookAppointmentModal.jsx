@@ -170,13 +170,13 @@ export default function BookAppointmentModal({
           onClose={closeModal}
         >
           <Transition.Child as={Fragment}>
-            <div className="fixed inset-0 bg-black/80" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
               <Transition.Child as={Fragment}>
-                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-vmb-bg-soft p-10 shadow-xl flex flex-col gap-8">
+                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] backdrop-blur-[1px]  bg-vmb-modals-bg p-10 shadow-xl flex flex-col gap-8">
                   <div className="flex justify-between items-center">
                     <h2 className="text-vmb-primary font-bold text-[24px]">
                       Book Your Appointment
