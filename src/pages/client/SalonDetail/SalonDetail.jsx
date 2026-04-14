@@ -7,6 +7,7 @@ import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoC
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { BsClockFill } from "react-icons/bs";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
+import TemplatesSection from "../../../components/dashboard/admin/SalonDetail/TemplatesSection";
 import { useUser } from "../../../hooks/useUser";
 export default function SalonDetail() {
   const { id } = useParams();
@@ -128,7 +129,7 @@ export default function SalonDetail() {
           </div>
         </div>
       </div>
-
+      {user?.role === "admin" && <TemplatesSection salonId={id} />}
       <ServicesSection services={salon?.services} salon={salon} />
     </div>
   );

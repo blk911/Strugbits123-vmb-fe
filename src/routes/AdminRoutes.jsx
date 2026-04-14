@@ -9,6 +9,7 @@ import {
   SalonInvites,
   Salons,
   Customers,
+  ServicePresets,
 } from "../pages/admin";
 import { SalonDetail } from "../pages/client";
 
@@ -25,6 +26,7 @@ export default function AdminRoutes() {
       />
       <Route path="/salons" element={<Salons />} />
       <Route path="/salon/:id" element={<SalonDetail />} />
+      <Route path="/service-presets" element={<ServicePresets />} />
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/salon-invites" element={<SalonInvites />} />

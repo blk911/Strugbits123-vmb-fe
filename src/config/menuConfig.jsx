@@ -43,6 +43,11 @@ export const menus = {
       path: "/customers",
       icon: <IoIosPeople className="h-5 w-5" />,
     },
+    {
+      name: "Service Presets",
+      path: "/service-presets",
+      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
+    },
   ],
   salonOwner: [
     {
@@ -59,6 +64,11 @@ export const menus = {
       name: "Appointments",
       path: "/appointments",
       icon: <FaCalendarDays className="h-5 w-5" />,
+    },
+    {
+      name: "Service Presets",
+      path: "/service-presets",
+      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
     },
   ],
   customer: [

@@ -6,6 +6,7 @@ import SalonInvites from "./SalonInvites/SalonInvites";
 import Salons from "./Salons/Salons";
 import Payouts from "./Payouts/Payouts";
 import Customers from "./Customers/Customers";
+import ServicePresets from "./ServicePresets/ServicePresets";
 export {
   Home,
   AppointmentHistory,
@@ -14,4 +15,5 @@ export {
   Salons,
   Payouts,
   Customers,
+  ServicePresets,
 };

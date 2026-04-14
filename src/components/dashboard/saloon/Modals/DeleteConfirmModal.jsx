@@ -6,14 +6,28 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import { useDeleteServiceMutation } from "../../../../store/api";
 import { toastError, toastSuccess } from "../../../../utils/toast";
 
-export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
+export default function DeleteConfirmModal({
+  isOpen,
+  closeModal,
+  onClose,
+  id,
+  onConfirm,
+  title,
+  message,
+}) {
+  const handleClose = onClose || closeModal;
   const [deleteService, { isLoading: isDeleting }] = useDeleteServiceMutation();
   const handleDeleteClick = async () => {
+    if (onConfirm) {
+      await onConfirm();
+      return;
+    }
+
     if (!id) return;
 
     try {
       await deleteService(id).unwrap();
-      closeModal();
+      handleClose();
       toastSuccess(`Service deleted successfully!`);
     } catch (err) {
       console.error("Delete failed:", err);
@@ -25,7 +39,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
       <Dialog
         as="div"
         className="relative z-50 font-poppins"
-        onClose={closeModal}
+        onClose={handleClose}
       >
         <Transition.Child
           as={Fragment}
@@ -52,12 +66,16 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
                 />
 
                 <h2 className="text-center text-vmb-secondary font-bold text-[20px] leading-tight">
-                  Are you sure you want <br /> to delete this?
+                  {title || (
+                    <>
+                      Are you sure you want <br /> to delete this?
+                    </>
+                  )}
                 </h2>
 
                 <p className="text-center text-vmb-text-main text-[14px] font-medium leading-[20px]">
-                  This action can’t be undone. Once deleted, this record will be
-                  permanently removed.
+                  {message ||
+                    "This action can’t be undone. Once deleted, this record will be permanently removed."}
                 </p>
 
                 <div className="flex w-full gap-3 mt-2">
@@ -65,7 +83,7 @@ export default function DeleteConfirmModal({ isOpen, closeModal, id }) {
                     leftIcon={<FaTimes />}
                     variant="custom"
                     className="flex-1 bg-vmb-primary text-white"
-                    onClick={closeModal}
+                    onClick={handleClose}
                   >
                     No
                   </AppButton>

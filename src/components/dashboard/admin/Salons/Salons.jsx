@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "../../../common/dashboard/Table/Pagination";
 import { FiEye, FiCheck, FiX } from "react-icons/fi";
 import { HiHandRaised } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import {
   useApproveSalonMutation,
@@ -22,7 +23,7 @@ const PAGE_SIZE = 10;
 
 export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
-
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("All");
 
   const [allPage, setAllPage] = useState(1);
@@ -391,7 +392,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const handleRowClick = (row) => {
-    handleAction("view", row);
+    navigate(`/salon/${row.id}`);
   };
 
   const handlePageChange = (page) => {
