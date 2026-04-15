@@ -3,16 +3,23 @@ import { menus } from "../../../../config/menuConfig";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useUser } from "../../../../hooks/useUser";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 function DashboardSidebar() {
   const { role } = useSelector((state) => state.role);
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const roleMap = {
     "salon-owner": "salonOwner",
     customer: "customer",
     admin: "admin",
   };
-
+  if (loading) {
+    return (
+      <div className="h-full bg-white/50 flex flex-col items-center justify-center border-r border-vmb-primary/10">
+        <LoadingIndicator size="md" />
+      </div>
+    );
+  }
   let items = menus[roleMap[role]] || [];
   if (role === "salon-owner" && user?.status === "hold") {
     items = items.filter((item) => item.name === "Dashboard");

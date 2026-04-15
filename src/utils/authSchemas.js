@@ -74,30 +74,3 @@ export const salonStep2Schema = z.object({
     )
     .min(1, "At least one salon photo is required"),
 });
-// .refine
-// (data) => {
-//   if (!data.startTime || !data.endTime) return true;
-//   return timeToMinutes(data.endTime) > timeToMinutes(data.startTime);
-// },
-// {
-//   message: "End time must be after start time",
-//   path: ["endTime"],
-// }
-
-// (data) => {
-//   if (!data.startTime || !data.endTime) return true;
-
-//   const startMinutes = timeToMinutes(data.startTime);
-//   const endMinutes = timeToMinutes(data.endTime);
-
-//   if (endMinutes < startMinutes) {
-//     return true;
-//   }
-
-//   return endMinutes > startMinutes;
-// },
-// {
-//   message: "End time must be after start time (or next day if overnight)",
-//   path: ["endTime"],
-// }
-// ();

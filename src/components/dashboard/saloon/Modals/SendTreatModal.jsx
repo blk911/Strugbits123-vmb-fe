@@ -127,7 +127,6 @@ export default function SendTreatModal({
 
   useEffect(() => {
     if (isOpen) {
-      // Fallback for names if firstName/lastName are missing but fullName exists
       const fullName = initialData?.fullName || "";
       const [fName, ...lNameParts] = fullName.split(" ");
       const lName = lNameParts.join(" ");
@@ -135,7 +134,6 @@ export default function SendTreatModal({
       const firstName = initialData?.firstName || fName || "";
       const lastName = initialData?.lastName || lName || "";
 
-      // Fallback for service selection
       const serviceId =
         initialData?.services?._id ||
         (Array.isArray(initialData?.services) ?

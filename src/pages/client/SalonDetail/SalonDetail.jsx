@@ -40,16 +40,7 @@ export default function SalonDetail() {
       refetchOnMountOrArgChange: true,
     },
   );
-  // const {
-  //   data: apiData,
-  //   isLoading: apiLoading,
-  //   isError,
-  // } = useGetSalonByIdQuery(
-  //   (id)
-  //   , {
-  //   refetchOnMountOrArgChange: true,
 
-  // });
   const salon = apiData?.data || reduxSalon;
   const isLoading = apiLoading && !salon;
 

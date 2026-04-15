@@ -10,7 +10,6 @@ export default function Customers() {
     order: -1,
   });
 
-  // Sync the legacy dropdown with the advanced sort state
   const handleDropdownSort = (option) => {
     setSortOption(option);
     if (option === "Newest") {
@@ -23,7 +22,6 @@ export default function Customers() {
   const handleTableSort = (field, order) => {
     setAdvancedSort({ field, order });
 
-    // Sync dropdown label if sorting by date, otherwise set to Custom
     if (field === "createdAt") {
       setSortOption(order === -1 ? "Newest" : "Oldest");
     } else {
@@ -46,7 +44,6 @@ export default function Customers() {
         sortBy={advancedSort.field}
         sortOrder={advancedSort.order}
         onSortChange={handleTableSort}
-        // Explicitly pass current dropdown sort for backend priority check
         sort={sortOption.toLowerCase()}
       />
     </div>

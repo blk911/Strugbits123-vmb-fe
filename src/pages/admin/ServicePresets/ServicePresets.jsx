@@ -23,7 +23,6 @@ export default function ServicePresets() {
   const [page, setPage] = useState(1);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // If Admin: fetch all templates. If Salon: fetch assigned templates.
   const {
     data: allTemplatesData,
     isLoading: isAllLoading,
@@ -85,7 +84,7 @@ export default function ServicePresets() {
           {isAdmin && (
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="bg-vmb-secondary hover:bg-vmb-secondary/90 text-white px-5 py-2.5 rounded-[8px] flex items-center gap-2 transition-all shadow-md active:scale-95"
+              className="bg-vmb-secondary cursor-pointer hover:bg-vmb-secondary/90 text-white px-5 py-2.5 rounded-[8px] flex items-center gap-2 transition-all shadow-md active:scale-95"
             >
               <FiPlus className="text-lg" />
               <span className="text-[14px] font-medium">Add Template</span>

@@ -30,7 +30,6 @@ export default function ExclusiveInviteModal({
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  // const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
   const { user } = useUser();
@@ -52,7 +51,6 @@ export default function ExclusiveInviteModal({
       skip: !isOpen || !salonId,
     },
   );
-  // useEffect(() => setInviteOpen(isOpen), [isOpen]);
   useEffect(() => {
     if (isOpen) {
       setSelectedDate("");
@@ -133,29 +131,6 @@ export default function ExclusiveInviteModal({
       toastError(err?.data?.message || "Payment failed. Please try again.");
       console.error("Checkout error:", err);
     }
-
-    // try {
-    //   await acceptInvite({
-    //     id: inviteId,
-    //     data: {
-    //       appointmentDate: selectedDate,
-    //       startTime: convertTo12Hour(selectedTime),
-    //       payment: {
-    //         amount: finalPrice,
-    //       },
-    //     },
-    //   }).unwrap();
-
-    //   toastDismiss(loadingToast);
-    //   toastSuccess("Appointment booked successfully!");
-
-    //   closeAll();
-    //   initialData?.onBookingSuccess?.();
-    // } catch (err) {
-    //   toastDismiss(loadingToast);
-    //   toastError(err?.data?.message || "Failed to book appointment");
-    //   console.error("Accept invite failed:", err);
-    // }
   };
   return (
     <>

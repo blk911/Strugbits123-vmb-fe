@@ -96,25 +96,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
   const vmbFee = totalPrice * 0.1;
-  // const handleAccept = async () => {
-  //   if (!giftId) return;
 
-  //   const loadingToast = toastLoading("Processing your payment...");
-  //   try {
-  //     await acceptGift({
-  //       id: giftId,
-  //       data: gift,
-  //     }).unwrap();
-
-  //     toastDismiss(loadingToast);
-  //     toastSuccess("Payment successful! Treat accepted.");
-  //     closeModal();
-  //     setTimeout(() => setShowSuccessModal(true), 300);
-  //   } catch (err) {
-  //     toastDismiss(loadingToast);
-  //     toastError(err?.data?.message || "Failed to accept gift");
-  //   }
-  // };
   const handleAccept = async () => {
     if (!giftId || !salonId || !info.services || info.services.length === 0) {
       toastError("Invalid gift request data");
@@ -342,7 +324,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         leftIcon={<FaCheck className="text-[14px]" />}
                         variant="outline-dark"
                         size="custom"
-                        // disabled={accepting}
                         disabled={isRedirecting}
                         onClick={handleAccept}
                         className="text-[14px] font-medium px-5 py-[15px]"

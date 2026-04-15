@@ -78,16 +78,6 @@ const salonProfileSchema = z.object({
     .array(z.object({ url: z.string().url(), name: z.string() }))
     .min(1, "At least one salon photo is required"),
 });
-// .refine(
-//   (data) => {
-//     if (!data.startTime || !data.endTime) return true;
-//     return data.endTime > data.startTime;
-//   },
-//   {
-//     message: "End time must be after start time",
-//     path: ["endTime"],
-//   }
-// );
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();

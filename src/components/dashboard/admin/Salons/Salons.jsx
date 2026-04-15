@@ -350,7 +350,6 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       try {
         await approveSalon(salonId).unwrap();
         toastDismiss(loadingToast);
-        // toastSuccess(`"${salonName}" has been approved successfully!`);
         openModal("salonApprovedSuccess", {
           title: "Salon Verification Approved",
           subtitle:
@@ -416,14 +415,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
         <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-vmb-primary/10">
-          {[
-            "All",
-            "Pending",
-            "Approved",
-            "Hold",
-            // "Deactivated",
-            "Rejected",
-          ].map((tab) => (
+          {["All", "Pending", "Approved", "Hold", "Rejected"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}

@@ -3,7 +3,8 @@ import { Fragment } from "react";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { FiClipboard, FiPlusCircle } from "react-icons/fi";
-
+import ClipBoard from "../../../../assets/clipboard.png";
+import ZoomIn from "../../../../assets/zoom-in.png";
 export default function AddServiceChoiceModal({
   isOpen,
   onClose,
@@ -67,7 +68,12 @@ export default function AddServiceChoiceModal({
                     className="h-[97px] bg-white cursor-pointer border border-vmb-primary/10 rounded-[10px] flex flex-col items-center justify-center gap-[6px] hover:border-vmb-secondary hover:bg-vmb-bg-soft transition-all group"
                   >
                     <div className="w-[44px] h-[44px] flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
-                      <FiClipboard size={28} />
+                      {/* <FiClipboard size={28} /> */}
+                      <img
+                        src={ClipBoard}
+                        alt=""
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                     <span className="text-[14px] font-medium text-vmb-primary">
                       Start from Scratch
@@ -79,7 +85,12 @@ export default function AddServiceChoiceModal({
                     className="h-[97px] bg-white cursor-pointer border border-vmb-primary/10 rounded-[10px] flex flex-col items-center justify-center gap-[6px] hover:border-vmb-secondary hover:bg-vmb-bg-soft transition-all group"
                   >
                     <div className="w-[44px] h-[44px] flex items-center justify-center text-vmb-secondary group-hover:scale-110 transition-transform">
-                      <FiPlusCircle size={28} />
+                      {/* <FiPlusCircle size={28} /> */}
+                      <img
+                        src={ZoomIn}
+                        alt=""
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                     <span className="text-[14px] font-medium text-vmb-primary">
                       Browse Presets
