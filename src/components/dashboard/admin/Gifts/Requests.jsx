@@ -17,13 +17,17 @@ import { RiCalendarScheduleLine } from "react-icons/ri";
 import userAvatar from "../../../../assets/user_icon.png";
 import SalonImage from "../../../../assets/salon-1.png";
 import { FiX } from "react-icons/fi";
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
 
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
 
@@ -37,6 +41,8 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -44,18 +50,6 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
   }, [refetch]);
   const gifts = response?.data?.items || [];
   const totalPages = response?.data?.pages || 1;
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("en-GB");
-  };
-
-  const formatTime = (dateString) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
 
   const mapTimeline = (timeline = [], gift) => {
     return timeline.map((item, index) => {
@@ -245,7 +239,17 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setCurrentPage(1);
+  };
 
+  const sortFields = {
+    clientName: "clientName",
+    salonName: "salonName",
+    clientEmail: "clientEmail",
+    status: "status",
+  };
   if (isLoading) {
     return (
       <div className="flex items-center flex-1 bg-white w-full justify-center rounded-[10px] p-6 shadow-sm">
@@ -261,6 +265,10 @@ export default function Requests({ searchQuery = "", sortOption = "Newest" }) {
           data={cleanData}
           cellRenderers={CellRenderers}
           onRowClick={handleRowClick}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

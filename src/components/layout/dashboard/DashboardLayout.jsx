@@ -43,6 +43,9 @@ import {
   SalonInviteTrackingModal,
   SalonRequestModal,
   SalonVerificationRejectionModal,
+  SuspendModal,
+  UnsuspendModal,
+  ContactCustomerModal,
 } from "../../dashboard/admin/Modals";
 import RescheduleRequestModal from "../../dashboard/client/Modals/RescheduledModal";
 
@@ -133,6 +136,21 @@ function DashboardModals() {
         closeModal={closeModal}
         data={modalData}
         onAccept={() => handleSuccess("salonVerfication")}
+      />
+      <SuspendModal
+        isOpen={activeModal === "suspendAdmin"}
+        onClose={closeModal}
+        data={modalData}
+      />
+      <UnsuspendModal
+        isOpen={activeModal === "unsuspendAdmin"}
+        onClose={closeModal}
+        data={modalData}
+      />
+      <ContactCustomerModal
+        isOpen={activeModal === "contactAdmin"}
+        onClose={closeModal}
+        data={modalData}
       />
       <DeleteConfirmModal
         isOpen={activeModal === "delete"}
@@ -272,7 +290,7 @@ function DashboardLayout() {
           <DashboardHeader toggleSidebar={toggleSidebar} />
 
           <main
-            className="flex-1 overflow-y-auto bg-vmb-bg-soft no-scrollbar"
+            className="flex-1 overflow-y-auto bg-vmb-dashboard-bg no-scrollbar"
             style={{
               scrollbarWidth: "none",
             }}

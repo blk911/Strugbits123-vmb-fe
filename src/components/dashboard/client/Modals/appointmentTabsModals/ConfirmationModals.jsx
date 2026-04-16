@@ -27,7 +27,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/80" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Transition.Child
@@ -39,7 +39,7 @@ export function StatusModal({ open, onClose, imageSrc, title, subtitle }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <Dialog.Panel className="bg-vmb-bg-soft rounded-[10px] p-[30px] flex flex-col items-center gap-3 w-full max-w-[468px] text-center">
+            <Dialog.Panel className="backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[10px] p-[30px] flex flex-col items-center gap-3 w-full max-w-[468px] text-center">
               <img
                 src={imageSrc}
                 alt={title}

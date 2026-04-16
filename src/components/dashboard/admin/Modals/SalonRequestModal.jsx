@@ -57,11 +57,11 @@ export default function SalonRequestModal({
   };
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-vmb-overlay-bg"
       onClick={closeModal}
     >
       <div
-        className="bg-vmb-bg-soft w-full max-w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-[10px] p-[30px] flex flex-col gap-[32px] font-poppins"
+        className="backdrop-blur-[1px]  bg-vmb-modals-bg w-full max-w-[600px] max-h-[90vh] overflow-y-auto custom-scrollbar rounded-[10px] p-[30px] flex flex-col gap-[32px] font-poppins"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center">
@@ -97,7 +97,9 @@ export default function SalonRequestModal({
               </div>
 
               <div>
-                <p className="text-vmb-text-main text-[14px] font-medium">Address</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">
+                  Address
+                </p>
                 <p className="text-vmb-text-muted text-[16px]">
                   {data?.address ||
                     "123 Beauty Street, Fashion District, NY 10001"}
@@ -106,7 +108,9 @@ export default function SalonRequestModal({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <p className="text-vmb-text-main text-[14px] font-medium">Phone</p>
+                  <p className="text-vmb-text-main text-[14px] font-medium">
+                    Phone
+                  </p>
                   <p className="text-vmb-text-muted text-[16px]">
                     {data?.phone || "+1 (555) 123-4567"}
                   </p>
@@ -177,17 +181,23 @@ export default function SalonRequestModal({
               </h3>
 
               <div>
-                <p className="text-vmb-text-main text-[14px] font-medium">Full Name</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">
+                  Full Name
+                </p>
                 <p className="text-vmb-text-muted text-[16px]">{data?.name}</p>
               </div>
 
               <div>
-                <p className="text-vmb-text-main text-[14px] font-medium">Email</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">
+                  Email
+                </p>
                 <p className="text-vmb-text-muted text-[16px]">{data?.email}</p>
               </div>
 
               <div>
-                <p className="text-vmb-text-main text-[14px] font-medium">Phone</p>
+                <p className="text-vmb-text-main text-[14px] font-medium">
+                  Phone
+                </p>
                 <p className="text-vmb-text-muted text-[16px]">
                   {data?.phoneNumber || "+1 (555) 987-6543"}
                 </p>

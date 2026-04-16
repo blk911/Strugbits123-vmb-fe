@@ -16,7 +16,7 @@ import {
 } from "../../../../store/api";
 import { toastError, toastSuccess } from "../../../../utils/toast";
 import { HiHandRaised } from "react-icons/hi2";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 export default function PendingRequestsSection() {
   const { openModal } = useDashboardModal();
   const [page, setPage] = useState(1);
@@ -57,7 +57,6 @@ export default function PendingRequestsSection() {
     setApprovingId(salonId);
     try {
       await approveSalon(salonId).unwrap();
-      // toastSuccess(`"${salonName}" has been approved successfully!`);
       openModal("salonApprovedSuccess", {
         title: "Salon Verification Approved",
         subtitle:
@@ -163,7 +162,7 @@ export default function PendingRequestsSection() {
                   {item.salonName} • {item.address || "Unknown City"}
                 </p>
                 <p className="text-[12px] text-vmb-muted">
-                  Applied {new Date(item.createdAt).toLocaleDateString()}
+                  Applied {formatDate(item.createdAt)}
                 </p>
               </div>
             </div>

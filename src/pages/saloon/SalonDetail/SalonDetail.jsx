@@ -37,7 +37,7 @@ export default function SalonDetail() {
   const { openModal } = useDashboardModal();
 
   return (
-    <div className=" bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+    <div className="  p-7 font-poppins gap-8 flex flex-col">
       <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-sm p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative">
           <AutoCarousel

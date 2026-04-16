@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../../../common/dashboard/Table/Pagination";
 import { FiEye, FiCheck, FiX } from "react-icons/fi";
+import { HiHandRaised } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import {
   useApproveSalonMutation,
@@ -15,11 +17,13 @@ import {
   toastSuccess,
 } from "../../../../utils/toast";
 import SalonImage from "../../../../assets/salon-1.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
+
 const PAGE_SIZE = 10;
 
 export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const { openModal } = useDashboardModal();
-
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("All");
 
   const [allPage, setAllPage] = useState(1);
@@ -29,6 +33,14 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const [deactivatedPage, setDeactivatedPage] = useState(1);
   const [rejectedPage, setRejectedPage] = useState(1);
   const [processingId, setProcessingId] = useState(null);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
+
+  const handleTableSort = (field, order) => {
+    setAdvancedSort({ field, order });
+  };
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
   const [approveSalon] = useApproveSalonMutation();
@@ -43,6 +55,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -55,6 +69,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -68,6 +84,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "approved",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -81,6 +99,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "hold",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -94,6 +114,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "deactivated",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -107,6 +129,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "rejected",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -123,6 +147,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     refetchHold,
     refetchDeactivated,
     refetchRejected,
+    advancedSort,
+    sortValue,
   ]);
 
   const currentData =
@@ -160,10 +186,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     email: salon.email || "N/A",
     phone: salon.phoneNumber || "N/A",
     ownerPhone: salon.ownerPhone || "N/A",
-    submittedDate:
-      salon.createdAt ?
-        new Date(salon.createdAt).toLocaleDateString("en-GB")
-      : "N/A",
+    submittedDate: salon.createdAt ? formatDate(salon.createdAt) : "N/A",
     status:
       salon.status ?
         salon.status.charAt(0).toUpperCase() + salon.status.slice(1)
@@ -179,6 +202,8 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     {
       key: "salonName",
       header: "Salon Name",
+      sortable: true,
+      sortField: "salonName",
       render: (row) => (
         <div className="flex items-center gap-3">
           <img
@@ -192,9 +217,19 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
         </div>
       ),
     },
-    { key: "ownerName", header: "Owner Name" },
-    { key: "email", header: "Email" },
-    { key: "submittedDate", header: "Submitted" },
+    {
+      key: "ownerName",
+      header: "Owner Name",
+      sortable: true,
+      sortField: "name",
+    },
+    { key: "email", header: "Email", sortable: true, sortField: "email" },
+    {
+      key: "submittedDate",
+      header: "Submitted",
+      sortable: true,
+      sortField: "createdAt",
+    },
     {
       key: "status",
       header: "Status",
@@ -254,6 +289,19 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  onActionClick?.("hold", row);
+                }}
+                disabled={processingId === row.id}
+                className={`w-10 h-10 flex items-center justify-center rounded-lg border border-vmb-primary/10 hover:bg-vmb-bg-soft transition cursor-pointer ${
+                  processingId === row.id ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                title="Hold"
+              >
+                <HiHandRaised className="w-4 h-4 text-vmb-text-muted" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
                   onActionClick?.("reject", row);
                 }}
                 disabled={processingId === row.id}
@@ -302,7 +350,6 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       try {
         await approveSalon(salonId).unwrap();
         toastDismiss(loadingToast);
-        // toastSuccess(`"${salonName}" has been approved successfully!`);
         openModal("salonApprovedSuccess", {
           title: "Salon Verification Approved",
           subtitle:
@@ -316,6 +363,13 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
       }
     }
 
+    if (action === "hold") {
+      const selectedRow = salons.find((salon) => salon._id === row.id);
+      openModal("salonRejection", {
+        salonId: selectedRow._id,
+        salonName: selectedRow.salonName,
+      });
+    }
     if (action === "reject") {
       const selectedRow = salons.find((salon) => salon._id === row.id);
       const salonId = selectedRow._id;
@@ -337,7 +391,7 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   };
 
   const handleRowClick = (row) => {
-    handleAction("view", row);
+    navigate(`/salon/${row.id}`);
   };
 
   const handlePageChange = (page) => {
@@ -358,17 +412,10 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     : rejectedPage;
 
   return (
-    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
         <div className="flex flex-wrap gap-6 px-6 pt-6 border-b border-vmb-primary/10">
-          {[
-            "All",
-            "Pending",
-            "Approved",
-            "Hold",
-            // "Deactivated",
-            "Rejected",
-          ].map((tab) => (
+          {["All", "Pending", "Approved", "Hold", "Rejected"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -398,6 +445,9 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
                 columns={columns}
                 onRowClick={handleRowClick}
                 onActionClick={handleAction}
+                sortBy={advancedSort.field}
+                sortOrder={advancedSort.order}
+                onSort={handleTableSort}
               />
 
               {totalPages > 1 && (

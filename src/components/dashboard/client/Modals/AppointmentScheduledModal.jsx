@@ -123,7 +123,7 @@ export default function AppointmentScheduledModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/80" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -137,7 +137,7 @@ export default function AppointmentScheduledModal({
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Panel className="relative w-full max-w-[460px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
+                <Dialog.Panel className="relative w-full max-w-[460px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl transition-all flex flex-col gap-[23px]">
                   <IoClose
                     onClick={closeModal}
                     className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
@@ -146,14 +146,15 @@ export default function AppointmentScheduledModal({
                   <div className="flex flex-col items-center text-center">
                     <h2 className="text-vmb-primary font-bold text-[22px]">
                       Great News! <br />
-                      {status === "pending"
-                        ? "Your Treat Request is Fulfilled."
-                        : "Your Appointment is Scheduled."}
+                      {status === "pending" ?
+                        "Your Treat Request is Fulfilled."
+                      : "Your Appointment is Scheduled."}
                     </h2>
                     <p className="text-vmb-text-muted text-[14px] mt-2 leading-[20px]">
-                      {status === "pending"
-                        ? "Your treat request has been successfully fulfilled. The salon has been notified and will schedule your appointment."
-                        : "The salon has successfully scheduled your appointment. Please review the details below and confirm your appointment."}
+                      {status === "pending" ?
+                        "Your treat request has been successfully fulfilled. The salon has been notified and will schedule your appointment."
+                      : "The salon has successfully scheduled your appointment. Please review the details below and confirm your appointment."
+                      }
                     </p>
                   </div>
 

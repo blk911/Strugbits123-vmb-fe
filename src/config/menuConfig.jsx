@@ -5,6 +5,8 @@ import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
 import { LuUserRoundPlus } from "react-icons/lu";
+import { IoIosPeople } from "react-icons/io";
+import { BsArchiveFill } from "react-icons/bs";
 export const menus = {
   admin: [
     {
@@ -37,6 +39,16 @@ export const menus = {
       path: "/payouts",
       icon: <MdPayments className="h-5 w-5" />,
     },
+    {
+      name: "Customers",
+      path: "/customers",
+      icon: <IoIosPeople className="h-5 w-5" />,
+    },
+    {
+      name: "Service Presets",
+      path: "/service-presets",
+      icon: <BsArchiveFill className="h-5 w-5" />,
+    },
   ],
   salonOwner: [
     {
@@ -53,6 +65,11 @@ export const menus = {
       name: "Appointments",
       path: "/appointments",
       icon: <FaCalendarDays className="h-5 w-5" />,
+    },
+    {
+      name: "Service Presets",
+      path: "/service-presets",
+      icon: <BsArchiveFill className="h-5 w-5" />,
     },
   ],
   customer: [

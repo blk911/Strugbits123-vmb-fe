@@ -3,18 +3,28 @@ import { menus } from "../../../../config/menuConfig";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useUser } from "../../../../hooks/useUser";
+import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 function DashboardSidebar() {
   const { role } = useSelector((state) => state.role);
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const roleMap = {
     "salon-owner": "salonOwner",
     customer: "customer",
     admin: "admin",
   };
-
+  if (loading) {
+    return (
+      <div className="h-full bg-white/50 flex flex-col items-center justify-center border-r border-vmb-primary/10">
+        <LoadingIndicator size="md" />
+      </div>
+    );
+  }
   let items = menus[roleMap[role]] || [];
   if (role === "salon-owner" && user?.status === "hold") {
+    items = items.filter((item) => item.name === "Dashboard");
+  }
+  if (user?.isSuspended) {
     items = items.filter((item) => item.name === "Dashboard");
   }
   return (
@@ -29,7 +39,9 @@ function DashboardSidebar() {
               `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[8px] sm:px-[4px]
    rounded-[14px] transition-all duration-200
    ${
-      isActive ? "bg-vmb-secondary text-white shadow-sm" : "bg-transparent text-vmb-primary hover:bg-vmb-secondary/10"
+     isActive ?
+       "bg-vmb-secondary text-white shadow-sm"
+     : "bg-transparent text-vmb-primary hover:bg-vmb-secondary/10"
    } text-center `
             }
             style={{

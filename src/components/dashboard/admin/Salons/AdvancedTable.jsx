@@ -1,10 +1,14 @@
 import React from "react";
+import { LuArrowUp, LuArrowDown, LuArrowUpDown } from "react-icons/lu";
 
 export default function AdvancedTable({
   data,
   columns,
   onRowClick,
   onActionClick,
+  sortBy,
+  sortOrder,
+  onSort,
 }) {
   if (!data || data.length === 0) {
     return (
@@ -19,15 +23,47 @@ export default function AdvancedTable({
       <table className="w-full advanced-table-desktop">
         <thead className="rounded-[5px]">
           <tr className="border-b border-vmb-primary/10 bg-vmb-bg-soft ">
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                className="text-left py-4 px-3 text-sm font-semibold text-vmb-secondary uppercase tracking-wider"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                {col.header}
-              </th>
-            ))}
+            {columns.map((col) => {
+              const isSortable = col.sortable;
+              const isActive = sortBy === col.sortField;
+
+              return (
+                <th
+                  key={col.key}
+                  className={`text-left bg-vmb-table-header rounded-[10px] py-3 px-6 text-sm font-semibold text-vmb-secondary uppercase tracking-wider select-none ${isSortable ? "cursor-pointer group" : ""}`}
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                  onClick={
+                    isSortable ?
+                      () => {
+                        if (isActive) {
+                          onSort?.(col.sortField, sortOrder === 1 ? -1 : 1);
+                        } else {
+                          onSort?.(
+                            col.sortField,
+                            col.sortField === "createdAt" ? -1 : 1,
+                          );
+                        }
+                      }
+                    : undefined
+                  }
+                >
+                  <div className="flex items-center gap-2">
+                    {col.header}
+                    {isSortable && (
+                      <div className="flex items-center">
+                        {isActive ?
+                          sortOrder === 1 ?
+                            <LuArrowUp className="w-4 h-4 text-vmb-secondary" />
+                          : <LuArrowDown className="w-4 h-4 text-vmb-secondary" />
+
+                        : <LuArrowUpDown className="text-vmb-secondary w-3 h-3  " />
+                        }
+                      </div>
+                    )}
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
@@ -40,7 +76,7 @@ export default function AdvancedTable({
               {columns.map((col) => (
                 <td
                   key={col.key}
-                  className="py-4 px-3 text-sm font-medium text-vmb-text-muted align-center"
+                  className="py-3 px-4 text-sm font-medium text-vmb-text-muted align-center"
                 >
                   <div className="break-words max-w-xs">
                     {col.render ? col.render(row, onActionClick) : row[col.key]}

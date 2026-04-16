@@ -48,18 +48,32 @@ export const giftApi = createApi({
     }),
 
     requestedGifts: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest", search = "" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        sortBy = "createdAt",
+        sortOrder = -1,
+      } = {}) => ({
         url: "/requested-gifts",
-        params: { page, limit, sort, search },
+        params: { page, limit, sort, search, sortBy, sortOrder },
       }),
 
       providesTags: ["Gift"],
     }),
 
     recievedGifts: builder.query({
-      query: ({ page = 1, limit = 10, sort = "newest", search = "" } = {}) => ({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        sortBy = "createdAt",
+        sortOrder = -1,
+      } = {}) => ({
         url: "/recieved-gifts",
-        params: { page, limit, sort, search },
+        params: { page, limit, sort, search, sortBy, sortOrder },
       }),
       providesTags: ["Gift"],
     }),
@@ -75,9 +89,11 @@ export const giftApi = createApi({
         sort = "newest",
         search = "",
         status,
+        sortBy = "createdAt",
+        sortOrder = -1,
       } = {}) => ({
         url: "/get-all-gifts",
-        params: { page, limit, sort, search, status },
+        params: { page, limit, sort, search, status, sortBy, sortOrder },
       }),
     }),
   }),

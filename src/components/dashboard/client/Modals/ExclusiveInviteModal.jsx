@@ -30,7 +30,6 @@ export default function ExclusiveInviteModal({
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  // const [acceptInvite, { isLoading: accepting }] = useAcceptInviteMutation();
   const [createCheckoutSession, { isLoading: isRedirecting }] =
     useCreateCheckoutSessionMutation();
   const { user } = useUser();
@@ -52,7 +51,6 @@ export default function ExclusiveInviteModal({
       skip: !isOpen || !salonId,
     },
   );
-  // useEffect(() => setInviteOpen(isOpen), [isOpen]);
   useEffect(() => {
     if (isOpen) {
       setSelectedDate("");
@@ -133,29 +131,6 @@ export default function ExclusiveInviteModal({
       toastError(err?.data?.message || "Payment failed. Please try again.");
       console.error("Checkout error:", err);
     }
-
-    // try {
-    //   await acceptInvite({
-    //     id: inviteId,
-    //     data: {
-    //       appointmentDate: selectedDate,
-    //       startTime: convertTo12Hour(selectedTime),
-    //       payment: {
-    //         amount: finalPrice,
-    //       },
-    //     },
-    //   }).unwrap();
-
-    //   toastDismiss(loadingToast);
-    //   toastSuccess("Appointment booked successfully!");
-
-    //   closeAll();
-    //   initialData?.onBookingSuccess?.();
-    // } catch (err) {
-    //   toastDismiss(loadingToast);
-    //   toastError(err?.data?.message || "Failed to book appointment");
-    //   console.error("Accept invite failed:", err);
-    // }
   };
   return (
     <>
@@ -174,7 +149,7 @@ export default function ExclusiveInviteModal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/80" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -188,7 +163,7 @@ export default function ExclusiveInviteModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[448px] rounded-[20px] bg-vmb-bg-soft border border-vmb-primary/10 p-[30px] shadow-xl flex flex-col gap-6">
+                <Dialog.Panel className="relative w-full max-w-[448px] rounded-[20px] backdrop-blur-[1px]  bg-vmb-modals-bg border border-vmb-primary/10 p-[30px] shadow-xl flex flex-col gap-6">
                   <IoClose
                     onClick={closeAll}
                     className="absolute top-6 right-6 text-vmb-primary text-3xl cursor-pointer hover:opacity-80"

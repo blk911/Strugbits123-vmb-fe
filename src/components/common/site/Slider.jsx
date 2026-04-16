@@ -90,7 +90,7 @@ function SalonCard({ salon }) {
 
   return (
     <div
-      className="bg-white rounded-[16px] border border-vmb-secondary/20 overflow-hidden w-auto xl:max-w-[340px] flex flex-col cursor-pointer"
+      className="bg-white rounded-[16px] border border-vmb-secondary/20 overflow-hidden w-full xl:max-w-[340px] flex flex-col cursor-pointer"
       onClick={handleViewSalon}
     >
       <img

@@ -14,7 +14,7 @@ export default function RejectionSentModal({ isOpen, onClose }) {
   }, [isOpen]);
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black/30 z-[999] p-4"
+      className="fixed inset-0 flex items-center justify-center bg-vmb-overlay-bg z-[999] p-4"
       onClick={onClose}
     >
       <div

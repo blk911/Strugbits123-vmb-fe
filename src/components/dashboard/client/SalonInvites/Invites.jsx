@@ -4,7 +4,7 @@ import { CellRenderers } from "./CellRenderers";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetUserInvitesQuery } from "../../../../store/api";
 import { ConfirmConfirmation } from "../Modals/appointmentTabsModals/ConfirmationModals";
-import { formatDuration } from "../../../../utils/HelperFunctions";
+import { formatDuration, formatDate } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 const PAGE_SIZE = 10;
 
@@ -23,7 +23,10 @@ export default function Invites({
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
   const [activeTab, setActiveTab] = useState(initialTab);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const [allPage, setAllPage] = useState(1);
   const [pendingPage, setPendingPage] = useState(1);
   const [claimedPage, setClaimedPage] = useState(1);
@@ -39,6 +42,8 @@ export default function Invites({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -51,6 +56,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: claimedData,
@@ -63,6 +70,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "claimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -76,6 +85,8 @@ export default function Invites({
     sort: sortValue,
     search: searchQuery,
     status: "unclaimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -85,29 +96,20 @@ export default function Invites({
     refetchUnclaimed();
   }, [refetchAll, refetchClaimed, refetchPending, refetchUnclaimed]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Claimed"
-      ? claimedData
-      : unclaimedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Claimed" ? claimedData
+    : unclaimedData;
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Claimed"
-      ? loadingClaimed
-      : loadingUnclaimed;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Claimed" ? loadingClaimed
+    : loadingUnclaimed;
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Claimed"
-      ? fetchingClaimed
-      : fetchingUnclaimed;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Claimed" ? fetchingClaimed
+    : fetchingUnclaimed;
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
@@ -118,9 +120,7 @@ export default function Invites({
     salonEmail: invite.salonEmail || "N/A",
     serviceName: invite.services?.serviceName || "N/A",
     discount: `${invite.discountPercentage}%`,
-    expiresOn: invite.expiresOn
-      ? new Date(invite.expiresOn).toLocaleDateString("en-GB")
-      : "N/A",
+    expiresOn: invite.expiresOn ? formatDate(invite.expiresOn) : "N/A",
     status: invite.status.charAt(0).toUpperCase() + invite.status.slice(1),
     _modalData: {
       name: invite.salonName,
@@ -128,8 +128,9 @@ export default function Invites({
       description: invite.salonDesc || "N/A",
       salonId: invite.salonId,
       inviteId: invite._id,
-      services: invite.services
-        ? [
+      services:
+        invite.services ?
+          [
             {
               id: invite.services._id,
               name: invite.services.serviceName,
@@ -198,17 +199,29 @@ export default function Invites({
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Claimed"
-      ? claimedPage
-      : unclaimedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Claimed" ? claimedPage
+    : unclaimedPage;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setClaimedPage(1);
+    setUnclaimedPage(1);
+  };
+
+  const sortFields = {
+    salonName: "salonName",
+    salonEmail: "salonEmail",
+    discount: "discount",
+    expiresOn: "expiresOn",
+    status: "status",
+  };
 
   return (
     <>
-      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+      <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
         <TabbedTable
           tabs={tabs}
           tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}
@@ -221,6 +234,10 @@ export default function Invites({
           onPageChange={handlePageChange}
           isLoading={isLoading}
           isFetching={isFetching}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

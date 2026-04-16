@@ -121,10 +121,9 @@ export default function AuthForm() {
         keepIsSubmitted: false,
         keepSubmitCount: false,
         keepValues: false,
-      }
+      },
     );
     setStep("step1");
-    // setUserType("customer");
   }, [mode, reset]);
 
   const goToStep2 = async () => {
@@ -141,13 +140,10 @@ export default function AuthForm() {
       dispatch(setUser(meRes.data));
 
       const target =
-        apiRole === "customer"
-          ? "/client"
-          : apiRole === "salon-owner"
-          ? "/salon-owner"
-          : apiRole === "admin"
-          ? "/admin"
-          : "/";
+        apiRole === "customer" ? "/client"
+        : apiRole === "salon-owner" ? "/salon-owner"
+        : apiRole === "admin" ? "/admin"
+        : "/";
 
       navigate(target, { replace: true });
     } catch (err) {
@@ -163,7 +159,6 @@ export default function AuthForm() {
     setStep("step1");
     setUserType("customer");
     dispatch(setAuthMode("login"));
-    // toastSuccess(message || "Account created! Please log in.");
     setIsConfirmationModalData({ title: "Account created!", message });
     setIsConfirmationModalOpen(true);
   };

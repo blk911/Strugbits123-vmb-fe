@@ -78,11 +78,11 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
   const statusStyle = getStatusStyle();
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/80"
+      className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-vmb-overlay-bg"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] font-poppins max-h-[95vh] overflow-y-auto custom-scrollbar bg-vmb-bg-soft rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
+        className="w-full max-w-[960px] font-poppins max-h-[95vh] overflow-y-auto custom-scrollbar backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-6 sm:gap-8"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -270,9 +270,7 @@ export default function GiftRequestHistoryModal({ isOpen, onClose, data }) {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium">Email:</p>
-                  <p className="text-vmb-text-muted break-all">
-                    {salon.email}
-                  </p>
+                  <p className="text-vmb-text-muted break-all">{salon.email}</p>
                 </div>
                 <div>
                   <p className="font-medium">Phone:</p>

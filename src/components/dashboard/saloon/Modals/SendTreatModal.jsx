@@ -46,7 +46,21 @@ export default function SendTreatModal({
   const [page, setPage] = useState(1);
   const [toastId, setToastId] = useState(null);
 
-  const prefilledEmail = initialData?.email || "";
+  const isViewMode = !!initialData?.status;
+
+  const getStatusContent = () => {
+    if (!isViewMode) return null;
+    const status = initialData.status?.toLowerCase();
+    if (status === "pending")
+      return "Your invite has been delivered. They’ll receive your salon offer shortly. 💖";
+    if (status === "claimed")
+      return "Your invite has been claimed. They’ve successfully joined your salon! 💖";
+    if (status === "unclaimed")
+      return "Your invite has expired or remained unclaimed. 💖";
+    return null;
+  };
+
+  const prefilledEmail = initialData?.email || initialData?.inviteeEmail || "";
 
   const {
     data: response,
@@ -101,32 +115,45 @@ export default function SendTreatModal({
   }, [isOpen, services, setValue]);
 
   useEffect(() => {
-    if (selectedServiceId && firstName) {
+    if (!isViewMode && selectedServiceId && firstName) {
       const selectedService = services.find((s) => s._id === selectedServiceId);
       if (selectedService) {
-        setValue("discountPercentage", selectedService?.serviceDiscount ?? 0, {
-          shouldValidate: true,
-        });
         const name = firstName.trim() || "FirstName";
         const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
         setValue("message", message);
       }
     }
-  }, [firstName, selectedServiceId, services, setValue]);
+  }, [firstName, selectedServiceId, services, setValue, isViewMode]);
 
   useEffect(() => {
     if (isOpen) {
+      const fullName = initialData?.fullName || "";
+      const [fName, ...lNameParts] = fullName.split(" ");
+      const lName = lNameParts.join(" ");
+
+      const firstName = initialData?.firstName || fName || "";
+      const lastName = initialData?.lastName || lName || "";
+
+      const serviceId =
+        initialData?.services?._id ||
+        (Array.isArray(initialData?.services) ?
+          initialData?.services[0]?._id
+        : null) ||
+        initialData?.serviceId ||
+        "";
+
       reset({
-        firstName: "",
-        lastName: "",
+        firstName,
+        lastName,
         email: prefilledEmail,
-        serviceId: "",
-        discountPercentage: services[0]?.serviceDiscount || 10,
-        message: "",
+        serviceId,
+        discountPercentage:
+          initialData?.discountPercentage || services[0]?.serviceDiscount || 10,
+        message: initialData?.message || "",
       });
       setPage(1);
     }
-  }, [isOpen, prefilledEmail, reset]);
+  }, [isOpen, prefilledEmail, reset, initialData, services]);
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
       setPage(newPage);
@@ -168,152 +195,172 @@ export default function SendTreatModal({
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-[4px]" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg backdrop-blur-[4px]" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child as={Fragment}>
-              <Dialog.Panel className="relative w-full max-w-[616px] rounded-[10px] bg-vmb-bg-soft p-[30px] shadow-lg flex flex-col gap-[12px] max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <Dialog.Panel className="relative w-full max-w-[805px] backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[12px] p-[20px] sm:p-[30px] shadow-lg flex flex-col gap-[20px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer hover:opacity-70"
                 />
 
-                <h2 className="text-center text-vmb-secondary font-bold text-[22px]">
-                  Send a Special Treat To Your Customer
+                <h2 className="text-center text-vmb-secondary font-bold text-[20px] sm:text-[22px]">
+                  {isViewMode ?
+                    "You Have Sent Special Treat To Your Customer"
+                  : "Send a Special Treat To Your Customer"}
                 </h2>
 
-                <p className="text-center text-vmb-text-muted text-[14px] leading-[20px]">
-                  Invite your customer to enjoy one of your salon services. Add
-                  a discount, include a short message, and send your invite
-                  instantly. 💖
+                <p className="text-center text-vmb-text-muted text-[13px] sm:text-[14px] leading-[20px] max-w-[600px] mx-auto">
+                  {isViewMode ?
+                    getStatusContent()
+                  : "Invite your customer to enjoy one of your salon services. Add a discount, include a short message, and send your invite instantly. 💖"
+                  }
                 </p>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div>
-                    <label className="text-[14px] font-medium text-vmb-text-main">
-                      Email
-                    </label>
-                    <Controller
-                      name="email"
-                      control={control}
-                      render={({ field }) => (
-                        <input
-                          {...field}
-                          type="email"
-                          readOnly={!!prefilledEmail}
-                          placeholder="Enter email"
-                          className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-vmb-secondary ${
-                            errors.email ? "border-red-500" : (
-                              "border-vmb-primary/10"
-                            )
-                          } ${prefilledEmail ? "bg-vmb-bg-soft" : ""}`}
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col gap-[20px]"
+                >
+                  <div className="flex flex-col lg:flex-row gap-[20px] justify-between">
+                    <div className="w-full lg:w-[428px] flex flex-col gap-[16px]">
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Controller
+                          name="email"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              type="email"
+                              readOnly={!!prefilledEmail || isViewMode}
+                              placeholder="Email"
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                                errors.email ? "border-red-500" : (
+                                  "border-vmb-primary/10"
+                                )
+                              } ${
+                                prefilledEmail || isViewMode ? "bg-vmb-bg-soft"
+                                : ""
+                              }`}
+                            />
+                          )}
                         />
-                      )}
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.email.message}
-                      </p>
-                    )}
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-[14px] font-medium text-vmb-text-main">
-                        First Name
-                      </label>
-                      <Controller
-                        name="firstName"
-                        control={control}
-                        render={({ field: { onChange, value, ...field } }) => (
-                          <input
-                            {...field}
-                            value={value || ""}
-                            placeholder="First Name"
-                            onChange={(e) => {
-                              let newValue = e.target.value;
-                              if (newValue.startsWith(" ")) {
-                                newValue = newValue.trimStart();
+
+                        <Controller
+                          name="discountPercentage"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              type="number"
+                              min="0"
+                              max="99"
+                              readOnly={isViewMode}
+                              value={
+                                field.value === 0 ? "" : (field.value ?? "")
                               }
-                              e.target.value = newValue;
-                              onChange(newValue);
-                            }}
-                            className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-vmb-secondary ${
-                              errors.firstName ? "border-red-500" : (
-                                "border-vmb-primary/10"
-                              )
+                              onChange={(e) => {
+                                if (isViewMode) return;
+                                const val = e.target.value;
+                                field.onChange(val === "" ? "" : Number(val));
+                              }}
+                              placeholder="Discount %"
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                                errors.discountPercentage ? "border-red-500" : (
+                                  "border-vmb-primary/10"
+                                )
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
+                            />
+                          )}
+                        />
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Controller
+                          name="firstName"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              readOnly={isViewMode}
+                              placeholder="First Name"
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                                errors.firstName ? "border-red-500" : (
+                                  "border-vmb-primary/10"
+                                )
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
+                            />
+                          )}
+                        />
+
+                        <Controller
+                          name="lastName"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              {...field}
+                              readOnly={isViewMode}
+                              placeholder="Last Name"
+                              className={`w-full border rounded-[8px] p-3 text-[14px] focus:outline-none focus:border-vmb-secondary ${
+                                errors.lastName ? "border-red-500" : (
+                                  "border-vmb-primary/10"
+                                )
+                              } ${isViewMode ? "bg-vmb-bg-soft" : ""}`}
+                            />
+                          )}
+                        />
+                      </div>
+
+                      <Controller
+                        name="message"
+                        control={control}
+                        render={({ field }) => (
+                          <textarea
+                            {...field}
+                            rows={5}
+                            readOnly={isViewMode}
+                            placeholder="Type your message..."
+                            className={`w-full h-[156px] border border-vmb-primary/10 rounded-[8px] p-3 text-[12px] italic text-vmb-text-muted resize-none outline-none focus:border-vmb-secondary ${
+                              isViewMode ? "bg-vmb-bg-soft" : ""
                             }`}
                           />
                         )}
                       />
-                      {errors.firstName && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors.firstName.message}
-                        </p>
-                      )}
                     </div>
-                    <div>
-                      <label className="text-[14px] font-medium text-vmb-text-main">
-                        Last Name
-                      </label>
-                      <Controller
-                        name="lastName"
-                        control={control}
-                        render={({ field: { onChange, value, ...field } }) => (
-                          <input
-                            {...field}
-                            value={value || ""}
-                            placeholder="Last Name"
-                            onChange={(e) => {
-                              let newValue = e.target.value;
-                              if (newValue.startsWith(" ")) {
-                                newValue = newValue.trimStart();
-                              }
-                              e.target.value = newValue;
-                              onChange(newValue);
-                            }}
-                            className={`w-full border rounded-[8px] p-3 text-[14px] mt-1 focus:outline-none focus:border-vmb-secondary ${
-                              errors.lastName ? "border-red-500" : (
-                                "border-vmb-primary/10"
-                              )
-                            }`}
-                          />
-                        )}
-                      />
-                      {errors.lastName && (
-                        <p className="text-red-500 text-xs mt-1">
-                          {errors.lastName.message}
+
+                    <div className="w-full lg:w-[305px] border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] p-4 flex flex-col">
+                      <p className="text-[14px] font-medium text-vmb-text-main mb-4">
+                        Choose Service
+                      </p>
+
+                      {isLoading ?
+                        <p className="text-center py-6 text-vmb-text-muted">
+                          Loading services...
                         </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] p-4 ">
-                    <p className="text-[14px] font-medium text-vmb-text-main mb-4">
-                      Choose Service
-                    </p>
-
-                    {isLoading ?
-                      <p className="text-center py-8 text-vmb-text-muted">
-                        Loading services...
-                      </p>
-                    : services.length === 0 ?
-                      <p className="text-center py-8 text-vmb-text-muted">
-                        No services found.
-                      </p>
-                    : <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-44 overflow-y-auto custom-scrollbar ">
-                          {filteredservices?.map((srv) => (
+                      : filteredservices.length === 0 ?
+                        <p className="text-center py-6 text-vmb-text-muted">
+                          No services found.
+                        </p>
+                      : <div className="flex flex-col gap-3 max-h-[260px] overflow-y-auto custom-scrollbar pr-1">
+                          {filteredservices.map((srv) => (
                             <label
                               key={srv._id}
-                              className="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-vmb-bg-soft transition"
+                              className={`flex items-center gap-3 p-2 rounded-lg transition ${
+                                selectedServiceId === srv._id ?
+                                  "bg-vmb-secondary/10 border border-vmb-secondary/20"
+                                : "hover:bg-vmb-bg-soft border border-transparent"
+                              } ${
+                                isViewMode ? "cursor-default" : "cursor-pointer"
+                              }`}
                             >
                               <input
                                 type="radio"
-                                name="service"
+                                disabled={isViewMode}
                                 checked={selectedServiceId === srv._id}
                                 onChange={() => {
+                                  if (isViewMode) return;
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
@@ -322,134 +369,50 @@ export default function SendTreatModal({
                                     srv?.serviceDiscount ?? 0,
                                     { shouldValidate: true },
                                   );
+
                                   const name =
-                                    watch("firstName").trim() || "${FirstName}";
-                                  const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!\nSignup and book today.`;
+                                    watch("firstName").trim() || "{FirstName}";
+                                  const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!`;
                                   setValue("message", message);
                                 }}
-                                className="w-4 h-4 text-vmb-primary"
+                                className="w-4 h-4"
                                 style={{ accentColor: "var(--vmb-primary)" }}
                               />
+
                               <img
                                 src={srv.serviceImage || "/default-service.jpg"}
                                 alt={srv.serviceName}
-                                className="w-12 h-12 rounded-md object-cover shadow-sm border border-white/70"
+                                className="w-10 h-10 rounded-md object-cover"
                               />
+
                               <div>
-                                <p className="text-[14px] font-semibold text-vmb-text-main">
+                                <p className="text-[13px] font-semibold text-vmb-text-main">
                                   {srv.serviceName}
                                 </p>
-                                <p className="text-[13px] font-bold text-vmb-secondary">
+                                <p className="text-[12px] font-bold text-vmb-secondary">
                                   ${srv.servicePrice}
                                 </p>
                               </div>
                             </label>
                           ))}
                         </div>
-
-                        {errors.serviceId && (
-                          <p className="text-red-500 text-xs mt-2">
-                            {errors.serviceId.message}
-                          </p>
-                        )}
-
-                        {totalPages > 1 && (
-                          <div className="flex justify-center gap-3 mt-6 pt-4 border-t">
-                            <button
-                              type="button"
-                              onClick={() => handlePageChange(currentPage - 1)}
-                              disabled={currentPage === 1 || isFetching}
-                              className="px-4 py-2 text-sm border rounded-lg disabled:opacity-50"
-                            >
-                              Previous
-                            </button>
-                            <span className="text-sm text-vmb-text-muted self-center">
-                              Page {currentPage} of {totalPages}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => handlePageChange(currentPage + 1)}
-                              disabled={
-                                currentPage === totalPages || isFetching
-                              }
-                              className="px-4 py-2 text-sm border rounded-lg disabled:opacity-50"
-                            >
-                              Next
-                            </button>
-                          </div>
-                        )}
-                      </>
-                    }
+                      }
+                    </div>
                   </div>
 
-                  <div>
-                    <label className="text-[14px] font-medium text-vmb-text-main">
-                      Service Discount (%)
-                    </label>
-                    <Controller
-                      name="discountPercentage"
-                      control={control}
-                      render={({ field }) => (
-                        <input
-                          {...field}
-                          type="number"
-                          min="0"
-                          max="99"
-                          value={field.value === 0 ? "" : (field.value ?? "")}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            field.onChange(val === "" ? "" : Number(val));
-                          }}
-                          placeholder="e.g. 20"
-                          className="w-full border border-vmb-primary/10 bg-white/30 rounded-[8px] p-3 mt-1 text-[14px]"
-                        />
-                      )}
-                    />
-                    {errors.discountPercentage && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {errors.discountPercentage.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="text-[14px] font-medium text-vmb-text-main">
-                      Write your message
-                    </label>
-                    <Controller
-                      name="message"
-                      control={control}
-                      render={({ field: { onChange, value, ...field } }) => (
-                        <textarea
-                          {...field}
-                          value={value || ""}
-                          rows={4}
-                          placeholder="Type your message..."
-                          onChange={(e) => {
-                            let newValue = e.target.value;
-                            if (newValue.startsWith(" ")) {
-                              newValue = newValue.trimStart();
-                            }
-                            e.target.value = newValue;
-                            onChange(newValue);
-                          }}
-                          className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] p-3 mt-1 text-[12px] italic text-vmb-text-muted resize-none outline-none focus:border-vmb-secondary"
-                        />
-                      )}
-                    />
-                  </div>
-
-                  <AppButton
-                    type="submit"
-                    variant="primary"
-                    size="custom"
-                    className="w-full text-[16px] font-medium py-3"
-                    disabled={
-                      !isValid || isSubmitting || !filteredservices?.length
-                    }
-                  >
-                    {isSubmitting ? "Sending Invite..." : "Invite Now"}
-                  </AppButton>
+                  {!isViewMode && (
+                    <AppButton
+                      type="submit"
+                      variant="primary"
+                      size="custom"
+                      className="w-full max-w-[745px] mx-auto text-[16px] font-medium py-3"
+                      disabled={
+                        !isValid || isSubmitting || !filteredservices?.length
+                      }
+                    >
+                      {isSubmitting ? "Sending Invite..." : "Invite Now"}
+                    </AppButton>
+                  )}
                 </form>
               </Dialog.Panel>
             </Transition.Child>

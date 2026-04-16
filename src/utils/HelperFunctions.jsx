@@ -56,10 +56,19 @@ function capitalizeFirst(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+function formatDate(date) {
+  if (!date) return "";
+  const d = new Date(date);
+  const day = d.getDate().toString().padStart(2, "0");
+  const month = (d.getMonth() + 1).toString().padStart(2, "0");
+  const year = d.getFullYear().toString().slice(-2);
+  return `${day}/${month}/${year}`;
+}
 export {
   convertTo12Hour,
   convert12HourTo24Hour,
   formatTimeAgo,
   formatDuration,
   capitalizeFirst,
+  formatDate,
 };

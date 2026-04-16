@@ -6,13 +6,6 @@ export const adminApi = createApi({
     baseUrl:
       import.meta.env.VITE_BACKEND_URL + "admin" || "http://localhost:5000/",
     credentials: "include",
-    // prepareHeaders: (headers, { getState }) => {
-    //   const token = getState().auth.token;
-    //   if (token) {
-    //     headers.set("authorization", `Bearer ${token}`);
-    //   }
-    //   return headers;
-    // },
     prepareHeaders: (headers, { getState }) => {
       const token =
         getState().user?.token || localStorage.getItem("auth_token");
@@ -22,7 +15,7 @@ export const adminApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Salon"],
+  tagTypes: ["Salon", "Customer"],
   endpoints: (builder) => ({
     getPendingSalons: builder.query({
       query: ({ page = 1, limit = 10, sort = "newest" } = {}) => ({
@@ -66,11 +59,49 @@ export const adminApi = createApi({
         sort = "newest",
         search = "",
         status,
+        sortBy = "createdAt",
+        sortOrder = -1,
       } = {}) => ({
         url: "/get-all-salons",
-        params: { page, limit, sort, search, status },
+        params: { page, limit, sort, search, status, sortBy, sortOrder },
       }),
       providesTags: ["Salon"],
+    }),
+    getAllCustomers: builder.query({
+      query: ({
+        page = 1,
+        limit = 10,
+        sort = "newest",
+        search = "",
+        sortBy = "createdAt",
+        sortOrder = -1,
+      } = {}) => ({
+        url: "/get-all-customers",
+        params: { page, limit, sort, search, sortBy, sortOrder },
+      }),
+      providesTags: ["Customer"],
+    }),
+    suspendUser: builder.mutation({
+      query: ({ userId, reason }) => ({
+        url: `/suspend-user/${userId}`,
+        method: "PATCH",
+        body: { reason },
+      }),
+      invalidatesTags: ["Customer"],
+    }),
+    unsuspendUser: builder.mutation({
+      query: (userId) => ({
+        url: `/unsuspend-user/${userId}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Customer"],
+    }),
+    contactUser: builder.mutation({
+      query: ({ userId, message }) => ({
+        url: `/contact-user/${userId}`,
+        method: "POST",
+        body: { message },
+      }),
     }),
   }),
 });
@@ -82,4 +113,8 @@ export const {
   useHoldSalonMutation,
   useGetWeeklyStatsQuery,
   useGetAllAdminSalonsQuery,
+  useGetAllCustomersQuery,
+  useSuspendUserMutation,
+  useUnsuspendUserMutation,
+  useContactUserMutation,
 } = adminApi;

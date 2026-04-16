@@ -166,14 +166,14 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child as={Fragment}>
               <Dialog.Panel
-                className={`relative w-full max-w-[448px] rounded-[20px] border border-vmb-primary/10 ${
+                className={`relative w-full max-w-[448px] rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg ${
                   isSubmitted ? "bg-vmb-bg-soft" : "bg-vmb-bg"
                 } p-[30px] shadow-xl transition-all flex flex-col gap-8`}
               >
@@ -302,13 +302,13 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                       </div>
                     )}
 
-                    <div>
+                    <div className="flex flex-col gap-3">
                       <h4 className="text-vmb-primary font-bold text-xl">
                         Who’s treating you?
                       </h4>
-                      <label className="text-vmb-text-main text-sm font-medium mt-3 block">
+                      {/* <label className="text-vmb-text-main text-sm font-medium mt-3 block">
                         Email
-                      </label>
+                      </label> */}
                       <Controller
                         name="email"
                         control={control}
@@ -343,9 +343,9 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                         </p>
                       )}
 
-                      <label className="text-vmb-text-main text-sm font-medium mt-4 block">
+                      {/* <label className="text-vmb-text-main text-sm font-medium mt-4 block">
                         Write a sweet message
-                      </label>
+                      </label> */}
                       <Controller
                         name="message"
                         control={control}
@@ -354,7 +354,7 @@ export default function GiftServiceModal({ isOpen, closeModal, initialData }) {
                             {...field}
                             rows={3}
                             placeholder="Type your message..."
-                            className="w-full border border-vmb-primary/10 rounded-lg p-4 text-sm text-vmb-text-muted/50 mt-1 resize-none focus:outline-none focus:border-vmb-secondary"
+                            className="w-full border border-vmb-primary/10 rounded-lg p-4 text-sm text-black/50 mt-1 resize-none focus:outline-none focus:border-vmb-secondary"
                           />
                         )}
                       />

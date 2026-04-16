@@ -13,6 +13,8 @@ import HoldDirectModal from "../Modals/appointmentTabsModals/HoldDirectModal";
 import DeclineDirectModal from "../Modals/appointmentTabsModals/DeclineDirectModal";
 import ConfirmDirectModal from "../Modals/appointmentTabsModals/ConfirmDirectModal";
 import SalonImage from "../../../../assets/salon-1.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
+
 const PAGE_SIZE = 10;
 
 export default function Appointments({
@@ -43,7 +45,10 @@ export default function Appointments({
   const [showDeclineSuccess, setShowDeclineSuccess] = useState(false);
   const [showRescheduleSent, setShowRescheduleSent] = useState(false);
   const [directData, setDirectData] = useState(null);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const {
     data: allData,
     isLoading: loadingAll,
@@ -54,6 +59,8 @@ export default function Appointments({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -66,6 +73,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: rescheduleData,
@@ -78,6 +87,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "reschedule-requested",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -91,6 +102,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "hold",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -104,6 +117,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "confirmed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: scheduledData,
@@ -116,6 +131,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "scheduled",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: declinedData,
@@ -128,6 +145,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "declined",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   useEffect(() => {
     refetchConfirmed();
@@ -185,9 +204,7 @@ export default function Appointments({
       : appt?.type === "gift" ? (appt?.requestedFrom?.email ?? "N/A")
       : "N/A",
     appointmentDate:
-      appt?.appointmentDate ?
-        new Date(appt?.appointmentDate).toLocaleDateString("en-GB")
-      : "N/A",
+      appt?.appointmentDate ? formatDate(appt?.appointmentDate) : "N/A",
     appointmentTime: appt?.startTime || "N/A",
     status:
       appt.status ?
@@ -320,10 +337,27 @@ export default function Appointments({
     : activeTab === "Confirmed" ? confirmedPage
     : activeTab === "Scheduled" ? scheduledPage
     : declinedPage;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setReschedulePage(1);
+    setHoldPage(1);
+    setConfirmedPage(1);
+    setScheduledPage(1);
+    setDeclinedPage(1);
+  };
 
+  const sortFields = {
+    salonName: "salonName",
+    payersEmail: "clientEmail",
+    appointmentDate: "appointmentDate",
+    appointmentTime: "appointmentTime",
+    status: "status",
+  };
   return (
     <>
-      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+      <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
         <TabbedTable
           tabs={tabs}
           tabOrder={[
@@ -344,6 +378,10 @@ export default function Appointments({
           onPageChange={handlePageChange}
           isLoading={isLoading}
           isFetching={isFetching}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
       <ConfirmDirectModal

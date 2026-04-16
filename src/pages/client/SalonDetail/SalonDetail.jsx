@@ -7,6 +7,7 @@ import AutoCarousel from "../../../components/dashboard/client/SalonDetail/AutoC
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { BsClockFill } from "react-icons/bs";
 import ServicesSection from "../../../components/dashboard/client/SalonDetail/ServicesSection";
+import TemplatesSection from "../../../components/dashboard/admin/SalonDetail/TemplatesSection";
 import { useUser } from "../../../hooks/useUser";
 export default function SalonDetail() {
   const { id } = useParams();
@@ -39,16 +40,7 @@ export default function SalonDetail() {
       refetchOnMountOrArgChange: true,
     },
   );
-  // const {
-  //   data: apiData,
-  //   isLoading: apiLoading,
-  //   isError,
-  // } = useGetSalonByIdQuery(
-  //   (id)
-  //   , {
-  //   refetchOnMountOrArgChange: true,
 
-  // });
   const salon = apiData?.data || reduxSalon;
   const isLoading = apiLoading && !salon;
 
@@ -69,7 +61,7 @@ export default function SalonDetail() {
   if (!salon) return null;
 
   return (
-    <div className="bg-vmb-bg-soft p-7 font-poppins gap-8 flex flex-col">
+    <div className=" p-7 font-poppins gap-8 flex flex-col">
       <div className="bg-white border border-vmb-primary/10 rounded-[12px] shadow-sm p-4 sm:p-5 md:p-6 w-full max-w-full relative">
         <div className="w-full relative z-0">
           <AutoCarousel
@@ -128,7 +120,7 @@ export default function SalonDetail() {
           </div>
         </div>
       </div>
-
+      {user?.role === "admin" && <TemplatesSection salonId={id} />}
       <ServicesSection services={salon?.services} salon={salon} />
     </div>
   );

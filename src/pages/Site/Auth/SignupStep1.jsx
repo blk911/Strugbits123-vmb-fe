@@ -93,6 +93,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         name="fullName"
         register={register}
         error={errors.fullName}
+        placeholder={"Enter you full name"}
       />
       <InputWithIcon
         label="Email"
@@ -100,6 +101,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         name="email"
         register={register}
         error={errors.email}
+        placeholder={"Enter your email"}
       />
       <InputWithIcon
         type="tel"
@@ -108,6 +110,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         name="phone"
         register={register}
         error={errors.phone}
+        placeholder={"Enter your phone number"}
       />
       <div className="flex gap-3">
         <div className="w-[68%]">
@@ -117,6 +120,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
             name="address"
             register={register}
             error={errors.address}
+            placeholder={"Enter your complete address"}
           />
         </div>
         <div className="w-[32%]">
@@ -125,6 +129,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
             name="zipcode"
             register={register}
             error={errors.zipcode}
+            placeholder={"Zipcode"}
           />
         </div>
       </div>
@@ -176,6 +181,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         name="password"
         register={register}
         error={errors.password}
+        placeholder={"Enter your password"}
       />
       <InputWithIcon
         label="Confirm Password"
@@ -184,6 +190,7 @@ export default function SignupStep1({ userType, setUserType, onNext }) {
         name="confirmPassword"
         register={register}
         error={errors.confirmPassword}
+        placeholder={"Confirm your password"}
       />
 
       {userType === "salon" ?

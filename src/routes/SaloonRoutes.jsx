@@ -7,7 +7,7 @@ import {
   SalonDetail,
   SalonInvites,
 } from "../pages/saloon";
-
+import { ServicePresets } from "../pages/admin";
 export default function SalonRoutes() {
   return (
     <Route element={<DashboardLayout />}>
@@ -22,6 +22,7 @@ export default function SalonRoutes() {
       <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/salon-detail" element={<SalonDetail />} />
+      <Route path="/service-presets" element={<ServicePresets />} />
     </Route>
   );
 }

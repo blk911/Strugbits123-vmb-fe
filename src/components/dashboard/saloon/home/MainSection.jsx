@@ -12,13 +12,18 @@ import {
   useGetSalonInvitesQuery,
   useGetSalonAppointmentsQuery,
   useGetServicesQuery,
+  useGetDailyStatsQuery,
 } from "../../../../store/api";
 import { formatTimeAgo } from "../../../../utils/HelperFunctions";
 import SalonImage from "../../../../assets/salon-1.png";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
-
+import { FaCalendarCheck } from "react-icons/fa6";
+import { RiFlowerLine } from "react-icons/ri";
+import { useDashboardModal } from "../../../../pages/ModalProvider";
+import serviceIcon from "../../../../assets/Services_Icon.png";
 export default function MainSection() {
   const navigate = useNavigate();
+  const { openModal } = useDashboardModal();
 
   const { data: servicesRes, isLoading: loadingServices } =
     useGetServicesQuery();
@@ -113,86 +118,145 @@ export default function MainSection() {
               key={item._id}
               {...getCardProps(item)}
               isLoading={false}
+              onClick={
+                title === "Invites" ? () => openModal("sendTreat", item) : null
+              }
             />
           ))}
         </div>
       }
     </SectionWrapper>
   );
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      <div className="lg:col-span-3 flex flex-col gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          {renderCardSection({
-            title: "Invites",
-            icon: <FaUser className="text-vmb-secondary" />,
-            items: pendingInvites,
-            isLoading: loadingInvites,
-            emptyMessage: "No pending invites received",
-            CardComponent: InviteCard,
-            navigateTo: "/salon-invites",
-            getCardProps: getInviteProps,
-          })}
+  const { data: statsRes, isLoading: loadingStats } = useGetDailyStatsQuery();
+  const todaysAppointments = statsRes?.data?.appointmentsCount || 0;
+  const totalServicesCount = statsRes?.data?.totalServicesCount || 0;
 
-          {renderCardSection({
-            title: "Pending Appointments",
-            icon: <FaCalendarAlt className="text-vmb-secondary" />,
-            items: selectedAppointments,
-            isLoading: loadingAppointments || loadingReschedule,
-            emptyMessage: "No appointments to show",
-            CardComponent: AppointmentCard,
-            navigateTo: "/appointments",
-            getCardProps: getAppointmentProps,
-          })}
+  return (
+    <div className="flex flex-col gap-[30px] font-poppins">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-[30px] items-stretch">
+        <div className="lg:col-span-4 flex">
+          <SectionWrapper className="px-4 py-3 flex flex-col gap-2 w-full lg:min-h-[127px] h-auto justify-between">
+            <Header
+              icon={<FaUser className="text-vmb-secondary" />}
+              title="Invites"
+              onViewAll={() => navigate("/saloninvites")}
+            />
+            <div className="flex-grow flex items-center">
+              {loadingInvites ?
+                <div className="w-full flex justify-center items-center">
+                  <LoadingIndicator size="sm" />
+                </div>
+              : pendingInvites.length === 0 ?
+                <div className="w-full flex justify-center items-center text-vmb-text-muted text-[14px]">
+                  No pending invites
+                </div>
+              : <InviteCard
+                  {...getInviteProps(pendingInvites[0])}
+                  isLoading={false}
+                  onClick={() => openModal("sendTreat", pendingInvites[0])}
+                  className="w-full !p-[10px] !border !border-black/10 hover:!border-vmb-secondary rounded-[10px] !bg-transparent"
+                />
+              }
+            </div>
+          </SectionWrapper>
         </div>
 
-        <SectionWrapper className="p-6 flex flex-col gap-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <h3 className="text-[18px] font-semibold text-vmb-primary">
-              Services
-            </h3>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <button
-                onClick={() => navigate("/salon-detail")}
-                className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
-              >
-                View All
-              </button>
-              <button
-                onClick={() => navigate("/salon-detail")}
-                className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
-              >
-                Manage Services
-              </button>
-            </div>
-          </div>
-
-          {loadingServices ?
-            <div className="flex justify-center py-6">
-              <LoadingIndicator />
-            </div>
-          : services.length === 0 ?
-            <p className="bg-vmb-pending/20 text-vmb-pending text-center">
-              No services added yet
-            </p>
-          : <div className="grid grid-cols-1 gap-6">
-              {services.map((service) => (
-                <ServiceCard
-                  key={service._id}
-                  img={service.serviceImage}
-                  title={service.serviceName}
-                  desc={service.description}
-                  price={service.servicePrice}
-                />
-              ))}
-            </div>
-          }
-        </SectionWrapper>
+        <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-[30px]">
+          <MetricCard
+            icon={
+              <FaCalendarCheck className="text-[18px] text-vmb-secondary" />
+            }
+            title="Pending Appointments"
+            value={pendingAppointments.length}
+            isLoading={loadingAppointments}
+          />
+          <MetricCard
+            icon={
+              <FaCalendarCheck className="text-[18px] text-vmb-secondary" />
+            }
+            title="Today's Appointment"
+            value={todaysAppointments}
+            isLoading={loadingStats}
+          />
+          <MetricCard
+            icon={serviceIcon}
+            title="Total Services"
+            value={totalServicesCount}
+            isLoading={loadingStats}
+          />
+        </div>
       </div>
 
-      <div className="lg:col-span-1 flex flex-col gap-6">
-        <QuickInvitePanel />
-        <SalonProfilePanel />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-[30px] items-start">
+        <div className="lg:col-span-8 ">
+          <SectionWrapper className="p-6 flex flex-col gap-6 h-full min-h-[400px]">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <h3 className="text-[18px] font-semibold text-vmb-primary">
+                Services
+              </h3>
+              <div className="flex flex-col sm:flex-row gap-2">
+                {/* <button
+                  onClick={() => navigate("/salon-detail")}
+                  className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
+                >
+                  View All
+                </button> */}
+                <button
+                  onClick={() => navigate("/salon-detail")}
+                  className="bg-vmb-secondary text-white rounded-[8px] px-6 py-2 text-[12px] sm:text-[14px] md:text-[16px]  hover:opacity-90 transition cursor-pointer"
+                >
+                  Manage Services
+                </button>
+              </div>
+            </div>
+
+            {loadingServices ?
+              <div className="flex justify-center py-6">
+                <LoadingIndicator />
+              </div>
+            : services.length === 0 ?
+              <p className="bg-vmb-pending/20 text-vmb-pending text-center p-4 rounded">
+                No services added yet
+              </p>
+            : <div className="grid grid-cols-1 gap-6">
+                {services.map((service) => (
+                  <ServiceCard
+                    key={service._id}
+                    img={service.serviceImage}
+                    title={service.serviceName}
+                    desc={service.description}
+                    price={service.servicePrice}
+                  />
+                ))}
+              </div>
+            }
+          </SectionWrapper>
+        </div>
+
+        <div className="lg:col-span-4 flex flex-col gap-[30px]">
+          <QuickInvitePanel />
+          <SalonProfilePanel />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MetricCard({ icon, title, value, isLoading }) {
+  return (
+    <div className="w-full min-h-[127px] bg-white rounded-[10px] p-[15px] flex flex-col gap-[10px] shadow-[0px_4px_10px_rgba(0,0,0,0.05)] border border-vmb-primary/5">
+      <div className="shrink-0">
+        {title === "Total Services" ?
+          <img src={icon} />
+        : icon}
+      </div>
+      <div className="flex flex-col justify-end h-full">
+        <p className="text-[14px] xl:text-[16px] font-medium text-[#4B5563] leading-tight">
+          {title}
+        </p>
+        <p className="text-[24px] xl:text-[30px] font-bold text-[#0F3D3E] leading-none mt-1">
+          {isLoading ? "..." : value}
+        </p>
       </div>
     </div>
   );

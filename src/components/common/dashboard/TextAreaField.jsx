@@ -5,6 +5,7 @@ export default function TextAreaField({
   name = "description",
   placeholder = "Enter description",
   classes,
+  ...rest
 }) {
   return (
     <div className="flex flex-col gap-y-[8px]">
@@ -35,6 +36,7 @@ export default function TextAreaField({
           fontStyle: "normal",
           letterSpacing: "0%",
         }}
+        {...rest}
       />
     </div>
   );

@@ -96,25 +96,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
       info.services.reduce((acc, s) => acc + (s.price || 0), 0)
     : 0;
   const vmbFee = totalPrice * 0.1;
-  // const handleAccept = async () => {
-  //   if (!giftId) return;
 
-  //   const loadingToast = toastLoading("Processing your payment...");
-  //   try {
-  //     await acceptGift({
-  //       id: giftId,
-  //       data: gift,
-  //     }).unwrap();
-
-  //     toastDismiss(loadingToast);
-  //     toastSuccess("Payment successful! Treat accepted.");
-  //     closeModal();
-  //     setTimeout(() => setShowSuccessModal(true), 300);
-  //   } catch (err) {
-  //     toastDismiss(loadingToast);
-  //     toastError(err?.data?.message || "Failed to accept gift");
-  //   }
-  // };
   const handleAccept = async () => {
     if (!giftId || !salonId || !info.services || info.services.length === 0) {
       toastError("Invalid gift request data");
@@ -200,7 +182,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/30" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -214,7 +196,7 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-[448px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 bg-vmb-bg-soft p-[30px] shadow-xl transition-all">
+                <Dialog.Panel className="relative w-full max-w-[448px] transform overflow-hidden rounded-[20px] border border-vmb-primary/10 backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-xl transition-all">
                   <IoClose
                     onClick={closeModal}
                     className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer"
@@ -342,7 +324,6 @@ function TreatRequestModal({ isOpen, closeModal, initialData }) {
                         leftIcon={<FaCheck className="text-[14px]" />}
                         variant="outline-dark"
                         size="custom"
-                        // disabled={accepting}
                         disabled={isRedirecting}
                         onClick={handleAccept}
                         className="text-[14px] font-medium px-5 py-[15px]"

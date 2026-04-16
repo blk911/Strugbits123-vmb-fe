@@ -1,67 +1,13 @@
-// import React from "react";
-// import { useNavigate, useLocation } from "react-router-dom";
-// import PrimaryButton from "../../common/site/PrimaryButton";
-
-// const Header = () => {
-//   const navigate = useNavigate();
-//   const { pathname } = useLocation();
-
-//   const selected = pathname === "/salon" ? "salon" : "customer";
-
-//   return (
-//     <div
-//       className="
-//         fixed top-0 left-0 w-full z-50
-//         h-[60px] sm:h-[70px] md:h-[79px]
-//         bg-white/80 backdrop-blur-xl
-//         border-b border-black/10
-//         px-2 sm:px-6 md:px-12
-//         flex items-center justify-between
-//       "
-//     >
-//       {/* Logo */}
-//       <img
-//         src="/logo.png"
-//         alt="Logo"
-//         className="
-//           w-[60px] sm:w-[75px] md:w-[84px]
-//           h-auto object-contain
-//           cursor-pointer
-//         "
-//         onClick={() => navigate("/")}
-//       />
-
-//       {/* Buttons */}
-//       <div className="flex items-center gap-2 sm:gap-4">
-//         <PrimaryButton
-//           text="For Salon"
-//           variant="header"
-//           isActive={selected === "salon"}
-//           onClick={() => navigate("/salon")}
-//           className="min-w-[110px] sm:min-w-[140px]"
-//         />
-
-//         <PrimaryButton
-//           text="For Customer"
-//           variant="header"
-//           isActive={selected === "customer"}
-//           onClick={() => navigate("/")}
-//           className="min-w-[110px] sm:min-w-[140px]"
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Header;
-
-import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
 import { FaBars, FaTimes } from "react-icons/fa";
 import PrimaryButton from "../../common/site/PrimaryButton";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -111,6 +57,14 @@ const Header = () => {
           isActive={selected === "customer"}
           onClick={() => handleNav("/")}
           className="min-w-[150px]"
+        />
+        <PrimaryButton
+          text="Login"
+          variant="pillGreen"
+          onClick={() => navigate("/register")}
+          className="w-full sm:w-auto p-[5px] pl-[15px]  text-[12px] sm:text-[16px]"
+          authMode={"login"}
+          authType={selected}
         />
       </div>
 
@@ -175,6 +129,16 @@ const Header = () => {
               `}
             >
               <span>For Customer</span>
+            </button>
+            <button
+              onClick={() => {
+                dispatch(setAuthMode("login"));
+                dispatch(setAuthType(selected));
+                handleNav("/register");
+              }}
+              className="w-full text-center px-4 py-3 rounded-lg font-poppins text-[14px] bg-vmb-secondary text-white mt-1 hover:bg-vmb-primary transition-all duration-300"
+            >
+              <span>Login</span>
             </button>
           </div>
         </div>

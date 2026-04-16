@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Marquee from "react-fast-marquee";
+import WaitlistModal from "./Modals/WaitlistModal";
 import waxingImg from "../../../assets/scroller/wax.png";
 import stylingImg from "../../../assets/scroller/styling.png";
 import spaImg from "../../../assets/scroller/spa.png";
@@ -22,16 +24,20 @@ const services = [
 ];
 
 export default function LogoMarquee() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="w-full h-[146px]  flex items-center overflow-hidden">
-      <Marquee gradient={false} speed={40} autoFill pauseOnHover>
-        {services.map((service, index) => (
-          <div
-            key={`${service.label}-${index}`}
-            className="mx-3 w-[120px] h-[146px] flex flex-col items-center justify-center flex-shrink-0"
-          >
+    <>
+      <div className="w-full h-[146px]  flex items-center overflow-hidden">
+        <Marquee gradient={false} speed={40} autoFill pauseOnHover>
+          {services.map((service, index) => (
             <div
-              className="
+              key={`${service.label}-${index}`}
+              className="mx-3 w-[120px] h-[146px] flex flex-col items-center justify-center flex-shrink-0 cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <div
+                className="
                 w-[100px] h-[100px]
                 rounded-full
                 border-[1px] border-white
@@ -40,20 +46,26 @@ export default function LogoMarquee() {
                 bg-white/30 backdrop-blur-sm
                 shadow-xl
               "
-            >
-              <img
-                src={service.image}
-                alt={service.label}
-                className="w-[90%] h-[90%] object-cover rounded-full"
-              />
-            </div>
+              >
+                <img
+                  src={service.image}
+                  alt={service.label}
+                  className="w-[90%] h-[90%] object-cover rounded-full"
+                />
+              </div>
 
-            <span className="mt-2 text-center font-poppins text-[16px] font-normal text-vmb-primary leading-none">
-              {service.label}
-            </span>
-          </div>
-        ))}
-      </Marquee>
-    </div>
+              <span className="mt-2 text-center font-poppins text-[16px] font-normal text-vmb-primary leading-none">
+                {service.label}
+              </span>
+            </div>
+          ))}
+        </Marquee>
+      </div>
+
+      <WaitlistModal
+        isOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+      />
+    </>
   );
 }

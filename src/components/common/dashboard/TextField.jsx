@@ -28,7 +28,7 @@ export default function TextField({
         </label>
       )}
 
-      {icon ? (
+      {icon ?
         <div className="relative w-full">
           <Input
             id={name}
@@ -38,7 +38,7 @@ export default function TextField({
             onChange={onChange}
             onBlur={onBlur}
             ref={ref}
-            className={`border border-vmb-primary/10 h-12 px-3 rounded-md
+            className={`w-full border border-vmb-primary/10 h-12 px-3 rounded-md
               text-[12px] leading-[24px] font-poppins font-normal 
               placeholder:text-vmb-text-muted/50 focus:outline-none pl-10 ${classInput}`}
             style={{
@@ -51,8 +51,7 @@ export default function TextField({
             {icon}
           </span>
         </div>
-      ) : (
-        <Input
+      : <Input
           id={name}
           name={name}
           type={type}
@@ -69,7 +68,7 @@ export default function TextField({
           }}
           {...rest}
         />
-      )}
+      }
     </div>
   );
 }

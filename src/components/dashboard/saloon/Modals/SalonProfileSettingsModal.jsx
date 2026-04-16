@@ -78,16 +78,6 @@ const salonProfileSchema = z.object({
     .array(z.object({ url: z.string().url(), name: z.string() }))
     .min(1, "At least one salon photo is required"),
 });
-// .refine(
-//   (data) => {
-//     if (!data.startTime || !data.endTime) return true;
-//     return data.endTime > data.startTime;
-//   },
-//   {
-//     message: "End time must be after start time",
-//     path: ["endTime"],
-//   }
-// );
 
 export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
   const { user, loading: userLoading } = useUser();
@@ -341,7 +331,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
         className="relative z-50 font-poppins"
         onClose={closeModal}
       >
-        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-black/80">
+        <div className="fixed inset-0 overflow-y-auto custom-scrollbar  bg-vmb-overlay-bg">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child
               as={Fragment}
@@ -352,7 +342,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] bg-vmb-bg-soft p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <Dialog.Panel className="relative w-full max-w-[900px] rounded-[10px] backdrop-blur-[1px]  bg-vmb-modals-bg p-[30px] shadow-lg flex flex-col gap-[32px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <div className="flex justify-between items-center">
                   <h2 className="text-vmb-primary font-bold text-[24px]">
                     Profile Settings
@@ -373,9 +363,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </h3>
 
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Full Name
-                      </label>
+                      </label> */}
                       <input
                         {...register("fullName")}
                         onChange={(e) => {
@@ -387,6 +377,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("fullName").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
+                        placeholder="Full Name"
                       />
                       {errors.fullName && (
                         <p className="text-red-500 text-xs mt-1">
@@ -396,9 +387,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Email
-                      </label>
+                      </label> */}
                       <input
                         type="text"
                         readOnly
@@ -412,6 +403,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("email").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
+                        placeholder="Email"
                       />
                       {errors.email && (
                         <p className="text-red-500 text-xs mt-1">
@@ -421,9 +413,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Phone
-                      </label>
+                      </label> */}
                       <input
                         {...register("phone")}
                         onChange={(e) => {
@@ -435,6 +427,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("phone").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1 text-[14px]"
+                        placeholder="Phone"
                       />
                       {errors.phone && (
                         <p className="text-red-500 text-xs mt-1">
@@ -489,9 +482,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Salon Name
-                      </label>
+                      </label> */}
                       <input
                         {...register("salonName")}
                         onChange={(e) => {
@@ -503,6 +496,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("salonName").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
+                        placeholder="Salon Name"
                       />
                       {errors.salonName && (
                         <p className="text-red-500 text-xs mt-1">
@@ -512,9 +506,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     </div>
 
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Address
-                      </label>
+                      </label> */}
                       <input
                         {...register("address")}
                         onChange={(e) => {
@@ -526,6 +520,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("address").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
+                        placeholder="Address"
                       />
                       {errors.address && (
                         <p className="text-red-500 text-xs mt-1">
@@ -534,9 +529,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                       )}
                     </div>
                     <div>
-                      <label className="text-vmb-text-main text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-main text-[14px] font-medium">
                         Zip Code
-                      </label>
+                      </label> */}
                       <input
                         {...register("zipcode")}
                         onChange={(e) => {
@@ -548,6 +543,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           register("zipcode").onChange(e);
                         }}
                         className="w-full border border-vmb-primary/10 bg-white/50 p-3 rounded-[8px] mt-1"
+                        placeholder="Zip Code"
                       />
                       {errors.zipcode && (
                         <p className="text-red-500 text-xs mt-1">
@@ -568,52 +564,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         control={control}
                       />
                     </div>
-                    {/* <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[#374151] text-[14px] font-semibold mb-1">
-                          Start Time
-                        </label>
-                        <div className="relative">
-                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
-                          <input
-                            type="time"
-                            {...register("startTime")}
-                            className="w-full bg-white/50 border border-gray-300 rounded-md py-3 pl-10 pr-4
-                            transition-all cursor-pointer
-                   [&::-webkit-calendar-picker-indicator]:opacity-0
-                   [&::-webkit-calendar-picker-indicator]:absolute
-                   [&::-webkit-calendar-picker-indicator]:right-0
-                   [&::-webkit-calendar-picker-indicator]:w-full
-                   [&::-webkit-calendar-picker-indicator]:h-full"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block text-[#374151] text-[14px] font-semibold mb-1">
-                          End Time
-                        </label>
-                        <div className="relative">
-                          <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
-                          <input
-                            type="time"
-                            {...register("endTime")}
-                            className="w-full bg-white/50 border border-gray-300 rounded-md py-3 pl-10 pr-4 
-                            transition-all cursor-pointer
-                   [&::-webkit-calendar-picker-indicator]:opacity-0
-                   [&::-webkit-calendar-picker-indicator]:absolute
-                   [&::-webkit-calendar-picker-indicator]:right-0
-                   [&::-webkit-calendar-picker-indicator]:w-full
-                   [&::-webkit-calendar-picker-indicator]:h-full
-                            "
-                          />
-                        </div>
-                        {errors.endTime && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.endTime.message}
-                          </p>
-                        )}
-                      </div>
-                    </div> */}
 
                     <div>
                       <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
@@ -625,12 +575,6 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                           className="bg-white/50 border border-vmb-primary/10 rounded-md py-3 px-4 flex justify-between cursor-pointer"
                         >
                           <span className="text-[14px] text-vmb-text-muted">
-                            {/* {watch("selectedDays").length > 0
-                              ? watch("selectedDays")
-                                  .map((d) => d.slice(0, 3))
-                                  .join(", ")
-
-                              : "Select Days"} */}
                             {(() => {
                               const selected = watch("selectedDays") || [];
                               if (selected.length === 0) return "Select Days";
@@ -729,9 +673,9 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                     )}
 
                     <div>
-                      <label className="block text-vmb-text-main font-medium mb-2">
+                      {/* <label className="block text-vmb-text-main font-medium mb-2">
                         Description
-                      </label>
+                      </label> */}
                       <textarea
                         {...register("description")}
                         onChange={(e) => {
@@ -744,6 +688,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
                         }}
                         rows={4}
                         className="w-full border border-vmb-primary/10 bg-white/50 rounded-lg p-3"
+                        placeholder="Description"
                       />
                       {errors.description && (
                         <p className="text-red-500 text-xs mt-1">

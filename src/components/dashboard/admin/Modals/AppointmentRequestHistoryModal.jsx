@@ -9,6 +9,7 @@ import { setSelectedSalon } from "../../../../store/features/selectedSalonSlice"
 import { toastLoading } from "../../../../utils/toast";
 import ServicesTable from "../../../common/dashboard/ServicesTable";
 import userAvatar from "../../../../assets/user.png";
+import { formatDate } from "../../../../utils/HelperFunctions";
 export default function AppointmentRequestHistoryModal({
   isOpen,
   onClose,
@@ -23,8 +24,6 @@ export default function AppointmentRequestHistoryModal({
   let finalTotal;
 
   if (type === "invite") {
-    //  const discount=salon?.discount;
-    // finalTotal = (total-((total * discount)/100));
     finalTotal = appointment?.paidAmount || 0;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
@@ -66,21 +65,29 @@ export default function AppointmentRequestHistoryModal({
   };
   const status = appointment?.status?.toLowerCase() || "pending";
   const statusStyles = {
-    pending: { bg: "bg-vmb-pending/20", text: "text-vmb-pending", label: "Pending" },
+    pending: {
+      bg: "bg-vmb-pending/20",
+      text: "text-vmb-pending",
+      label: "Pending",
+    },
     scheduled: {
-        bg: "bg-vmb-success/20",
-        text: "text-vmb-success",
+      bg: "bg-vmb-success/20",
+      text: "text-vmb-success",
       label: "Scheduled",
     },
     confirmed: {
-        bg: "bg-vmb-success/20",
-        text: "text-vmb-success",
+      bg: "bg-vmb-success/20",
+      text: "text-vmb-success",
       label: "Confirmed",
     },
-    hold: { bg: "bg-vmb-pending/20", text: "text-vmb-pending", label: "On Hold" },
+    hold: {
+      bg: "bg-vmb-pending/20",
+      text: "text-vmb-pending",
+      label: "On Hold",
+    },
     declined: {
-        bg: "bg-vmb-error/20",
-        text: "text-vmb-error",
+      bg: "bg-vmb-error/20",
+      text: "text-vmb-error",
       label: "Declined",
     },
     default: {
@@ -93,11 +100,11 @@ export default function AppointmentRequestHistoryModal({
 
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/80"
+      className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-vmb-overlay-bg"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar bg-vmb-bg-soft rounded-[20px] p-[30px] flex flex-col gap-8"
+        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[20px] p-[30px] flex flex-col gap-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between">
@@ -138,7 +145,8 @@ export default function AppointmentRequestHistoryModal({
                           item.iconBg || "bg-vmb-secondary/30"
                         }`}
                         style={{
-                          borderColor: item.iconBorderColor || "var(--vmb-secondary)",
+                          borderColor:
+                            item.iconBorderColor || "var(--vmb-secondary)",
                         }}
                       >
                         <div className={item.iconColor || "text-vmb-secondary"}>
@@ -158,7 +166,9 @@ export default function AppointmentRequestHistoryModal({
                     <div className="flex-1 pb-2">
                       <h4
                         className="font-bold text-sm sm:text-base"
-                        style={{ color: item.titleColor || "var(--vmb-text-main)" }}
+                        style={{
+                          color: item.titleColor || "var(--vmb-text-main)",
+                        }}
                       >
                         {item.title}
                       </h4>
@@ -248,9 +258,7 @@ export default function AppointmentRequestHistoryModal({
                       <FaCalendarAlt className="text-vmb-secondary shrink-0" />
                       <p className="text-vmb-text-muted text-[14px]">
                         {appointment?.appointmentDate ?
-                          new Date(
-                            appointment.appointmentDate,
-                          ).toLocaleDateString("en-GB")
+                          formatDate(appointment.appointmentDate)
                         : "N/A"}
                       </p>
                     </div>
@@ -306,7 +314,9 @@ export default function AppointmentRequestHistoryModal({
                 {salon.phone && (
                   <div className={`${!salon.email && "col-span-2"}`}>
                     <p className="font-medium text-vmb-text-main">Phone:</p>
-                    <p className="text-vmb-text-muted">{salon.phone || "N/A"}</p>
+                    <p className="text-vmb-text-muted">
+                      {salon.phone || "N/A"}
+                    </p>
                   </div>
                 )}
               </div>

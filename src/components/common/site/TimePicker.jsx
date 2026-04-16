@@ -52,11 +52,11 @@ function PickerUI({ label, value, onChange, error }) {
 
   return (
     <div className="relative">
-      {label && (
+      {/* {label && (
         <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
           {label}
         </label>
-      )}
+      )} */}
 
       <Popover className="relative">
         <Popover.Button className="w-full">
@@ -66,6 +66,7 @@ function PickerUI({ label, value, onChange, error }) {
             <input
               readOnly
               value={displayValue(value)}
+              placeholder={label}
               className="w-full bg-white border border-vmb-primary/10 rounded-md py-3 pl-10 pr-4 text-vmb-text-main
                        focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
                        transition-all cursor-pointer"

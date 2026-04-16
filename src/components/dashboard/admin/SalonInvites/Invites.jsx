@@ -13,6 +13,7 @@ import SalonImage from "../../../../assets/salon-1.png";
 import userAvatar from "../../../../assets/user.png";
 import { FiX } from "react-icons/fi";
 import { RiCalendarScheduleLine } from "react-icons/ri";
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
@@ -24,7 +25,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
   const [pendingPage, setPendingPage] = useState(1);
   const [claimedPage, setClaimedPage] = useState(1);
   const [unclaimedPage, setUnclaimedPage] = useState(1);
-  const [bookedPage, setBookedPage] = useState(1);
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
 
   const sortMap = { Newest: "newest", Oldest: "oldest" };
   const sortValue = sortMap[sortOption] || "newest";
@@ -39,6 +43,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -51,6 +57,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -64,6 +72,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "claimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -77,6 +87,8 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     sort: sortValue,
     search: searchQuery,
     status: "unclaimed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -108,7 +120,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
 
   const invites = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
-  const formatDate = (date) => new Date(date).toLocaleDateString("en-GB");
+
   const formatTime = (date) =>
     new Date(date).toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -239,10 +251,7 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     serviceName: invite.services?.serviceName || "N/A",
     discount:
       invite.discountPercentage ? `${invite.discountPercentage}%` : "0%",
-    inviteDate:
-      invite.createdAt ?
-        new Date(invite.createdAt).toLocaleDateString("en-GB")
-      : "N/A",
+    inviteDate: invite.createdAt ? formatDate(invite.createdAt) : "N/A",
     status:
       invite.status?.charAt(0).toUpperCase() + invite.status?.slice(1) ||
       "Pending",
@@ -314,9 +323,23 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
     : activeTab === "Claimed" ? claimedPage
     : activeTab === "Unclaimed" ? unclaimedPage
     : 1;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setClaimedPage(1);
+    setUnclaimedPage(1);
+  };
 
+  const sortFields = {
+    salonName: "salonName",
+    Email: "Email",
+    discount: "discount",
+    inviteDate: "inviteDate",
+    status: "status",
+  };
   return (
-    <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+    <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
       <TabbedTable
         tabs={tabs}
         tabOrder={["All", "Pending", "Claimed", "Unclaimed"]}
@@ -335,6 +358,10 @@ export default function Invites({ searchQuery = "", sortOption = "Newest" }) {
         onPageChange={handlePageChange}
         isLoading={isLoading}
         isFetching={isFetching}
+        onSort={handleSort}
+        sortBy={advancedSort.field}
+        sortOrder={advancedSort.order}
+        sortFields={sortFields}
       />
     </div>
   );

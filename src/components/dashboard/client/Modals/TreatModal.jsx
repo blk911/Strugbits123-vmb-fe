@@ -185,7 +185,7 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
-          <div className="fixed inset-0 bg-black/30" />
+          <div className="fixed inset-0 bg-vmb-overlay-bg" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
@@ -594,13 +594,13 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                         }
                       </div>
 
-                      <div className="mt-4">
+                      <div className="flex flex-col gap-3 mt-4">
                         <h4 className="text-vmb-primary font-bold text-[18px]">
                           Who’s treating you?
                         </h4>
-                        <label className="text-vmb-text-main text-[14px] mt-2 block">
+                        {/* <label className="text-vmb-text-main text-[14px] mt-2 block">
                           Email
-                        </label>
+                        </label> */}
                         <input
                           type="email"
                           value={
@@ -609,9 +609,9 @@ export default function TreatModal({ isOpen, closeModal, initialData }) {
                           readOnly
                           className="w-full border border-vmb-primary/10 bg-vmb-bg-soft rounded-[8px] px-3 py-2 text-sm text-vmb-text-muted/50 mt-1 cursor-not-allowed"
                         />
-                        <label className="text-vmb-text-main text-[14px] mt-3 block">
+                        {/* <label className="text-vmb-text-main text-[14px] mt-3 block">
                           Write a sweet message
-                        </label>
+                        </label> */}
                         <textarea
                           rows={3}
                           value={submittedData?.message || gift?.message || ""}

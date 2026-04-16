@@ -9,8 +9,6 @@ export default function AppointmentDetailsSection({ data }) {
   let finalTotal;
 
   if (type === "invite") {
-    // const discount=data?.services[0]?.discount;
-    // finalTotal = (total-((total * discount)/100));
     finalTotal = data?.appointment?.amountPaid;
   } else if (type === "booking") {
     finalTotal = total + 2.5;
@@ -31,7 +29,9 @@ export default function AppointmentDetailsSection({ data }) {
           <p className="text-vmb-text-main font-semibold text-[14px]">
             {data.salon.name}
           </p>
-          <p className="text-vmb-text-main text-[12px]">{data.salon.description}</p>
+          <p className="text-vmb-text-main text-[12px]">
+            {data.salon.description}
+          </p>
         </div>
       </div>
 

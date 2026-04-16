@@ -53,16 +53,6 @@ export const customerApi = createApi({
       }),
     }),
     getSalonById: builder.query({
-      // query: ( id ) => ({
-      //   url: `/get-salon-by-id/${id}`,
-      // }),
-      //     query: ({ id, userLat, userLng }) => ({
-      //   url: `/get-salon-by-id/${id}`,
-      //   params: {
-      //     ...(userLat !== undefined && { userLat }),
-      //     ...(userLng !== undefined && { userLng }),
-      //   },
-      // }),
       query: (params) => {
         const { id, userLat, userLng } = params;
         const queryParams = new URLSearchParams();

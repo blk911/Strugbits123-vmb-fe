@@ -8,3 +8,4 @@ export * from "./appointmentApi";
 export * from "./awsApi";
 export * from "./paymentApi";
 export * from "./payoutApi";
+export * from "./templateApi";

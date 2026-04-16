@@ -170,13 +170,13 @@ export default function BookAppointmentModal({
           onClose={closeModal}
         >
           <Transition.Child as={Fragment}>
-            <div className="fixed inset-0 bg-black/80" />
+            <div className="fixed inset-0 bg-vmb-overlay-bg" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
             <div className="flex min-h-full items-center justify-center p-4 sm:p-6">
               <Transition.Child as={Fragment}>
-                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] bg-vmb-bg-soft p-10 shadow-xl flex flex-col gap-8">
+                <Dialog.Panel className="relative w-full max-w-[420px] rounded-[10px] backdrop-blur-[1px]  bg-vmb-modals-bg p-10 shadow-xl flex flex-col gap-8">
                   <div className="flex justify-between items-center">
                     <h2 className="text-vmb-primary font-bold text-[24px]">
                       Book Your Appointment
@@ -212,9 +212,9 @@ export default function BookAppointmentModal({
                     className="space-y-6"
                   >
                     <div className="flex flex-col gap-2">
-                      <label className="text-vmb-text-muted text-[14px] font-medium">
+                      {/* <label className="text-vmb-text-muted text-[14px] font-medium">
                         Full Name
-                      </label>
+                      </label> */}
                       <Controller
                         name="fullName"
                         control={control}
@@ -337,9 +337,9 @@ export default function BookAppointmentModal({
                     )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="flex flex-col">
-                        <label className="text-vmb-text-muted text-[14px] font-semibold mb-1">
+                        {/* <label className="text-vmb-text-muted text-[14px] font-semibold mb-1">
                           Booking Date
-                        </label>
+                        </label> */}
                         <Controller
                           name="appointmentDate"
                           control={control}
@@ -360,6 +360,7 @@ export default function BookAppointmentModal({
                    [&::-webkit-calendar-picker-indicator]:w-full
                    [&::-webkit-calendar-picker-indicator]:h-full`}
                                 style={{ appearance: "none" }}
+                                placeholder="Select date"
                               />
                             </div>
                           )}
@@ -375,40 +376,6 @@ export default function BookAppointmentModal({
                         name="appointmentTime"
                         control={control}
                       />
-
-                      {/* <div className="flex flex-col gap-2">
-                        <label className="text-vmb-text-muted text-[14px] font-medium">
-                          Booking Time
-                        </label>
-                        <Controller
-                          name="appointmentTime"
-                          control={control}
-                          render={({ field }) => (
-                            <div className="relative">
-                              <FaClock className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary pointer-events-none z-10" />
-
-                              <input
-                                type="time"
-                                {...field}
-                                className={`w-full bg-white border border-gray-300 text-[14px] rounded-md py-3 pl-10 pr-4 text-gray-700
-                   focus:outline-none focus:ring-2 focus:ring-vmb-secondary focus:border-vmb-secondary
-                   transition-all cursor-pointer
-                   [&::-webkit-calendar-picker-indicator]:opacity-0
-                   [&::-webkit-calendar-picker-indicator]:absolute
-                   [&::-webkit-calendar-picker-indicator]:right-0
-                   [&::-webkit-calendar-picker-indicator]:w-full
-                   [&::-webkit-calendar-picker-indicator]:h-full`}
-                                style={{ appearance: "none" }}
-                              />
-                            </div>
-                          )}
-                        />
-                        {errors.appointmentTime && (
-                          <p className="text-red-500 text-xs mt-1">
-                            {errors.appointmentTime.message}
-                          </p>
-                        )}
-                      </div> */}
                     </div>
 
                     <AppButton

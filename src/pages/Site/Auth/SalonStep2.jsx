@@ -170,6 +170,7 @@ export default function SalonStep2({ onBack }) {
         name="saloonName"
         register={register}
         error={errors.saloonName}
+        placeholder={"Enter your salon name"}
       />
       <div className="flex gap-3">
         <div className="w-[68%]">
@@ -179,6 +180,7 @@ export default function SalonStep2({ onBack }) {
             name="saloonAddress"
             register={register}
             error={errors.saloonAddress}
+            placeholder={"Enter your complete address"}
           />
         </div>
         <div className="w-[32%]">
@@ -187,6 +189,7 @@ export default function SalonStep2({ onBack }) {
             name="saloonZipcode"
             register={register}
             error={errors.saloonZipcode}
+            placeholder={"Zipcode"}
           />
         </div>
       </div>
@@ -197,6 +200,7 @@ export default function SalonStep2({ onBack }) {
         name="salonPhone"
         register={register}
         error={errors.salonPhone}
+        placeholder={"Enter your phone number"}
       />
 
       <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
@@ -292,9 +296,9 @@ export default function SalonStep2({ onBack }) {
         </div>
 
         <div>
-          <label className="block text-vmb-text-main font-medium mb-2">
+          {/* <label className="block text-vmb-text-main font-medium mb-2">
             Description
-          </label>
+          </label> */}
           <textarea
             {...register("description")}
             rows={3}
@@ -308,7 +312,7 @@ export default function SalonStep2({ onBack }) {
 
               register("description").onChange(e);
             }}
-            placeholder="Enter description"
+            placeholder="Write short description (Premium beauty salon offering cutting-edge hair, nail, and beauty services in a luxurious environment.)"
             className="w-full border border-vmb-primary/10 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-vmb-secondary"
           />
           {errors.description && (

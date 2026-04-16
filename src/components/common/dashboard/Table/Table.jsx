@@ -2,16 +2,33 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
-const Table = ({ data, cellRenderers, onRowClick, showPointer }) => {
+const Table = ({
+  data,
+  cellRenderers,
+  onRowClick,
+  showPointer,
+  onSort,
+  sortBy,
+  sortOrder,
+  sortFields,
+}) => {
   if (!data || data.length === 0)
     return <p className="p-4 text-gray-500 text-center">No data available</p>;
 
-  const keys = Object.keys(data[0]).filter((key) => key !== "id");
+  const keys = Object.keys(data[0]).filter(
+    (key) => key !== "id" && !key.startsWith("_"),
+  );
 
   return (
     <div className="w-full overflow-x-auto">
       <table className="w-full table-fixed text-sm bg-white custom-table ">
-        <TableHeader keys={keys} />
+        <TableHeader
+          keys={keys}
+          onSort={onSort}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
+          sortFields={sortFields}
+        />
         <tbody>
           {data.map((row) => (
             <TableRow

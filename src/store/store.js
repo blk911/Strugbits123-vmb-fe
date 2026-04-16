@@ -11,8 +11,10 @@ import { awsApi } from "./api/awsApi";
 import { paymentApi } from "./api/paymentApi";
 import { appointmentApi } from "./api/appointmentApi";
 import { payoutApi } from "./api/payoutApi";
+import { waitlistApi } from "./api/waitlistApi";
 import authReducer from "./features/authSlice";
 import userReducer from "./features/userSlice";
+import { templateApi } from "./api/templateApi";
 import selectedSalonReducer from "./features/selectedSalonSlice";
 export const store = configureStore({
   reducer: {
@@ -30,6 +32,8 @@ export const store = configureStore({
     [awsApi.reducerPath]: awsApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
     [payoutApi.reducerPath]: payoutApi.reducer,
+    [waitlistApi.reducerPath]: waitlistApi.reducer,
+    [templateApi.reducerPath]: templateApi.reducer,
     role: roleReducer,
   },
 
@@ -44,5 +48,7 @@ export const store = configureStore({
       .concat(awsApi.middleware)
       .concat(appointmentApi.middleware)
       .concat(paymentApi.middleware)
-      .concat(payoutApi.middleware),
+      .concat(payoutApi.middleware)
+      .concat(waitlistApi.middleware)
+      .concat(templateApi.middleware),
 });

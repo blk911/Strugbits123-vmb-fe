@@ -5,7 +5,7 @@ import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useGetSalonAppointmentsQuery } from "../../../../store/api";
 import StatusAppointmentModal from "../Modals/StatusAppointmentModal";
 import userAvatar from "../../../../assets/user.png";
-
+import { formatDate } from "../../../../utils/HelperFunctions";
 const PAGE_SIZE = 10;
 
 export default function Appointments({
@@ -28,7 +28,10 @@ export default function Appointments({
   const [holdPage, setHoldPage] = useState(1);
   const [confirmedPage, setConfirmedPage] = useState(1);
   const [declinedPage, setDeclinedPage] = useState(1);
-
+  const [advancedSort, setAdvancedSort] = useState({
+    field: "createdAt",
+    order: -1,
+  });
   const [showStatusModal, setShowStatusModal] = useState(false);
   const [statusModalType, setStatusModalType] = useState("hold");
   const [modalData, setModalData] = useState(null);
@@ -43,6 +46,8 @@ export default function Appointments({
     limit: PAGE_SIZE,
     sort: sortValue,
     search: searchQuery,
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: pendingData,
@@ -55,6 +60,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "pending",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: scheduledData,
@@ -67,6 +74,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "scheduled",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -80,6 +89,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "reschedule-requested",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
   const {
     data: holdData,
@@ -92,6 +103,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "hold",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -105,6 +118,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "confirmed",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   const {
@@ -118,6 +133,8 @@ export default function Appointments({
     sort: sortValue,
     search: searchQuery,
     status: "declined",
+    sortBy: advancedSort.field,
+    sortOrder: advancedSort.order,
   });
 
   useEffect(() => {
@@ -138,49 +155,31 @@ export default function Appointments({
     refetchDeclined,
   ]);
   const currentData =
-    activeTab === "All"
-      ? allData
-      : activeTab === "Pending"
-      ? pendingData
-      : activeTab === "Scheduled"
-      ? scheduledData
-      : activeTab === "Reschedule"
-      ? rescheduleData
-      : activeTab === "Hold"
-      ? holdData
-      : activeTab === "Confirmed"
-      ? confirmedData
-      : declinedData;
+    activeTab === "All" ? allData
+    : activeTab === "Pending" ? pendingData
+    : activeTab === "Scheduled" ? scheduledData
+    : activeTab === "Reschedule" ? rescheduleData
+    : activeTab === "Hold" ? holdData
+    : activeTab === "Confirmed" ? confirmedData
+    : declinedData;
 
   const isLoading =
-    activeTab === "All"
-      ? loadingAll
-      : activeTab === "Pending"
-      ? loadingPending
-      : activeTab === "Scheduled"
-      ? loadingScheduled
-      : activeTab === "Reschedule"
-      ? loadingReschedule
-      : activeTab === "Hold"
-      ? loadingHold
-      : activeTab === "Confirmed"
-      ? loadingConfirmed
-      : loadingDeclined;
+    activeTab === "All" ? loadingAll
+    : activeTab === "Pending" ? loadingPending
+    : activeTab === "Scheduled" ? loadingScheduled
+    : activeTab === "Reschedule" ? loadingReschedule
+    : activeTab === "Hold" ? loadingHold
+    : activeTab === "Confirmed" ? loadingConfirmed
+    : loadingDeclined;
 
   const isFetching =
-    activeTab === "All"
-      ? fetchingAll
-      : activeTab === "Pending"
-      ? fetchingPending
-      : activeTab === "Scheduled"
-      ? fetchingScheduled
-      : activeTab === "Reschedule"
-      ? fetchingReschedule
-      : activeTab === "Hold"
-      ? fetchingHold
-      : activeTab === "Confirmed"
-      ? fetchingConfirmed
-      : fetchingDeclined;
+    activeTab === "All" ? fetchingAll
+    : activeTab === "Pending" ? fetchingPending
+    : activeTab === "Scheduled" ? fetchingScheduled
+    : activeTab === "Reschedule" ? fetchingReschedule
+    : activeTab === "Hold" ? fetchingHold
+    : activeTab === "Confirmed" ? fetchingConfirmed
+    : fetchingDeclined;
   const appointments = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
   const transformedAppointments = appointments.map((appt) => ({
@@ -188,12 +187,12 @@ export default function Appointments({
     salonName: appt?.salon?.salonName || "Unknown Salon",
     serviceName: appt?.services?.map((s) => s.serviceName || s.name) || [],
     payersEmail: appt?.requestedBy?.email || "N/A",
-    appointmentDate: appt.appointmentDate
-      ? new Date(appt.appointmentDate).toLocaleDateString("en-GB")
-      : "N/A",
+    appointmentDate:
+      appt.appointmentDate ? formatDate(appt.appointmentDate) : "N/A",
     appointmentTime: appt.startTime || "N/A",
-    status: appt.status
-      ? appt.status.charAt(0).toUpperCase() +
+    status:
+      appt.status ?
+        appt.status.charAt(0).toUpperCase() +
         appt.status.slice(1).replace("-", " ")
       : "Pending",
     _modalData: {
@@ -219,9 +218,9 @@ export default function Appointments({
         email: appt.requestedFrom.email || "N/A",
         phone: appt.requestedFrom.phone || "N/A",
         image:
-          appt?.requestedFrom?.name === appt?.salon?.salonName
-            ? appt?.salon?.salonImage
-            : appt.requestedFrom.image || userAvatar,
+          appt?.requestedFrom?.name === appt?.salon?.salonName ?
+            appt?.salon?.salonImage
+          : appt.requestedFrom.image || userAvatar,
       },
       appointment: {
         id: appt._id,
@@ -301,23 +300,34 @@ export default function Appointments({
   };
 
   const currentPage =
-    activeTab === "All"
-      ? allPage
-      : activeTab === "Pending"
-      ? pendingPage
-      : activeTab === "Scheduled"
-      ? scheduledPage
-      : activeTab === "Reschedule"
-      ? reschedulePage
-      : activeTab === "Hold"
-      ? holdPage
-      : activeTab === "Confirmed"
-      ? confirmedPage
-      : declinedPage;
+    activeTab === "All" ? allPage
+    : activeTab === "Pending" ? pendingPage
+    : activeTab === "Scheduled" ? scheduledPage
+    : activeTab === "Reschedule" ? reschedulePage
+    : activeTab === "Hold" ? holdPage
+    : activeTab === "Confirmed" ? confirmedPage
+    : declinedPage;
+  const handleSort = (field, order) => {
+    setAdvancedSort({ field, order });
+    setAllPage(1);
+    setPendingPage(1);
+    setScheduledPage(1);
+    setReschedulePage(1);
+    setHoldPage(1);
+    setConfirmedPage(1);
+    setDeclinedPage(1);
+  };
 
+  const sortFields = {
+    salonName: "salonName",
+    payersEmail: "clientEmail",
+    appointmentDate: "appointmentDate",
+    appointmentTime: "appointmentTime",
+    status: "status",
+  };
   return (
     <>
-      <div className="w-full flex flex-col gap-y-[31px] py-6 bg-vmb-bg-soft">
+      <div className="w-full flex flex-col gap-y-[31px] rounded-[10px] py-6 bg-vmb-bg-soft">
         <TabbedTable
           tabs={tabs}
           tabOrder={[
@@ -347,6 +357,10 @@ export default function Appointments({
           onPageChange={handlePageChange}
           isLoading={isLoading}
           isFetching={isFetching}
+          onSort={handleSort}
+          sortBy={advancedSort.field}
+          sortOrder={advancedSort.order}
+          sortFields={sortFields}
         />
       </div>
 

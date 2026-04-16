@@ -73,11 +73,11 @@ export default function SalonInviteTrackingModal({ isOpen, onClose, data }) {
     statusStyles[status.toLowerCase()] || statusStyles.default;
   return (
     <div
-      className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-black/30"
+      className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 bg-vmb-overlay-bg"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar bg-vmb-bg-soft rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
+        className="w-full max-w-[960px] max-h-[95vh] font-poppins overflow-y-auto custom-scrollbar backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[20px] p-4 sm:p-[30px] flex flex-col gap-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between">
