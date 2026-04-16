@@ -97,36 +97,50 @@ export default function SendTreatModal({
   });
 
   const selectedServiceId = watch("serviceId");
+  const generateInviteMessage = (sName, fName) => {
+    const name = fName?.trim() || "{FirstName}";
+    const serviceName = sName || "{ServiceName}";
+    return `Hi ${name},\nI want you to experience my salon with ${serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
+  };
+
   const firstName = watch("firstName");
+
+  // Handle initialization and automatic message generation
   useEffect(() => {
     if (isOpen && services.length > 0) {
-      const firstService = services[0];
+      const currentServiceId = watch("serviceId");
+      const currentMessage = watch("message");
 
-      setValue("serviceId", firstService._id, { shouldValidate: true });
-
-      const generateMessage = () => {
-        const serviceName = firstService.serviceName;
-        const name = firstName.trim() || "{FirstName}";
-        return `Hi ${name},\nI want you to experience my salon with ${serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
-      };
-
-      setValue("message", generateMessage());
-    }
-  }, [isOpen, services, setValue]);
-
-  useEffect(() => {
-    if (!isViewMode && selectedServiceId && firstName) {
-      const selectedService = services.find((s) => s._id === selectedServiceId);
-      if (selectedService) {
-        const name = firstName.trim() || "FirstName";
-        const message = `Hi ${name},\nI want you to experience my salon with ${selectedService.serviceName} at an exclusive discount!\nNew here? Sign up to get started. Already have an account? Visit Salon Invites to claim your offer.`;
-        setValue("message", message);
+      // Set initial service if none selected
+      if (!currentServiceId) {
+        const firstService = services[0];
+        setValue("serviceId", firstService._id, { shouldValidate: true });
+        if (!currentMessage) {
+          setValue(
+            "message",
+            generateInviteMessage(firstService.serviceName, firstName),
+          );
+        }
       }
     }
-  }, [firstName, selectedServiceId, services, setValue, isViewMode]);
+  }, [isOpen, services, firstName, setValue, watch]);
+
+  // Update message reactively when name or service changes (only if not in view mode)
+  useEffect(() => {
+    if (!isViewMode && isOpen && services.length > 0) {
+      const selectedService = services.find((s) => s._id === selectedServiceId);
+      if (selectedService) {
+        setValue(
+          "message",
+          generateInviteMessage(selectedService.serviceName, firstName),
+        );
+      }
+    }
+  }, [firstName, selectedServiceId, services, setValue, isViewMode, isOpen]);
 
   useEffect(() => {
     if (isOpen) {
+      // Fallback for names if firstName/lastName are missing but fullName exists
       const fullName = initialData?.fullName || "";
       const [fName, ...lNameParts] = fullName.split(" ");
       const lName = lNameParts.join(" ");
@@ -134,6 +148,7 @@ export default function SendTreatModal({
       const firstName = initialData?.firstName || fName || "";
       const lastName = initialData?.lastName || lName || "";
 
+      // Fallback for service selection
       const serviceId =
         initialData?.services?._id ||
         (Array.isArray(initialData?.services) ?
@@ -195,13 +210,13 @@ export default function SendTreatModal({
         onClose={closeModal}
       >
         <Transition.Child as={Fragment}>
-          <div className="fixed inset-0 bg-vmb-overlay-bg backdrop-blur-[4px]" />
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-[4px]" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto custom-scrollbar">
           <div className="flex min-h-full items-center justify-center p-4">
             <Transition.Child as={Fragment}>
-              <Dialog.Panel className="relative w-full max-w-[805px] backdrop-blur-[1px]  bg-vmb-modals-bg rounded-[12px] p-[20px] sm:p-[30px] shadow-lg flex flex-col gap-[20px] max-h-[90vh] overflow-y-auto custom-scrollbar">
+              <Dialog.Panel className="relative w-full max-w-[805px] bg-white/90 rounded-[12px] p-[20px] sm:p-[30px] shadow-lg flex flex-col gap-[20px] max-h-[90vh] overflow-y-auto custom-scrollbar">
                 <IoClose
                   onClick={closeModal}
                   className="absolute top-4 right-4 text-vmb-primary text-2xl cursor-pointer hover:opacity-70"
@@ -258,9 +273,7 @@ export default function SendTreatModal({
                               min="0"
                               max="99"
                               readOnly={isViewMode}
-                              value={
-                                field.value === 0 ? "" : (field.value ?? "")
-                              }
+                              value={field.value ?? ""}
                               onChange={(e) => {
                                 if (isViewMode) return;
                                 const val = e.target.value;
@@ -364,16 +377,19 @@ export default function SendTreatModal({
                                   setValue("serviceId", srv._id, {
                                     shouldValidate: true,
                                   });
-                                  setValue(
-                                    "discountPercentage",
-                                    srv?.serviceDiscount ?? 0,
-                                    { shouldValidate: true },
-                                  );
-
-                                  const name =
-                                    watch("firstName").trim() || "{FirstName}";
-                                  const message = `Hi ${name},\nI want you to experience my salon with ${srv.serviceName} at an exclusive discount!`;
-                                  setValue("message", message);
+                                  // Update discount only if it's currently at 0 or uninitialized
+                                  const currentDiscount =
+                                    watch("discountPercentage");
+                                  if (
+                                    !currentDiscount ||
+                                    currentDiscount === 0
+                                  ) {
+                                    setValue(
+                                      "discountPercentage",
+                                      srv?.serviceDiscount ?? 0,
+                                      { shouldValidate: true },
+                                    );
+                                  }
                                 }}
                                 className="w-4 h-4"
                                 style={{ accentColor: "var(--vmb-primary)" }}
