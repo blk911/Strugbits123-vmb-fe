@@ -46,18 +46,7 @@ const HeroSection = () => {
             leading-snug
           "
           >
-            Priority Access. Exclusive Perks.
-          </h2>
-
-          <h2
-            className="
-            font-lato font-semibold
-            text-lg sm:text-2xl md:text-[35px]
-            text-vmb-primary
-            leading-snug
-          "
-          >
-            Insider Benefits.
+            The Salons You Trust. The People You Trust. Connected.
           </h2>
         </div>
 
@@ -69,8 +58,8 @@ const HeroSection = () => {
             text-vmb-secondary
           "
           >
-            VMB rewards loyalty with priority booking, referral rewards, and
-            member-only benefits.
+            Your favorite nail tech. Your hair stylist. Your esthetician. You
+            already move through a trusted circle.
           </p>
 
           <p
@@ -81,15 +70,25 @@ const HeroSection = () => {
             leading-relaxed
           "
           >
-            VMB members secure their preferred appointments, unlock service
-            credits and upgrades for referrals, and strengthen their connection
-            with the salons they love. Thoughtful incentives turn loyal clients
-            into insiders — delivering more value with every visit.
+            VMB turns your circle into a shared experience — where you connect,
+            gift, and bring each other in.
+          </p>
+          <p
+            className="
+            font-lato
+            text-sm sm:text-base md:text-[18px]
+            text-vmb-text-main
+            leading-relaxed
+          "
+          >
+            VMB turns what you already do into something real — shared
+            experiences, trusted connections, and better outcomes...finally!
+            Sharing what you love actually pays off.
           </p>
         </div>
 
         <PrimaryButton
-          text="Join as Customer"
+          text="It's Time — Bring Your Circle In"
           variant="pill"
           onClick={() => navigate("/register")}
           className="w-fit p-[5px] pl-[15px] "

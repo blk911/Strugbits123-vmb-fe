@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { buildApiBaseUrl } from "./baseUrl";
 
 export const appointmentApi = createApi({
   reducerPath: "appointmentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      import.meta.env.VITE_BACKEND_URL + "appointment" ||
-      "http://localhost:5000/",
+    baseUrl: buildApiBaseUrl("appointment"),
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token =

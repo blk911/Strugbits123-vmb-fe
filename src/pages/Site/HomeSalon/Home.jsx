@@ -14,41 +14,25 @@ function HomeSalon() {
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits
-        heading={"A New Model For Modern Salons"}
-        subheading={"Success needs a system - VMB simplifies success."}
+        heading={"Turn Attention Into Clients, Loyalty, and Growth"}
+        subheading={
+          "VMB turns your social into an invite-only client network — where trust drives who shows up, who pays, and who brings others."
+        }
         cards={[
           {
             photo: priorityImg,
-            title: "Empowering",
-            desc: (
-              <>
-                Replace cancellations with committed <br />
-                clients and fill empty chairs through <br />
-                international invitations.
-              </>
-            ),
+            title: "Revenue",
+            desc: "VMB converts attention into prepaid clients through trust — not ads or discounts.",
           },
           {
             photo: loyaltyImg,
-            title: "Personal",
-            desc: (
-              <>
-                Experience beauty through <br />
-                personal invitations designed <br />
-                with intention.
-              </>
-            ),
+            title: "Trust",
+            desc: "Every client invite is personal, trust makes every client intentional and priceless.",
           },
           {
             photo: advocateImg,
-            title: "Connection",
-            desc: (
-              <>
-                Build long-term relationships <br />
-                that grow through trust, <br />
-                referrals, and repeat visits.
-              </>
-            ),
+            title: "Growth",
+            desc: "Clients don't just come — they invite, share, and expand your network.",
           },
         ]}
       />
@@ -57,12 +41,14 @@ function HomeSalon() {
           {
             title: "Two is Fun. Three is a celebration.",
             desc: "Turn loyal clients into new bookings - invite them to schedule with a friend or request a gift from someone special.",
+            btnText: "Send or Request Style Gifts",
             type: "salon",
             mode: "signup",
           },
           {
-            title: "Make invitations and gifting your calling card",
-            desc: "Salon owners can invite others to join and grow together.",
+            title: "Your Clients Already Have Favorite Salons — VMB Gets You Inside",
+            desc: "Your clients trust you and their favorites for Nails. Hair. Skin. Wax. and more. VMB places you inside that trusted circle — so clients connect you to their trusted relationships, friends, and favorites.",
+            btnText: "Connect With the Salons Your Clients Love",
             type: "salon",
             mode: "signup",
           },
@@ -72,23 +58,27 @@ function HomeSalon() {
         blocks={[
           {
             label: "SALON OWNERS",
-            title: "How The VMB Model Works",
+            title: "How VMB Turns Attention Into Revenue",
             descriptionBlock: [
               {
-                heading: "Replace Cancellation with Commitments",
-                text: "Pre-paid invitations reduce no-shows and protect your schedule.",
+                heading: "Capture Attention",
+                text: "You're already getting views, likes, and DMs. VMB captures that attention and gives it a path to convert.",
               },
               {
-                heading: "Turn Invitations Into Revenue",
-                text: "Clients invite friends, request gifted services, and book together intentionally.",
+                heading: "Turn Attention Into Trusted Clients",
+                text: "Clients don't come in cold — they arrive through people they already trust.",
               },
               {
-                heading: "Reward Loyalty That Promotes You",
-                text: "Built-in incentives turn satisfied clients into active ambassadors.",
+                heading: "Drive Prepaid, Intent-Based Visits",
+                text: "Clients commit before they show up — creating reliable, higher-quality appointments.",
               },
               {
-                heading: "Grow Through Co-Marketing",
-                text: "Salons who build the network share in its growth.",
+                heading: "Expand Through Client Networks",
+                text: "Clients don't come alone — they bring others through shared trust and relationships.",
+              },
+              {
+                heading: "Grow Through Connected Salons",
+                text: "You connect with the salons your clients already love — creating a shared network that drives referrals across services.",
               },
             ],
             buttonText: "Register Your Salon Today",
@@ -96,16 +86,19 @@ function HomeSalon() {
             authType: "salon",
           },
           {
-            label: "FOR CUSTOMERS",
-            title: "Beauty Is Better Shared; Even Better Gifted!",
-
+            label: "FOR YOUR CLIENTS",
+            title: "VMB fits your Clients Lifestyle",
+            introText:
+              "Your clients don't just book — they engage, share, and bring others in.",
             bulletPoints: [
-              "Schedule together",
-              "Send experiences as gifts",
-              "Discover salons through real relationships",
-              "Benefits when your circle grows.",
+              "Schedule together with people they trust",
+              "Send services as gifts to friends and family",
+              "Share their favorite salons with friends",
+              "Discover new services through their trusted salon relationships",
+              "Your network grows as your client network grows",
             ],
-            buttonText: "Create Free Account",
+            outroText: "This is what turns clients into your growth engine.",
+            buttonText: "Activate Your Client Network",
             authMode: "signup",
             authType: "salon",
           },

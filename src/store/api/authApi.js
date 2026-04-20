@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { convertTo12Hour } from "../../utils/HelperFunctions";
+import { buildApiBaseUrl } from "./baseUrl";
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      import.meta.env.VITE_BACKEND_URL + "auth" || "http://localhost:5000/",
+    baseUrl: buildApiBaseUrl("auth"),
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token =

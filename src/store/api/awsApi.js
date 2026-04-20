@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { buildApiBaseUrl } from "./baseUrl";
 
 export const awsApi = createApi({
   reducerPath: "awsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      import.meta.env.VITE_BACKEND_URL + "aws" || "http://localhost:5000/",
+    baseUrl: buildApiBaseUrl("aws"),
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token =
