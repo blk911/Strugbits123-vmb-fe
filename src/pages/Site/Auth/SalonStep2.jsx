@@ -208,10 +208,6 @@ export default function SalonStep2({ onBack }) {
         <TimePicker label="End Time" name="endTime" />
 
         <div className="relative" ref={detailsRef}>
-          <label className="block text-vmb-text-main text-[14px] font-semibold mb-1">
-            Working Days
-          </label>
-
           <div className="relative">
             <FaCalendarAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-vmb-secondary z-10" />
 
