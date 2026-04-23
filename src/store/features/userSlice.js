@@ -18,7 +18,7 @@ const loadInitialState = () => {
 
     return {
       data: storedUser ? JSON.parse(storedUser) : null,
-      loading: false,
+      loading: !!storedToken, // Set to true if token exists to allow initial verification
       token: storedToken || null,
     };
   } catch (error) {
@@ -76,10 +76,13 @@ const userSlice = createSlice({
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_DATA_KEY);
     },
+    setLoading(state, action) {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { setUser, clearUser, setToken, clearToken, logout } =
+export const { setUser, clearUser, setToken, clearToken, logout, setLoading } =
   userSlice.actions;
 
 export default userSlice.reducer;
