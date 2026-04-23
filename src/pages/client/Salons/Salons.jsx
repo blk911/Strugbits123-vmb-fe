@@ -15,6 +15,7 @@ export default function Salons() {
         onSort={setSortOption}
         defaultSort="Nearest"
         sortOptions={["Nearest", "Farthest"]}
+        searchPlaceholder="Search by Salon name"
       />
       <SalonSection searchQuery={searchQuery} sortOption={sortOption} />
     </div>

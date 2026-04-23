@@ -73,6 +73,7 @@ export default function ServicePresets() {
         defaultSort={sort}
         sortOptions={["Newest", "Oldest"]}
         showSort={isAdmin}
+        searchPlaceholder="Search by Template Name"
       />
 
       {/* Templates Grid Content */}

@@ -4,13 +4,13 @@ export const waitlistApi = createApi({
   reducerPath: "waitlistApi",
   baseQuery: fetchBaseQuery({
     baseUrl:
-      import.meta.env.VITE_BACKEND_URL + "waitlist" ||
-      "http://localhost:5000/",
+      (import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/") +
+      "waitlist",
   }),
   endpoints: (builder) => ({
     joinWaitlist: builder.mutation({
       query: (data) => ({
-        url: "/",
+        url: "",
         method: "POST",
         body: data,
       }),

@@ -14,6 +14,7 @@ export default function SalonInvites() {
         onSort={setSortOption}
         defaultSort={sortOption}
         sortOptions={["Newest", "Oldest"]}
+        searchPlaceholder="Search by Salon Name, Service Name and Email"
       />
       <div className="w-full ">
         <Invites searchQuery={searchQuery} sortOption={sortOption} />
