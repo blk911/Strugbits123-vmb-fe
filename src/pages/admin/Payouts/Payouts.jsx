@@ -15,6 +15,7 @@ export default function Payouts() {
         onSort={setSortOption}
         defaultSort={sortOption}
         sortOptions={["Newest", "Oldest"]}
+        searchPlaceholder="Search by Salon Name, Email and Amount"
       />
       <AllPayouts searchQuery={searchQuery} sortOption={sortOption} />
     </div>

@@ -13,6 +13,7 @@ export default function Salons() {
         onSort={setSortOption}
         defaultSort={sortOption}
         sortOptions={["Newest", "Oldest"]}
+        searchPlaceholder="Search by Salon Name and Email"
       />
       <AllSalons searchQuery={searchQuery} sortOption={sortOption} />
     </div>
