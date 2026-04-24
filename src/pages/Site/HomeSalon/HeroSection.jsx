@@ -1,5 +1,3 @@
-import React from "react";
-import heroBg from "../../../assets/salon_hero_bg.png";
 import PrimaryButton from "../../../components/common/site/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +18,7 @@ export default function WhyVMBHero() {
         "
       >
         <img
-          src={heroBg}
+          src="/hero-bg2.jpg"
           alt="Hero background"
           className="absolute inset-0 w-full h-full object-cover scale-x-[-1]"
         />

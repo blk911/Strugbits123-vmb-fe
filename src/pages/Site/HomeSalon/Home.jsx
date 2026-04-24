@@ -14,7 +14,7 @@ function HomeSalon() {
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits
-        heading={"Turn Attention Into Clients, Loyalty, and Growth"}
+        heading={"Turn Attention Into Clients, Loyalty and Recurring Revenue"}
         subheading={
           "VMB turns your social into an invite-only client network — where trust drives who shows up, who pays, and who brings others."
         }
