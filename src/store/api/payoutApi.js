@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { buildApiBaseUrl } from "./baseUrl";
 
 export const payoutApi = createApi({
   reducerPath: "payoutApi",
   baseQuery: fetchBaseQuery({
-    baseUrl:
-      import.meta.env.VITE_BACKEND_URL + "payout" || "http://localhost:5000/",
+    baseUrl: buildApiBaseUrl("payout"),
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token =

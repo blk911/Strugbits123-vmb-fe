@@ -59,7 +59,7 @@ function GiftsAndInvite({ cards }) {
           img={pic1}
           title={cards[0].title}
           desc={cards[0].desc}
-          btnText="Gift A VMB Gift Card"
+          btnText={cards[0].btnText || "Gift A VMB Gift Card"}
           type={cards[0].type}
           mode={cards[0].mode}
         />
@@ -68,7 +68,7 @@ function GiftsAndInvite({ cards }) {
           img={pic2}
           title={cards[1].title}
           desc={cards[1].desc}
-          btnText="Invite The Best Salon"
+          btnText={cards[1].btnText || "Invite The Best Salon"}
           type={cards[1].type}
           mode={cards[1].mode}
         />

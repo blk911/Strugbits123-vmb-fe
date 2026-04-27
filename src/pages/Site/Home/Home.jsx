@@ -14,44 +14,23 @@ function Home() {
       <HeroSection />
       <LogoMarquee />
       <PlatformBenefits
-        heading={"A New Model For Modern Salons"}
-        subheading={"Success needs a system - VMB simplifies success."}
+        heading={"VMB Fits Your Lifestyle: Trust, Loyalty and Friends"}
+        subheading={""}
         cards={[
           {
             photo: priorityImg,
-            title: "Priority",
-            desc: (
-              <>
-                VMB members enjoy better access, <br />
-                smoother scheduling, and a <br />
-                relationship built on mutual respect.
-              </>
-            ),
+            title: "Go Where Your People Go",
+            desc: "You don't guess — you follow what you trust. VMB connects you to the salons your circle already loves.",
           },
           {
             photo: loyaltyImg,
-            title: "Loyalty",
-            desc: (
-              <>
-                It's shared trust over time. VMB rewards <br />
-                that trust with upgrades, credits, and <br />
-                thoughtful perks designed to make every <br />
-                appointment feel even better.
-              </>
-            ),
+            title: "Share What You Love",
+            desc: "Bring friends. Book together. Send services. What you already do becomes a shared experience.",
           },
           {
             photo: advocateImg,
-            title: "Advocate",
-            desc: (
-              <>
-                Share the salon you trust. VMB
-                <br />
-                converts referrals into earned credits <br />
-                and exclusive upgrades - built to <br />
-                reward loyalty.
-              </>
-            ),
+            title: "Get Something Back",
+            desc: "When you share what you love, it comes back to you — in real value and better experiences.",
           },
         ]}
       />
@@ -59,13 +38,14 @@ function Home() {
         cards={[
           {
             title: "Did someone say “Party”!",
-            desc: "You love sharing the best finds. VMB makes it easy to turn those moments into something more - with earned credits, exclusive upgrades, and thoughtful perks for you and your friends.",
+            desc: "You love putting your people onto the best and they love sharing their fav's. VMB makes it count — bringing value back to you, and elevating the experience for everyone in your circle.",
+            btnText: "Invite your GFs, get the party started",
             type: "customer",
             mode: "signup",
           },
           {
-            title: "Gifts and Personal Invitations are Personal, Intentional.",
-            desc: "There are moments when you or someone special needs a little attention, a confidence booster, a timely reset. VMB makes it effortless to give and receive the glam, the refresh, or the rest she'll actually love - secure, thoughtful, and easy to use.",
+            title: "It's Not Just a Gift — It's Personal",
+            desc: "For the Moments That Matter — for the ones you Love. Birthday. Celebration. Or a quiet “thinking of you.” VMB makes it effortless to send something meaningful — a moment of care, confidence, or reset she'll actually feel.",
             type: "customer",
             mode: "signup",
           },
@@ -75,23 +55,23 @@ function Home() {
         blocks={[
           {
             label: "VMB CLIENTS",
-            title: "How The VMB Model Works",
+            title: "How VMB Works For You",
             descriptionBlock: [
               {
-                heading: "Secure Your Spot With Confidence",
-                text: "Commitment-based invitations reduce last-minute chaos and protect the time you count on.",
+                heading: "Book With Intention",
+                text: "Lock in the time and service you want — prepaid, confirmed, and set.",
               },
               {
-                heading: "Turn Invitations Into Revenue",
-                text: "Invite friends, request gifted services, or book intentionally - and unlock credits and exclusive upgrades.",
+                heading: "Send Something She'll Actually Use",
+                text: "Gift services that matter — easy to send, easy to redeem, always relevant.",
               },
               {
-                heading: "Be Rewarded for Loyalty",
-                text: "Your repeat visits and referrals earn tangible rewards, not just points - real value you can use.",
+                heading: "Get More From What You Already Do",
+                text: "When you come back or bring someone new, you get real value back — not points, or credits you'll never use.",
               },
               {
-                heading: "Build Your Co-Marketing Account",
-                text: "As the network grows, so do your perks - giving you better access and member-only advantages.",
+                heading: "Better Access, Better Experiences",
+                text: "The more you use VMB, the more it works for you — better access, better experiences, and value that comes back to you — including cash you can spend",
               },
             ],
             buttonText: "Register Your Salon Today",
@@ -100,20 +80,28 @@ function Home() {
           },
           {
             label: "CO-MARKETING PROGRAM",
-            title: "Your Circle Grows, You Benefit.",
+            title: "Use VMB With Your People — Get More From It",
+            introText:
+              "Invite your friends. Send a service. Plan something together. Skip the back-and-forth — it's set, prepaid, and real.",
             bulletPoints: [
-              "Join VMB and secure your place in the network.",
-              "Invite friends to schedule or receive gifts.",
-              "When they book, your circle expands.",
-              "As the network grows, so do your member rewards.",
+              "When they show up, you benefit.",
+              "Value comes back to you.",
+              "Experiences get better over time.",
             ],
-            buttonText: "Create Free Account",
+            outroText: "No points. No gimmicks. Just more from what you already do.",
+            buttonText: "Start With Your Besties",
             authMode: "signup",
             authType: "customer",
           },
         ]}
       />
-      <SalonExperience />
+      <SalonExperience
+        heading={"Ready to Make VMB Work for You?"}
+        primaryButtonText={"Activate your network"}
+        primaryAuthType={"customer"}
+        secondaryButtonText={"Gift Your First Service"}
+        secondaryAuthType={"customer"}
+      />
       <TopSalons />
     </div>
   );

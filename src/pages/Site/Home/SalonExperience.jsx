@@ -4,7 +4,13 @@ import pic2 from "../../../assets/admin_dashboard.png";
 import PrimaryButton from "../../../components/common/site/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 
-function SalonExperience() {
+function SalonExperience({
+  heading = "Ready to Own Your Client Network?",
+  primaryButtonText = "Get your salon onboard",
+  primaryAuthType = "salon",
+  secondaryButtonText = "Gift Your First Service",
+  secondaryAuthType = "salon",
+}) {
   const navigate = useNavigate();
 
   const imgShadow = {
@@ -29,28 +35,26 @@ function SalonExperience() {
       <div className="w-full h-full flex max-lg:flex-col gap-y-[30px] lg:flex-row justify-center items-center lg:gap-x-[50px]">
         <div className="flex flex-col items-center p-3 w-full lg:w-[640px]">
           <h4 className="text-[25px] sm:text-[30px] md:text-[35px] xl:text-[40px] text-center text-white mb-[10px] font-poppins font-bold">
-            Ready to Experience the
-            <br />
-            New Era of Salon Invites?
+            {heading}
           </h4>
 
           <div className="flex flex-col sm:flex-row gap-x-[20px] gap-y-[10px]">
             <PrimaryButton
-              text="List Your Salon Now"
+              text={primaryButtonText}
               variant="pillOutline"
               className="w-fit p-[5px] pl-[15px]"
               onClick={() => navigate("/register")}
               authMode={"signup"}
-              authType={"salon"}
+              authType={primaryAuthType}
             />
 
             <PrimaryButton
-              text="Gift Your First Service"
+              text={secondaryButtonText}
               variant="pillOutline"
               className="w-fit p-[5px] pl-[15px]"
               onClick={() => navigate("/register")}
               authMode={"signup"}
-              authType={"salon"}
+              authType={secondaryAuthType}
             />
           </div>
         </div>

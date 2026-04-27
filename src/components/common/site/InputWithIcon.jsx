@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export default function InputWithIcon({
   label,
+  required = false,
   icon: Icon,
   type = "text",
   placeholder,
@@ -37,13 +38,14 @@ export default function InputWithIcon({
 
   return (
     <div className="w-full">
-      {/* {label && (
+      {label && (
         <label
           className="block text-vmb-text-main font-semibold mb-1 text-[14px] font-poppins"
         >
           {label}
+          {required && <span className="ml-1 text-red-600">*</span>}
         </label>
-      )} */}
+      )}
 
       <div className="relative">
         {Icon && (

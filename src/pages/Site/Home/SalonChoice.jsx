@@ -9,7 +9,9 @@ function FeatureBlock({
   label,
   title,
   descriptionBlock,
+  introText,
   bulletPoints,
+  outroText,
   buttonText,
   reverse = false,
   authMode = null,
@@ -60,9 +62,11 @@ function FeatureBlock({
 
         {bulletPoints && (
           <div className="flex flex-col gap-[10px]">
-            <p className="font-lato font-bold text-[14px] text-vmb-primary">
-              The salons you love. The friends you trust. All connected.
-            </p>
+            {introText && (
+              <p className="font-lato font-bold text-[14px] text-vmb-primary">
+                {introText}
+              </p>
+            )}
             <ul className="list-disc pl-5 space-y-2">
               {bulletPoints.map((point, i) => (
                 <li
@@ -73,6 +77,11 @@ function FeatureBlock({
                 </li>
               ))}
             </ul>
+            {outroText && (
+              <p className="font-lato font-bold text-[14px] text-vmb-primary">
+                {outroText}
+              </p>
+            )}
           </div>
         )}
 

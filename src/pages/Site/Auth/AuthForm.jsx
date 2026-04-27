@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 
 import FormHeader from "./FormHeader";
-import bgImage from "../../../assets/register.png";
+import bgImage from "../../../assets/brand/benefits/vmb sign pg5.jpg";
 import LoginForm from "./LoginForm";
 import SignupStep1 from "./SignupStep1";
 import SalonStep2 from "./SalonStep2";
@@ -227,6 +227,30 @@ export default function AuthForm() {
     }
   };
 
+  const enterPreview = (previewRole) => {
+    const isCustomer = previewRole === "customer";
+    const previewUser =
+      isCustomer ?
+        {
+          role: "customer",
+          name: "Preview Client",
+          email: "client-preview@vmb.local",
+        }
+      : {
+          role: "salon-owner",
+          name: "Preview Salon Owner",
+          salonName: "Preview Salon",
+          email: "salon-preview@vmb.local",
+        };
+
+    const target = isCustomer ? "/client" : "/salon-owner";
+
+    dispatch(setToken("preview-token"));
+    dispatch(setUser(previewUser));
+    dispatch(setRole(previewRole));
+    navigate(target, { replace: true });
+  };
+
   return (
     <div
       className="w-full min-h-screen flex items-center justify-center py-[80px] max-sm:px-5"
@@ -260,6 +284,29 @@ export default function AuthForm() {
               <SalonStep2 onBack={() => setStep("step1")} />
             )}
           </form>
+          {import.meta.env.DEV && (
+            <div className="px-6 pb-6 pt-2">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-vmb-text-muted">
+                Dev Preview Access
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => enterPreview("customer")}
+                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-4 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
+                >
+                  Enter Client App
+                </button>
+                <button
+                  type="button"
+                  onClick={() => enterPreview("salon-owner")}
+                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-4 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
+                >
+                  Enter Salon App
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </FormProvider>
       <ConfirmConfirmation
