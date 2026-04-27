@@ -38,6 +38,7 @@ export default function Customers() {
         onSort={handleDropdownSort}
         defaultSort={sortOption}
         sortOptions={["Newest", "Oldest"]}
+        searchPlaceholder="Search by Customer Name and Email"
       />
       <CustomerTable
         searchQuery={searchQuery}

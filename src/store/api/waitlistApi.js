@@ -9,7 +9,7 @@ export const waitlistApi = createApi({
   endpoints: (builder) => ({
     joinWaitlist: builder.mutation({
       query: (data) => ({
-        url: "/",
+        url: "",
         method: "POST",
         body: data,
       }),

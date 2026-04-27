@@ -304,7 +304,7 @@ export default function AddServiceModal({
 
                     <div>
                       <Controller
-                        name="Duration"
+                        name="serviceDuration"
                         control={control}
                         rules={{ required: "Please select a duration" }}
                         render={({ field }) => (

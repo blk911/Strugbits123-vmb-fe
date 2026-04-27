@@ -15,9 +15,14 @@ import ScrollToTop from "./components/common/site/ScrollToTop";
 import { BookingCancel, BookingSuccess } from "./pages/client";
 import { clearRole } from "./store/features/roleSlice";
 import { logout as logoutAction } from "./store/features/userSlice";
+import { useStatusPolling } from "./hooks/useStatusPolling";
+
 export default function App() {
   const role = useSelector((state) => state.role.role);
   const dispatch = useDispatch();
+
+  // useStatusPolling(60000);
+  useStatusPolling();
 
   useEffect(() => {
     const handleStorageChange = (e) => {
@@ -30,6 +35,7 @@ export default function App() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, [dispatch]);
+
   return (
     <Router>
       <ScrollToTop />
