@@ -16,9 +16,10 @@ import { BookingCancel, BookingSuccess } from "./pages/client";
 import { clearRole } from "./store/features/roleSlice";
 import { logout as logoutAction } from "./store/features/userSlice";
 import { useStatusPolling } from "./hooks/useStatusPolling";
-
+import LoadingIndicator from "./components/common/LoadingIndicator/LoadingIndicator";
 export default function App() {
   const role = useSelector((state) => state.role.role);
+  const { loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // useStatusPolling(60000);
@@ -35,7 +36,13 @@ export default function App() {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, [dispatch]);
-
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <LoadingIndicator size="xl" />;
+      </div>
+    );
+  }
   return (
     <Router>
       <ScrollToTop />
