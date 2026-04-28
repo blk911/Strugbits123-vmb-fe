@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import adminSaloonsReducer from "./features/admin/listsSaloonSlice";
-import roleReducer from "./features/roleSlice";
+
 import { authApi } from "./api/authApi";
 import { customerApi } from "./api/customerApi";
 import { adminApi } from "./api/adminApi";
@@ -34,7 +34,6 @@ export const store = configureStore({
     [payoutApi.reducerPath]: payoutApi.reducer,
     [waitlistApi.reducerPath]: waitlistApi.reducer,
     [templateApi.reducerPath]: templateApi.reducer,
-    role: roleReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

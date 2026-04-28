@@ -24,7 +24,6 @@ import {
 } from "../../../store/api/authApi";
 
 import { setAuthMode } from "../../../store/features/authSlice";
-import { setRole } from "../../../store/features/roleSlice";
 
 import {
   toastSuccess,
@@ -133,11 +132,13 @@ export default function AuthForm() {
     }
   };
 
-  const handleSuccess = async (apiRole) => {
-    dispatch(setRole(apiRole));
+  const handleSuccess = async () => {
     try {
       const meRes = await triggerGetMe().unwrap();
-      dispatch(setUser(meRes.data));
+      const userData = meRes.data;
+      dispatch(setUser(userData));
+
+      const apiRole = userData.role;
 
       const target =
         apiRole === "customer" ? "/client"
@@ -148,7 +149,7 @@ export default function AuthForm() {
       navigate(target, { replace: true });
     } catch (err) {
       console.error("Failed to fetch user profile:", err);
-      dispatch(setRole(null));
+
       dispatch(setUser(null));
       navigate("/register", { replace: true });
     }
@@ -178,7 +179,7 @@ export default function AuthForm() {
         toastDismiss(loadingToastId);
         toastSuccess("Welcome back!");
         dispatch(setToken(res?.data?.token));
-        handleSuccess(res?.data?.user?.role);
+        handleSuccess();
       } else if (
         mode === "signup" &&
         step === "step1" &&
@@ -196,7 +197,7 @@ export default function AuthForm() {
 
         toastDismiss(loadingToastId);
         dispatch(setToken(resSignin?.data?.token));
-        handleSuccess(resSignin?.data?.user?.role);
+        handleSuccess();
       } else if (mode === "signup" && step === "step2") {
         loadingToastId = toastLoading("Registering salon...");
 

@@ -13,13 +13,13 @@ import SaloonRoutes from "./routes/SaloonRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
 import ScrollToTop from "./components/common/site/ScrollToTop";
 import { BookingCancel, BookingSuccess } from "./pages/client";
-import { clearRole } from "./store/features/roleSlice";
+
 import { logout as logoutAction } from "./store/features/userSlice";
 import { useStatusPolling } from "./hooks/useStatusPolling";
 import LoadingIndicator from "./components/common/LoadingIndicator/LoadingIndicator";
 export default function App() {
-  const role = useSelector((state) => state.role.role);
-  const { loading } = useSelector((state) => state.user);
+  const { data, loading } = useSelector((state) => state.user);
+  const role = data?.role;
   const dispatch = useDispatch();
 
   // useStatusPolling(60000);
@@ -27,8 +27,7 @@ export default function App() {
 
   useEffect(() => {
     const handleStorageChange = (e) => {
-      if ((e.key === "auth_token" || e.key === "user_role") && !e.newValue) {
-        dispatch(clearRole());
+      if ((e.key === "auth_token" || e.key === "user_data") && !e.newValue) {
         dispatch(logoutAction());
       }
     };

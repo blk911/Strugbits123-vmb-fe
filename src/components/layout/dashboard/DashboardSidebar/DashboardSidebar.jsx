@@ -6,8 +6,8 @@ import { useUser } from "../../../../hooks/useUser";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 
 function DashboardSidebar() {
-  const { role } = useSelector((state) => state.role);
   const { user, loading } = useUser();
+  const role = user?.role;
   const roleMap = {
     "salon-owner": "salonOwner",
     customer: "customer",

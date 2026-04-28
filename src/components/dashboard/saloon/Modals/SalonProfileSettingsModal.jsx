@@ -33,7 +33,7 @@ import {
 import { useDispatch } from "react-redux";
 import { clearUser, setUser } from "../../../../store/features/userSlice";
 import { useNavigate } from "react-router-dom";
-import { clearRole } from "../../../../store/features/roleSlice";
+
 import { setAuthMode } from "../../../../store/features/authSlice";
 import TimePicker from "../../../common/site/TimePicker";
 const days = [
@@ -298,7 +298,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
             "Application resubmitted successfully! Awaiting approval.",
         );
         await logout().unwrap();
-        dispatch(clearRole());
+
         dispatch(clearUser());
         dispatch(setAuthMode("login"));
         navigate("/register");
