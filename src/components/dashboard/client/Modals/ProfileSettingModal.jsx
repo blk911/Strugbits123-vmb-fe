@@ -194,10 +194,6 @@ export default function ProfileSettingsModal({ isOpen, closeModal, user }) {
                           type="text"
                           {...register("fullName", {
                             required: "Full name is required",
-                            pattern: {
-                              value: /^[a-zA-Z\s'-]+$/,
-                              message: "Invalid name",
-                            },
                           })}
                           onChange={preventLeadingSpace(
                             register("fullName").onChange,

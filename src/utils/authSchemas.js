@@ -9,10 +9,7 @@ export const loginSchema = z.object({
 
 export const customerSignupSchema = z
   .object({
-    fullName: z
-      .string()
-      .min(1, "Name is required")
-      .regex(nameRegex, "Invalid name"),
+    fullName: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email"),
     address: z.string().min(5, "Enter a valid address"),
     // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
@@ -38,10 +35,7 @@ const timeToMinutes = (time24) => {
 };
 
 export const salonStep2Schema = z.object({
-  saloonName: z
-    .string()
-    .min(2, "Salon name required")
-    .regex(nameRegex, "Invalid salon name"),
+  saloonName: z.string().min(2, "Salon name required"),
   saloonAddress: z.string().min(5, "Enter salon address"),
   // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
   saloonZipcode: z.string().regex(/^\d{5}$/, "5-digit zip"),
