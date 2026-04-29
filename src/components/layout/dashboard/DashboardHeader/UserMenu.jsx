@@ -3,7 +3,7 @@ import profile from "../../../../assets/dashboard/profile.jpg";
 import Dropdown from "../../../common/dashboard/Dropdown/Dropdown";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
 import { useDispatch } from "react-redux";
-import { clearRole } from "../../../../store/features/roleSlice";
+
 import { setAuthMode } from "../../../../store/features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { TbLogout2 } from "react-icons/tb";
@@ -31,14 +31,13 @@ function UserMenu() {
   const handleLogout = async () => {
     try {
       await logout().unwrap();
-      dispatch(clearRole());
+
       dispatch(logoutAction());
       dispatch(setAuthMode("login"));
       navigate("/register");
     } catch (error) {
       console.error("Logout failed:", error);
 
-      dispatch(clearRole());
       dispatch(logoutAction());
       dispatch(setAuthMode("login"));
       navigate("/register");
