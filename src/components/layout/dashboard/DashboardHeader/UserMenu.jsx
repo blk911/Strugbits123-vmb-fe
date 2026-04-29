@@ -34,13 +34,13 @@ function UserMenu() {
 
       dispatch(logoutAction());
       dispatch(setAuthMode("login"));
-      navigate("/register");
+      navigate("/");
     } catch (error) {
       console.error("Logout failed:", error);
 
       dispatch(logoutAction());
       dispatch(setAuthMode("login"));
-      navigate("/register");
+      navigate("/");
     }
   };
   const menuItems = [

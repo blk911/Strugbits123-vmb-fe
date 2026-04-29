@@ -255,10 +255,6 @@ export default function AddServiceModal({
                     <input
                       {...register("serviceName", {
                         required: "Service name is required",
-                        pattern: {
-                          value: /^[a-zA-Z0-9\s\-_&'.,()]+$/,
-                          message: "Invalid character in service name",
-                        },
                       })}
                       onChange={(e) => {
                         let value = e.target.value;

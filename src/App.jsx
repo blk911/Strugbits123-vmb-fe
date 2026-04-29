@@ -53,7 +53,7 @@ export default function App() {
         <Route path="/booking-success" element={<BookingSuccess />} />
         <Route path="/booking-cancel" element={<BookingCancel />} />
 
-        <Route path="*" element={<Navigate to="/register" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

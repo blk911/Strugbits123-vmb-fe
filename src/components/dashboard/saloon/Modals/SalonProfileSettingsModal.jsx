@@ -47,15 +47,9 @@ const days = [
 ];
 
 const salonProfileSchema = z.object({
-  fullName: z
-    .string()
-    .min(2, "Full name must be at least 2 characters")
-    .regex(/^[a-zA-Z\s]+$/, "Invalid name"),
+  fullName: z.string().min(2, "Full name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
-  salonName: z
-    .string()
-    .min(2, "Salon name is required")
-    .regex(/^[a-zA-Z\s]+$/, "Invalid salon name"),
+  salonName: z.string().min(2, "Salon name is required"),
   address: z.string().min(5, "Address is required"),
   // .regex(/^[a-zA-Z0-9\s,.'\-!&()/:]+$/, "Invalid address"),
   zipcode: z.string().regex(/^\d{5}$/, "Invalid zip code"),
@@ -301,7 +295,7 @@ export default function SalonProfileSettingsModal({ isOpen, closeModal }) {
 
         dispatch(clearUser());
         dispatch(setAuthMode("login"));
-        navigate("/register");
+        navigate("/");
       } else {
         const res = await updateMe(payload).unwrap();
         dispatch(setUser(res.data));

@@ -20,10 +20,7 @@ import { useUser } from "../../../../hooks/useUser";
 import TimePicker from "../../../common/site/TimePicker";
 import SalonImage from "../../../../assets/salon-1.png";
 const bookingSchema = z.object({
-  fullName: z
-    .string()
-    .min(2, "Full name is required")
-    .regex(/^[a-zA-Z\s'-]+$/, "Invalid name"),
+  fullName: z.string().min(2, "Full name is required"),
   selectedServices: z
     .array(z.string())
     .min(1, "Please select at least one service"),
