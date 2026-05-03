@@ -7,6 +7,7 @@ import AppointmentRequestHistoryModal from "./AppointmentRequestHistoryModal";
 import SuspendModal from "./SuspendModal";
 import UnsuspendModal from "./UnsuspendModal";
 import ContactCustomerModal from "./ContactCustomerModal";
+import ArchiveCustomerModal from "./ArchiveCustomerModal";
 export {
   SalonRequestModal,
   SalonVerificationRejectionModal,
@@ -17,4 +18,5 @@ export {
   SuspendModal,
   UnsuspendModal,
   ContactCustomerModal,
+  ArchiveCustomerModal,
 };

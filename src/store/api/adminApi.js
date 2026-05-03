@@ -103,6 +103,13 @@ export const adminApi = createApi({
         body: { message },
       }),
     }),
+    archiveCustomer: builder.mutation({
+      query: (userId) => ({
+        url: `/archive-customer/${userId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Customer"],
+    }),
   }),
 });
 
@@ -117,4 +124,5 @@ export const {
   useSuspendUserMutation,
   useUnsuspendUserMutation,
   useContactUserMutation,
+  useArchiveCustomerMutation,
 } = adminApi;

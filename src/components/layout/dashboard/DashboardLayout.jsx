@@ -46,6 +46,7 @@ import {
   SuspendModal,
   UnsuspendModal,
   ContactCustomerModal,
+  ArchiveCustomerModal,
 } from "../../dashboard/admin/Modals";
 import RescheduleRequestModal from "../../dashboard/client/Modals/RescheduledModal";
 
@@ -149,6 +150,11 @@ function DashboardModals() {
       />
       <ContactCustomerModal
         isOpen={activeModal === "contactAdmin"}
+        onClose={closeModal}
+        data={modalData}
+      />
+      <ArchiveCustomerModal
+        isOpen={activeModal === "archiveCustomer"}
         onClose={closeModal}
         data={modalData}
       />

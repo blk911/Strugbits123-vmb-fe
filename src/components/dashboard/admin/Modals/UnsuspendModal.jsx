@@ -12,7 +12,7 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
   const handleUnsuspend = async () => {
     try {
       await unsuspendUser(data?._id).unwrap();
-      toastSuccess(`Account for ${data?.name} has been unsuspended.`);
+      toastSuccess(`Account for ${data?.name} has been reinstated.`);
       onClose();
     } catch (err) {
       toastError(err?.data?.message || "Failed to unsuspend account");
@@ -36,7 +36,7 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
         </button>
         <div className="w-full text-center mt-2">
           <h2 className="text-vmb-primary font-bold font-poppins text-[22px] leading-tight px-4">
-            Are You Sure To Unsuspend This Account
+            Reinstate This Account?
           </h2>
         </div>
 
@@ -56,7 +56,7 @@ export default function UnsuspendModal({ isOpen, onClose, data }) {
             isLoading={isLoading}
             disabled={isLoading}
           >
-            {isLoading ? "Wait..." : "Yes"}
+            {isLoading ? "Reinstating..." : "Yes, Reinstate"}
           </AppButton>
         </div>
       </div>
