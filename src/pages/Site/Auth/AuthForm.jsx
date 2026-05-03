@@ -32,6 +32,9 @@ import {
   toastDismiss,
 } from "../../../utils/toast";
 import { setToken, setUser } from "../../../store/features/userSlice";
+
+const PREVIEW_MODE =
+  import.meta.env.DEV || import.meta.env.VITE_PREVIEW_MODE === "true";
 import { useLazyGetMeQuery } from "../../../store/api";
 import { ConfirmConfirmation } from "../../../components/dashboard/client/Modals/appointmentTabsModals/ConfirmationModals";
 
@@ -228,28 +231,37 @@ export default function AuthForm() {
     }
   };
 
-  const enterPreview = (previewRole) => {
-    const isCustomer = previewRole === "customer";
-    const previewUser =
-      isCustomer ?
-        {
-          role: "customer",
-          name: "Preview Client",
-          email: "client-preview@vmb.local",
-        }
-      : {
-          role: "salon-owner",
-          name: "Preview Salon Owner",
-          salonName: "Preview Salon",
-          email: "salon-preview@vmb.local",
-        };
+  const [previewEmail, setPreviewEmail] = useState("");
 
-    const target = isCustomer ? "/client" : "/salon-owner";
+  const enterPreview = (previewRole) => {
+    const roleMap = {
+      customer: {
+        role: "customer",
+        name: previewEmail || "Preview Client",
+        email: previewEmail || "client-preview@vmb.local",
+      },
+      "salon-owner": {
+        role: "salon-owner",
+        name: previewEmail || "Preview Salon Owner",
+        salonName: "Preview Salon",
+        email: previewEmail || "salon-preview@vmb.local",
+      },
+      admin: {
+        role: "admin",
+        name: previewEmail || "Preview Admin",
+        email: previewEmail || "admin-preview@vmb.local",
+      },
+    };
+
+    const targetMap = {
+      customer: "/client",
+      "salon-owner": "/salon-owner",
+      admin: "/admin",
+    };
 
     dispatch(setToken("preview-token"));
-    dispatch(setUser(previewUser));
-    dispatch(setRole(previewRole));
-    navigate(target, { replace: true });
+    dispatch(setUser(roleMap[previewRole]));
+    navigate(targetMap[previewRole], { replace: true });
   };
 
   return (
@@ -285,25 +297,39 @@ export default function AuthForm() {
               <SalonStep2 onBack={() => setStep("step1")} />
             )}
           </form>
-          {import.meta.env.DEV && (
-            <div className="px-6 pb-6 pt-2">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-vmb-text-muted">
-                Dev Preview Access
+          {PREVIEW_MODE && (
+            <div className="px-6 pb-6 pt-2 border-t border-vmb-primary/10">
+              <p className="mt-4 mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-vmb-text-muted">
+                Preview Access — Email Only
               </p>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <input
+                type="email"
+                placeholder="your@email.com (optional)"
+                value={previewEmail}
+                onChange={(e) => setPreviewEmail(e.target.value)}
+                className="w-full mb-3 px-4 py-2 rounded-xl border border-vmb-primary/20 text-sm text-vmb-primary placeholder:text-vmb-text-muted focus:outline-none focus:border-vmb-secondary"
+              />
+              <div className="grid gap-3 grid-cols-3">
                 <button
                   type="button"
                   onClick={() => enterPreview("customer")}
-                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-4 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
+                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-3 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
                 >
-                  Enter Client App
+                  Client
                 </button>
                 <button
                   type="button"
                   onClick={() => enterPreview("salon-owner")}
-                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-4 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
+                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-3 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
                 >
-                  Enter Salon App
+                  Salon
+                </button>
+                <button
+                  type="button"
+                  onClick={() => enterPreview("admin")}
+                  className="rounded-xl border border-vmb-primary/15 bg-vmb-secondary/10 px-3 py-3 text-sm font-semibold text-vmb-primary transition hover:bg-vmb-secondary/20"
+                >
+                  Admin
                 </button>
               </div>
             </div>
