@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;600;700&family=Poppins:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;600;700&family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap");
 @import "tailwindcss";
 
 .font-lato {
@@ -12,39 +12,55 @@
 .font-inter {
   font-family: var(--font-inter);
 }
+
+.font-playfair {
+  font-family: var(--font-playfair);
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant);
+}
 :root {
-  /* Centralized Core Colors (New Teal Theme) */
+  /* Centralized Core Colors */
   --vmb-modals-bg: rgba(255, 255, 255, 0.9);
   --vmb-overlay-bg: rgba(0, 0, 0, 0.5);
   --vmb-primary: #0f3d3e;
   --vmb-secondary: #5c8374;
-  --vmb-text-main: #333333;
-  --vmb-text-muted: #4b5563;
-  --vmb-bg-soft: #fafffd;
+  --vmb-text-main: #2c2c2c;
+  --vmb-text-muted: #6b7280;
+  --vmb-bg-soft: #fdfaf6;
   --vmb-bg: #ffffff;
-  --vmb-pending: #ff9500;
-  --vmb-success: #4fcf00;
-  --vmb-error: #dc2626;
+  --vmb-pending: #d4822a;
+  --vmb-success: #3a8f5c;
+  --vmb-error: #b94040;
   --vmb-info: #4376c0;
-  --vmb-muted: #64748b;
-  --vmb-primary-soft: rgba(15, 61, 62, 0.1);
-  --vmb-modal-bg: #e8e8e8;
-  --vmb-waitlist-bg: #f5f6f7;
+  --vmb-muted: #8a9ba8;
+  --vmb-primary-soft: rgba(15, 61, 62, 0.08);
+  --vmb-modal-bg: #e7edea;
+  --vmb-waitlist-bg: #f5f0e8;
   --vmb-text-gray: #9ca3af;
   --vmb-green: #1f6f5b;
   --vmb-text-dark: #1a1a1a;
-  --vmb-text-light: #666666;
-  --vmb-border-light: #f3f4f6;
-  --vmb-border-gray: #e5e7eb;
-  --vmb-dashboard-bg: #efefef;
-  --vmb-modal-bg: #e7edea;
-  --vmb-table-header: #f8f8f8;
+  --vmb-text-light: #888880;
+  --vmb-border-light: #ede8e0;
+  --vmb-border-gray: #e5e0d8;
+  /* Dashboard — warm cream palette */
+  --vmb-dashboard-bg: #faf7f2;
+  --vmb-cream: #faf7f2;
+  --vmb-cream-deep: #f0ebe2;
+  --vmb-card-warm: #fdfaf6;
+  --vmb-gold: #b8966a;
+  --vmb-gold-light: rgba(184, 150, 106, 0.15);
+  --vmb-sidebar-bg: #f5f0e8;
+  --vmb-table-header: #f5f0e8;
 }
 
 @theme {
   --font-lato: "Lato", sans-serif;
   --font-poppins: "Poppins", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-cormorant: "Cormorant Garamond", serif;
   --color-vmb-overlay-bg: var(--vmb-overlay-bg);
   --color-vmb-modals-bg: var(--vmb-modals-bg);
   --color-vmb-modal-bg: var(--vmb-modal-bg);
@@ -68,6 +84,12 @@
   --color-vmb-border-light: var(--vmb-border-light);
   --color-vmb-border-gray: var(--vmb-border-gray);
   --color-vmb-table-header: var(--vmb-table-header);
+  --color-vmb-cream: var(--vmb-cream);
+  --color-vmb-cream-deep: var(--vmb-cream-deep);
+  --color-vmb-card-warm: var(--vmb-card-warm);
+  --color-vmb-gold: var(--vmb-gold);
+  --color-vmb-gold-light: var(--vmb-gold-light);
+  --color-vmb-sidebar-bg: var(--vmb-sidebar-bg);
   /* Compatibility with existing tokens */
   --color-vmb-bg: var(--vmb-bg);
   --color-vmb-accent: var(--vmb-primary);

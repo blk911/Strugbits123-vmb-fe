@@ -1,20 +1,30 @@
-export default function ServiceCard({ img, title, desc, price }) {
+export default function ServiceCard({ title, desc, price }) {
   return (
-    <div className="border border-vmb-primary/10 px-[20px] py-[10px] rounded-[10px] flex flex-col sm:flex-row  gap-4 items-start bg-vmb-secondary/10 hover:bg-white transition cursor-pointer">
-      <div className="shrink-0 w-12 h-12 sm:w-[50px] sm:h-[50px] border border-vmb-bg-soft rounded-[8px] flex  items-center justify-center overflow-hidden">
-        <img src={img} alt={title} className="w-full h-full object-cover" />
+    <div className="flex items-baseline gap-3 py-3.5 border-b border-vmb-border-light last:border-0">
+      <div className="flex flex-col min-w-0">
+        <span className="font-poppins font-medium text-[15px] text-vmb-text-dark leading-tight">
+          {title}
+        </span>
+        {desc && (
+          <span className="text-[12px] text-vmb-text-muted font-inter leading-tight mt-0.5 truncate max-w-[220px]">
+            {desc}
+          </span>
+        )}
       </div>
-
-      <div className="flex flex-col flex-grow">
-        <p className="text-[18px] font-medium text-vmb-primary">{title}</p>
-        <p className="text-[12px] text-vmb-text-muted font-inter font-medium">
-          {desc}
-        </p>
-      </div>
-
-      <p className="text-[20px] self-center font-bold text-vmb-primary whitespace-nowrap">
-        $ {price}
-      </p>
+      <span
+        className="flex-1 self-center"
+        style={{
+          borderBottom: "1px dotted var(--vmb-gold)",
+          opacity: 0.4,
+          minWidth: 16,
+        }}
+      />
+      <span
+        className="font-playfair text-[18px] whitespace-nowrap"
+        style={{ color: "var(--vmb-primary)" }}
+      >
+        ${price}
+      </span>
     </div>
   );
 }
