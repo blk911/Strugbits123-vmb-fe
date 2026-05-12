@@ -4,7 +4,13 @@ import { MdPayments } from "react-icons/md";
 import { FaGift } from "react-icons/fa";
 import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
-import { LuUserRoundPlus } from "react-icons/lu";
+import {
+  LuContact,
+  LuHeadphones,
+  LuSettings,
+  LuUserCog,
+  LuUserRoundPlus,
+} from "react-icons/lu";
 import { IoIosPeople } from "react-icons/io";
 import { BsArchiveFill } from "react-icons/bs";
 export const menus = {
@@ -43,6 +49,32 @@ export const menus = {
       name: "Customers",
       path: "/customers",
       icon: <IoIosPeople className="h-5 w-5" />,
+    },
+    {
+      name: "Settings",
+      path: "/admin/settings/staff",
+      icon: <LuSettings className="h-5 w-5" />,
+      allowedRoles: ["admin"],
+      children: [
+        {
+          name: "Staff",
+          path: "/admin/settings/staff",
+          icon: <LuUserCog className="h-4 w-4" />,
+          allowedRoles: ["admin"],
+        },
+        {
+          name: "Support",
+          path: "/admin/settings/support",
+          icon: <LuHeadphones className="h-4 w-4" />,
+          allowedRoles: ["admin"],
+        },
+        {
+          name: "Contacts",
+          path: "/admin/settings/contacts",
+          icon: <LuContact className="h-4 w-4" />,
+          allowedRoles: ["admin"],
+        },
+      ],
     },
     {
       name: "Service Presets",

@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
+        "studio-serif": ['"Cormorant Garamond"', "Georgia", "serif"],
+        "studio-sans": ["Poppins", "system-ui", "sans-serif"],
       },
 
       colors: {

@@ -10,6 +10,9 @@ import {
   Salons,
   Customers,
   ServicePresets,
+  Staff,
+  Support,
+  Contacts,
 } from "../pages/admin";
 import { SalonDetail } from "../pages/client";
 
@@ -32,6 +35,30 @@ export default function AdminRoutes() {
       <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/payouts" element={<Payouts />} />
       <Route path="/customers" element={<Customers />} />
+      <Route
+        path="/admin/settings/staff"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Staff />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/settings/support"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Support />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/settings/contacts"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Contacts />
+          </ProtectedRoute>
+        }
+      />
     </Route>
   );
 }

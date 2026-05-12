@@ -1,0 +1,88 @@
+export const champagne = "#F7E7CE";
+
+export const RELATIONSHIP_ACTIVITY = [
+  {
+    id: "1",
+    name: "Jessica M.",
+    headline: "Booked Bridal Package",
+    source: "Ashley Referral Circle",
+    value: "$185",
+    status: "Confirmed",
+    tags: ["VIP", "Referral"],
+  },
+  {
+    id: "2",
+    name: "Olivia Chen",
+    headline: "Gift invitation accepted",
+    source: "Mother's Day Push",
+    value: "$240",
+    status: "Awaiting visit",
+    tags: ["Gift", "Warm Lead"],
+  },
+  {
+    id: "3",
+    name: "Marcus Reed",
+    headline: "Returning · Signature Facial",
+    source: "AI Assisted routing",
+    value: "$132",
+    status: "Scheduled",
+    tags: ["Returning Client", "AI Assisted"],
+  },
+  {
+    id: "4",
+    name: "Priya N.",
+    headline: "Referral introduction",
+    source: "Client Reactivation flow",
+    value: "$0",
+    status: "Warm pipeline",
+    tags: ["Warm Lead", "Referral"],
+  },
+];
+
+export const CAMPAIGNS = [
+  {
+    id: "1",
+    title: "Mother's Day Push",
+    subtitle: "Seasonal",
+    shares: 2840,
+    claimed: 412,
+    gradient: "from-rose-950/80 via-slate-900/90 to-[#121826]",
+    accent: "bg-rose-500/25",
+  },
+  {
+    id: "2",
+    title: "Wedding Season",
+    subtitle: "Luxury lane",
+    shares: 1922,
+    claimed: 267,
+    gradient: "from-amber-950/70 via-slate-900/90 to-[#121826]",
+    accent: "bg-amber-500/20",
+  },
+  {
+    id: "3",
+    title: "VIP Reactivation",
+    subtitle: "High yield",
+    shares: 940,
+    claimed: 156,
+    gradient: "from-violet-950/70 via-slate-900/90 to-[#121826]",
+    accent: "bg-violet-500/20",
+  },
+  {
+    id: "4",
+    title: "Birthday Flow",
+    subtitle: "Automated",
+    shares: 1205,
+    claimed: 289,
+    gradient: "from-pink-950/70 via-slate-900/90 to-[#121826]",
+    accent: "bg-pink-500/20",
+  },
+  {
+    id: "5",
+    title: "Summer Refresh",
+    subtitle: "Broad reach",
+    shares: 3511,
+    claimed: 589,
+    gradient: "from-teal-950/70 via-slate-900/90 to-[#121826]",
+    accent: "bg-teal-500/20",
+  },
+];
