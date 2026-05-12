@@ -134,16 +134,16 @@ export default function PrivateStudioSalonDashboard() {
   return (
     <div className="min-h-[calc(100vh-8rem)] bg-[#f5eee9] font-poppins text-[#333232]">
       <div className="mx-auto flex max-w-[1380px] flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
-        <section className="overflow-hidden rounded-[8px] bg-[#333232] text-white shadow-[0_22px_60px_-38px_rgba(13,69,66,0.8)]">
+        <section className="overflow-hidden rounded-[8px] border border-[#e2d6cf] bg-[linear-gradient(120deg,#fffdfb_0%,#f7ece9_52%,#ead6cf_100%)] text-[#333232] shadow-[0_22px_60px_-42px_rgba(164,95,118,0.55)]">
           <div className="flex flex-col gap-6 px-6 py-7 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c0a05a]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#a45f76]">
                 Salon Growth Launchpad
               </p>
-              <h1 className="mt-3 max-w-4xl font-studio-serif text-4xl leading-[1.05] text-white sm:text-5xl">
+              <h1 className="mt-3 max-w-4xl font-studio-serif text-4xl leading-[1.05] text-[#333232] sm:text-5xl">
                 Grow through the clients who already love you.
               </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-white/78">
+              <p className="mt-4 max-w-3xl text-base leading-7 text-[#5f5654]">
                 Turn loyal clients into local advocates with shareable offers,
                 lifestyle moments, and incentives that bring new business back
                 to your chair.
@@ -153,7 +153,7 @@ export default function PrivateStudioSalonDashboard() {
                 <button
                   type="button"
                   onClick={() => openModal("exclusiveInvite")}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] bg-[#c0a05a] px-5 text-sm font-bold text-[#333232] transition hover:bg-[#d0b36c]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[4px] bg-[#b88f45] px-5 text-sm font-bold text-white transition hover:bg-[#c0a05a]"
                 >
                   <FaGift aria-hidden />
                   Create First Offer
@@ -161,7 +161,7 @@ export default function PrivateStudioSalonDashboard() {
                 <button
                   type="button"
                   onClick={() => openModal("sendTreat")}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] border border-white/28 px-5 text-sm font-bold text-white transition hover:bg-white/10"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[4px] border border-[#b88f45]/45 bg-white/45 px-5 text-sm font-bold text-[#333232] transition hover:bg-white/75"
                 >
                   <FaPaperPlane aria-hidden />
                   Invite A Client
@@ -169,8 +169,8 @@ export default function PrivateStudioSalonDashboard() {
               </div>
             </div>
 
-            <div className="flex w-full max-w-[360px] shrink-0 items-center gap-4 rounded-[8px] border border-white/14 bg-white/10 p-4">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#c0a05a]/70 bg-[#eadfd8] text-[#333232]">
+            <div className="flex w-full max-w-[360px] shrink-0 items-center gap-4 rounded-[8px] border border-white/70 bg-white/55 p-4 shadow-[0_18px_40px_-30px_rgba(164,95,118,0.65)] backdrop-blur">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#c0a05a]/70 bg-[#fff8f4] text-[#333232]">
                 {profileSrc ? (
                   <img
                     src={profileSrc}
@@ -184,19 +184,19 @@ export default function PrivateStudioSalonDashboard() {
                 )}
               </div>
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#c0a05a]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a45f76]">
                   Owner Profile
                 </p>
                 <h2 className="mt-1 truncate font-studio-serif text-2xl">
                   {salonName}
                 </h2>
-                <p className="mt-1 truncate text-sm text-white/72">
+                <p className="mt-1 truncate text-sm text-[#6b6262]">
                   {ownerName}
                 </p>
                 <button
                   type="button"
                   onClick={() => navigate("/salon-detail")}
-                  className="mt-3 rounded-[6px] bg-white px-3 py-2 text-xs font-bold text-[#333232] transition hover:bg-[#c0a05a]"
+                  className="mt-3 rounded-[4px] bg-[#333232] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#a45f76]"
                 >
                   Edit Profile
                 </button>
@@ -226,8 +226,8 @@ export default function PrivateStudioSalonDashboard() {
                 key={guide.title}
                 className="overflow-hidden rounded-[8px] border border-[#e2d6cf] bg-[#fffdfb]"
               >
-                <div className="flex aspect-video items-center justify-center bg-[#333232] text-white">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/16 ring-1 ring-white/24">
+                <div className="flex aspect-video items-center justify-center bg-[linear-gradient(135deg,#fff8f4_0%,#ead6cf_55%,#d9b7ad_100%)] text-[#333232]">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/70 text-[#a45f76] shadow-[0_10px_24px_-14px_rgba(164,95,118,0.8)] ring-1 ring-[#b88f45]/30">
                     <FaPlay className="ml-0.5 text-sm" aria-hidden />
                   </span>
                 </div>
@@ -338,16 +338,16 @@ export default function PrivateStudioSalonDashboard() {
         </section>
 
         <section className="grid gap-5 lg:grid-cols-[1fr_360px]">
-          <div className="rounded-[8px] border border-[#ded3cc] bg-[#333232] p-6 text-white sm:p-7">
+          <div className="rounded-[8px] border border-[#ded3cc] bg-[linear-gradient(120deg,#fffdfb_0%,#f3e6e2_100%)] p-6 text-[#333232] sm:p-7">
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#c0a05a]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#a45f76]">
                   Recommended Next Move
                 </p>
                 <h2 className="mt-2 font-studio-serif text-3xl">
                   Invite five clients who already send people your way.
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/76">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-[#6b6262]">
                   Ask them to share a perk with someone in their circle. It
                   feels personal, gives the friend a reason to book, and
                   rewards the client for bringing you business.
@@ -356,7 +356,7 @@ export default function PrivateStudioSalonDashboard() {
               <button
                 type="button"
                 onClick={() => openModal("sendTreat")}
-                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[6px] bg-white px-5 text-sm font-bold text-[#333232] transition hover:bg-[#c0a05a]"
+                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[4px] bg-[#b88f45] px-5 text-sm font-bold text-white transition hover:bg-[#c0a05a]"
               >
                 <FaPaperPlane aria-hidden />
                 Send Invite

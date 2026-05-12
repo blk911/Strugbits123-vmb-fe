@@ -53,7 +53,7 @@ function DashboardSidebar() {
    rounded-[4px] transition-all duration-200 border
    ${
      isGroupActive ?
-       "border-vmb-primary bg-vmb-primary text-white"
+       "border-[#d2b48a] bg-[linear-gradient(135deg,#f8eee9,#e8cfc7)] text-[#333232] shadow-[0_10px_24px_-20px_rgba(164,95,118,0.7)]"
      : "border-transparent bg-transparent text-vmb-primary hover:border-[#ded3cc] hover:bg-[#f5eee9]"
    } text-center `}
                   style={{
@@ -79,7 +79,7 @@ function DashboardSidebar() {
                       className={({ isActive }) =>
                         `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 rounded-[4px] px-2 py-[7px] transition-all duration-200 ${
                           isActive ?
-                            "bg-[#eadfd8] text-vmb-primary"
+                            "bg-[#f3e3de] text-[#333232]"
                           : "bg-transparent text-vmb-primary/70 hover:bg-[#f5eee9]"
                         } text-center`
                       }
@@ -113,7 +113,7 @@ function DashboardSidebar() {
    rounded-[4px] transition-all duration-200 border
    ${
      isActive ?
-       "border-vmb-primary bg-vmb-primary text-white"
+       "border-[#d2b48a] bg-[linear-gradient(135deg,#f8eee9,#e8cfc7)] text-[#333232] shadow-[0_10px_24px_-20px_rgba(164,95,118,0.7)]"
      : "border-transparent bg-transparent text-vmb-primary hover:border-[#ded3cc] hover:bg-[#f5eee9]"
    } text-center `
             }

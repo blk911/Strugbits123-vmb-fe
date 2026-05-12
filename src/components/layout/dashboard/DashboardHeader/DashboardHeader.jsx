@@ -10,7 +10,7 @@ function DashboardHeader({ toggleSidebar }) {
       <div className="flex items-center">
         <button
           onClick={toggleSidebar}
-          className="flex h-10 w-10 items-center justify-center border border-[#ded3cc] bg-[#f5eee9] text-xl text-vmb-primary hover:bg-[#efe3dc] focus:outline-none transition-colors cursor-pointer"
+          className="flex h-10 w-10 items-center justify-center border border-[#d2b48a] bg-[#f8eee9] text-xl text-vmb-primary hover:bg-[#ead6cf] focus:outline-none transition-colors cursor-pointer"
           aria-label="Toggle sidebar"
         >
           <HiMenuAlt2 />
