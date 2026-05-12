@@ -7,6 +7,7 @@ import {
   FaHandshake,
   FaMagic,
   FaPaperPlane,
+  FaPlay,
   FaRegLightbulb,
   FaShareAlt,
   FaUsers,
@@ -67,6 +68,34 @@ const checklist = [
   "Invite five loyal clients",
 ];
 
+const videoGuides = [
+  {
+    title: "Salon Setup",
+    meta: "5 min",
+    text: "Profile, services, hours, and the first offer foundation.",
+  },
+  {
+    title: "Superstar Clients",
+    meta: "Guide",
+    text: "Find the clients most likely to bring in trusted referrals.",
+  },
+  {
+    title: "New Biz Promos",
+    meta: "Guide",
+    text: "Build shareable offers that create fresh booking reasons.",
+  },
+  {
+    title: "Create Your Bench",
+    meta: "Guide",
+    text: "Grow a warm list of clients ready for the right campaign.",
+  },
+  {
+    title: "Special Occasions",
+    meta: "Guide",
+    text: "Use parties, trips, weddings, and holidays as invite moments.",
+  },
+];
+
 export default function PrivateStudioSalonDashboard() {
   const { openModal } = useDashboardModal();
   const { user } = useUser();
@@ -106,25 +135,29 @@ export default function PrivateStudioSalonDashboard() {
     ];
   }, [appointmentsRes, invitesRes, statsRes]);
 
+  const profileSrc = user?.profilePic || user?.userProfile || user?.image;
+  const salonName = user?.salonName || "Preview Salon";
+  const ownerName = user?.name || "Salon Owner";
+
   return (
     <div className="min-h-[calc(100vh-8rem)] bg-[#f7f3ec] font-poppins text-[#103f3d]">
       <div className="mx-auto flex max-w-[1380px] flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
         <section className="overflow-hidden rounded-[8px] bg-[#0d4542] text-white shadow-[0_22px_60px_-38px_rgba(13,69,66,0.8)]">
-          <div className="grid gap-0 lg:grid-cols-[1.12fr_0.88fr]">
-            <div className="px-6 py-8 sm:px-8 lg:px-10 lg:py-12">
+          <div className="flex flex-col gap-6 px-6 py-7 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+            <div className="min-w-0 flex-1">
               <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#e2c58f]">
                 Salon Growth Launchpad
               </p>
-              <h1 className="mt-4 max-w-3xl font-studio-serif text-4xl leading-[1.04] text-white sm:text-5xl lg:text-[58px]">
+              <h1 className="mt-3 max-w-4xl font-studio-serif text-4xl leading-[1.05] text-white sm:text-5xl">
                 Grow through the clients who already love you.
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-7 text-white/78">
-                VMB helps salons generate new business by turning loyal clients
-                into local advocates with shareable offers, lifestyle moments,
-                and thoughtful incentives.
+              <p className="mt-4 max-w-3xl text-base leading-7 text-white/78">
+                Turn loyal clients into local advocates with shareable offers,
+                lifestyle moments, and incentives that bring new business back
+                to your chair.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <button
                   type="button"
                   onClick={() => openModal("exclusiveInvite")}
@@ -144,36 +177,118 @@ export default function PrivateStudioSalonDashboard() {
               </div>
             </div>
 
-            <div className="bg-[#e9ddca] p-5 text-[#103f3d] lg:p-7">
-              <div className="h-full rounded-[8px] bg-white/72 p-5 shadow-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#a6783f]">
-                  First Campaign
+            <div className="flex w-full max-w-[360px] shrink-0 items-center gap-4 rounded-[8px] border border-white/14 bg-white/10 p-4">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#f0d39a]/70 bg-[#e9ddca] text-[#0d4542]">
+                {profileSrc ? (
+                  <img
+                    src={profileSrc}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="font-studio-serif text-3xl">
+                    {ownerName.charAt(0)}
+                  </span>
+                )}
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58f]">
+                  Owner Profile
                 </p>
-                <h2 className="mt-3 font-studio-serif text-3xl">
-                  Launch path
+                <h2 className="mt-1 truncate font-studio-serif text-2xl">
+                  {salonName}
                 </h2>
-                <div className="mt-5 space-y-3">
-                  {checklist.map((item, index) => (
-                    <div
-                      key={item}
-                      className="flex items-start gap-3 rounded-[8px] border border-[#ded2bf] bg-white px-3 py-3"
-                    >
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0d4542] text-[10px] text-white">
-                        {index === 0 ? <FaCheck aria-hidden /> : index + 1}
-                      </span>
-                      <span className="text-sm font-semibold">{item}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="mt-1 truncate text-sm text-white/72">
+                  {ownerName}
+                </p>
                 <button
                   type="button"
                   onClick={() => navigate("/salon-detail")}
-                  className="mt-5 w-full rounded-[6px] bg-[#0d4542] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#123f3d]"
+                  className="mt-3 rounded-[6px] bg-white px-3 py-2 text-xs font-bold text-[#0d4542] transition hover:bg-[#f0d39a]"
                 >
-                  Edit Salon Profile
+                  Edit Profile
                 </button>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="rounded-[8px] border border-[#e2d8c8] bg-white px-4 py-4 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.7)] sm:px-5">
+          <div className="flex min-h-[150px] flex-col gap-4 lg:flex-row lg:items-center">
+            <div className="shrink-0 lg:w-[210px]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#a6783f]">
+                First Campaign
+              </p>
+              <h2 className="mt-2 font-studio-serif text-3xl">
+                Launch path
+              </h2>
+              <button
+                type="button"
+                onClick={() => navigate("/salon-detail")}
+                className="mt-3 rounded-[6px] bg-[#0d4542] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#123f3d]"
+              >
+                Start Setup
+              </button>
+            </div>
+            <div className="grid flex-1 gap-3 md:grid-cols-4">
+              {checklist.map((item, index) => (
+                <div
+                  key={item}
+                  className="flex min-h-[72px] items-start gap-3 rounded-[8px] border border-[#ded2bf] bg-[#fbf8f2] px-3 py-3"
+                >
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0d4542] text-[10px] text-white">
+                    {index === 0 ? <FaCheck aria-hidden /> : index + 1}
+                  </span>
+                  <span className="text-sm font-semibold leading-5">
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-[8px] bg-white p-5 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.7)] sm:p-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a6783f]">
+                How-To Guides
+              </p>
+              <h2 className="mt-2 font-studio-serif text-3xl">
+                Get the salon growth engine moving.
+              </h2>
+            </div>
+            <span className="text-sm font-semibold text-[#5e6b68]">
+              Video placeholders
+            </span>
+          </div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {videoGuides.map((guide) => (
+              <article
+                key={guide.title}
+                className="overflow-hidden rounded-[8px] border border-[#eadfce] bg-[#fbf8f2]"
+              >
+                <div className="flex aspect-video items-center justify-center bg-[#0d4542] text-white">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/16 ring-1 ring-white/24">
+                    <FaPlay className="ml-0.5 text-sm" aria-hidden />
+                  </span>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="font-bold leading-tight">
+                      {guide.title}
+                    </h3>
+                    <span className="shrink-0 rounded-full bg-[#e9ddca] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a6237]">
+                      {guide.meta}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-[#5e6b68]">
+                    {guide.text}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
