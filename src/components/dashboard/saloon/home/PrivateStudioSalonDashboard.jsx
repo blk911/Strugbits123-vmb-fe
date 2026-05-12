@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FaCalendarAlt,
-  FaCheck,
   FaGift,
   FaHandshake,
   FaMagic,
@@ -59,13 +58,6 @@ const featureCards = [
     text: "Send the first invite from this page and keep momentum moving.",
     icon: FaPaperPlane,
   },
-];
-
-const checklist = [
-  "Complete your salon profile",
-  "Add two signature services",
-  "Create your first client offer",
-  "Invite five loyal clients",
 ];
 
 const videoGuides = [
@@ -209,41 +201,6 @@ export default function PrivateStudioSalonDashboard() {
                   Edit Profile
                 </button>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-[8px] border border-[#e2d8c8] bg-white px-4 py-4 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.7)] sm:px-5">
-          <div className="flex min-h-[150px] flex-col gap-4 lg:flex-row lg:items-center">
-            <div className="shrink-0 lg:w-[210px]">
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#a6783f]">
-                First Campaign
-              </p>
-              <h2 className="mt-2 font-studio-serif text-3xl">
-                Launch path
-              </h2>
-              <button
-                type="button"
-                onClick={() => navigate("/salon-detail")}
-                className="mt-3 rounded-[6px] bg-[#0d4542] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#123f3d]"
-              >
-                Start Setup
-              </button>
-            </div>
-            <div className="grid flex-1 gap-3 md:grid-cols-4">
-              {checklist.map((item, index) => (
-                <div
-                  key={item}
-                  className="flex min-h-[72px] items-start gap-3 rounded-[8px] border border-[#ded2bf] bg-[#fbf8f2] px-3 py-3"
-                >
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0d4542] text-[10px] text-white">
-                    {index === 0 ? <FaCheck aria-hidden /> : index + 1}
-                  </span>
-                  <span className="text-sm font-semibold leading-5">
-                    {item}
-                  </span>
-                </div>
-              ))}
             </div>
           </div>
         </section>
