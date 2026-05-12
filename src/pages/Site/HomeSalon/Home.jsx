@@ -1,5 +1,6 @@
+import SalonFeaturedExperiences from "../../../components/site/SalonFeaturedExperiences";
 import LogoMarquee from "../../../components/common/site/Marquee";
-import HeroSection from "./HeroSection";
+import SalonHero from "../../../components/site/SalonHero/SalonHero";
 import priorityImg from "../../../assets/brand/benefits/priority.png";
 import loyaltyImg from "../../../assets/brand/benefits/loyalty.png";
 import advocateImg from "../../../assets/brand/benefits/advocate.png";
@@ -10,8 +11,10 @@ import TopSalons from "../Home/TopSalons";
 import SalonChoice from "../Home/SalonChoice";
 function HomeSalon() {
   return (
-    <div className="flex flex-col items-center bg-vmb-bg-soft gap-[60px] px-4 py-6">
-      <HeroSection />
+    <>
+      <SalonHero />
+      <SalonFeaturedExperiences />
+      <div className="flex w-full flex-col items-center gap-[60px] bg-vmb-bg-soft px-4 py-6">
       <LogoMarquee />
       <PlatformBenefits
         heading={"Turn Attention Into Clients, Loyalty and Recurring Revenue"}
@@ -36,6 +39,7 @@ function HomeSalon() {
           },
         ]}
       />
+      <div id="salon-gift-flow">
       <GiftsAndInvite
         cards={[
           {
@@ -54,6 +58,7 @@ function HomeSalon() {
           },
         ]}
       />
+      </div>
       <SalonChoice
         blocks={[
           {
@@ -104,9 +109,12 @@ function HomeSalon() {
           },
         ]}
       />
+      <div id="salon-book-experience">
       <SalonExperience />
+      </div>
       <TopSalons />
     </div>
+    </>
   );
 }
 
