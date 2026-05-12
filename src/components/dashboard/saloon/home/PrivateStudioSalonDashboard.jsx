@@ -132,12 +132,12 @@ export default function PrivateStudioSalonDashboard() {
   const ownerName = user?.name || "Salon Owner";
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] bg-[#f7f3ec] font-poppins text-[#103f3d]">
+    <div className="min-h-[calc(100vh-8rem)] bg-[#f5eee9] font-poppins text-[#333232]">
       <div className="mx-auto flex max-w-[1380px] flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
-        <section className="overflow-hidden rounded-[8px] bg-[#0d4542] text-white shadow-[0_22px_60px_-38px_rgba(13,69,66,0.8)]">
+        <section className="overflow-hidden rounded-[8px] bg-[#333232] text-white shadow-[0_22px_60px_-38px_rgba(13,69,66,0.8)]">
           <div className="flex flex-col gap-6 px-6 py-7 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
             <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#e2c58f]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#c0a05a]">
                 Salon Growth Launchpad
               </p>
               <h1 className="mt-3 max-w-4xl font-studio-serif text-4xl leading-[1.05] text-white sm:text-5xl">
@@ -153,7 +153,7 @@ export default function PrivateStudioSalonDashboard() {
                 <button
                   type="button"
                   onClick={() => openModal("exclusiveInvite")}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] bg-[#f0d39a] px-5 text-sm font-bold text-[#103f3d] transition hover:bg-[#f6dfb1]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-[6px] bg-[#c0a05a] px-5 text-sm font-bold text-[#333232] transition hover:bg-[#d0b36c]"
                 >
                   <FaGift aria-hidden />
                   Create First Offer
@@ -170,7 +170,7 @@ export default function PrivateStudioSalonDashboard() {
             </div>
 
             <div className="flex w-full max-w-[360px] shrink-0 items-center gap-4 rounded-[8px] border border-white/14 bg-white/10 p-4">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#f0d39a]/70 bg-[#e9ddca] text-[#0d4542]">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#c0a05a]/70 bg-[#eadfd8] text-[#333232]">
                 {profileSrc ? (
                   <img
                     src={profileSrc}
@@ -184,7 +184,7 @@ export default function PrivateStudioSalonDashboard() {
                 )}
               </div>
               <div className="min-w-0">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e2c58f]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#c0a05a]">
                   Owner Profile
                 </p>
                 <h2 className="mt-1 truncate font-studio-serif text-2xl">
@@ -196,7 +196,7 @@ export default function PrivateStudioSalonDashboard() {
                 <button
                   type="button"
                   onClick={() => navigate("/salon-detail")}
-                  className="mt-3 rounded-[6px] bg-white px-3 py-2 text-xs font-bold text-[#0d4542] transition hover:bg-[#f0d39a]"
+                  className="mt-3 rounded-[6px] bg-white px-3 py-2 text-xs font-bold text-[#333232] transition hover:bg-[#c0a05a]"
                 >
                   Edit Profile
                 </button>
@@ -208,14 +208,14 @@ export default function PrivateStudioSalonDashboard() {
         <section className="rounded-[8px] bg-white p-5 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.7)] sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a6783f]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a45f76]">
                 How-To Guides
               </p>
               <h2 className="mt-2 font-studio-serif text-3xl">
                 Get the salon growth engine moving.
               </h2>
             </div>
-            <span className="text-sm font-semibold text-[#5e6b68]">
+            <span className="text-sm font-semibold text-[#6b6262]">
               Video placeholders
             </span>
           </div>
@@ -224,9 +224,9 @@ export default function PrivateStudioSalonDashboard() {
             {videoGuides.map((guide) => (
               <article
                 key={guide.title}
-                className="overflow-hidden rounded-[8px] border border-[#eadfce] bg-[#fbf8f2]"
+                className="overflow-hidden rounded-[8px] border border-[#e2d6cf] bg-[#fffdfb]"
               >
-                <div className="flex aspect-video items-center justify-center bg-[#0d4542] text-white">
+                <div className="flex aspect-video items-center justify-center bg-[#333232] text-white">
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/16 ring-1 ring-white/24">
                     <FaPlay className="ml-0.5 text-sm" aria-hidden />
                   </span>
@@ -236,11 +236,11 @@ export default function PrivateStudioSalonDashboard() {
                     <h3 className="font-bold leading-tight">
                       {guide.title}
                     </h3>
-                    <span className="shrink-0 rounded-full bg-[#e9ddca] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#8a6237]">
+                    <span className="shrink-0 rounded-full bg-[#eadfd8] px-2 py-1 text-[10px] font-bold uppercase tracking-[0.08em] text-[#7f5362]">
                       {guide.meta}
                     </span>
                   </div>
-                  <p className="mt-2 text-xs leading-5 text-[#5e6b68]">
+                  <p className="mt-2 text-xs leading-5 text-[#6b6262]">
                     {guide.text}
                   </p>
                 </div>
@@ -253,28 +253,28 @@ export default function PrivateStudioSalonDashboard() {
           {stats.map((item) => (
             <article
               key={item.label}
-              className="rounded-[8px] border border-[#e2d8c8] bg-white px-5 py-5 shadow-[0_12px_34px_-28px_rgba(39,46,45,0.65)]"
+              className="rounded-[8px] border border-[#e2d6cf] bg-white px-5 py-5 shadow-[0_12px_34px_-28px_rgba(39,46,45,0.65)]"
             >
-              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a6783f]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#a45f76]">
                 {item.label}
               </p>
-              <p className="mt-3 font-studio-serif text-4xl text-[#0d4542]">
+              <p className="mt-3 font-studio-serif text-4xl text-[#333232]">
                 {item.value}
               </p>
-              <p className="mt-2 text-sm text-[#5e6b68]">{item.helper}</p>
+              <p className="mt-2 text-sm text-[#6b6262]">{item.helper}</p>
             </article>
           ))}
         </section>
 
         <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a6783f]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a45f76]">
               How VMB Works
             </p>
             <h2 className="mt-3 max-w-xl font-studio-serif text-4xl leading-tight">
               A simple referral system your clients understand immediately.
             </h2>
-            <p className="mt-4 max-w-xl text-sm leading-6 text-[#5e6b68]">
+            <p className="mt-4 max-w-xl text-sm leading-6 text-[#6b6262]">
               The dashboard should guide the salon owner toward one useful
               action: create something worth sharing, then invite clients who
               are proud to pass it along.
@@ -286,11 +286,11 @@ export default function PrivateStudioSalonDashboard() {
               return (
                 <article
                   key={step.title}
-                  className="rounded-[8px] border border-[#e2d8c8] bg-white p-5"
+                  className="rounded-[8px] border border-[#e2d6cf] bg-white p-5"
                 >
-                  <Icon className="text-xl text-[#b58246]" aria-hidden />
+                  <Icon className="text-xl text-[#b88f45]" aria-hidden />
                   <h3 className="mt-5 text-lg font-bold">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#5e6b68]">
+                  <p className="mt-2 text-sm leading-6 text-[#6b6262]">
                     {step.text}
                   </p>
                 </article>
@@ -302,7 +302,7 @@ export default function PrivateStudioSalonDashboard() {
         <section className="rounded-[8px] bg-white p-5 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.7)] sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a6783f]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#a45f76]">
                 Growth Tools
               </p>
               <h2 className="mt-2 font-studio-serif text-3xl">
@@ -312,7 +312,7 @@ export default function PrivateStudioSalonDashboard() {
             <button
               type="button"
               onClick={() => navigate("/salon-invites")}
-              className="inline-flex min-h-10 items-center justify-center rounded-[6px] border border-[#0d4542]/20 px-4 text-sm font-bold text-[#0d4542] transition hover:bg-[#eef4f1]"
+              className="inline-flex min-h-10 items-center justify-center rounded-[4px] border border-[#333232]/20 px-4 text-sm font-bold text-[#333232] transition hover:bg-[#f5eee9]"
             >
               View Invites
             </button>
@@ -324,11 +324,11 @@ export default function PrivateStudioSalonDashboard() {
               return (
                 <article
                   key={feature.title}
-                  className="rounded-[8px] border border-[#eadfce] bg-[#fbf8f2] p-5"
+                  className="rounded-[8px] border border-[#e2d6cf] bg-[#fffdfb] p-5"
                 >
-                  <Icon className="text-xl text-[#0d4542]" aria-hidden />
+                  <Icon className="text-xl text-[#333232]" aria-hidden />
                   <h3 className="mt-4 font-bold">{feature.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#5e6b68]">
+                  <p className="mt-2 text-sm leading-6 text-[#6b6262]">
                     {feature.text}
                   </p>
                 </article>
@@ -338,10 +338,10 @@ export default function PrivateStudioSalonDashboard() {
         </section>
 
         <section className="grid gap-5 lg:grid-cols-[1fr_360px]">
-          <div className="rounded-[8px] border border-[#d9ccb9] bg-[#0d4542] p-6 text-white sm:p-7">
+          <div className="rounded-[8px] border border-[#ded3cc] bg-[#333232] p-6 text-white sm:p-7">
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#e2c58f]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#c0a05a]">
                   Recommended Next Move
                 </p>
                 <h2 className="mt-2 font-studio-serif text-3xl">
@@ -356,7 +356,7 @@ export default function PrivateStudioSalonDashboard() {
               <button
                 type="button"
                 onClick={() => openModal("sendTreat")}
-                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[6px] bg-white px-5 text-sm font-bold text-[#0d4542] transition hover:bg-[#f0d39a]"
+                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-[6px] bg-white px-5 text-sm font-bold text-[#333232] transition hover:bg-[#c0a05a]"
               >
                 <FaPaperPlane aria-hidden />
                 Send Invite
@@ -364,10 +364,10 @@ export default function PrivateStudioSalonDashboard() {
             </div>
           </div>
 
-          <div className="rounded-[8px] border border-[#e2d8c8] bg-white p-6">
-            <FaRegLightbulb className="text-2xl text-[#b58246]" aria-hidden />
+          <div className="rounded-[8px] border border-[#e2d6cf] bg-white p-6">
+            <FaRegLightbulb className="text-2xl text-[#b88f45]" aria-hidden />
             <h3 className="mt-4 font-studio-serif text-2xl">Offer idea</h3>
-            <p className="mt-2 text-sm leading-6 text-[#5e6b68]">
+            <p className="mt-2 text-sm leading-6 text-[#6b6262]">
               "Bring a friend for a blowout, brow refresh, or pre-event glow.
               You both receive a salon credit after the visit."
             </p>

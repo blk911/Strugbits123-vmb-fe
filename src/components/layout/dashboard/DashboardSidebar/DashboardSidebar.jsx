@@ -15,7 +15,7 @@ function DashboardSidebar() {
   };
   if (loading) {
     return (
-      <div className="h-full bg-white/50 flex flex-col items-center justify-center border-r border-vmb-primary/10">
+      <div className="h-full bg-[#fffdfb]/90 flex flex-col items-center justify-center border-r border-[#ded3cc]">
         <LoadingIndicator size="md" />
       </div>
     );
@@ -36,8 +36,8 @@ function DashboardSidebar() {
     items = items.filter((item) => item.name === "Dashboard");
   }
   return (
-    <div className="h-full bg-white/50 flex flex-col border-r border-vmb-primary/10 ">
-      <div className="flex flex-col gap-y-[10px] px-[8px]  py-[30px]">
+    <div className="h-full bg-[#fffdfb]/90 flex flex-col border-r border-[#ded3cc] ">
+      <div className="flex flex-col gap-y-[6px] px-[8px] py-[26px]">
         {items.map((item, idx) => {
           const isGroupActive =
             item.children?.some((child) =>
@@ -49,51 +49,51 @@ function DashboardSidebar() {
               <div key={idx} className="flex flex-col gap-y-[4px]">
                 <NavLink
                   to={item.path}
-                  className={`flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[8px] sm:px-[4px]
-   rounded-[14px] transition-all duration-200
+                  className={`flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
+   rounded-[4px] transition-all duration-200 border
    ${
      isGroupActive ?
-       "bg-vmb-secondary text-white shadow-sm"
-     : "bg-transparent text-vmb-primary hover:bg-vmb-secondary/10"
+       "border-vmb-primary bg-vmb-primary text-white"
+     : "border-transparent bg-transparent text-vmb-primary hover:border-[#ded3cc] hover:bg-[#f5eee9]"
    } text-center `}
                   style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontWeight: 500,
+                    fontFamily: "Libre Franklin, sans-serif",
+                    fontWeight: 600,
                   }}
                 >
-                  <span className="flex items-center justify-center flex-shrink-0 rounded-full w-9 h-9">
+                  <span className="flex items-center justify-center flex-shrink-0 w-8 h-8">
                     {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                   </span>
 
-                  <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[12px] xl:text-[14px] break-all max-sm:hidden">
+                  <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-all max-sm:hidden">
                     {item.name}
                   </span>
                 </NavLink>
 
-                <div className="ml-5 flex flex-col gap-y-[3px] border-l border-vmb-primary/10 pl-2 max-[1100px]:ml-0 max-[1100px]:border-l-0 max-[1100px]:pl-0">
+                <div className="ml-5 flex flex-col gap-y-[3px] border-l border-[#ded3cc] pl-2 max-[1100px]:ml-0 max-[1100px]:border-l-0 max-[1100px]:pl-0">
                   {item.children.map((child) => (
                     <NavLink
                       to={child.path}
                       key={child.path}
                       end
                       className={({ isActive }) =>
-                        `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 rounded-[10px] px-2 py-[6px] transition-all duration-200 ${
+                        `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 rounded-[4px] px-2 py-[7px] transition-all duration-200 ${
                           isActive ?
-                            "bg-vmb-secondary/20 text-vmb-primary"
-                          : "bg-transparent text-vmb-primary/70 hover:bg-vmb-secondary/10"
+                            "bg-[#eadfd8] text-vmb-primary"
+                          : "bg-transparent text-vmb-primary/70 hover:bg-[#f5eee9]"
                         } text-center`
                       }
                       style={{
-                        fontFamily: "Poppins, sans-serif",
-                        fontWeight: 500,
+                        fontFamily: "Libre Franklin, sans-serif",
+                        fontWeight: 600,
                       }}
                     >
-                      <span className="flex items-center justify-center flex-shrink-0 rounded-full w-7 h-7">
+                      <span className="flex items-center justify-center flex-shrink-0 w-7 h-7">
                         {React.cloneElement(child.icon, {
                           className: "w-4 h-4",
                         })}
                       </span>
-                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] break-all max-sm:hidden">
+                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] uppercase tracking-[0.04em] break-all max-sm:hidden">
                         {child.name}
                       </span>
                     </NavLink>
@@ -109,25 +109,25 @@ function DashboardSidebar() {
               key={idx}
               end
               className={({ isActive }) =>
-                `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[8px] sm:px-[4px]
-   rounded-[14px] transition-all duration-200
+                `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
+   rounded-[4px] transition-all duration-200 border
    ${
      isActive ?
-       "bg-vmb-secondary text-white shadow-sm"
-     : "bg-transparent text-vmb-primary hover:bg-vmb-secondary/10"
+       "border-vmb-primary bg-vmb-primary text-white"
+     : "border-transparent bg-transparent text-vmb-primary hover:border-[#ded3cc] hover:bg-[#f5eee9]"
    } text-center `
             }
               style={{
-                fontFamily: "Poppins, sans-serif",
-                fontWeight: 500,
+                fontFamily: "Libre Franklin, sans-serif",
+                fontWeight: 600,
               }}
             >
               <>
-                <span className="flex items-center justify-center flex-shrink-0 rounded-full w-9 h-9">
+                <span className="flex items-center justify-center flex-shrink-0 w-8 h-8">
                   {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
 
-                <span className=" max-[1100px]:text-center text-left text-wrap  text-[10px] sm:text-[12px]  xl:text-[14px]   break-all max-sm:hidden ">
+                <span className=" max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-all max-sm:hidden ">
                   {item.name}
                 </span>
               </>

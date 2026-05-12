@@ -22,9 +22,9 @@ const Header = () => {
     <div
       className="
         fixed top-0 left-0 w-full z-50
-        h-[60px] sm:h-[70px] md:h-[79px]
-        bg-white/80 backdrop-blur-xl
-        border-b border-black/10
+        h-[58px] sm:h-[68px] md:h-[76px]
+        bg-[#fffdfb]/92 backdrop-blur-xl
+        border-b border-[#ded3cc]
         px-3 sm:px-6 md:px-12
         flex items-center justify-between
       "
@@ -42,13 +42,13 @@ const Header = () => {
       />
 
       {/* Desktop Buttons */}
-      <div className="hidden sm:flex items-center gap-3 md:gap-4">
+      <div className="hidden sm:flex items-center gap-0 border border-[#ded3cc] bg-[#f5eee9]">
         <PrimaryButton
           text="For Salon"
           variant="header"
           isActive={selected === "salon"}
           onClick={() => handleNav("/salon")}
-          className="min-w-[140px]"
+          className="min-w-[136px]"
         />
 
         <PrimaryButton
@@ -58,11 +58,13 @@ const Header = () => {
           onClick={() => handleNav("/")}
           className="min-w-[150px]"
         />
+      </div>
+      <div className="hidden sm:flex items-center">
         <PrimaryButton
           text="Login"
-          variant="pillGreen"
+          variant="gold"
           onClick={() => navigate("/register")}
-          className="w-full sm:w-auto p-[5px] pl-[15px]  text-[12px] sm:text-[16px]"
+          className="w-full sm:w-auto text-[12px] sm:text-[14px]"
           authMode={"login"}
           authType={selected}
         />
@@ -75,7 +77,7 @@ const Header = () => {
           className="
             w-[38px] h-[38px]
             flex items-center justify-center
-            rounded-lg
+            rounded-[4px]
             bg-vmb-primary
             text-white
           "
@@ -91,8 +93,8 @@ const Header = () => {
         <div
           className="
             absolute top-full left-0 w-full
-            bg-white/95 backdrop-blur-xl
-            border-b border-black/10
+            bg-[#fffdfb]/98 backdrop-blur-xl
+            border-b border-[#ded3cc]
             shadow-lg
             sm:hidden
             animate-fadeIn
@@ -102,7 +104,7 @@ const Header = () => {
             <button
               onClick={() => handleNav("/salon")}
               className={`
-                w-full text-left px-4 py-3 rounded-lg
+                w-full text-left px-4 py-3 rounded-[4px]
                 font-poppins text-[14px]
                 flex items-center justify-between
                 ${
@@ -118,7 +120,7 @@ const Header = () => {
             <button
               onClick={() => handleNav("/")}
               className={`
-                w-full text-left px-4 py-3 rounded-lg
+                w-full text-left px-4 py-3 rounded-[4px]
                 font-poppins text-[14px]
                 flex items-center justify-between
                 ${
@@ -136,7 +138,7 @@ const Header = () => {
                 dispatch(setAuthType(selected));
                 handleNav("/register");
               }}
-              className="w-full text-center px-4 py-3 rounded-lg font-poppins text-[14px] bg-vmb-secondary text-white mt-1 hover:bg-vmb-primary transition-all duration-300"
+              className="w-full text-center px-4 py-3 rounded-[4px] font-poppins text-[14px] bg-vmb-secondary text-white mt-1 hover:bg-vmb-primary transition-all duration-300"
             >
               <span>Login</span>
             </button>

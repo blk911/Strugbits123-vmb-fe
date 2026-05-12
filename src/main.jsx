@@ -15,16 +15,16 @@ createRoot(document.getElementById("root")).render(
         toastOptions={{
           duration: 4000,
           style: {
-            fontSize: "15px",
-            background: "white",
-            color: "#333333", // vmb-text-main
-            fontFamily: "Poppins, sans-serif",
+            fontSize: "14px",
+            background: "#fffdfb",
+            color: "#23272c",
+            fontFamily: "Libre Franklin, Inter, sans-serif",
             padding: "16px 20px",
-            borderRadius: "12px",
+            borderRadius: "6px",
             maxWidth: "420px",
             width: "100%",
             boxShadow:
-              "0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04)",
+              "0 10px 28px rgba(66, 55, 50, 0.10)",
           },
 
           success: {
@@ -34,9 +34,9 @@ createRoot(document.getElementById("root")).render(
               secondary: "#fff",
             },
             style: {
-              background: "#F2FDF2", // Success soft
-              color: "#0F3D3E", // vmb-primary
-              border: "1px solid #4FCF004D",
+              background: "#f4f1ec",
+              color: "#333232",
+              border: "1px solid #d6c9b8",
             },
           },
 
@@ -55,9 +55,9 @@ createRoot(document.getElementById("root")).render(
 
           loading: {
             style: {
-              background: "#FAFFFD", // vmb-bg-soft
-              color: "#0F3D3E", // vmb-primary
-              border: "1px solid #0F3D3E4D",
+              background: "#fbf7f4",
+              color: "#333232",
+              border: "1px solid #ded3cc",
             },
           },
         }}

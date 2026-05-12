@@ -27,20 +27,20 @@ export default function PrimaryButton({
 
   const variants = {
     header: `
-      h-[32px] sm:h-[39px]
-      px-2 sm:px-[10px]
-      rounded-[8px] sm:rounded-[10px]
-      text-[12px] sm:text-[16px]
-      font-normal
+      h-[34px] sm:h-[40px]
+      px-3 sm:px-[16px]
+      rounded-none
+      text-[11px] sm:text-[13px]
+      font-semibold uppercase tracking-[0.08em]
       ${
         isActive ?
           "bg-vmb-primary text-white "
-        : "bg-transparent text-vmb-primary"
+        : "bg-[#f5eee9] text-vmb-primary hover:bg-[#efe3dc]"
       }
     `,
 
     pill: `
-      rounded-full
+      rounded-[4px]
       text-sm sm:text-[16px]
       font-semibold
       bg-vmb-primary text-white
@@ -49,7 +49,7 @@ export default function PrimaryButton({
     `,
 
     pillLight: `
-      rounded-full
+      rounded-[4px]
       text-sm sm:text-[16px]
       font-medium
       bg-white text-vmb-secondary
@@ -58,7 +58,7 @@ export default function PrimaryButton({
     `,
 
     pillGreen: `
-      rounded-full
+      rounded-[4px]
       text-sm sm:text-[16px]
       font-semibold
       bg-vmb-secondary text-white
@@ -67,16 +67,27 @@ export default function PrimaryButton({
     `,
 
     pillOutline: `
-      rounded-full
+      rounded-[4px]
       text-sm sm:text-[16px]
       bg-white text-vmb-primary
       hover:bg-vmb-primary hover:text-white
       border border-vmb-primary
     `,
+
+    gold: `
+      h-[40px]
+      rounded-[4px]
+      px-4
+      text-[12px] sm:text-[13px]
+      font-semibold uppercase tracking-[0.08em]
+      bg-vmb-secondary text-white
+      hover:brightness-95
+      border border-vmb-secondary
+    `,
   };
 
   const arrowStyles = {
-    header: "bg-vmb-secondary text-white",
+    header: "hidden",
 
     pill: "bg-white text-vmb-secondary group-hover:bg-vmb-primary group-hover:text-white",
 
@@ -87,6 +98,8 @@ export default function PrimaryButton({
 
     pillOutline:
       "bg-vmb-primary text-white group-hover:bg-white group-hover:text-vmb-primary",
+
+    gold: "hidden",
   };
 
   return (
@@ -105,17 +118,19 @@ export default function PrimaryButton({
       <span>{text}</span>
 
       {/* Arrow */}
-      <span
-        className={`
-          flex items-center justify-center
-          w-[22px] h-[22px] sm:w-[29px] sm:h-[29px]
-          rounded-full
-          transition-all duration-300
-          ${arrowStyles[variant]}
-        `}
-      >
-        <FaArrowRight className="w-[7px] h-[10px]  sm:w-[9px] sm:h-[12px]" />
-      </span>
+      {arrowStyles[variant] !== "hidden" && (
+        <span
+          className={`
+            flex items-center justify-center
+            w-[22px] h-[22px] sm:w-[29px] sm:h-[29px]
+            rounded-[4px]
+            transition-all duration-300
+            ${arrowStyles[variant]}
+          `}
+        >
+          <FaArrowRight className="w-[7px] h-[10px]  sm:w-[9px] sm:h-[12px]" />
+        </span>
+      )}
     </button>
   );
 }

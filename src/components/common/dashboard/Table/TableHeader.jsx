@@ -29,13 +29,13 @@ const TableHeader = ({ keys, onSort, sortBy, sortOrder, sortFields = {} }) => (
                 }
               : undefined
             }
-            className={` bg-[#F8F8F8]
-              text-[#5C8374] font-semibold px-2 py-2 text-left text-[13px] sm:text-[16px]
+            className={` bg-[#f2ebe6]
+              text-vmb-primary font-semibold px-2 py-2 text-left text-[12px] sm:text-[13px] uppercase tracking-[0.05em]
               ${widthClass}
               ${noTruncate ? "whitespace-nowrap" : "whitespace-normal break-words"}
-              ${isSortable ? "cursor-pointer group select-none hover:bg-gray-100" : ""}
+              ${isSortable ? "cursor-pointer group select-none hover:bg-[#eadfd8]" : ""}
             `}
-            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600 }}
+            style={{ fontFamily: "Libre Franklin, sans-serif", fontWeight: 600 }}
           >
             <div className="flex items-center gap-2">
               {key.charAt(0).toUpperCase() +

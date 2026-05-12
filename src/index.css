@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lato:wght@400;600;700&family=Poppins:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Lato:wght@400;600;700&family=Libre+Franklin:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 .font-lato {
@@ -13,38 +13,48 @@
   font-family: var(--font-inter);
 }
 :root {
-  /* Centralized Core Colors (New Teal Theme) */
-  --vmb-modals-bg: rgba(255, 255, 255, 0.9);
-  --vmb-overlay-bg: rgba(0, 0, 0, 0.5);
-  --vmb-primary: #0f3d3e;
-  --vmb-secondary: #5c8374;
-  --vmb-text-main: #333333;
-  --vmb-text-muted: #4b5563;
-  --vmb-bg-soft: #fafffd;
-  --vmb-bg: #ffffff;
-  --vmb-pending: #ff9500;
-  --vmb-success: #4fcf00;
+  /* Soft salon editorial palette */
+  --vmb-modals-bg: rgba(255, 252, 248, 0.94);
+  --vmb-overlay-bg: rgba(49, 44, 43, 0.5);
+  --vmb-primary: #333232;
+  --vmb-secondary: #b88f45;
+  --vmb-rose: #a45f76;
+  --vmb-rose-soft: #d8bcc1;
+  --vmb-taupe: #d9cec3;
+  --vmb-charcoal: #5a5858;
+  --vmb-text-main: #23272c;
+  --vmb-text-muted: #6b6262;
+  --vmb-bg-soft: #fbf7f4;
+  --vmb-bg: #fffdfb;
+  --vmb-pending: #c39a4b;
+  --vmb-success: #7f946e;
   --vmb-error: #dc2626;
-  --vmb-info: #4376c0;
-  --vmb-muted: #64748b;
-  --vmb-primary-soft: rgba(15, 61, 62, 0.1);
-  --vmb-modal-bg: #e8e8e8;
-  --vmb-waitlist-bg: #f5f6f7;
-  --vmb-text-gray: #9ca3af;
-  --vmb-green: #1f6f5b;
-  --vmb-text-dark: #1a1a1a;
-  --vmb-text-light: #666666;
-  --vmb-border-light: #f3f4f6;
-  --vmb-border-gray: #e5e7eb;
-  --vmb-dashboard-bg: #efefef;
-  --vmb-modal-bg: #e7edea;
-  --vmb-table-header: #f8f8f8;
+  --vmb-info: #7a8497;
+  --vmb-muted: #8f8582;
+  --vmb-primary-soft: rgba(51, 50, 50, 0.08);
+  --vmb-modal-bg: #f6eee9;
+  --vmb-waitlist-bg: #f4ede9;
+  --vmb-text-gray: #a9a09b;
+  --vmb-green: #7f946e;
+  --vmb-text-dark: #1f1f22;
+  --vmb-text-light: #6f6764;
+  --vmb-border-light: #eee4dd;
+  --vmb-border-gray: #ded3cc;
+  --vmb-dashboard-bg: #f5eee9;
+  --vmb-table-header: #f2ebe6;
+  --vmb-border: #e2d6cf;
+  --vmb-accent: #b88f45;
+  --vmb-accent-pink: #a45f76;
+  --vmb-ink: #23272c;
+  --vmb-gold-flake-shadow: 0 12px 34px rgba(66, 55, 50, 0.08);
 }
 
 @theme {
   --font-lato: "Lato", sans-serif;
   --font-poppins: "Poppins", sans-serif;
   --font-inter: "Inter", sans-serif;
+  --font-studio-serif: "Cormorant Garamond", Georgia, serif;
+  --font-studio-sans: "Libre Franklin", "Inter", sans-serif;
   --color-vmb-overlay-bg: var(--vmb-overlay-bg);
   --color-vmb-modals-bg: var(--vmb-modals-bg);
   --color-vmb-modal-bg: var(--vmb-modal-bg);
@@ -76,10 +86,55 @@
 
 html,
 body {
-  background: var(--vmb-bg);
+  background: var(--vmb-bg-soft);
   color: var(--vmb-ink);
+  font-family: "Libre Franklin", "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3,
+.font-studio-serif {
+  letter-spacing: 0.015em;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--vmb-rose-soft);
+  color: var(--vmb-text-dark);
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: "Libre Franklin", "Inter", system-ui, sans-serif;
+}
+
+button {
+  letter-spacing: 0.01em;
+}
+
+input,
+textarea,
+select {
+  background: rgba(255, 253, 251, 0.96);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--vmb-secondary) !important;
+  box-shadow: 0 0 0 3px rgba(184, 143, 69, 0.12);
 }
 
 @utility vmb-container {
@@ -91,7 +146,7 @@ body {
 }
 
 @utility vmb-card {
-  @apply rounded-2xl bg-white/85 backdrop-blur border;
+  @apply rounded-[8px] bg-white/90 backdrop-blur border;
   border-color: var(--vmb-border);
   box-shadow: var(--vmb-gold-flake-shadow);
 }
@@ -113,7 +168,7 @@ body {
 }
 
 @utility vmb-btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition;
+  @apply inline-flex items-center gap-2 rounded-[4px] px-5 py-3 text-sm font-semibold transition;
 }
 
 @utility vmb-btn-primary {
@@ -131,7 +186,7 @@ body {
 }
 
 @utility vmb-photo {
-  @apply relative overflow-hidden rounded-2xl border;
+  @apply relative overflow-hidden rounded-[8px] border;
   border-color: var(--vmb-primary-soft);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
@@ -230,7 +285,7 @@ body {
 }
 
 .custom-table tr {
-  @apply block mb-6 bg-white rounded-lg shadow-sm w-full;
+  @apply block mb-6 bg-white rounded-[6px] shadow-sm w-full;
 }
 
 .custom-table td {
