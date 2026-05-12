@@ -27,15 +27,15 @@ export default function PrimaryButton({
 
   const variants = {
     header: `
-      h-[34px] sm:h-[40px]
-      px-3 sm:px-[16px]
+      h-[38px]
+      px-3 sm:px-[14px]
       rounded-none
-      text-[11px] sm:text-[13px]
+      text-[11px] sm:text-[12px]
       font-semibold uppercase tracking-[0.08em]
       ${
         isActive ?
-          "bg-vmb-primary text-white "
-        : "bg-[#f5eee9] text-vmb-primary hover:bg-[#efe3dc]"
+          "bg-[#fffdfb] text-vmb-primary underline decoration-vmb-secondary decoration-2 underline-offset-[7px]"
+        : "bg-[#e8e4e0] text-vmb-primary hover:bg-[#efe3dc]"
       }
     `,
 
@@ -76,8 +76,8 @@ export default function PrimaryButton({
 
     gold: `
       h-[40px]
-      rounded-[4px]
-      px-4
+      rounded-none
+      px-5
       text-[12px] sm:text-[13px]
       font-semibold uppercase tracking-[0.08em]
       bg-vmb-secondary text-white

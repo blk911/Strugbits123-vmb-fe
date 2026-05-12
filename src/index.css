@@ -108,6 +108,25 @@ a {
   color: inherit;
 }
 
+.site-shell {
+  background:
+    linear-gradient(90deg, rgba(222, 211, 204, 0.36) 0 1px, transparent 1px),
+    var(--vmb-bg-soft);
+  background-size: 280px 100%;
+}
+
+.site-shell main {
+  background: var(--vmb-bg-soft);
+}
+
+.site-shell main a:not([class]) {
+  color: var(--vmb-rose);
+}
+
+.site-shell main a:not([class]):hover {
+  color: var(--vmb-secondary);
+}
+
 ::selection {
   background: var(--vmb-rose-soft);
   color: var(--vmb-text-dark);
