@@ -1,0 +1,19 @@
+payment_id,transaction_date,client_name,service_description,subtotal,tip,tax,total,payment_method,staff_name
+GG-PAY-9001,2026-05-12,Martinez / Jenny,Gel Manicure,45.00,9.00,3.78,57.78,Card,Nina K.
+GG-PAY-9002,2026-05-12,Chen / Ashley,Classic Pedicure,48.00,12.00,4.20,64.20,Card,Maya T.
+GG-PAY-9003,2026-05-12,Brooks / Taylor,Dip Powder Full Set,72.00,15.00,5.80,92.80,Apple Pay,Nina K.
+GG-PAY-9004,2026-05-11,Lee / Morgan,Gel + Nail Art,68.00,10.00,5.46,83.46,Card,Sophia R.
+GG-PAY-9005,2026-05-11,Patel / Riley,Manicure,32.00,5.00,2.59,39.59,Cash,Guest Stylist
+GG-PAY-9006,2026-05-10,Kim / Jordan,Gel Polish Change,28.00,6.00,2.38,36.38,Card,Nina K.
+GG-PAY-9007,2026-05-10,Wright / Skylar,Spa Pedicure,58.00,14.00,5.04,77.04,Card,Sophia R.
+GG-PAY-9008,2026-05-09,Johnson / Reese,Builder Gel,95.00,20.00,7.65,122.65,Card,Maya T.
+GG-PAY-9009,2026-05-09,Singh / Harper,Express Manicure,22.00,4.00,1.87,27.87,Square Reader,Nina K.
+GG-PAY-9010,2026-05-08,Murphy / Blake,Gel Manicure,45.00,11.00,3.92,59.92,Card,Maya T.
+GG-PAY-9011,2026-05-08,Garcia / Emery,Kids Manicure + sticker,26.00,5.00,2.17,33.17,Card,Nina K.
+GG-PAY-9012,2026-05-07,Rivera / Charlie,Retail polish duo,34.00,0.00,2.38,36.38,Card,Front desk
+GG-PAY-9013,2026-05-07,Hughes / Avery,Gel Pedicure,55.00,12.00,4.70,71.70,Card,Sophia R.
+GG-PAY-9014,2026-05-06,Davis / Quinn,Paraffin Pedicure,62.00,0.00,4.96,66.96,Gift card,Sophia R.
+GG-PAY-9015,2026-05-06,Okonkwo / Drew,Classic Manicure,38.00,8.00,3.22,49.22,Card,Sophia R.
+GG-PAY-9016,2026-05-05,Flores / Sage,Brow wax,18.00,3.00,1.51,22.51,Card,Maya T.
+GG-PAY-9017,2026-05-04,Bailey / Finley,Polish change feet,20.00,4.00,1.68,25.68,Cash,Maya T.
+GG-PAY-9018,2026-05-04,Friends of Jenny,Party booking deposit,150.00,0.00,10.50,160.50,ACH,Jenny O.

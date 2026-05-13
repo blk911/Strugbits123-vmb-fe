@@ -1,0 +1,19 @@
+sale_date,salon_name,report_type,category,transaction_count,gross_sales,discounts,net_sales,tax_collected,payment_mix_notes
+2026-05-12,Jenny's Nails — Downtown,Daily,Services,47,2840.00,125.00,2715.00,224.30,68% card
+2026-05-11,Jenny's Nails — Downtown,Daily,Services,52,3105.00,80.00,3025.00,248.10,72% card
+2026-05-10,Jenny's Nails — Downtown,Daily,Services,44,2620.00,200.00,2420.00,198.65,Bogo Monday
+2026-05-09,Jenny's Nails — Downtown,Daily,Services + Retail,38,2288.00,0.00,2288.00,189.90,Retail 14%
+2026-05-08,Jenny's Nails — Downtown,Daily,Services,49,2955.00,95.00,2860.00,236.20,Peak Friday
+2026-05-07,Jenny's Nails — Downtown,Daily,Services,41,2510.00,0.00,2510.00,207.15,Steady
+2026-05-06,Jenny's Nails — Downtown,Daily,Services,53,3188.00,150.00,3038.00,250.45,Promo codes
+2026-05-05,Jenny's Nails — Downtown,Daily,Services,36,2144.00,0.00,2144.00,177.45,Quiet Wed AM
+2026-05-04,Jenny's Nails — Downtown,Daily,Retail only,22,396.00,12.00,384.00,31.75,Dip liquids
+2026-05-03,Jenny's Nails — Downtown,Daily,Services,45,2695.00,40.00,2655.00,219.40,Weekend carryover
+2026-05-02,Jenny's Nails — Downtown,Daily,Services + Classes,29,1980.00,0.00,1980.00,163.95,Host private party
+2026-05-01,Jenny's Nails — Downtown,Daily,Services,42,2560.00,60.00,2500.00,206.25,May Day
+2026-04-30,Jenny's Nails — Downtown,Monthly rollup,Services,1124,68420.00,4200.00,64220.00,5310.80,April close
+2026-04-30,Jenny's Nails — Downtown,Monthly rollup,Retail,188,9420.00,310.00,9110.00,752.40,Polish + tools
+2026-04-29,Jenny's Nails — Downtown,Daily,Services,48,2920.00,0.00,2920.00,241.20,Strong tips
+2026-04-28,Jenny's Nails — Downtown,Daily,Services,39,2344.00,100.00,2244.00,185.45,Corporate group
+2026-04-27,Jenny's Nails — Downtown,Daily,Services,33,2010.00,0.00,2010.00,166.10,Rain day soft
+2026-04-26,Jenny's Nails — Downtown,Daily,Services,51,3055.00,175.00,2880.00,238.05,Sunday bridal

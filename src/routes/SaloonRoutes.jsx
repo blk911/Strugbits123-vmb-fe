@@ -4,6 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import {
   AppointmentHistory,
   DashboardHome,
+  DeepDig,
   SalonDetail,
   SalonInvites,
 } from "../pages/saloon";
@@ -16,6 +17,14 @@ export default function SalonRoutes() {
         element={
           <ProtectedRoute allowedRoles={["salon-owner"]}>
             <DashboardHome />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/salon-owner/deep-dig"
+        element={
+          <ProtectedRoute allowedRoles={["salon-owner"]}>
+            <DeepDig />
           </ProtectedRoute>
         }
       />

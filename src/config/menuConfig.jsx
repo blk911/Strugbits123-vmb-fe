@@ -6,7 +6,10 @@ import { GiOfficeChair } from "react-icons/gi";
 import { BsEnvelopePaperHeart } from "react-icons/bs";
 import {
   LuContact,
+  LuFlaskConical,
   LuHeadphones,
+  LuKeyRound,
+  LuSearch,
   LuSettings,
   LuUserCog,
   LuUserRoundPlus,
@@ -19,6 +22,18 @@ export const menus = {
       name: "Dashboard",
       path: "/admin",
       icon: <FaChartLine className="h-5 w-5" />,
+    },
+    {
+      name: "Intelligence Lab",
+      path: "/admin/salon-intelligence",
+      icon: <LuFlaskConical className="h-5 w-5" />,
+      allowedRoles: ["admin"],
+    },
+    {
+      name: "Credential Assist",
+      path: "/admin/credential-assist",
+      icon: <LuKeyRound className="h-5 w-5" />,
+      allowedRoles: ["admin"],
     },
     {
       name: "Salons",
@@ -87,6 +102,11 @@ export const menus = {
       name: "Dashboard",
       path: "/salon-owner",
       icon: <FaChartLine className="h-5 w-5" />,
+    },
+    {
+      name: "Deep Dig",
+      path: "/salon-owner/deep-dig",
+      icon: <LuSearch className="h-5 w-5" />,
     },
     {
       name: "Invites",

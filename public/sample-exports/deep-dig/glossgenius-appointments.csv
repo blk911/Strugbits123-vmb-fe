@@ -1,0 +1,19 @@
+appt_id,client_name,service_name,staff_name,start_datetime,duration_minutes,status,source,location
+GG-APT-5001,Martinez / Jenny,Gel Manicure,Nina K.,2026-05-13T10:00:00,45,confirmed,app,Jenny's Nails Studio A
+GG-APT-5002,Chen / Ashley,Classic Pedicure,Maya T.,2026-05-13T11:30:00,50,confirmed,website,Jenny's Nails Studio A
+GG-APT-5003,Brooks / Taylor,Dip Powder Full Set,Nina K.,2026-05-13T14:00:00,75,completed,Instagram DM,Jenny's Nails Studio A
+GG-APT-5004,Lee / Morgan,Gel Manicure + Nail Art,Sophia R.,2026-05-14T09:00:00,60,confirmed,referral,Jenny's Nails Studio A
+GG-APT-5005,Patel / Riley,Manicure,Guest Stylist,2026-05-14T13:15:00,35,cancelled,app,Jenny's Nails Studio A
+GG-APT-5006,Nguyen / Casey,Acrylic Fill,Maya T.,2026-05-14T15:00:00,60,no_show,walk_in,Jenny's Nails Studio A
+GG-APT-5007,Kim / Jordan,Gel Polish Change,Nina K.,2026-05-15T10:30:00,30,completed,phone,Jenny's Nails Studio A
+GG-APT-5008,Wright / Skylar,Spa Pedicure,Sophia R.,2026-05-15T12:00:00,55,confirmed,app,Jenny's Nails Studio A
+GG-APT-5009,Johnson / Reese,Builder Gel Overlay,Maya T.,2026-05-15T16:45:00,90,confirmed,Google,Jenny's Nails Studio A
+GG-APT-5010,Singh / Harper,Express Manicure,Nina K.,2026-05-16T09:30:00,25,completed,walk_in,Jenny's Nails Studio A
+GG-APT-5011,Davis / Quinn,Paraffin Pedicure,Sophia R.,2026-05-16T11:00:00,50,confirmed,website,Jenny's Nails Studio A
+GG-APT-5012,Murphy / Blake,Gel Manicure,Maya T.,2026-05-16T14:30:00,45,completed,app,Jenny's Nails Studio A
+GG-APT-5013,Garcia / Emery,Kids Manicure,Nina K.,2026-05-17T10:00:00,30,confirmed,referral,Jenny's Nails Studio A
+GG-APT-5014,Okonkwo / Drew,Classic Manicure,Sophia R.,2026-05-17T13:00:00,40,scheduled,Instagram,Jenny's Nails Studio A
+GG-APT-5015,Flores / Sage,Brow wax add-on,Maya T.,2026-05-17T15:15:00,15,cancelled,app,Jenny's Nails Studio A
+GG-APT-5016,Rivera / Charlie,Full Set Acrylic,Nina K.,2026-05-18T11:00:00,90,confirmed,TikTok,Jenny's Nails Studio A
+GG-APT-5017,Hughes / Avery,Gel Pedicure,Sophia R.,2026-05-18T14:00:00,55,scheduled,VMB invite,Jenny's Nails Studio A
+GG-APT-5018,Bailey / Finley,Polish Change,Maya T.,2026-05-19T16:00:00,20,scheduled,walk_in,Jenny's Nails Studio A

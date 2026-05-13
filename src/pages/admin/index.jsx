@@ -10,6 +10,8 @@ import ServicePresets from "./ServicePresets/ServicePresets";
 import Staff from "./Settings/Staff";
 import Support from "./Settings/Support";
 import Contacts from "./Settings/Contacts";
+import SalonIntelligence from "./SalonIntelligence/SalonIntelligence";
+import CredentialAssistQueue from "./CredentialAssistQueue/CredentialAssistQueue";
 export {
   Home,
   AppointmentHistory,
@@ -22,4 +24,6 @@ export {
   Staff,
   Support,
   Contacts,
+  SalonIntelligence,
+  CredentialAssistQueue,
 };

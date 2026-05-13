@@ -29,6 +29,7 @@ import {
   SalonProfileSettingsModal,
   AddServiceModal,
   DeleteConfirmModal,
+  WelcomeMessageModal,
 } from "../../dashboard/saloon/Modals";
 import {
   ConfirmConfirmation,
@@ -164,6 +165,10 @@ function DashboardModals() {
       />
       <SalonProfileSettingsModal
         isOpen={activeModal === "salonprofileSettings"}
+        closeModal={closeModal}
+      />
+      <WelcomeMessageModal
+        isOpen={activeModal === "recordWelcomeMessage"}
         closeModal={closeModal}
       />
       <SendTreatModal

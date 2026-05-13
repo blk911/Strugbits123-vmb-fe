@@ -13,6 +13,8 @@ import {
   Staff,
   Support,
   Contacts,
+  SalonIntelligence,
+  CredentialAssistQueue,
 } from "../pages/admin";
 import { SalonDetail } from "../pages/client";
 
@@ -56,6 +58,22 @@ export default function AdminRoutes() {
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <Contacts />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/salon-intelligence"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <SalonIntelligence />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/credential-assist"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <CredentialAssistQueue />
           </ProtectedRoute>
         }
       />
