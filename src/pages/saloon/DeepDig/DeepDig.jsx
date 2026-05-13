@@ -1370,7 +1370,7 @@ function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
             <React.Fragment key={step.id}>
               {i > 0 ?
                 <div
-                  className={`mx-1 mt-[11px] hidden h-px min-w-[12px] flex-1 sm:mx-2 sm:block ${
+                  className={`mx-1 mt-[12px] hidden h-px min-w-[12px] flex-1 sm:mx-2 sm:block ${
                     isDone ? "bg-emerald-500/40"
                     : isActive ? "bg-[#c9a86a]/55"
                     : "bg-[#ded5cd]/85"
@@ -1392,10 +1392,10 @@ function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
                   i === DEEP_DIG_PIPELINE_STEPS.length - 1 ? "pr-0.5" : ""
                 }`}
                 aria-current={isActive ? "step" : undefined}
-                aria-label={`${step.label}: learn about this step`}
+                aria-label={`Step ${i + 1} ${step.label}: learn about this step`}
               >
                 <span
-                  className={`flex size-[22px] items-center justify-center rounded-full border text-[10px] transition ${
+                  className={`flex size-[24px] items-center justify-center rounded-full border text-[10px] transition ${
                     isDone ?
                       "border-emerald-400/80 bg-emerald-500/15 text-emerald-800"
                     : isActive ?
@@ -1408,19 +1408,24 @@ function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
                   {isDone ?
                     <FaCheck className="text-[9px]" aria-hidden />
                   : (
-                    <span className="font-studio-serif text-[11px] font-semibold leading-none">
+                    <span className="font-studio-serif text-[12px] font-semibold leading-none tabular-nums">
                       {i + 1}
                     </span>
                   )}
                 </span>
                 <span
-                  className={`max-w-[5.5rem] text-[9px] font-bold uppercase leading-tight tracking-wider sm:max-w-none sm:text-[10px] ${
+                  className={`max-w-[6.5rem] text-center text-[9px] font-bold uppercase leading-snug tracking-wider sm:max-w-none sm:text-[10px] ${
                     isActive ? "text-[#2f2a28]"
                     : isMuted ? "text-[#a39a97]"
                     : "text-[#6b6262]"
                   }`}
                 >
-                  {step.label}
+                  <span className="tabular-nums">{i + 1}</span>
+                  <span className="text-[#c9bfb8]" aria-hidden>
+                    {" "}
+                    ·{" "}
+                  </span>
+                  <span>{step.label}</span>
                 </span>
               </button>
             </React.Fragment>
@@ -1579,6 +1584,12 @@ function DeepDigProgressRail({
   const activeIndex = DEEP_DIG_PIPELINE_STEPS.findIndex((s) => s.id === stage);
   const currentStepLabel =
     activeIndex >= 0 ? DEEP_DIG_PIPELINE_STEPS[activeIndex].label : stage;
+  const currentProgressDetail =
+    stage === "capture" ?
+      captureSubstage === "select" ?
+        "Capture · Select systems"
+      : "Capture · Export list"
+    : currentStepLabel;
 
   const cta =
     stage === "capture" && captureSubstage === "select" ?
@@ -1634,7 +1645,7 @@ function DeepDigProgressRail({
               Current
             </dt>
             <dd className="mt-0.5 font-semibold text-[#333232]">
-              {currentStepLabel}
+              {currentProgressDetail}
             </dd>
           </div>
           <div>
@@ -2550,8 +2561,13 @@ export default function DeepDig() {
       return;
     }
     setCaptureConfirmHint(null);
+    const firstCard = selectionOrder.find((id) => PROVIDER_BY_ID[id]);
+    setExpandedIds((prev) => {
+      if (prev.size > 0 || !firstCard) return prev;
+      return new Set([firstCard]);
+    });
     setCaptureSubstage("exports");
-  }, [systemsSelected]);
+  }, [systemsSelected, selectionOrder]);
 
   const editSelectedSystems = useCallback(() => {
     setCaptureSubstage("select");
@@ -2749,7 +2765,7 @@ export default function DeepDig() {
         {/* Provider selector */}
         <section className="rounded-2xl border border-[#e2d6cf] bg-white/95 p-4 shadow-[0_14px_44px_-34px_rgba(39,46,45,0.3)] sm:p-5">
           <h2 className="font-studio-serif text-xl text-[#2f2a28] sm:text-2xl">
-            Select your systems
+            1 — Select your systems
           </h2>
           <p className="mt-1.5 max-w-2xl text-sm text-[#6b6262]">
             Choose every platform your salon actively uses. We&apos;ll build
@@ -2987,10 +3003,14 @@ export default function DeepDig() {
             {captureSubstage === "exports" ?
               <>
                 <section className="rounded-xl border border-[#e2d6cf] bg-white/95 p-3 shadow-sm sm:p-4">
-                  <h2 className="font-studio-serif text-lg font-semibold text-[#2f2a28]">
-                    Selected systems
+                  <h2 className="font-studio-serif text-lg font-semibold text-[#2f2a28] sm:text-xl">
+                    2 — Export List
                   </h2>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
+                  <p className="mt-1.5 max-w-2xl text-sm text-[#6b6262]">
+                    Open each provider card, follow the export guide, and mark
+                    it gathered when the files are ready.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
                     {orderedCards.map((id) => {
                       const pSel = PROVIDER_BY_ID[id];
                       if (!pSel) return null;
@@ -3046,9 +3066,15 @@ export default function DeepDig() {
 
         {/* Selected cards */}
         <section className="space-y-4">
-          <h2 className="font-studio-serif text-xl text-[#2f2a28] sm:text-2xl">
-            Your export checklist
-          </h2>
+          <div>
+            <h2 className="font-studio-serif text-base font-semibold text-[#6b6262] sm:text-lg">
+              Your export checklist
+            </h2>
+            <p className="mt-1 max-w-2xl text-xs leading-relaxed text-[#8a7f7c] sm:text-sm">
+              Each provider below includes instructions, sample files, support
+              fallback, and concierge assist.
+            </p>
+          </div>
           {orderedCards.length > 0 ?
             orderedCards.map((id) => {
               const p = PROVIDER_BY_ID[id];
