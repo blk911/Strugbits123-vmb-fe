@@ -60,7 +60,7 @@ function UserMenu() {
     <div className="flex items-center gap-x-6" ref={ref}>
       <div className="relative">
         <div
-          className="h-[40px] w-[40px] rounded-full overflow-hidden cursor-pointer border-b border-vmb-primary/10"
+          className="h-[42px] w-[42px] overflow-hidden cursor-pointer border border-[#ded3cc] bg-[#f5eee9]"
           style={{
             backdropFilter: "blur(10px)",
           }}
@@ -78,13 +78,13 @@ function UserMenu() {
 
       <button
         onClick={handleLogout}
-        className={`flex items-center justify-center w-auto h-[36px] sm:w-[128px] sm:h-[48px] rounded-[10px] gap-2 sm:gap-[12px] bg-vmb-secondary/30 px-3 sm:px-[10px] py-1 sm:py-[12px] text-vmb-primary hover:opacity-80 transition-all ${
+        className={`flex items-center justify-center w-auto h-[36px] sm:w-[128px] sm:h-[42px] rounded-[4px] gap-2 sm:gap-[10px] border border-[#ded3cc] bg-[#f5eee9] px-3 sm:px-[10px] py-1 sm:py-[10px] text-vmb-primary hover:bg-[#efe3dc] transition-all ${
           isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
         }`}
         disabled={isLoading}
       >
         <TbLogout2 className="text-[18px] sm:text-[21px]" />
-        <span className="text-[13px] sm:text-[16px] font-poppins">
+        <span className="text-[12px] sm:text-[13px] font-poppins font-semibold uppercase tracking-[0.04em]">
           {isLoading ? "Logging out..." : "Log Out"}
         </span>
       </button>

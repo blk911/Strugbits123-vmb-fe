@@ -29,6 +29,7 @@ import {
   SalonProfileSettingsModal,
   AddServiceModal,
   DeleteConfirmModal,
+  WelcomeMessageModal,
 } from "../../dashboard/saloon/Modals";
 import {
   ConfirmConfirmation,
@@ -172,6 +173,10 @@ function DashboardModals() {
         isOpen={activeModal === "salonprofileSettings"}
         closeModal={closeModal}
       />
+      <WelcomeMessageModal
+        isOpen={activeModal === "recordWelcomeMessage"}
+        closeModal={closeModal}
+      />
       <SendTreatModal
         isOpen={activeModal === "sendTreat"}
         closeModal={closeModal}
@@ -268,9 +273,10 @@ function DashboardLayout() {
         <aside
           className={`
             fixed inset-y-0 left-0 z-40
-            bg-white/50 backdrop-blur-md
+            bg-[#fffdfb]/92 backdrop-blur-md
             flex flex-col
             transition-transform duration-300 ease-in-out
+            border-r border-[#ded3cc]
             ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
             ${sidebarOpen ? "w-[24%] md:w-[16%] xl:w-[14%]" : "w-0"}
           `}

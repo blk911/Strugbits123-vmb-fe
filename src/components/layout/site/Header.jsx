@@ -2,8 +2,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
 import { FaBars, FaTimes } from "react-icons/fa";
-import PrimaryButton from "../../common/site/PrimaryButton";
 import { useState } from "react";
+
+const pillBase =
+  "inline-flex min-h-[40px] shrink-0 items-center justify-center rounded-full px-4 text-[11px] font-bold uppercase tracking-[0.07em] transition sm:min-h-[42px] sm:px-5 sm:text-[12px]";
+const pillIdle =
+  "bg-vmb-primary text-white hover:brightness-110";
+const pillActive =
+  "bg-vmb-secondary text-white ring-2 ring-vmb-secondary ring-offset-2 ring-offset-[#fffdfb]";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,132 +24,112 @@ const Header = () => {
     setMenuOpen(false);
   };
 
+  const goLogin = () => {
+    dispatch(setAuthMode("login"));
+    dispatch(setAuthType(selected));
+    navigate("/register");
+    setMenuOpen(false);
+  };
+
   return (
-    <div
-      className="
-        fixed top-0 left-0 w-full z-50
-        h-[60px] sm:h-[70px] md:h-[79px]
-        bg-white/80 backdrop-blur-xl
-        border-b border-black/10
-        px-3 sm:px-6 md:px-12
-        flex items-center justify-between
-      "
-    >
-      {/* Logo */}
-      <img
-        src="/logo.png"
-        alt="Logo"
-        className="
-          w-[60px] sm:w-[75px] md:w-[84px]
-          h-auto object-contain
-          cursor-pointer
-        "
-        onClick={() => handleNav("/")}
-      />
-
-      {/* Desktop Buttons */}
-      <div className="hidden sm:flex items-center gap-3 md:gap-4">
-        <PrimaryButton
-          text="For Salon"
-          variant="header"
-          isActive={selected === "salon"}
-          onClick={() => handleNav("/salon")}
-          className="min-w-[140px]"
-        />
-
-        <PrimaryButton
-          text="For Customer"
-          variant="header"
-          isActive={selected === "customer"}
-          onClick={() => handleNav("/")}
-          className="min-w-[150px]"
-        />
-        <PrimaryButton
-          text="Login"
-          variant="pillGreen"
-          onClick={() => navigate("/register")}
-          className="w-full sm:w-auto p-[5px] pl-[15px]  text-[12px] sm:text-[16px]"
-          authMode={"login"}
-          authType={selected}
-        />
-      </div>
-
-      {/* Mobile Hamburger */}
-      <div className="sm:hidden">
+    <header className="fixed left-0 top-0 z-50 w-full border-b border-[#ded3cc] bg-[#fffdfb]/96 backdrop-blur-xl">
+      <div className="relative flex h-[76px] items-center justify-between gap-3 px-3 sm:gap-4 sm:px-6 md:px-12">
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="
-            w-[38px] h-[38px]
-            flex items-center justify-center
-            rounded-lg
-            bg-vmb-primary
-            text-white
-          "
+          type="button"
+          onClick={() => handleNav("/")}
+          className="flex min-w-0 flex-col items-start text-left text-vmb-primary"
         >
-          {menuOpen ?
-            <FaTimes size={18} />
-          : <FaBars size={18} />}
+          <span className="font-studio-serif text-[24px] font-semibold uppercase leading-none tracking-[0.18em] sm:text-[32px] sm:tracking-[0.22em]">
+            VMB
+          </span>
+          <span className="mt-0.5 font-studio-serif text-[11px] font-medium italic tracking-[0.06em] text-vmb-text-muted sm:text-[12px] sm:tracking-[0.08em]">
+            Ven Me, Baby
+          </span>
         </button>
+
+        <div className="hidden flex-1 items-center justify-end gap-2 sm:flex md:gap-3">
+          <button
+            type="button"
+            onClick={() => handleNav("/salon")}
+            className={`${pillBase} ${
+              selected === "salon" ? pillActive : pillIdle
+            }`}
+          >
+            For Salon +
+          </button>
+          <button
+            type="button"
+            onClick={() => handleNav("/")}
+            className={`${pillBase} ${
+              selected === "customer" ? pillActive : pillIdle
+            }`}
+          >
+            For Customer +
+          </button>
+          <button
+            type="button"
+            onClick={goLogin}
+            className={`${pillBase} ${pillIdle} gap-2`}
+          >
+            <span
+              className="size-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.85)]"
+              aria-hidden
+            />
+            Login
+          </button>
+        </div>
+
+        <div className="sm:hidden">
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="flex h-[38px] w-[38px] items-center justify-center rounded-[4px] bg-vmb-primary text-white"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ?
+              <FaTimes size={18} />
+            : <FaBars size={18} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Dropdown */}
-      {menuOpen && (
-        <div
-          className="
-            absolute top-full left-0 w-full
-            bg-white/95 backdrop-blur-xl
-            border-b border-black/10
-            shadow-lg
-            sm:hidden
-            animate-fadeIn
-          "
-        >
-          <div className="flex flex-col p-3 gap-2">
+      {menuOpen ?
+        <div className="absolute top-full left-0 w-full animate-fadeIn border-b border-[#ded3cc] bg-[#fffdfb]/98 shadow-lg backdrop-blur-xl sm:hidden">
+          <div className="flex flex-col gap-2 p-3">
             <button
+              type="button"
               onClick={() => handleNav("/salon")}
-              className={`
-                w-full text-left px-4 py-3 rounded-lg
-                font-poppins text-[14px]
-                flex items-center justify-between
-                ${
-                  selected === "salon" ?
-                    "bg-vmb-primary text-white"
-                  : "bg-transparent text-vmb-primary"
-                }
-              `}
+              className={`${pillBase} w-full ${
+                selected === "salon" ? pillActive : pillIdle
+              }`}
             >
-              <span>For Salon</span>
+              For Salon +
             </button>
-
             <button
+              type="button"
               onClick={() => handleNav("/")}
-              className={`
-                w-full text-left px-4 py-3 rounded-lg
-                font-poppins text-[14px]
-                flex items-center justify-between
-                ${
-                  selected === "customer" ?
-                    "bg-vmb-primary text-white"
-                  : "bg-transparent text-vmb-primary"
-                }
-              `}
+              className={`${pillBase} w-full ${
+                selected === "customer" ? pillActive : pillIdle
+              }`}
             >
-              <span>For Customer</span>
+              For Customer +
             </button>
             <button
-              onClick={() => {
-                dispatch(setAuthMode("login"));
-                dispatch(setAuthType(selected));
-                handleNav("/register");
-              }}
-              className="w-full text-center px-4 py-3 rounded-lg font-poppins text-[14px] bg-vmb-secondary text-white mt-1 hover:bg-vmb-primary transition-all duration-300"
+              type="button"
+              onClick={goLogin}
+              className={`${pillBase} w-full gap-2 ${pillIdle}`}
             >
-              <span>Login</span>
+              <span
+                className="size-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.85)]"
+                aria-hidden
+              />
+              Login
             </button>
           </div>
         </div>
-      )}
-    </div>
+      : null}
+    </header>
   );
 };
 

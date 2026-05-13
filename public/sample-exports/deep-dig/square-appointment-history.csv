@@ -1,0 +1,21 @@
+booking_id,start_time,end_time,client_display,service_title,staff_name,duration_min,status,location_label,internal_note
+sq_jn_10001,2026-05-13T09:00:00,2026-05-13T09:50:00,Martinez / Jenny,Classic manicure,Nina Patel,50,completed,Jenny's Nails — Downtown,Repeat 3-week cadence
+sq_jn_10002,2026-05-13T10:30:00,2026-05-13T11:35:00,Chen / Ashley,Gel pedicure,Maya Torres,65,completed,Jenny's Nails — Downtown,Add-on cuticle oil
+sq_jn_10003,2026-05-13T14:00:00,2026-05-13T15:30:00,Brooks / Taylor,Dip full set,Nina Patel,90,cancelled,Jenny's Nails — Downtown,Client rescheduled to Fri
+sq_jn_10004,2026-05-14T11:00:00,2026-05-14T12:05:00,Lee / Morgan,Builder gel fill,Sophia Reyes,65,completed,Jenny's Nails — Downtown,Thumb repair
+sq_jn_10005,2026-05-14T15:15:00,2026-05-14T15:45:00,Patel / Riley,Polish change,Maya Torres,30,no_show,Jenny's Nails — Downtown,SMS reminder sent
+sq_jn_10006,2026-05-15T09:30:00,2026-05-15T10:40:00,Kim / Jordan,Spa pedicure,Sophia Reyes,70,completed,Jenny's Nails — Downtown,Mother's week package
+sq_jn_10007,2026-05-15T13:00:00,2026-05-15T14:15:00,Wright / Skylar,Acrylic sculpt,Nina Patel,75,completed,Jenny's Nails — Downtown,Long nails maintained
+sq_jn_10008,2026-05-16T10:00:00,2026-05-16T10:45:00,Johnson / Reese,Gel manicure,Maya Torres,45,completed,Jenny's Nails — Downtown,Office lunch break
+sq_jn_10009,2026-05-16T16:00:00,2026-05-16T17:10:00,Singh / Harper,Express mani-pedi combo,Nina Patel,70,completed,Jenny's Nails — Downtown,Walk-in converted
+sq_jn_10010,2026-05-17T12:30:00,2026-05-17T13:45:00,Davis / Quinn,Kids manicure,Sophia Reyes,45,completed,Jenny's Nails — Downtown,Sibling appointment
+sq_jn_10011,2026-05-17T14:00:00,2026-05-17T14:20:00,Murphy / Blake,Brow wax,Maya Torres,20,completed,Jenny's Nails — Downtown,Add-on to pedi
+sq_jn_10012,2026-05-18T09:00:00,2026-05-18T10:30:00,Garcia / Emery,Dip color change,Nina Patel,90,completed,Jenny's Nails — Downtown,New spring palette
+sq_jn_10013,2026-05-18T15:00:00,2026-05-18T16:10:00,Okonkwo / Drew,French gel overlay,Sophia Reyes,70,completed,Jenny's Nails — Downtown,Wedding trial
+sq_jn_10014,2026-05-19T11:30:00,2026-05-19T12:15:00,Flores / Sage,Classic pedicure,Maya Torres,45,cancelled,Jenny's Nails — Downtown,Weather-related
+sq_jn_10015,2026-05-19T16:30:00,2026-05-19T17:45:00,Rivera / Charlie,Full set acrylic,Nina Patel,75,completed,Jenny's Nails — Downtown,Evening slot
+sq_jn_10016,2026-05-20T10:00:00,2026-05-20T11:05:00,Hughes / Avery,Paraffin pedicure,Sophia Reyes,65,completed,Jenny's Nails — Downtown,Standing Saturday
+sq_jn_10017,2026-05-20T14:00:00,2026-05-20T14:35:00,Bailey / Finley,Gel polish removal,Maya Torres,35,completed,Jenny's Nails — Downtown,Switch to dip
+sq_jn_10018,2026-05-21T13:15:00,2026-05-21T14:30:00,Amy Smith,Color melt + gloss,Nina Patel,75,no_show,Jenny's Nails — Downtown,Left voicemail
+sq_jn_10019,2026-05-22T09:30:00,2026-05-22T10:45:00,Ashley Chen,Spa pedicure deluxe,Maya Torres,75,completed,Jenny's Nails — Downtown,Pre-event Friday
+sq_jn_10020,2026-05-22T15:00:00,2026-05-22T16:15:00,Taylor Brooks,Dip maintenance,Sophia Reyes,75,completed,Jenny's Nails — Downtown,3-week fill

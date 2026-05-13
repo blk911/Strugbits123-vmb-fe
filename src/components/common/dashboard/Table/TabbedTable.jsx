@@ -37,21 +37,21 @@ export default function TabbedTable({
     tabLabelMap[key] ?? key.replace(/([A-Z])/g, " $1").trim();
 
   return (
-    <div className="w-full rounded-[10px] bg-white p-3 md:p-[10px]">
-      <div className="flex flex-wrap gap-3 md:gap-6 mb-3 text-xs md:text-sm">
+    <div className="w-full rounded-[6px] border border-[#e2d6cf] bg-[#fffdfb] p-3 md:p-[10px] shadow-[0_10px_28px_rgba(66,55,50,0.06)]">
+      <div className="mb-4 flex flex-wrap gap-0 border border-[#ded3cc] bg-[#f5eee9] text-xs md:text-sm">
         {tabOrder.map((key) => (
           <button
             key={key}
             onClick={() => setActiveTab(key)}
             className={`
-              cursor-pointer pb-2 text-sm sm:text-[20px] font-medium transition-colors
+              cursor-pointer px-4 py-2.5 text-sm sm:text-[14px] font-semibold uppercase tracking-[0.06em] transition-colors
               ${
                 currentTab === key ?
-                  "text-vmb-secondary border-b-2 border-vmb-secondary"
-                : "text-gray-400 hover:text-gray-600"
+                  "bg-vmb-primary text-white"
+                : "text-vmb-primary hover:bg-[#efe3dc]"
               }
             `}
-            style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600 }}
+            style={{ fontFamily: "Libre Franklin, sans-serif", fontWeight: 600 }}
           >
             {getLabel(key)}
           </button>

@@ -22,14 +22,8 @@ export default function PublicRoutes() {
           }
         />
 
-        <Route
-          path="/salon"
-          element={
-            <RedirectIfAuthenticated>
-              <HomeSalon />
-            </RedirectIfAuthenticated>
-          }
-        />
+        {/* Public marketing: must stay reachable when logged in (e.g. salon owners preview /salon) */}
+        <Route path="/salon" element={<HomeSalon />} />
         <Route path="/about" element={<About />} />
         <Route path="/salon-detail/:id" element={<SalonDetail />} />
       </Route>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import MainSection from "../../../components/dashboard/saloon/home/MainSection";
+import PrivateStudioSalonDashboard from "../../../components/dashboard/saloon/home/PrivateStudioSalonDashboard";
 import { useUser } from "../../../hooks/useUser";
 import AppButton from "../../../components/common/site/AppButton";
 import { useDashboardModal } from "../../ModalProvider";
@@ -10,9 +10,13 @@ function DashboardHome() {
   const { user } = useUser();
   const reasons =
     user?.holdReason ? user.holdReason.split("|").map((r) => r.trim()) : [];
+  const showPrivateStudio =
+    !(user?.status === "hold" || user?.isSuspended);
   return (
-    <div className="p-6 flex flex-col gap-8 font-poppins">
-      {!(user?.status === "hold" || user?.isSuspended) && <MainSection />}
+    <div
+      className={`flex flex-col gap-8 font-poppins ${showPrivateStudio ? "" : "p-6"}`}
+    >
+      {showPrivateStudio && <PrivateStudioSalonDashboard />}
       {user?.isSuspended && (
         <div className="border border-red-500/20 bg-white p-[30px] rounded-[20px] flex flex-col items-center text-center gap-4 shadow-sm">
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-600">

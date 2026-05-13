@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../../../common/dashboard/Table/Pagination";
-import { FiEye, FiCheck, FiX } from "react-icons/fi";
+import {
+  FiBell,
+  FiChevronDown,
+  FiChevronRight,
+  FiEye,
+  FiCheck,
+  FiX,
+} from "react-icons/fi";
 import { HiHandRaised } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useDashboardModal } from "../../../../pages/ModalProvider";
@@ -33,6 +40,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const [deactivatedPage, setDeactivatedPage] = useState(1);
   const [rejectedPage, setRejectedPage] = useState(1);
   const [processingId, setProcessingId] = useState(null);
+  const [openGroups, setOpenGroups] = useState({
+    Pending: false,
+    Approved: false,
+    Hold: false,
+    Rejected: false,
+  });
   const [advancedSort, setAdvancedSort] = useState({
     field: "createdAt",
     order: -1,
@@ -178,8 +191,10 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   const salons = currentData?.data?.items || [];
   const totalPages = currentData?.data?.pages || 1;
 
-  const transformedData = salons.map((salon) => ({
+  const transformSalons = (items = []) =>
+    items.map((salon) => ({
     id: salon._id,
+    rawSalon: salon,
     image: salon.profilePic || SalonImage,
     salonName: salon.salonName || "Unknown Salon",
     ownerName: salon.name || "N/A",
@@ -196,7 +211,9 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     workingDays: salon.workingDays?.join(", ") || "N/A",
     licenseDoc: salon.licenseDoc || "N/A",
     description: salon.description || "No description",
-  }));
+    }));
+
+  const transformedData = transformSalons(salons);
 
   const columns = [
     {
@@ -336,15 +353,16 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
   ];
 
   const handleAction = async (action, row) => {
+    const selectedRow =
+      row.rawSalon || salons.find((salon) => salon._id === row.id);
+    if (!selectedRow) return;
+
     if (action === "view") {
-      const selectedRow = salons.find((salon) => salon._id === row.id);
       openModal("salonRequest", selectedRow);
     }
 
     if (action === "approve") {
-      const selectedRow = salons.find((salon) => salon._id === row.id);
       const salonId = selectedRow._id;
-      const salonName = selectedRow.salonName;
       setProcessingId(salonId);
       const loadingToast = toastLoading("Approving salon...");
       try {
@@ -364,14 +382,12 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     }
 
     if (action === "hold") {
-      const selectedRow = salons.find((salon) => salon._id === row.id);
       openModal("salonRejection", {
         salonId: selectedRow._id,
         salonName: selectedRow.salonName,
       });
     }
     if (action === "reject") {
-      const selectedRow = salons.find((salon) => salon._id === row.id);
       const salonId = selectedRow._id;
       const salonName = selectedRow.salonName;
       const loadingToast = toastLoading("Rejecting salon...");
@@ -411,6 +427,119 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
     : activeTab === "Deactivated" ? deactivatedPage
     : rejectedPage;
 
+  const allSections = [
+    {
+      key: "Pending",
+      title: "Pending",
+      data: transformSalons(pendingData?.data?.items || []),
+      isLoading: loadingPending,
+      isFetching: fetchingPending,
+      emptyText: "No pending salons found",
+    },
+    {
+      key: "Approved",
+      title: "Approved",
+      data: transformSalons(approvedData?.data?.items || []),
+      isLoading: loadingApproved,
+      isFetching: fetchingApproved,
+      emptyText: "No approved salons found",
+    },
+    {
+      key: "Hold",
+      title: "Hold",
+      data: transformSalons(holdData?.data?.items || []),
+      isLoading: loadingHold,
+      isFetching: fetchingHold,
+      emptyText: "No hold salons found",
+    },
+    {
+      key: "Rejected",
+      title: "Rejected",
+      data: transformSalons(rejectedData?.data?.items || []),
+      isLoading: loadingRejected,
+      isFetching: fetchingRejected,
+      emptyText: "No rejected salons found",
+    },
+  ];
+
+  const toggleGroup = (key) => {
+    setOpenGroups((current) => ({
+      ...current,
+      [key]: !current[key],
+    }));
+  };
+
+  const renderAllGroups = () => (
+    <div className="flex flex-col gap-5">
+      {allSections.map((section) => {
+        const isOpen = openGroups[section.key];
+
+        return (
+          <div
+            key={section.key}
+            className="overflow-hidden rounded-[12px] border border-vmb-primary/10 bg-white shadow-sm"
+          >
+            <button
+              type="button"
+              onClick={() => toggleGroup(section.key)}
+              className="flex w-full items-center justify-between gap-4 border-b border-vmb-primary/10 bg-vmb-bg-soft px-4 py-4 text-left transition hover:bg-vmb-secondary/10"
+            >
+              <div className="flex items-center gap-3">
+                {isOpen ?
+                  <FiChevronDown className="h-5 w-5 text-vmb-secondary" />
+                : <FiChevronRight className="h-5 w-5 text-vmb-secondary" />}
+                <div>
+                  <div>
+                    <h3 className="text-[16px] font-semibold text-vmb-primary">
+                      {section.title}
+                    </h3>
+                    <p className="text-xs text-vmb-text-muted">
+                      {section.data.length} salon
+                      {section.data.length === 1 ? "" : "s"}
+                      {section.isFetching ? " • refreshing" : ""}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                {section.data.length > 0 && (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-vmb-secondary/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-vmb-secondary">
+                    <FiBell className="h-3.5 w-3.5" />
+                    New {section.data.length}
+                  </span>
+                )}
+              </div>
+            </button>
+
+            {isOpen && (
+              <div className="p-4 md:p-5">
+                {section.isLoading ?
+                  <div className="text-center py-8 text-vmb-text-muted">
+                    Loading {section.title.toLowerCase()} salons...
+                  </div>
+                : section.data.length === 0 ?
+                  <div className="text-center py-8 text-vmb-text-muted text-sm">
+                    {section.emptyText}
+                  </div>
+                : <AdvancedTable
+                    data={section.data}
+                    columns={columns}
+                    onRowClick={handleRowClick}
+                    onActionClick={handleAction}
+                    sortBy={advancedSort.field}
+                    sortOrder={advancedSort.order}
+                    onSort={handleTableSort}
+                  />
+                }
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+
   return (
     <div className="w-full flex flex-col gap-y-8 py-6 bg-vmb-bg-soft rounded-[10px]">
       <div className="bg-white rounded-[10px] shadow-sm overflow-hidden">
@@ -431,7 +560,9 @@ export default function AllSalons({ searchQuery = "", sortOption = "Newest" }) {
         </div>
 
         <div className="p-4 md:p-6">
-          {isLoading ?
+          {activeTab === "All" ?
+            renderAllGroups()
+          : isLoading ?
             <div className="text-center py-12 text-vmb-text-muted">
               Loading salons...
             </div>
