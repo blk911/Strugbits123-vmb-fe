@@ -67,34 +67,34 @@ export default function SalonHero() {
         />
       </div>
 
-      <div className="relative z-[1] mx-auto flex min-h-[78vh] max-w-[1440px] flex-col px-5 pb-16 pt-20 sm:min-h-[82vh] sm:px-8 sm:pb-20 sm:pt-24 lg:min-h-[88vh] lg:flex-row lg:items-center lg:gap-4 lg:px-12 lg:pb-24 lg:pt-28">
-        {/* Left — primary narrative */}
-        <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-[1.05] lg:pr-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.38em] text-[#F7E7CE]/55 sm:text-xs">
+      <div className="relative z-[1] mx-auto flex min-h-[31vh] max-w-[1440px] flex-col px-5 pb-7 pt-14 sm:min-h-[33vh] sm:px-8 sm:pb-9 sm:pt-16 lg:min-h-[35vh] lg:flex-row lg:items-center lg:gap-3 lg:px-12 lg:pb-10 lg:pt-16">
+        {/* Left — primary narrative (~60% shorter hero vs prior viewport mins) */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-[1.05] lg:pr-6">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#F7E7CE]/55 sm:text-[11px]">
             Private Studio
           </p>
-          <h1 className="font-studio-serif mt-5 text-[2.35rem] font-medium leading-[1.08] tracking-tight text-[#faf6ef] sm:text-5xl lg:text-[3.35rem] lg:leading-[1.05]">
+          <h1 className="font-studio-serif mt-3 text-[1.85rem] font-medium leading-[1.1] tracking-tight text-[#faf6ef] sm:mt-4 sm:text-[2.15rem] lg:text-[2.65rem] lg:leading-[1.06]">
             The Private Studio
           </h1>
-          <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#d8d2c8] sm:text-lg">
+          <p className="mt-3 max-w-xl text-[15px] leading-snug text-[#d8d2c8] sm:mt-4 sm:text-[16px] sm:leading-relaxed lg:text-[17px]">
             Luxury nail experiences for trusted clients and curated referrals.
           </p>
-          <p className="mt-3 text-sm font-medium tracking-wide text-[#F7E7CE]/50">
+          <p className="mt-2 text-xs font-medium tracking-wide text-[#F7E7CE]/50 sm:text-sm">
             Cherry Creek · Invite-only access
           </p>
 
           <HeroActions
-            className="mt-10"
-            onSendGift={() => scrollToId("salon-gifts-invite")}
+            className="mt-6 sm:mt-7"
+            onSendGift={() => scrollToId("salon-gift-flow")}
             onBookExperience={() => scrollToId("salon-book-experience")}
           />
         </div>
 
         {/* Right — trust & human presence (asymmetrical) */}
-        <div className="relative mt-14 flex min-h-[320px] flex-1 justify-end lg:mt-0 lg:min-h-[420px] lg:flex-[0.95]">
+        <div className="relative mt-8 flex min-h-[168px] flex-1 justify-end sm:mt-9 lg:mt-0 lg:min-h-[200px] lg:flex-[0.95]">
           {/* Stylist / lifestyle focal */}
-          <div className="relative w-full max-w-[420px] lg:max-w-none">
-            <div className="relative ml-auto aspect-[4/5] w-[88%] max-w-[380px] overflow-hidden rounded-[2rem] sm:w-[85%] sm:max-w-[400px] lg:mr-0 lg:w-full lg:max-w-[440px]">
+          <div className="relative w-full max-w-[360px] lg:max-w-none">
+            <div className="relative ml-auto aspect-[4/5] w-[82%] max-w-[300px] overflow-hidden rounded-[1.35rem] sm:w-[80%] sm:max-w-[320px] sm:rounded-[1.65rem] lg:mr-0 lg:w-full lg:max-w-[360px] lg:rounded-[1.75rem]">
               <img
                 src={stylistStill}
                 alt="Salon experience"

@@ -29,7 +29,6 @@ import {
   FaExclamationTriangle,
   FaExternalLinkAlt,
   FaImage,
-  FaKey,
   FaShareAlt,
   FaTimes,
   FaTrashAlt,
@@ -764,6 +763,42 @@ function getProviderExportGuide(providerId) {
   return buildGenericExportGuide(providerId);
 }
 
+/**
+ * Flatten grouped guide steps into workflow rows; align screenshots by index;
+ * append any extra screenshot slots as trailing rows.
+ * @param {ProviderExportGuide} guide
+ * @returns {Array<{ stepText: string; groupTitle?: string; screenshot?: { label: string; description: string }; isExtraShot?: boolean }>}
+ */
+function flattenExportWorkflow(guide) {
+  /** @type {Array<{ stepText: string; groupTitle?: string; screenshot?: { label: string; description: string }; isExtraShot?: boolean }>} */
+  const rows = [];
+  for (const group of guide.guideSteps) {
+    let first = true;
+    for (const stepText of group.steps) {
+      rows.push({
+        stepText,
+        groupTitle: first ? group.title ?? undefined : undefined,
+      });
+      first = false;
+    }
+  }
+  const slots = guide.screenshotSlots ?? [];
+  for (let i = 0; i < rows.length; i++) {
+    if (slots[i]) {
+      rows[i].screenshot = slots[i];
+    }
+  }
+  for (let j = rows.length; j < slots.length; j++) {
+    const slot = slots[j];
+    rows.push({
+      stepText: `Optional screenshot: ${slot.label}`,
+      screenshot: slot,
+      isExtraShot: true,
+    });
+  }
+  return rows;
+}
+
 function captureGuideRowVisible(
   id,
   showVerifiedOnly,
@@ -1272,10 +1307,10 @@ const DEEP_DIG_STAGE_COPY = {
   upload: {
     pageTitle: "Upload Queue",
     headerBlurb:
-      "Upload the files you gathered. Deep Dig organizes them by provider and report type.",
+      "Upload the files you gathered. Data Mine organizes them by provider and report type.",
     infoTitle: "Step 2 — Upload",
     infoBody:
-      "Upload the files you gathered. Deep Dig organizes them by provider and report type.",
+      "Upload the files you gathered. Data Mine organizes them by provider and report type.",
   },
   preflight: {
     pageTitle: "Preflight Check",
@@ -1313,7 +1348,7 @@ function DeepDigPipelineInfoOverlay({ stageId, onClose }) {
       className="fixed inset-0 z-[110] flex items-end justify-center sm:items-center sm:p-4"
       role="dialog"
       aria-modal="true"
-      aria-labelledby={`deep-dig-pipeline-info-${stageId}`}
+      aria-labelledby={`data-mine-pipeline-info-${stageId}`}
     >
       <button
         type="button"
@@ -1327,7 +1362,7 @@ function DeepDigPipelineInfoOverlay({ stageId, onClose }) {
       >
         <div className="flex items-start justify-between gap-3">
           <h3
-            id={`deep-dig-pipeline-info-${stageId}`}
+            id={`data-mine-pipeline-info-${stageId}`}
             className="font-studio-serif text-lg font-semibold leading-snug text-[#2f2a28]"
           >
             {copy.infoTitle}
@@ -1350,6 +1385,29 @@ function DeepDigPipelineInfoOverlay({ stageId, onClose }) {
 }
 
 /**
+ * Compact disclosure for secondary export-card copy.
+ * @param {{ label: string; children: React.ReactNode }} props
+ */
+function ExportCardAccordion({ label, children }) {
+  return (
+    <details className="group overflow-hidden rounded-lg border border-[#e8ddd4]/80 bg-white/75 [&_summary::-webkit-details-marker]:hidden">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-2.5 text-left transition hover:bg-[#faf6f2]/90">
+        <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#6b6262]">
+          {label}
+        </span>
+        <FaChevronDown
+          className="size-3 shrink-0 text-[#a39a97] transition group-open:rotate-180"
+          aria-hidden
+        />
+      </summary>
+      <div className="border-t border-[#efe4db]/70 px-3 py-2.5 text-xs leading-relaxed text-[#5f5654]">
+        {children}
+      </div>
+    </details>
+  );
+}
+
+/**
  * @param {{ stage: string; onRequestStepInfo: (id: string) => void }} props
  */
 function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
@@ -1357,7 +1415,7 @@ function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
   const idx = activeIndex >= 0 ? activeIndex : 0;
   return (
     <nav
-      aria-label="Deep Dig workflow"
+      aria-label="Data Mine workflow"
       className="rounded-xl border border-[#e8ddd4]/90 bg-gradient-to-b from-[#fffdfb]/95 to-[#faf6f2]/90 px-2 py-2.5 shadow-[0_8px_28px_-22px_rgba(47,42,40,0.4)] sm:px-3 sm:py-3"
     >
       <div className="flex min-w-0 items-stretch gap-0 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden">
@@ -1449,7 +1507,7 @@ function DeepDigCompactPageHeader({ stage, backControl }) {
           <div className="shrink-0 pt-0.5">{backControl}</div>
           <div className="min-w-0">
             <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#b8966a]">
-              DEEP DIG
+              DATA MINE
             </p>
             <h1 className="font-studio-serif text-xl font-semibold leading-tight tracking-tight text-[#2f2a28] sm:text-2xl">
               {copy.pageTitle}
@@ -1633,7 +1691,7 @@ function DeepDigProgressRail({
   return (
     <aside
       className="hidden min-w-0 lg:block"
-      aria-label="Deep Dig progress"
+      aria-label="Data Mine progress"
     >
       <div className="sticky top-[88px] rounded-xl border border-[#e2d6cf] bg-[#fffdfb]/95 p-3 shadow-[0_14px_40px_-30px_rgba(39,46,45,0.35)] xl:p-4">
         <h2 className="font-studio-serif text-sm font-semibold text-[#2f2a28]">
@@ -1734,7 +1792,7 @@ function DeepDigConciergeDrawer({
         className="absolute inset-0 flex justify-end"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="deep-dig-concierge-title"
+        aria-labelledby="data-mine-concierge-title"
       >
         <aside
           className="relative flex h-full w-full max-w-none flex-col border-[#e2d6cf] bg-[#fffdfb] shadow-[0_0_48px_-12px_rgba(39,46,45,0.35)] max-lg:border-t lg:max-w-[min(480px,100vw)] lg:rounded-l-2xl lg:border-l"
@@ -1743,7 +1801,7 @@ function DeepDigConciergeDrawer({
           <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#efe4db] px-4 py-3 sm:px-5 sm:py-3.5">
             <div className="min-w-0">
               <p
-                id="deep-dig-concierge-title"
+                id="data-mine-concierge-title"
                 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]"
               >
                 Concierge Assist
@@ -1961,7 +2019,7 @@ function DeepDigConciergeDrawer({
                   />
                   <span className="text-sm leading-relaxed text-[#5f5654]">
                     I authorize VMB to access this provider account only to
-                    gather the requested export files for my Deep Dig
+                    gather the requested export files for my Data Mine
                     analysis.
                   </span>
                 </label>
@@ -2287,6 +2345,19 @@ export default function DeepDig() {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id);
       else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const markExportWorkflowComplete = useCallback((providerId) => {
+    setGatheredIds((prev) => {
+      const next = new Set(prev);
+      next.add(providerId);
+      return next;
+    });
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      next.delete(providerId);
       return next;
     });
   }, []);
@@ -3115,14 +3186,15 @@ export default function DeepDig() {
                 schemaRowsForCard.length === 0 ?
                   "No registry rows"
                 : `${schemaMappedCount} mapped · ${schemaSampleNeededCount} need sample`;
+              const workflowRows = flattenExportWorkflow(guide);
               return (
                 <article
                   key={id}
-                  className="overflow-hidden rounded-xl border border-[#e2d6cf] bg-white shadow-[0_14px_40px_-34px_rgba(39,46,45,0.28)]"
+                  className="overflow-hidden rounded-xl border border-[#e8ddd4] bg-white shadow-[0_8px_32px_-28px_rgba(39,46,45,0.22)]"
                 >
                   <div
-                    className={`flex flex-col gap-2 px-3 py-2.5 sm:px-4 lg:flex-row lg:items-center lg:justify-between lg:gap-4 ${
-                      expanded ? "border-b border-[#efe4db] bg-[#fffcf9]" : ""
+                    className={`flex flex-col gap-2 px-3 py-2.5 sm:px-4 lg:flex-row lg:items-center lg:justify-between lg:gap-3 ${
+                      expanded ? "border-b border-[#efe4db]/90 bg-[#fffcf9]" : ""
                     }`}
                   >
                     <div className="min-w-0 flex flex-1 flex-wrap items-center gap-x-3 gap-y-1.5">
@@ -3156,7 +3228,7 @@ export default function DeepDig() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-1 lg:justify-end">
+                    <div className="flex flex-wrap items-center gap-1.5 lg:justify-end">
                       <button
                         type="button"
                         onClick={() => toggleExpanded(id)}
@@ -3170,15 +3242,14 @@ export default function DeepDig() {
                       <button
                         type="button"
                         onClick={() => setConciergeDrawerProviderId(id)}
-                        className="inline-flex min-h-8 items-center justify-center gap-1.5 rounded-full border border-[#c9a86a]/45 bg-[#faf6f0] px-2.5 text-[11px] font-bold text-[#4a3d2e] transition hover:border-[#b88f45] hover:bg-[#f3ead8] sm:px-3 sm:text-xs"
+                        className="inline-flex min-h-8 items-center justify-center rounded-full border border-[#e2d6cf] bg-[#fffdfb] px-2.5 text-[11px] font-semibold text-[#6b6262] transition hover:border-[#b88f45]/35 hover:bg-[#faf4ee] hover:text-[#333232] sm:px-3 sm:text-xs"
                       >
-                        <FaKey className="text-[10px]" aria-hidden />
-                        Open Concierge Assist
+                        Need help exporting?
                       </button>
                       <button
                         type="button"
                         onClick={() => toggleGathered(id)}
-                        className="inline-flex min-h-8 items-center justify-center rounded-full bg-[#b88f45] px-2.5 text-[11px] font-bold text-white shadow-[0_10px_28px_-14px_rgba(184,143,69,0.55)] transition hover:bg-[#c0a05a] sm:px-3 sm:text-xs"
+                        className="inline-flex min-h-8 items-center justify-center rounded-full border border-[#e2d6cf] bg-white px-2.5 text-[11px] font-bold text-[#333232] transition hover:border-[#b88f45]/40 hover:bg-[#faf4ee] sm:px-3 sm:text-xs"
                       >
                         {gathered ? "Mark not gathered" : "Mark gathered"}
                       </button>
@@ -3194,284 +3265,220 @@ export default function DeepDig() {
                   </div>
 
                   {expanded ?
-                    <div className="border-t border-[#e2d6cf] bg-[#faf8f5]/40 px-3 py-4 sm:px-4 sm:py-5">
-                      <div className="grid grid-cols-12 gap-4 lg:gap-6">
-                        <div className="col-span-12 space-y-4 lg:col-span-8">
-                          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-[#efe4db]/90 pb-2 text-[10px] font-medium text-[#6b6262]">
-                            <span
-                              className={`inline-flex items-center gap-1.5 ${
-                                guideConfidenceKey === "verified" ?
-                                  "font-semibold text-[#333232]"
-                                : ""
-                              }`}
-                            >
-                              <span
-                                className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.verified.dot}`}
-                                aria-hidden
-                              />
-                              {DEEP_DIG_CONFIDENCE.verified.legendLabel}
-                            </span>
-                            <span className="text-[#c9bfb8]" aria-hidden>
-                              ·
-                            </span>
-                            <span
-                              className={`inline-flex items-center gap-1.5 ${
-                                guideConfidenceKey === "assumed" ?
-                                  "font-semibold text-[#333232]"
-                                : ""
-                              }`}
-                            >
-                              <span
-                                className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.assumed.dot}`}
-                                aria-hidden
-                              />
-                              {DEEP_DIG_CONFIDENCE.assumed.legendLabel}
-                            </span>
-                            <span className="text-[#c9bfb8]" aria-hidden>
-                              ·
-                            </span>
-                            <span
-                              className={`inline-flex items-center gap-1.5 ${
-                                guideConfidenceKey === "needs_live_validation" ?
-                                  "font-semibold text-[#333232]"
-                                : ""
-                              }`}
-                            >
-                              <span
-                                className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.needs_live_validation.dot}`}
-                                aria-hidden
-                              />
-                              {
-                                DEEP_DIG_CONFIDENCE.needs_live_validation
-                                  .legendLabel
-                              }
-                            </span>
-                          </p>
-
-                          <section className="rounded-lg border border-[#efe4db]/90 bg-white/90 p-3">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Official guide links
-                            </h4>
-                            {guide.officialLinks.length > 0 ?
-                              <div className="mt-1.5 flex flex-wrap gap-1">
-                                {guide.officialLinks.map((link) => (
-                                  <a
-                                    key={link.url}
-                                    href={link.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex max-w-full items-center gap-1 rounded-full border border-[#e2d6cf] bg-[#fffdfb] px-2 py-0.5 text-[10px] font-semibold text-[#333232] transition hover:border-[#b88f45]/40 hover:underline hover:underline-offset-2"
-                                  >
-                                    <FaExternalLinkAlt
-                                      className="size-2.5 shrink-0 text-[#b88f45]"
-                                      aria-hidden
-                                    />
-                                    <span className="min-w-0 truncate">
-                                      {link.label}
-                                    </span>
-                                  </a>
-                                ))}
-                              </div>
-                            : <p className="mt-1.5 text-[11px] italic leading-snug text-[#8a7f7c]">
-                                No official doc links yet — use support
-                                fallback and live discovery.
-                              </p>}
-                          </section>
-
-                          <section className="rounded-lg border border-[#efe4db]/90 bg-white/90 p-3">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Export checklist
-                            </h4>
-                            <ul className="mt-1.5 list-disc space-y-0.5 pl-4 text-[13px] leading-snug text-[#5f5654]">
-                              {guide.requiredExports.map((line) => (
-                                <li key={line}>{line}</li>
-                              ))}
-                            </ul>
-                            <p className="mt-2 border-t border-[#efe4db]/60 pt-2 text-xs leading-snug text-[#5f5654]">
-                              <span className="font-bold text-[#333232]">
-                                Expected files:{" "}
-                              </span>
-                              {guide.expectedFileTypes}
-                            </p>
-                          </section>
-
-                          <div className="rounded-lg border border-[#efe4db]/90 bg-white/90 p-2.5">
-                            <p className="text-xs leading-snug text-[#5f5654]">
-                              <span className="font-bold text-[#333232]">
-                                Suggested date range:{" "}
-                              </span>
-                              <span className="font-semibold text-[#333232]">
-                                {DATE_RANGE_LABEL}
-                              </span>
-                            </p>
-                          </div>
-
-                          <section className="rounded-lg border border-[#e2d6cf]/90 bg-white p-3 sm:p-4">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Step-by-step guide
-                            </h4>
-                            <div className="mt-2 space-y-4">
-                              {guide.guideSteps.map((group, gi) => (
-                                <div key={gi}>
-                                  {group.title ?
-                                    <p className="text-[13px] font-bold text-[#333232]">
-                                      {group.title}
-                                    </p>
-                                  : null}
-                                  <ol
-                                    className={`list-decimal space-y-1.5 pl-4 text-[13px] leading-snug text-[#5f5654] ${
-                                      group.title ? "mt-1.5" : ""
-                                    }`}
-                                  >
-                                    {group.steps.map((step, si) => (
-                                      <li key={si}>{step}</li>
-                                    ))}
-                                  </ol>
-                                </div>
-                              ))}
-                            </div>
-                          </section>
-
-                          <section>
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Screenshot placeholders
-                            </h4>
-                            <p className="mt-0.5 text-[10px] leading-snug text-[#8a7f7c]">
-                              Capture these when you validate on a live account.
-                            </p>
-                            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 2xl:grid-cols-3">
-                              {guide.screenshotSlots.map((slot) => (
-                                <div
-                                  key={slot.label}
-                                  className="flex h-[76px] gap-2 overflow-hidden rounded-lg border border-dashed border-[#c9b8a8] bg-[#f5eee9]/40 px-2 py-2"
-                                >
-                                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#fffdfb] text-[#b88f45] ring-1 ring-[#e8ddd4]">
-                                    <FaImage
-                                      className="text-xs opacity-90"
-                                      aria-hidden
-                                    />
-                                  </span>
-                                  <div className="min-w-0 flex-1">
-                                    <p className="text-[9px] font-bold uppercase tracking-wide text-[#6b6262]">
-                                      Screenshot
-                                    </p>
-                                    <p className="truncate text-xs font-semibold text-[#333232]">
-                                      {slot.label}
-                                    </p>
-                                    <p className="line-clamp-2 text-[10px] leading-snug text-[#7a716e]">
-                                      {slot.description}
-                                    </p>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </section>
-
-                          <section className="rounded-lg border border-[#efe4db]/90 bg-white/90 p-3">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Sample exports
-                            </h4>
-                            {sampleExportsForCard.length > 0 ?
-                              <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                                {sampleExportsForCard.map((sample) => (
-                                  <div
-                                    key={sample.id}
-                                    className="rounded-md border border-[#e8ddd4] bg-[#fffdfb] p-2.5"
-                                  >
-                                    <p className="text-xs font-semibold text-[#333232]">
-                                      {sample.label}
-                                    </p>
-                                    <div className="mt-2 flex flex-wrap gap-1.5">
-                                      <a
-                                        href={sample.path}
-                                        download={sample.filename}
-                                        className="inline-flex items-center text-[11px] font-semibold text-[#b88f45] underline decoration-[#e8ddd4] underline-offset-2 transition hover:text-[#a67c32]"
-                                      >
-                                        Download sample CSV
-                                      </a>
-                                      <button
-                                        type="button"
-                                        onClick={() =>
-                                          setUploadSamplePreviewId(sample.id)
-                                        }
-                                        className="inline-flex rounded-full border border-[#2f2a28]/14 bg-white px-2.5 py-1 text-[10px] font-bold text-[#333232] transition hover:border-[#b88f45]/45 hover:bg-[#faf4ee]"
-                                      >
-                                        View example
-                                      </button>
-                                    </div>
-                                    <div className="mt-1.5 flex max-h-14 flex-wrap gap-1 overflow-hidden">
-                                      {sample.expectedHeaders
-                                        .slice(0, 8)
-                                        .map((h) => (
-                                          <span
-                                            key={h}
-                                            className="rounded-full border border-[#e2d6cf] bg-[#faf6f2] px-1.5 py-0 text-[9px] font-semibold text-[#4a4340]"
-                                          >
-                                            {h}
-                                          </span>
-                                        ))}
-                                      {sample.expectedHeaders.length > 8 ?
-                                        <span className="self-center text-[9px] text-[#a39a97]">
-                                          +{sample.expectedHeaders.length - 8}{" "}
-                                          headers
-                                        </span>
-                                      : null}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            : <p className="mt-1.5 text-[11px] italic leading-snug text-[#8a7f7c]">
-                                No packaged samples for this provider yet.
-                              </p>}
-                          </section>
-
-                          <label className="block rounded-lg border border-[#efe4db]/90 bg-white/90 p-3">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
-                              Notes for your team
-                            </span>
-                            <textarea
-                              value={notesById[id] ?? ""}
-                              onChange={(e) => setNote(id, e.target.value)}
-                              rows={3}
-                              placeholder='Add login/export notes for your team…'
-                              className="mt-2 w-full resize-y rounded-lg border border-[#e2d6cf] bg-white px-3 py-2 text-sm text-[#333232] placeholder:text-[#a39a97] focus:border-[#b88f45] focus:outline-none focus:ring-2 focus:ring-[#b88f45]/20"
-                            />
-                          </label>
+                    <div className="border-t border-[#efe4db]/80 bg-[#faf8f5]/25 px-3 py-4 sm:px-4 sm:py-5">
+                      <div className="mx-auto max-w-3xl space-y-5">
+                        <div className="flex flex-wrap items-center gap-2 border-b border-[#efe4db]/50 pb-3">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
+                            Export mode
+                          </span>
+                          <span className="rounded-full bg-[#faf0e4] px-2.5 py-1 text-[10px] font-bold text-[#6b4f21]">
+                            Guided export
+                          </span>
+                          <span
+                            className="rounded-full border border-dashed border-[#ded5cd] px-2.5 py-1 text-[10px] font-semibold text-[#a39a97]"
+                            title="Coming later"
+                          >
+                            Connect account
+                          </span>
+                          <span
+                            className="rounded-full border border-dashed border-[#ded5cd] px-2.5 py-1 text-[10px] font-semibold text-[#a39a97]"
+                            title="Use Need help exporting?"
+                          >
+                            Concierge assist
+                          </span>
                         </div>
 
-                        <div className="col-span-12 space-y-3 lg:col-span-4">
-                          <div className="rounded-lg border border-[#e2d6cf]/90 bg-white/95 p-3 shadow-sm">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
-                              Why we need this
-                            </h4>
-                            <p className="mt-1.5 text-xs leading-snug text-[#5f5654]">
-                              {guide.whatWeNeedThisFor}
-                            </p>
-                          </div>
+                        <section className="rounded-xl border border-[#e8ddd4] bg-[#fffdfb] p-4 sm:p-5">
+                          <h4 className="font-studio-serif text-lg font-semibold text-[#2f2a28]">
+                            Export workflow
+                          </h4>
+                          <p className="mt-1 text-sm leading-snug text-[#6b6262]">
+                            Follow these steps inside {guide.providerName} to
+                            generate your export files.
+                          </p>
+                          <p className="mt-2 text-[11px] text-[#8a7f7c]">
+                            <span className="font-semibold text-[#5f5654]">
+                              Suggested date range:
+                            </span>{" "}
+                            {DATE_RANGE_LABEL}
+                          </p>
+                          <ul className="mt-4 space-y-4">
+                            {workflowRows.map((row, wi) => (
+                              <li key={wi} className="flex gap-3">
+                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#c9a86a]/45 bg-[#faf0e4] font-studio-serif text-sm font-semibold tabular-nums text-[#6b4f21]">
+                                  {wi + 1}
+                                </span>
+                                <div className="min-w-0 flex-1 pt-0.5">
+                                  {row.groupTitle ?
+                                    <p className="text-[11px] font-bold uppercase tracking-wide text-[#a45f76]">
+                                      {row.groupTitle}
+                                    </p>
+                                  : null}
+                                  <p className="text-sm leading-relaxed text-[#333232]">
+                                    {row.stepText}
+                                  </p>
+                                  {row.screenshot ?
+                                    <div className="mt-2 flex gap-2 rounded-lg border border-dashed border-[#cfc4bc] bg-[#f5eee9]/35 px-2.5 py-2">
+                                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#fffdfb] text-[#b88f45] ring-1 ring-[#e8ddd4]">
+                                        <FaImage
+                                          className="text-xs opacity-90"
+                                          aria-hidden
+                                        />
+                                      </span>
+                                      <div className="min-w-0">
+                                        <p className="text-[9px] font-bold uppercase tracking-wide text-[#6b6262]">
+                                          Screenshot placeholder
+                                        </p>
+                                        <p className="text-xs font-semibold text-[#333232]">
+                                          {row.screenshot.label}
+                                        </p>
+                                        <p className="text-[10px] leading-snug text-[#7a716e]">
+                                          {row.screenshot.description}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  : null}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                          {!gathered ?
+                            <button
+                              type="button"
+                              onClick={() => markExportWorkflowComplete(id)}
+                              className="mt-5 w-full rounded-full bg-[#2f2a28] px-4 py-2.5 text-sm font-bold text-[#fffdfb] transition hover:bg-[#3d3634] sm:w-auto sm:px-6"
+                            >
+                              Mark export workflow complete
+                            </button>
+                          : <div className="mt-5 flex flex-wrap items-center gap-3">
+                              <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e8f0e6] px-3 py-1.5 text-xs font-semibold text-[#3d5c3a]">
+                                <FaCheck className="text-[10px]" aria-hidden />
+                                Export workflow complete
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => toggleGathered(id)}
+                                className="text-xs font-semibold text-[#7f5362] underline underline-offset-2"
+                              >
+                                Undo complete
+                              </button>
+                            </div>
+                          }
+                        </section>
 
-                          <div className="rounded-lg border border-[#e2d6cf]/90 bg-white/95 p-3 shadow-sm">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
-                              Trust notes
-                            </h4>
-                            <p className="mt-1.5 text-xs leading-snug text-[#5f5654]">
-                              {guide.notes}
-                            </p>
+                        <section>
+                          <h5 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
+                            Required exports
+                          </h5>
+                          <p className="mt-1 text-xs text-[#8a7f7c]">
+                            Download each export below, then add the files in{" "}
+                            <strong className="font-semibold text-[#5f5654]">
+                              Upload
+                            </strong>{" "}
+                            (next pipeline step).
+                          </p>
+                          <div className="mt-2.5 flex flex-wrap gap-1.5">
+                            {guide.requiredExports.map((line) => (
+                              <span
+                                key={line}
+                                className="inline-flex rounded-full border border-[#e2d6cf] bg-[#faf6f2] px-2.5 py-1 text-[11px] font-semibold text-[#333232]"
+                              >
+                                {line}
+                              </span>
+                            ))}
                           </div>
+                          <p className="mt-2 text-[11px] leading-snug text-[#8a7f7c]">
+                            Expected files: {guide.expectedFileTypes}
+                          </p>
+                        </section>
 
-                          <div className="rounded-lg border border-[#a45f76]/18 bg-[#fdf8f9] p-3">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
-                              Support fallback
-                            </h4>
-                            <p className="mt-1.5 text-xs leading-snug text-[#5f5654]">
-                              {guide.supportFallback}
-                            </p>
+                        {guide.officialLinks.length > 0 ?
+                          <div className="flex flex-wrap gap-1.5">
+                            {guide.officialLinks.map((link) => (
+                              <a
+                                key={link.url}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex max-w-full items-center gap-1 rounded-full border border-[#e8ddd4] bg-white px-2.5 py-1 text-[10px] font-semibold text-[#333232] transition hover:border-[#b88f45]/45"
+                              >
+                                <FaExternalLinkAlt
+                                  className="size-2.5 shrink-0 text-[#b88f45]"
+                                  aria-hidden
+                                />
+                                <span className="min-w-0 truncate">
+                                  {link.label}
+                                </span>
+                              </a>
+                            ))}
                           </div>
+                        : null}
 
-                          <div className="rounded-lg border border-[#c9a86a]/35 bg-[linear-gradient(145deg,#fffdfb_0%,#faf6f0_100%)] p-3">
-                            <h4 className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#a45f76]">
-                              Export readiness
-                            </h4>
-                            <dl className="mt-2 space-y-2 text-xs">
+                        <div className="space-y-2">
+                          <ExportCardAccordion label="Why this data matters">
+                            <p>{guide.whatWeNeedThisFor}</p>
+                          </ExportCardAccordion>
+                          <ExportCardAccordion label="Trust + validation notes">
+                            <p className="mb-3">{guide.notes}</p>
+                            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[#efe4db]/70 pt-2 text-[10px] font-medium text-[#6b6262]">
+                              <span
+                                className={`inline-flex items-center gap-1.5 ${
+                                  guideConfidenceKey === "verified" ?
+                                    "font-semibold text-[#333232]"
+                                  : ""
+                                }`}
+                              >
+                                <span
+                                  className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.verified.dot}`}
+                                  aria-hidden
+                                />
+                                {
+                                  DEEP_DIG_CONFIDENCE.verified.legendLabel
+                                }
+                              </span>
+                              <span className="text-[#c9bfb8]" aria-hidden>
+                                ·
+                              </span>
+                              <span
+                                className={`inline-flex items-center gap-1.5 ${
+                                  guideConfidenceKey === "assumed" ?
+                                    "font-semibold text-[#333232]"
+                                  : ""
+                                }`}
+                              >
+                                <span
+                                  className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.assumed.dot}`}
+                                  aria-hidden
+                                />
+                                {DEEP_DIG_CONFIDENCE.assumed.legendLabel}
+                              </span>
+                              <span className="text-[#c9bfb8]" aria-hidden>
+                                ·
+                              </span>
+                              <span
+                                className={`inline-flex items-center gap-1.5 ${
+                                  guideConfidenceKey ===
+                                  "needs_live_validation" ?
+                                    "font-semibold text-[#333232]"
+                                  : ""
+                                }`}
+                              >
+                                <span
+                                  className={`size-2 shrink-0 rounded-full ${DEEP_DIG_CONFIDENCE.needs_live_validation.dot}`}
+                                  aria-hidden
+                                />
+                                {
+                                  DEEP_DIG_CONFIDENCE.needs_live_validation
+                                    .legendLabel
+                                }
+                              </span>
+                            </p>
+                          </ExportCardAccordion>
+                          <ExportCardAccordion label="Support fallback">
+                            <p>{guide.supportFallback}</p>
+                          </ExportCardAccordion>
+                          <ExportCardAccordion label="Export readiness">
+                            <dl className="space-y-2 text-xs">
                               <div className="flex flex-wrap items-start justify-between gap-2 border-b border-[#efe4db]/70 pb-2">
                                 <dt className="font-semibold text-[#6b6262]">
                                   Required exports
@@ -3527,11 +3534,79 @@ export default function DeepDig() {
                                 </dd>
                               </div>
                             </dl>
-                          </div>
+                          </ExportCardAccordion>
+                          <ExportCardAccordion label="Sample exports">
+                            {sampleExportsForCard.length > 0 ?
+                              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                {sampleExportsForCard.map((sample) => (
+                                  <div
+                                    key={sample.id}
+                                    className="rounded-md border border-[#e8ddd4] bg-[#fffdfb] p-2.5"
+                                  >
+                                    <p className="text-xs font-semibold text-[#333232]">
+                                      {sample.label}
+                                    </p>
+                                    <div className="mt-2 flex flex-wrap gap-1.5">
+                                      <a
+                                        href={sample.path}
+                                        download={sample.filename}
+                                        className="inline-flex items-center text-[11px] font-semibold text-[#b88f45] underline decoration-[#e8ddd4] underline-offset-2 transition hover:text-[#a67c32]"
+                                      >
+                                        Download sample CSV
+                                      </a>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          setUploadSamplePreviewId(sample.id)
+                                        }
+                                        className="inline-flex rounded-full border border-[#2f2a28]/14 bg-white px-2.5 py-1 text-[10px] font-bold text-[#333232] transition hover:border-[#b88f45]/45 hover:bg-[#faf4ee]"
+                                      >
+                                        View example
+                                      </button>
+                                    </div>
+                                    <div className="mt-1.5 flex max-h-14 flex-wrap gap-1 overflow-hidden">
+                                      {sample.expectedHeaders
+                                        .slice(0, 8)
+                                        .map((h) => (
+                                          <span
+                                            key={h}
+                                            className="rounded-full border border-[#e2d6cf] bg-[#faf6f2] px-1.5 py-0 text-[9px] font-semibold text-[#4a4340]"
+                                          >
+                                            {h}
+                                          </span>
+                                        ))}
+                                      {sample.expectedHeaders.length > 8 ?
+                                        <span className="self-center text-[9px] text-[#a39a97]">
+                                          +{sample.expectedHeaders.length - 8}{" "}
+                                          headers
+                                        </span>
+                                      : null}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            : <p className="text-[11px] italic leading-snug text-[#8a7f7c]">
+                                No packaged samples for this provider yet.
+                              </p>}
+                          </ExportCardAccordion>
                         </div>
+
+                        <label className="block rounded-lg border border-[#efe4db]/70 bg-white/80 p-3">
+                          <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#a45f76]">
+                            Notes for your team
+                          </span>
+                          <textarea
+                            value={notesById[id] ?? ""}
+                            onChange={(e) => setNote(id, e.target.value)}
+                            rows={3}
+                            placeholder='Add login/export notes for your team…'
+                            className="mt-2 w-full resize-y rounded-lg border border-[#e2d6cf] bg-white px-3 py-2 text-sm text-[#333232] placeholder:text-[#a39a97] focus:border-[#b88f45] focus:outline-none focus:ring-2 focus:ring-[#b88f45]/20"
+                          />
+                        </label>
                       </div>
                     </div>
                   : null}
+
                 </article>
               );
             })
@@ -3675,7 +3750,7 @@ export default function DeepDig() {
                       </h3>
                       <ul className="mt-3 flex flex-col gap-4">
                         {labels.map((label, idx) => {
-                          const inputId = `deep-dig-file-${id}-${idx}`;
+                          const inputId = `data-mine-file-${id}-${idx}`;
                           const file = row[idx] ?? null;
                           const displayName = getUploadSlotDisplayName(file);
                           const slotSample = findSampleForUploadLabel(id, label);

@@ -1,5 +1,5 @@
 /**
- * Deep Dig credential assist API (Vite dev / preview middleware).
+ * Data Mine credential assist API (Vite dev / preview middleware).
  *
  * TODO: Mount equivalent routes on production app server with vault-backed store.
  * TODO: Rate limit POST; authenticate admin for GET/PATCH endpoints.

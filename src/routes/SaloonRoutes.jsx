@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import {
@@ -22,6 +22,10 @@ export default function SalonRoutes() {
       />
       <Route
         path="/salon-owner/deep-dig"
+        element={<Navigate to="/salon-owner/data-mine" replace />}
+      />
+      <Route
+        path="/salon-owner/data-mine"
         element={
           <ProtectedRoute allowedRoles={["salon-owner"]}>
             <DeepDig />

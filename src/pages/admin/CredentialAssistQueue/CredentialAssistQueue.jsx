@@ -118,14 +118,14 @@ export default function CredentialAssistQueue() {
         <div className="flex flex-col gap-4 border-b border-vmb-primary/8 bg-white/60 px-5 py-8 sm:flex-row sm:items-start sm:justify-between sm:px-8 sm:py-10">
           <div className="min-w-0">
             <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-vmb-secondary">
-              Deep Dig · Concierge
+              Data Mine · Concierge
             </p>
             <h1 className="mt-3 flex items-center gap-2 font-semibold text-vmb-primary text-[26px] leading-tight sm:text-[32px]">
               <LuKeyRound className="h-8 w-8 shrink-0 text-vmb-secondary" aria-hidden />
               Credential Assist Queue
             </h1>
             <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-vmb-text-muted">
-              Review temporary concierge access requests for Deep Dig exports.
+              Review temporary concierge access requests for Data Mine exports.
             </p>
           </div>
           <button

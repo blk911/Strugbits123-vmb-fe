@@ -104,8 +104,8 @@ export const menus = {
       icon: <FaChartLine className="h-5 w-5" />,
     },
     {
-      name: "Deep Dig",
-      path: "/salon-owner/deep-dig",
+      name: "Data Mine",
+      path: "/salon-owner/data-mine",
       icon: <LuSearch className="h-5 w-5" />,
     },
     {

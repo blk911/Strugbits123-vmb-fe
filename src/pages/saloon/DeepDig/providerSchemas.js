@@ -1,12 +1,12 @@
 /**
- * Deep Dig — normalized salon model and provider export registry (front-end only).
+ * Data Mine — normalized salon model and provider export registry (front-end only).
  * @typedef {"sample_needed" | "schema_captured" | "mapped"} SchemaCaptureStatus
  * @typedef {"official_docs" | "live_export" | "sample_mock"} SchemaSource
  * @typedef {"verified" | "assumed" | "needs_live_test"} FieldMapConfidence
  */
 
 /**
- * VMB normalized entities used across Deep Dig mapping and preflight.
+ * VMB normalized entities used across Data Mine mapping and preflight.
  * Each entry describes intent and core fields (not a DB schema).
  */
 export const NORMALIZED_SALON_SCHEMA = {
@@ -522,7 +522,7 @@ const INSTAGRAM_INSIGHTS_PREVIEW_ROWS = [
 ];
 
 /**
- * Deep Dig demo CSV registry (served from `public/sample-exports/deep-dig/`).
+ * Data Mine demo CSV registry (served from `public/sample-exports/deep-dig/`).
  * `uploadSlotHints`: longest matching hint wins against the upload queue label (case-insensitive).
  * @type {Array<{
  *   id: string;
