@@ -9,10 +9,12 @@ import {
   LuFlaskConical,
   LuHeadphones,
   LuKeyRound,
-  LuSearch,
   LuSettings,
+  LuShare2,
   LuUserCog,
   LuUserRoundPlus,
+  LuCloudUpload,
+  LuChartColumn,
 } from "react-icons/lu";
 import { IoIosPeople } from "react-icons/io";
 import { BsArchiveFill } from "react-icons/bs";
@@ -25,7 +27,7 @@ export const menus = {
     },
     {
       name: "Intelligence Lab",
-      path: "/admin/salon-intelligence",
+      path: "/admin/intelligence-lab",
       icon: <LuFlaskConical className="h-5 w-5" />,
       allowedRoles: ["admin"],
     },
@@ -89,6 +91,12 @@ export const menus = {
           icon: <LuContact className="h-4 w-4" />,
           allowedRoles: ["admin"],
         },
+        {
+          name: "Lab",
+          path: "/admin/lab",
+          icon: <LuShare2 className="h-4 w-4" />,
+          allowedRoles: ["admin"],
+        },
       ],
     },
     {
@@ -104,11 +112,6 @@ export const menus = {
       icon: <FaChartLine className="h-5 w-5" />,
     },
     {
-      name: "Data Mine",
-      path: "/salon-owner/data-mine",
-      icon: <LuSearch className="h-5 w-5" />,
-    },
-    {
       name: "Invites",
       path: "/salon-invites",
       icon: <LuUserRoundPlus className="h-5 w-5" />,
@@ -122,6 +125,31 @@ export const menus = {
       name: "Service Presets",
       path: "/service-presets",
       icon: <BsArchiveFill className="h-5 w-5" />,
+    },
+    { type: "divider" },
+    {
+      name: "tAIkOS",
+      subtext: "Deep Foresights",
+      path: "/salon-owner/deep-insights/data-capture",
+      groupPath: "/salon-owner/deep-insights",
+      menuIconUnstyled: true,
+      icon: (
+        <div className="flex h-8 w-8 items-center justify-center rounded-xl border border-vmb-gold/50 bg-slate-950 text-[11px] font-bold text-vmb-gold">
+          AI
+        </div>
+      ),
+      children: [
+        {
+          name: "Data Capture",
+          path: "/salon-owner/deep-insights/data-capture",
+          icon: <LuCloudUpload className="h-4 w-4" />,
+        },
+        {
+          name: "Analytics",
+          path: "/salon-owner/deep-insights/analytics",
+          icon: <LuChartColumn className="h-4 w-4" />,
+        },
+      ],
     },
   ],
   customer: [

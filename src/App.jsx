@@ -52,6 +52,12 @@ export default function App() {
         {role === "customer" && ClientRoutes()}
         <Route path="/booking-success" element={<BookingSuccess />} />
         <Route path="/booking-cancel" element={<BookingCancel />} />
+        <Route
+          path="/salon/deep-insights"
+          element={
+            <Navigate to="/salon-owner/deep-insights/data-capture" replace />
+          }
+        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

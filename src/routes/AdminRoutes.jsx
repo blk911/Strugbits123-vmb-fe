@@ -15,6 +15,7 @@ import {
   Contacts,
   SalonIntelligence,
   CredentialAssistQueue,
+  NetworkPropagationLab,
 } from "../pages/admin";
 import { SalonDetail } from "../pages/client";
 
@@ -62,6 +63,14 @@ export default function AdminRoutes() {
         }
       />
       <Route
+        path="/admin/intelligence-lab"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <SalonIntelligence />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/admin/salon-intelligence"
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
@@ -74,6 +83,14 @@ export default function AdminRoutes() {
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <CredentialAssistQueue />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/lab"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <NetworkPropagationLab />
           </ProtectedRoute>
         }
       />

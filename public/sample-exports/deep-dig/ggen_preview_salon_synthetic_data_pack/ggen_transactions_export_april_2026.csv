@@ -1,0 +1,272 @@
+transaction_id,appointment_id,transaction_date,client_id,client_name,provider_id,provider_name,service_name,service_category,service_amount,discount,tip,tax,total_collected,payment_method,vmb_gift,referral_credit_applied,notes
+GG-TXN-00001,GG-APT-00001,2026-04-01,GG-CL-0117,Camila Carter,GG-PROV-001,Mia Carter,Blowout,Hair,65,0,7.8,3.02,75.82,VMB Gift,no,0,High value
+GG-TXN-00002,GG-APT-00002,2026-04-01,GG-CL-0026,Olivia White,GG-PROV-005,Bri Ellis,Gloss / Toner,Color,95,0,19.0,4.42,118.42,VMB Gift,no,0,
+GG-TXN-00003,GG-APT-00003,2026-04-01,GG-CL-0085,Bella Hernandez,GG-PROV-005,Bri Ellis,Facial,Skin,110,15,0,4.42,99.42,Gift Card,no,0,Gift opportunity
+GG-TXN-00004,GG-APT-00004,2026-04-01,GG-CL-0114,Skylar Sanchez,GG-PROV-005,Bri Ellis,Gloss / Toner,Color,95,0,23.75,4.42,123.17,Card,no,5,Gift opportunity
+GG-TXN-00005,GG-APT-00005,2026-04-01,GG-CL-0060,Abigail Thompson,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,63,0,15.75,2.93,81.68,Cash,no,0,High value
+GG-TXN-00006,GG-APT-00006,2026-04-01,GG-CL-0031,Riley King,GG-PROV-004,Sasha Reed,Blowout,Hair,65,15,7.8,2.33,60.12,Gift Card,no,0,High value
+GG-TXN-00007,GG-APT-00008,2026-04-01,GG-CL-0113,Ava Green,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,38,0,7.6,1.77,47.37,Cash,yes,0,Gift opportunity
+GG-TXN-00008,GG-APT-00009,2026-04-01,GG-CL-0077,Layla Adams,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,90,0,16.2,4.18,110.39,Gift Card,no,5,
+GG-TXN-00009,GG-APT-00010,2026-04-01,GG-CL-0073,Ava Nguyen,GG-PROV-005,Bri Ellis,Balayage,Color,245,0,0,11.39,256.39,Cash,no,10,Rebooked
+GG-TXN-00010,GG-APT-00011,2026-04-01,GG-CL-0016,Charlotte Taylor,GG-PROV-002,Janelle Brooks,Blowout,Hair,70,0,14.0,3.25,87.25,VMB Gift,no,0,
+GG-TXN-00011,GG-APT-00012,2026-04-01,GG-CL-0005,Chloe Walker,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,73,0,8.76,3.39,85.15,VMB Gift,no,5,Rebooked
+GG-TXN-00012,GG-APT-00013,2026-04-01,GG-CL-0095,Savannah Baker,GG-PROV-003,Tori Nguyen,Facial,Skin,145,0,29.0,6.74,180.74,Card,no,0,Gift opportunity
+GG-TXN-00013,GG-APT-00014,2026-04-02,GG-CL-0075,Aurora Harris,GG-PROV-003,Tori Nguyen,Women's Haircut,Hair,85,20,21.25,3.02,89.27,VMB Gift,no,5,
+GG-TXN-00014,GG-APT-00015,2026-04-02,GG-CL-0106,Ellie Williams,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,75,0,13.5,3.49,91.99,Apple Pay,no,10,Gift opportunity
+GG-TXN-00015,GG-APT-00016,2026-04-02,GG-CL-0112,Skylar Green,GG-PROV-001,Mia Carter,Root Touch-Up,Color,150,0,22.5,6.97,179.47,Cash,no,5,Rebooked
+GG-TXN-00016,GG-APT-00017,2026-04-02,GG-CL-0044,Caroline Wilson,GG-PROV-005,Bri Ellis,Gel Manicure,Nails,73,0,8.76,3.39,85.15,Apple Pay,no,0,High value
+GG-TXN-00017,GG-APT-00018,2026-04-02,GG-CL-0091,Paisley Clark,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,33,0,6.6,1.53,41.13,Card,no,10,Gift opportunity
+GG-TXN-00018,GG-APT-00019,2026-04-02,GG-CL-0115,Olivia White,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,48,0,7.2,2.23,57.43,Cash,no,0,
+GG-TXN-00019,GG-APT-00021,2026-04-02,GG-CL-0007,Lucy Walker,GG-PROV-005,Bri Ellis,Balayage,Color,240,0,43.2,11.16,294.36,Apple Pay,yes,10,
+GG-TXN-00020,GG-APT-00024,2026-04-02,GG-CL-0120,Evelyn Flores,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,72,5,0,3.12,70.12,VMB Gift,no,0,Rebooked
+GG-TXN-00021,GG-APT-00025,2026-04-02,GG-CL-0060,Abigail Thompson,GG-PROV-003,Tori Nguyen,Balayage,Color,245,0,61.25,11.39,317.64,Card,no,0,Rebooked
+GG-TXN-00022,GG-APT-00026,2026-04-02,GG-CL-0087,Evelyn Hall,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,150,5,22.5,6.74,174.24,Cash,no,0,High value
+GG-TXN-00023,GG-APT-00027,2026-04-03,GG-CL-0035,Penelope Thomas,GG-PROV-003,Tori Nguyen,Gloss / Toner,Color,100,0,25.0,4.65,129.65,Cash,no,10,High value
+GG-TXN-00024,GG-APT-00028,2026-04-03,GG-CL-0089,Charlotte Nguyen,GG-PROV-001,Mia Carter,Gloss / Toner,Color,95,0,11.4,4.42,110.82,VMB Gift,no,10,Gift opportunity
+GG-TXN-00025,GG-APT-00029,2026-04-03,GG-CL-0097,Riley Carter,GG-PROV-005,Bri Ellis,Balayage,Color,240,0,48.0,11.16,299.16,VMB Gift,no,10,Rebooked
+GG-TXN-00026,GG-APT-00030,2026-04-03,GG-CL-0026,Olivia White,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,100,0,20.0,4.65,124.65,VMB Gift,no,10,Gift opportunity
+GG-TXN-00027,GG-APT-00031,2026-04-03,GG-CL-0104,Savannah Sanchez,GG-PROV-001,Mia Carter,Brow Wax,Wax,38,0,6.84,1.77,46.61,Cash,no,5,High value
+GG-TXN-00028,GG-APT-00032,2026-04-03,GG-CL-0105,Scarlett Martinez,GG-PROV-001,Mia Carter,Balayage,Color,255,0,38.25,11.86,305.11,Gift Card,yes,5,
+GG-TXN-00029,GG-APT-00033,2026-04-03,GG-CL-0099,Audrey Nelson,GG-PROV-002,Janelle Brooks,Spa Pedicure,Nails,87,0,15.66,4.05,106.71,Apple Pay,no,0,
+GG-TXN-00030,GG-APT-00034,2026-04-03,GG-CL-0023,Savannah Lee,GG-PROV-005,Bri Ellis,Spa Pedicure,Nails,72,0,0,3.35,75.35,VMB Gift,no,5,
+GG-TXN-00031,GG-APT-00035,2026-04-03,GG-CL-0032,Savannah Miller,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,58,0,14.5,2.7,75.2,Gift Card,no,0,
+GG-TXN-00032,GG-APT-00036,2026-04-03,GG-CL-0027,Abigail Gonzalez,GG-PROV-001,Mia Carter,Blowout,Hair,55,0,6.6,2.56,64.16,VMB Gift,no,0,
+GG-TXN-00033,GG-APT-00037,2026-04-03,GG-CL-0065,Evelyn Robinson,GG-PROV-003,Tori Nguyen,Balayage,Color,250,0,30.0,11.62,291.62,Apple Pay,no,0,
+GG-TXN-00034,GG-APT-00038,2026-04-04,GG-CL-0072,Grace Walker,GG-PROV-005,Bri Ellis,Root Touch-Up,Color,140,0,0,6.51,146.51,VMB Gift,no,5,Gift opportunity
+GG-TXN-00035,GG-APT-00040,2026-04-04,GG-CL-0019,Brooklyn Young,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,95,0,19.0,4.42,118.42,Apple Pay,no,0,Gift opportunity
+GG-TXN-00036,GG-APT-00042,2026-04-04,GG-CL-0025,Ava Rodriguez,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,95,0,14.25,4.42,113.67,Card,no,5,
+GG-TXN-00037,GG-APT-00043,2026-04-04,GG-CL-0090,Penelope Torres,GG-PROV-005,Bri Ellis,Balayage,Color,270,0,40.5,12.55,323.06,Cash,no,0,Rebooked
+GG-TXN-00038,GG-APT-00046,2026-04-04,GG-CL-0043,Amelia Nguyen,GG-PROV-002,Janelle Brooks,Spa Pedicure,Nails,97,0,24.25,4.51,125.76,Gift Card,no,0,
+GG-TXN-00039,GG-APT-00047,2026-04-04,GG-CL-0018,Penelope Rivera,GG-PROV-005,Bri Ellis,Brow Wax,Wax,20,5,4.0,0.7,19.7,Gift Card,no,0,
+GG-TXN-00040,GG-APT-00048,2026-04-04,GG-CL-0091,Paisley Clark,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,100,20,15.0,3.72,98.72,Card,no,5,
+GG-TXN-00041,GG-APT-00049,2026-04-04,GG-CL-0003,Penelope Thompson,GG-PROV-005,Bri Ellis,Gloss / Toner,Color,85,0,17.0,3.95,105.95,Card,no,10,
+GG-TXN-00042,GG-APT-00050,2026-04-04,GG-CL-0031,Riley King,GG-PROV-002,Janelle Brooks,Facial,Skin,125,0,18.75,5.81,149.56,Gift Card,no,0,High value
+GG-TXN-00043,GG-APT-00051,2026-04-04,GG-CL-0088,Savannah Torres,GG-PROV-001,Mia Carter,Women's Haircut,Hair,95,0,17.1,4.42,116.52,Apple Pay,no,5,High value
+GG-TXN-00044,GG-APT-00052,2026-04-04,GG-CL-0073,Ava Nguyen,GG-PROV-001,Mia Carter,Lash Lift,Lashes,95,0,23.75,4.42,123.17,Card,no,0,Rebooked
+GG-TXN-00045,GG-APT-00053,2026-04-04,GG-CL-0073,Ava Nguyen,GG-PROV-001,Mia Carter,Root Touch-Up,Color,125,0,25.0,5.81,155.81,Card,no,10,
+GG-TXN-00046,GG-APT-00055,2026-04-06,GG-CL-0065,Evelyn Robinson,GG-PROV-003,Tori Nguyen,Women's Haircut,Hair,85,0,0,3.95,88.95,Cash,yes,0,Gift opportunity
+GG-TXN-00047,GG-APT-00056,2026-04-06,GG-CL-0063,Amelia Nelson,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,68,0,8.16,3.16,79.32,VMB Gift,no,0,
+GG-TXN-00048,GG-APT-00059,2026-04-07,GG-CL-0072,Grace Walker,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,85,0,0,3.95,88.95,Cash,no,0,High value
+GG-TXN-00049,GG-APT-00060,2026-04-07,GG-CL-0053,Natalie Rodriguez,GG-PROV-004,Sasha Reed,Blowout,Hair,90,0,10.8,4.18,104.98,Cash,no,0,
+GG-TXN-00050,GG-APT-00061,2026-04-07,GG-CL-0022,Grace Martinez,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,110,0,0,5.12,115.11,Gift Card,no,0,Gift opportunity
+GG-TXN-00051,GG-APT-00062,2026-04-07,GG-CL-0014,Nora Jones,GG-PROV-002,Janelle Brooks,Gloss / Toner,Color,100,0,20.0,4.65,124.65,Gift Card,no,10,
+GG-TXN-00052,GG-APT-00063,2026-04-07,GG-CL-0039,Ava White,GG-PROV-003,Tori Nguyen,Facial,Skin,125,0,15.0,5.81,145.81,Gift Card,no,0,High value
+GG-TXN-00053,GG-APT-00064,2026-04-07,GG-CL-0049,Lily Thomas,GG-PROV-003,Tori Nguyen,Spa Pedicure,Nails,72,0,14.4,3.35,89.75,Card,no,5,
+GG-TXN-00054,GG-APT-00065,2026-04-07,GG-CL-0057,Sophia Lopez,GG-PROV-003,Tori Nguyen,Blowout,Hair,80,0,9.6,3.72,93.32,Apple Pay,no,5,
+GG-TXN-00055,GG-APT-00067,2026-04-08,GG-CL-0099,Audrey Nelson,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,48,0,9.6,2.23,59.83,Cash,no,5,
+GG-TXN-00056,GG-APT-00068,2026-04-08,GG-CL-0002,Mia Anderson,GG-PROV-001,Mia Carter,Gloss / Toner,Color,120,0,24.0,5.58,149.58,Cash,no,10,Rebooked
+GG-TXN-00057,GG-APT-00069,2026-04-08,GG-CL-0020,Amelia Nguyen,GG-PROV-003,Tori Nguyen,Women's Haircut,Hair,85,0,15.3,3.95,104.25,Apple Pay,no,0,Gift opportunity
+GG-TXN-00058,GG-APT-00070,2026-04-08,GG-CL-0101,Bella Young,GG-PROV-002,Janelle Brooks,Lash Lift,Lashes,110,0,0,5.12,115.11,Card,no,0,
+GG-TXN-00059,GG-APT-00072,2026-04-09,GG-CL-0072,Grace Walker,GG-PROV-004,Sasha Reed,Brow Wax,Wax,28,0,3.36,1.3,32.66,VMB Gift,no,5,Rebooked
+GG-TXN-00060,GG-APT-00073,2026-04-09,GG-CL-0055,Victoria Gonzalez,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,85,0,21.25,3.95,110.2,VMB Gift,no,0,
+GG-TXN-00061,GG-APT-00074,2026-04-09,GG-CL-0059,Violet Nelson,GG-PROV-001,Mia Carter,Gloss / Toner,Color,100,0,20.0,4.65,124.65,Cash,no,5,Rebooked
+GG-TXN-00062,GG-APT-00075,2026-04-09,GG-CL-0023,Savannah Lee,GG-PROV-003,Tori Nguyen,Facial,Skin,120,15,18.0,4.88,127.88,Apple Pay,no,5,Rebooked
+GG-TXN-00063,GG-APT-00076,2026-04-09,GG-CL-0018,Penelope Rivera,GG-PROV-005,Bri Ellis,Spa Pedicure,Nails,87,0,21.75,4.05,112.8,Apple Pay,no,0,
+GG-TXN-00064,GG-APT-00077,2026-04-09,GG-CL-0041,Zoey Anderson,GG-PROV-004,Sasha Reed,Facial,Skin,110,0,19.8,5.12,134.91,Gift Card,no,5,Gift opportunity
+GG-TXN-00065,GG-APT-00078,2026-04-09,GG-CL-0091,Paisley Clark,GG-PROV-004,Sasha Reed,Brow Wax,Wax,20,0,2.4,0.93,23.33,Cash,no,5,Rebooked
+GG-TXN-00066,GG-APT-00079,2026-04-09,GG-CL-0096,Amelia Clark,GG-PROV-004,Sasha Reed,Lash Lift,Lashes,90,0,13.5,4.18,107.69,Gift Card,no,5,
+GG-TXN-00067,GG-APT-00080,2026-04-09,GG-CL-0095,Savannah Baker,GG-PROV-002,Janelle Brooks,Gloss / Toner,Color,95,0,14.25,4.42,113.67,Apple Pay,no,10,High value
+GG-TXN-00068,GG-APT-00081,2026-04-09,GG-CL-0111,Claire Miller,GG-PROV-005,Bri Ellis,Spa Pedicure,Nails,72,0,8.64,3.35,83.99,VMB Gift,no,10,
+GG-TXN-00069,GG-APT-00082,2026-04-09,GG-CL-0042,Scarlett Nelson,GG-PROV-003,Tori Nguyen,Gloss / Toner,Color,90,0,10.8,4.18,104.98,Apple Pay,no,0,
+GG-TXN-00070,GG-APT-00083,2026-04-09,GG-CL-0019,Brooklyn Young,GG-PROV-003,Tori Nguyen,Balayage,Color,245,0,49.0,11.39,305.39,Gift Card,yes,0,Gift opportunity
+GG-TXN-00071,GG-APT-00084,2026-04-09,GG-CL-0066,Kennedy Ramirez,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,63,5,12.6,2.7,73.3,Cash,no,10,Gift opportunity
+GG-TXN-00072,GG-APT-00085,2026-04-09,GG-CL-0028,Ella Walker,GG-PROV-004,Sasha Reed,Balayage,Color,250,0,37.5,11.62,299.12,Gift Card,no,0,
+GG-TXN-00073,GG-APT-00086,2026-04-09,GG-CL-0013,Victoria Thomas,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,100,20,18.0,3.72,101.72,Cash,no,0,
+GG-TXN-00074,GG-APT-00087,2026-04-10,GG-CL-0048,Ava Wright,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,85,0,21.25,3.95,110.2,Card,no,0,
+GG-TXN-00075,GG-APT-00088,2026-04-10,GG-CL-0062,Savannah Martinez,GG-PROV-001,Mia Carter,Root Touch-Up,Color,140,15,0,5.81,130.81,Apple Pay,no,0,Gift opportunity
+GG-TXN-00076,GG-APT-00089,2026-04-10,GG-CL-0012,Abigail Moore,GG-PROV-001,Mia Carter,Blowout,Hair,65,0,7.8,3.02,75.82,Apple Pay,yes,10,
+GG-TXN-00077,GG-APT-00091,2026-04-10,GG-CL-0012,Abigail Moore,GG-PROV-001,Mia Carter,Root Touch-Up,Color,135,0,20.25,6.28,161.53,Apple Pay,no,0,
+GG-TXN-00078,GG-APT-00093,2026-04-10,GG-CL-0027,Abigail Gonzalez,GG-PROV-005,Bri Ellis,Facial,Skin,130,0,19.5,6.04,155.54,Card,no,10,
+GG-TXN-00079,GG-APT-00094,2026-04-10,GG-CL-0068,Skylar Campbell,GG-PROV-001,Mia Carter,Gel Manicure,Nails,68,0,13.6,3.16,84.76,Gift Card,no,0,
+GG-TXN-00080,GG-APT-00095,2026-04-10,GG-CL-0076,Emilia Thomas,GG-PROV-001,Mia Carter,Women's Haircut,Hair,75,0,0,3.49,78.49,VMB Gift,no,5,Gift opportunity
+GG-TXN-00081,GG-APT-00096,2026-04-10,GG-CL-0011,Amelia Harris,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,90,10,13.5,3.72,97.22,Gift Card,no,0,High value
+GG-TXN-00082,GG-APT-00097,2026-04-10,GG-CL-0090,Penelope Torres,GG-PROV-004,Sasha Reed,Balayage,Color,240,5,43.2,10.93,289.13,Apple Pay,no,0,
+GG-TXN-00083,GG-APT-00098,2026-04-10,GG-CL-0021,Caroline Perez,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,58,0,6.96,2.7,67.66,Card,no,0,High value
+GG-TXN-00084,GG-APT-00099,2026-04-11,GG-CL-0104,Savannah Sanchez,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,95,0,23.75,4.42,123.17,Gift Card,no,0,Gift opportunity
+GG-TXN-00085,GG-APT-00100,2026-04-11,GG-CL-0110,Emma Perez,GG-PROV-005,Bri Ellis,Root Touch-Up,Color,125,0,0,5.81,130.81,Apple Pay,no,0,
+GG-TXN-00086,GG-APT-00101,2026-04-11,GG-CL-0110,Emma Perez,GG-PROV-001,Mia Carter,Balayage,Color,250,0,45.0,11.62,306.62,VMB Gift,no,5,
+GG-TXN-00087,GG-APT-00102,2026-04-11,GG-CL-0042,Scarlett Nelson,GG-PROV-002,Janelle Brooks,Spa Pedicure,Nails,67,0,13.4,3.12,83.52,Apple Pay,no,10,
+GG-TXN-00088,GG-APT-00103,2026-04-11,GG-CL-0123,Everly Perez,GG-PROV-004,Sasha Reed,Blowout,Hair,65,20,9.75,2.09,56.84,Cash,no,0,Rebooked
+GG-TXN-00089,GG-APT-00105,2026-04-11,GG-CL-0020,Amelia Nguyen,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,97,0,14.55,4.51,116.06,Cash,yes,5,High value
+GG-TXN-00090,GG-APT-00106,2026-04-11,GG-CL-0014,Nora Jones,GG-PROV-002,Janelle Brooks,Lash Lift,Lashes,110,0,0,5.12,115.11,Card,yes,0,Rebooked
+GG-TXN-00091,GG-APT-00107,2026-04-11,GG-CL-0053,Natalie Rodriguez,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,23,0,4.6,1.07,28.67,VMB Gift,yes,0,
+GG-TXN-00092,GG-APT-00109,2026-04-11,GG-CL-0018,Penelope Rivera,GG-PROV-005,Bri Ellis,Blowout,Hair,65,0,11.7,3.02,79.72,Cash,no,0,Gift opportunity
+GG-TXN-00093,GG-APT-00110,2026-04-11,GG-CL-0040,Abigail Walker,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,95,0,23.75,4.42,123.17,Card,no,0,
+GG-TXN-00094,GG-APT-00111,2026-04-13,GG-CL-0046,Nova Wright,GG-PROV-004,Sasha Reed,Lash Lift,Lashes,95,0,14.25,4.42,113.67,Gift Card,no,10,
+GG-TXN-00095,GG-APT-00112,2026-04-13,GG-CL-0013,Victoria Thomas,GG-PROV-004,Sasha Reed,Blowout,Hair,55,0,0,2.56,57.56,Gift Card,no,0,Rebooked
+GG-TXN-00096,GG-APT-00113,2026-04-13,GG-CL-0076,Emilia Thomas,GG-PROV-003,Tori Nguyen,Blowout,Hair,65,0,16.25,3.02,84.27,Card,yes,5,
+GG-TXN-00097,GG-APT-00114,2026-04-13,GG-CL-0022,Grace Martinez,GG-PROV-005,Bri Ellis,Spa Pedicure,Nails,62,0,11.16,2.88,76.04,Apple Pay,no,5,
+GG-TXN-00098,GG-APT-00115,2026-04-13,GG-CL-0005,Chloe Walker,GG-PROV-005,Bri Ellis,Facial,Skin,120,0,21.6,5.58,147.18,Card,no,0,Gift opportunity
+GG-TXN-00099,GG-APT-00116,2026-04-13,GG-CL-0026,Olivia White,GG-PROV-005,Bri Ellis,Balayage,Color,255,0,63.75,11.86,330.61,Cash,no,10,High value
+GG-TXN-00100,GG-APT-00117,2026-04-13,GG-CL-0050,Anna Walker,GG-PROV-003,Tori Nguyen,Root Touch-Up,Color,125,0,0,5.81,130.81,VMB Gift,no,10,
+GG-TXN-00101,GG-APT-00118,2026-04-13,GG-CL-0125,Audrey Jones,GG-PROV-002,Janelle Brooks,Blowout,Hair,65,0,9.75,3.02,77.77,VMB Gift,no,5,High value
+GG-TXN-00102,GG-APT-00119,2026-04-13,GG-CL-0120,Evelyn Flores,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,130,0,32.5,6.04,168.54,Cash,no,10,
+GG-TXN-00103,GG-APT-00120,2026-04-13,GG-CL-0073,Ava Nguyen,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,28,5,5.04,1.07,29.11,Card,no,0,High value
+GG-TXN-00104,GG-APT-00121,2026-04-13,GG-CL-0118,Penelope Flores,GG-PROV-005,Bri Ellis,Balayage,Color,245,10,36.75,10.93,282.68,Card,no,0,
+GG-TXN-00105,GG-APT-00122,2026-04-14,GG-CL-0048,Ava Wright,GG-PROV-004,Sasha Reed,Facial,Skin,120,0,18.0,5.58,143.58,Gift Card,no,0,Rebooked
+GG-TXN-00106,GG-APT-00123,2026-04-14,GG-CL-0089,Charlotte Nguyen,GG-PROV-005,Bri Ellis,Gel Manicure,Nails,58,0,10.44,2.7,71.14,Apple Pay,no,10,Gift opportunity
+GG-TXN-00107,GG-APT-00124,2026-04-14,GG-CL-0109,Penelope Garcia,GG-PROV-005,Bri Ellis,Women's Haircut,Hair,90,0,18.0,4.18,112.19,Apple Pay,no,0,
+GG-TXN-00108,GG-APT-00127,2026-04-14,GG-CL-0064,Bella King,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,53,0,9.54,2.46,65.0,Apple Pay,no,0,
+GG-TXN-00109,GG-APT-00128,2026-04-14,GG-CL-0038,Aria Thompson,GG-PROV-001,Mia Carter,Gel Manicure,Nails,53,0,7.95,2.46,63.41,Card,no,0,High value
+GG-TXN-00110,GG-APT-00129,2026-04-14,GG-CL-0077,Layla Adams,GG-PROV-005,Bri Ellis,Brow Wax,Wax,28,0,5.6,1.3,34.9,Cash,no,0,Gift opportunity
+GG-TXN-00111,GG-APT-00130,2026-04-14,GG-CL-0090,Penelope Torres,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,95,0,14.25,4.42,113.67,VMB Gift,no,0,
+GG-TXN-00112,GG-APT-00131,2026-04-14,GG-CL-0047,Stella Nguyen,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,87,10,10.44,3.58,91.02,Card,no,0,High value
+GG-TXN-00113,GG-APT-00132,2026-04-14,GG-CL-0101,Bella Young,GG-PROV-004,Sasha Reed,Brow Wax,Wax,28,0,0,1.3,29.3,Gift Card,no,5,
+GG-TXN-00114,GG-APT-00133,2026-04-15,GG-CL-0029,Aurora Thompson,GG-PROV-003,Tori Nguyen,Facial,Skin,115,0,0,5.35,120.35,Apple Pay,no,5,Rebooked
+GG-TXN-00115,GG-APT-00134,2026-04-15,GG-CL-0054,Violet Sanchez,GG-PROV-005,Bri Ellis,Brow Wax,Wax,28,0,0,1.3,29.3,VMB Gift,no,10,Rebooked
+GG-TXN-00116,GG-APT-00135,2026-04-15,GG-CL-0019,Brooklyn Young,GG-PROV-001,Mia Carter,Brow Wax,Wax,28,0,3.36,1.3,32.66,Gift Card,no,0,Rebooked
+GG-TXN-00117,GG-APT-00136,2026-04-15,GG-CL-0034,Kennedy Jones,GG-PROV-003,Tori Nguyen,Blowout,Hair,90,0,16.2,4.18,110.39,Card,no,10,Rebooked
+GG-TXN-00118,GG-APT-00137,2026-04-15,GG-CL-0067,Violet Walker,GG-PROV-004,Sasha Reed,Blowout,Hair,65,0,13.0,3.02,81.02,Card,no,10,High value
+GG-TXN-00119,GG-APT-00138,2026-04-15,GG-CL-0113,Ava Green,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,110,0,22.0,5.12,137.12,Gift Card,no,10,Gift opportunity
+GG-TXN-00120,GG-APT-00139,2026-04-15,GG-CL-0005,Chloe Walker,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,73,0,10.95,3.39,87.34,Cash,no,5,
+GG-TXN-00121,GG-APT-00141,2026-04-15,GG-CL-0054,Violet Sanchez,GG-PROV-005,Bri Ellis,Blowout,Hair,65,0,11.7,3.02,79.72,Card,no,0,
+GG-TXN-00122,GG-APT-00143,2026-04-16,GG-CL-0113,Ava Green,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,100,0,0,4.65,104.65,Cash,no,10,Gift opportunity
+GG-TXN-00123,GG-APT-00144,2026-04-16,GG-CL-0082,Evelyn Martinez,GG-PROV-001,Mia Carter,Women's Haircut,Hair,100,0,20.0,4.65,124.65,Cash,no,0,
+GG-TXN-00124,GG-APT-00145,2026-04-16,GG-CL-0037,Isabella Campbell,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,72,0,8.64,3.35,83.99,Gift Card,no,0,Gift opportunity
+GG-TXN-00125,GG-APT-00146,2026-04-16,GG-CL-0117,Camila Carter,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,125,0,25.0,5.81,155.81,Cash,no,5,High value
+GG-TXN-00126,GG-APT-00147,2026-04-16,GG-CL-0059,Violet Nelson,GG-PROV-003,Tori Nguyen,Balayage,Color,270,0,54.0,12.55,336.56,Cash,no,10,Rebooked
+GG-TXN-00127,GG-APT-00148,2026-04-16,GG-CL-0037,Isabella Campbell,GG-PROV-003,Tori Nguyen,Blowout,Hair,70,0,10.5,3.25,83.75,Cash,no,10,
+GG-TXN-00128,GG-APT-00149,2026-04-16,GG-CL-0116,Ella Williams,GG-PROV-001,Mia Carter,Facial,Skin,125,0,31.25,5.81,162.06,Cash,no,5,Gift opportunity
+GG-TXN-00129,GG-APT-00150,2026-04-16,GG-CL-0050,Anna Walker,GG-PROV-001,Mia Carter,Facial,Skin,120,0,30.0,5.58,155.58,VMB Gift,no,0,Rebooked
+GG-TXN-00130,GG-APT-00151,2026-04-16,GG-CL-0024,Leah Moore,GG-PROV-003,Tori Nguyen,Blowout,Hair,65,0,16.25,3.02,84.27,Card,no,0,High value
+GG-TXN-00131,GG-APT-00152,2026-04-16,GG-CL-0054,Violet Sanchez,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,58,0,10.44,2.7,71.14,VMB Gift,no,10,
+GG-TXN-00132,GG-APT-00153,2026-04-16,GG-CL-0061,Hazel Miller,GG-PROV-002,Janelle Brooks,Lash Lift,Lashes,105,0,21.0,4.88,130.88,Apple Pay,no,0,Gift opportunity
+GG-TXN-00133,GG-APT-00155,2026-04-16,GG-CL-0082,Evelyn Martinez,GG-PROV-001,Mia Carter,Women's Haircut,Hair,85,0,10.2,3.95,99.15,Apple Pay,no,5,Gift opportunity
+GG-TXN-00134,GG-APT-00156,2026-04-16,GG-CL-0055,Victoria Gonzalez,GG-PROV-004,Sasha Reed,Spa Pedicure,Nails,97,0,11.64,4.51,113.15,VMB Gift,no,0,
+GG-TXN-00135,GG-APT-00157,2026-04-16,GG-CL-0029,Aurora Thompson,GG-PROV-003,Tori Nguyen,Gloss / Toner,Color,105,0,21.0,4.88,130.88,Cash,no,5,Rebooked
+GG-TXN-00136,GG-APT-00158,2026-04-16,GG-CL-0077,Layla Adams,GG-PROV-005,Bri Ellis,Gel Manicure,Nails,58,0,8.7,2.7,69.4,Apple Pay,no,5,
+GG-TXN-00137,GG-APT-00159,2026-04-17,GG-CL-0017,Emilia Taylor,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,80,0,12.0,3.72,95.72,Cash,no,10,
+GG-TXN-00138,GG-APT-00160,2026-04-17,GG-CL-0077,Layla Adams,GG-PROV-001,Mia Carter,Blowout,Hair,60,0,10.8,2.79,73.59,Gift Card,no,0,
+GG-TXN-00139,GG-APT-00161,2026-04-17,GG-CL-0039,Ava White,GG-PROV-004,Sasha Reed,Blowout,Hair,65,0,11.7,3.02,79.72,VMB Gift,no,0,
+GG-TXN-00140,GG-APT-00163,2026-04-17,GG-CL-0053,Natalie Rodriguez,GG-PROV-003,Tori Nguyen,Root Touch-Up,Color,140,0,16.8,6.51,163.31,Card,yes,0,
+GG-TXN-00141,GG-APT-00164,2026-04-17,GG-CL-0107,Everly Nguyen,GG-PROV-005,Bri Ellis,Brow Wax,Wax,53,0,0,2.46,55.46,Apple Pay,no,0,High value
+GG-TXN-00142,GG-APT-00165,2026-04-17,GG-CL-0060,Abigail Thompson,GG-PROV-001,Mia Carter,Blowout,Hair,65,0,9.75,3.02,77.77,Card,no,0,
+GG-TXN-00143,GG-APT-00166,2026-04-17,GG-CL-0110,Emma Perez,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,140,0,28.0,6.51,174.51,Cash,no,5,Gift opportunity
+GG-TXN-00144,GG-APT-00168,2026-04-17,GG-CL-0017,Emilia Taylor,GG-PROV-001,Mia Carter,Root Touch-Up,Color,140,0,28.0,6.51,174.51,Cash,no,0,Gift opportunity
+GG-TXN-00145,GG-APT-00169,2026-04-17,GG-CL-0118,Penelope Flores,GG-PROV-004,Sasha Reed,Blowout,Hair,55,0,0,2.56,57.56,VMB Gift,no,10,Rebooked
+GG-TXN-00146,GG-APT-00171,2026-04-17,GG-CL-0085,Bella Hernandez,GG-PROV-004,Sasha Reed,Root Touch-Up,Color,115,0,0,5.35,120.35,Gift Card,no,0,Gift opportunity
+GG-TXN-00147,GG-APT-00172,2026-04-17,GG-CL-0042,Scarlett Nelson,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,83,0,9.96,3.86,96.82,Card,no,10,Gift opportunity
+GG-TXN-00148,GG-APT-00173,2026-04-18,GG-CL-0012,Abigail Moore,GG-PROV-004,Sasha Reed,Brow Wax,Wax,43,0,10.75,2.0,55.75,Card,no,0,
+GG-TXN-00149,GG-APT-00174,2026-04-18,GG-CL-0102,Victoria Campbell,GG-PROV-005,Bri Ellis,Facial,Skin,145,0,17.4,6.74,169.14,Card,no,5,High value
+GG-TXN-00150,GG-APT-00176,2026-04-18,GG-CL-0044,Caroline Wilson,GG-PROV-003,Tori Nguyen,Gloss / Toner,Color,100,10,25.0,4.18,119.19,Gift Card,no,10,
+GG-TXN-00151,GG-APT-00177,2026-04-18,GG-CL-0025,Ava Rodriguez,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,72,0,18.0,3.35,93.35,VMB Gift,no,5,Gift opportunity
+GG-TXN-00152,GG-APT-00178,2026-04-18,GG-CL-0085,Bella Hernandez,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,85,0,17.0,3.95,105.95,Gift Card,no,0,Rebooked
+GG-TXN-00153,GG-APT-00179,2026-04-18,GG-CL-0023,Savannah Lee,GG-PROV-002,Janelle Brooks,Blowout,Hair,70,0,14.0,3.25,87.25,Apple Pay,no,0,High value
+GG-TXN-00154,GG-APT-00180,2026-04-18,GG-CL-0058,Genesis Perez,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,150,0,22.5,6.97,179.47,VMB Gift,no,0,
+GG-TXN-00155,GG-APT-00182,2026-04-18,GG-CL-0015,Aria Wilson,GG-PROV-003,Tori Nguyen,Lash Lift,Lashes,105,0,26.25,4.88,136.13,Card,no,0,Gift opportunity
+GG-TXN-00156,GG-APT-00183,2026-04-18,GG-CL-0019,Brooklyn Young,GG-PROV-001,Mia Carter,Women's Haircut,Hair,85,0,12.75,3.95,101.7,Cash,no,10,
+GG-TXN-00157,GG-APT-00184,2026-04-18,GG-CL-0046,Nova Wright,GG-PROV-004,Sasha Reed,Blowout,Hair,90,0,16.2,4.18,110.39,Card,no,5,Gift opportunity
+GG-TXN-00158,GG-APT-00185,2026-04-18,GG-CL-0123,Everly Perez,GG-PROV-003,Tori Nguyen,Lash Lift,Lashes,95,0,11.4,4.42,110.82,Cash,no,10,Rebooked
+GG-TXN-00159,GG-APT-00186,2026-04-18,GG-CL-0026,Olivia White,GG-PROV-002,Janelle Brooks,Gloss / Toner,Color,90,0,10.8,4.18,104.98,Gift Card,yes,0,Rebooked
+GG-TXN-00160,GG-APT-00187,2026-04-18,GG-CL-0034,Kennedy Jones,GG-PROV-002,Janelle Brooks,Root Touch-Up,Color,130,0,23.4,6.04,159.44,Cash,no,10,High value
+GG-TXN-00161,GG-APT-00188,2026-04-18,GG-CL-0063,Amelia Nelson,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,100,0,20.0,4.65,124.65,VMB Gift,no,10,Rebooked
+GG-TXN-00162,GG-APT-00189,2026-04-18,GG-CL-0052,Lily Rivera,GG-PROV-001,Mia Carter,Gel Manicure,Nails,63,0,9.45,2.93,75.38,VMB Gift,no,10,
+GG-TXN-00163,GG-APT-00190,2026-04-18,GG-CL-0015,Aria Wilson,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,28,0,0,1.3,29.3,Gift Card,no,0,
+GG-TXN-00164,GG-APT-00191,2026-04-20,GG-CL-0048,Ava Wright,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,85,0,12.75,3.95,101.7,Card,no,0,Rebooked
+GG-TXN-00165,GG-APT-00192,2026-04-20,GG-CL-0069,Emilia Adams,GG-PROV-001,Mia Carter,Blowout,Hair,65,0,16.25,3.02,84.27,Gift Card,no,0,
+GG-TXN-00166,GG-APT-00193,2026-04-20,GG-CL-0004,Amelia Sanchez,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,53,0,0,2.46,55.46,VMB Gift,no,0,Gift opportunity
+GG-TXN-00167,GG-APT-00194,2026-04-20,GG-CL-0050,Anna Walker,GG-PROV-004,Sasha Reed,Spa Pedicure,Nails,62,0,11.16,2.88,76.04,VMB Gift,yes,10,
+GG-TXN-00168,GG-APT-00195,2026-04-20,GG-CL-0090,Penelope Torres,GG-PROV-001,Mia Carter,Gel Manicure,Nails,58,0,14.5,2.7,75.2,Gift Card,no,0,Gift opportunity
+GG-TXN-00169,GG-APT-00197,2026-04-20,GG-CL-0019,Brooklyn Young,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,83,0,9.96,3.86,96.82,Gift Card,no,0,High value
+GG-TXN-00170,GG-APT-00198,2026-04-20,GG-CL-0027,Abigail Gonzalez,GG-PROV-003,Tori Nguyen,Balayage,Color,270,0,32.4,12.55,314.95,Apple Pay,no,10,
+GG-TXN-00171,GG-APT-00199,2026-04-20,GG-CL-0109,Penelope Garcia,GG-PROV-005,Bri Ellis,Brow Wax,Wax,28,5,7.0,1.07,31.07,Gift Card,no,0,
+GG-TXN-00172,GG-APT-00200,2026-04-20,GG-CL-0086,Lucy Nelson,GG-PROV-002,Janelle Brooks,Blowout,Hair,60,0,7.2,2.79,69.99,Cash,no,0,Rebooked
+GG-TXN-00173,GG-APT-00201,2026-04-20,GG-CL-0073,Ava Nguyen,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,48,0,7.2,2.23,57.43,Gift Card,no,0,
+GG-TXN-00174,GG-APT-00202,2026-04-20,GG-CL-0087,Evelyn Hall,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,33,0,4.95,1.53,39.48,VMB Gift,no,0,
+GG-TXN-00175,GG-APT-00204,2026-04-20,GG-CL-0075,Aurora Harris,GG-PROV-004,Sasha Reed,Facial,Skin,145,0,21.75,6.74,173.49,Apple Pay,no,0,Rebooked
+GG-TXN-00176,GG-APT-00205,2026-04-21,GG-CL-0094,Madison Lee,GG-PROV-003,Tori Nguyen,Root Touch-Up,Color,150,0,0,6.97,156.97,Apple Pay,no,10,
+GG-TXN-00177,GG-APT-00206,2026-04-21,GG-CL-0097,Riley Carter,GG-PROV-005,Bri Ellis,Root Touch-Up,Color,125,0,25.0,5.81,155.81,Gift Card,no,0,
+GG-TXN-00178,GG-APT-00207,2026-04-21,GG-CL-0098,Charlotte Hernandez,GG-PROV-004,Sasha Reed,Balayage,Color,250,10,30.0,11.16,281.16,Gift Card,no,5,
+GG-TXN-00179,GG-APT-00208,2026-04-21,GG-CL-0006,Skylar Rivera,GG-PROV-003,Tori Nguyen,Blowout,Hair,65,0,16.25,3.02,84.27,Gift Card,no,0,Rebooked
+GG-TXN-00180,GG-APT-00209,2026-04-21,GG-CL-0084,Olivia Mitchell,GG-PROV-001,Mia Carter,Lash Lift,Lashes,95,0,19.0,4.42,118.42,VMB Gift,yes,0,Gift opportunity
+GG-TXN-00181,GG-APT-00210,2026-04-21,GG-CL-0022,Grace Martinez,GG-PROV-002,Janelle Brooks,Blowout,Hair,65,0,7.8,3.02,75.82,Card,no,5,High value
+GG-TXN-00182,GG-APT-00211,2026-04-21,GG-CL-0093,Madison Roberts,GG-PROV-001,Mia Carter,Brow Wax,Wax,28,0,5.6,1.3,34.9,Card,no,10,
+GG-TXN-00183,GG-APT-00212,2026-04-22,GG-CL-0115,Olivia White,GG-PROV-005,Bri Ellis,Root Touch-Up,Color,125,0,15.0,5.81,145.81,Card,no,0,
+GG-TXN-00184,GG-APT-00213,2026-04-22,GG-CL-0028,Ella Walker,GG-PROV-004,Sasha Reed,Facial,Skin,120,0,14.4,5.58,139.98,Apple Pay,no,10,High value
+GG-TXN-00185,GG-APT-00214,2026-04-22,GG-CL-0022,Grace Martinez,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,38,0,6.84,1.77,46.61,VMB Gift,no,0,Rebooked
+GG-TXN-00186,GG-APT-00215,2026-04-22,GG-CL-0013,Victoria Thomas,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,53,10,0,2.0,45.0,Gift Card,no,0,
+GG-TXN-00187,GG-APT-00216,2026-04-22,GG-CL-0090,Penelope Torres,GG-PROV-005,Bri Ellis,Spa Pedicure,Nails,82,0,12.3,3.81,98.11,VMB Gift,no,0,High value
+GG-TXN-00188,GG-APT-00217,2026-04-22,GG-CL-0062,Savannah Martinez,GG-PROV-002,Janelle Brooks,Blowout,Hair,90,0,16.2,4.18,110.39,Card,no,0,Rebooked
+GG-TXN-00189,GG-APT-00218,2026-04-22,GG-CL-0001,Skylar Rodriguez,GG-PROV-004,Sasha Reed,Balayage,Color,250,0,0,11.62,261.62,Cash,no,5,Rebooked
+GG-TXN-00190,GG-APT-00220,2026-04-22,GG-CL-0048,Ava Wright,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,95,0,19.0,4.42,118.42,Apple Pay,no,0,
+GG-TXN-00191,GG-APT-00221,2026-04-22,GG-CL-0058,Genesis Perez,GG-PROV-002,Janelle Brooks,Blowout,Hair,75,0,11.25,3.49,89.74,Card,no,0,
+GG-TXN-00192,GG-APT-00222,2026-04-22,GG-CL-0106,Ellie Williams,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,23,0,3.45,1.07,27.52,Gift Card,no,5,Rebooked
+GG-TXN-00193,GG-APT-00224,2026-04-23,GG-CL-0109,Penelope Garcia,GG-PROV-005,Bri Ellis,Gloss / Toner,Color,120,0,24.0,5.58,149.58,Card,no,0,
+GG-TXN-00194,GG-APT-00225,2026-04-23,GG-CL-0012,Abigail Moore,GG-PROV-003,Tori Nguyen,Spa Pedicure,Nails,82,0,14.76,3.81,100.57,Card,no,10,High value
+GG-TXN-00195,GG-APT-00226,2026-04-23,GG-CL-0093,Madison Roberts,GG-PROV-005,Bri Ellis,Facial,Skin,120,0,14.4,5.58,139.98,VMB Gift,yes,0,Gift opportunity
+GG-TXN-00196,GG-APT-00227,2026-04-23,GG-CL-0065,Evelyn Robinson,GG-PROV-001,Mia Carter,Lash Lift,Lashes,95,0,14.25,4.42,113.67,VMB Gift,no,5,Gift opportunity
+GG-TXN-00197,GG-APT-00229,2026-04-23,GG-CL-0062,Savannah Martinez,GG-PROV-001,Mia Carter,Gloss / Toner,Color,95,0,23.75,4.42,123.17,VMB Gift,no,0,
+GG-TXN-00198,GG-APT-00230,2026-04-23,GG-CL-0037,Isabella Campbell,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,97,0,11.64,4.51,113.15,Cash,no,0,Gift opportunity
+GG-TXN-00199,GG-APT-00231,2026-04-23,GG-CL-0095,Savannah Baker,GG-PROV-002,Janelle Brooks,Balayage,Color,245,0,29.4,11.39,285.79,Cash,no,0,
+GG-TXN-00200,GG-APT-00233,2026-04-23,GG-CL-0041,Zoey Anderson,GG-PROV-004,Sasha Reed,Facial,Skin,120,0,24.0,5.58,149.58,Apple Pay,yes,5,Gift opportunity
+GG-TXN-00201,GG-APT-00234,2026-04-23,GG-CL-0121,Ellie Roberts,GG-PROV-005,Bri Ellis,Women's Haircut,Hair,95,0,23.75,4.42,123.17,VMB Gift,no,0,
+GG-TXN-00202,GG-APT-00235,2026-04-23,GG-CL-0087,Evelyn Hall,GG-PROV-002,Janelle Brooks,Spa Pedicure,Nails,77,0,15.4,3.58,95.98,Apple Pay,no,10,High value
+GG-TXN-00203,GG-APT-00236,2026-04-23,GG-CL-0047,Stella Nguyen,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,38,0,9.5,1.77,49.27,Cash,no,10,
+GG-TXN-00204,GG-APT-00237,2026-04-23,GG-CL-0074,Charlotte Adams,GG-PROV-002,Janelle Brooks,Blowout,Hair,90,0,16.2,4.18,110.39,Apple Pay,no,0,
+GG-TXN-00205,GG-APT-00238,2026-04-23,GG-CL-0054,Violet Sanchez,GG-PROV-004,Sasha Reed,Root Touch-Up,Color,130,0,23.4,6.04,159.44,Card,no,0,
+GG-TXN-00206,GG-APT-00239,2026-04-23,GG-CL-0028,Ella Walker,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,33,0,4.95,1.53,39.48,Cash,yes,0,High value
+GG-TXN-00207,GG-APT-00240,2026-04-24,GG-CL-0026,Olivia White,GG-PROV-005,Bri Ellis,Facial,Skin,120,0,18.0,5.58,143.58,Gift Card,no,5,Rebooked
+GG-TXN-00208,GG-APT-00241,2026-04-24,GG-CL-0037,Isabella Campbell,GG-PROV-004,Sasha Reed,Root Touch-Up,Color,130,0,23.4,6.04,159.44,Card,no,0,High value
+GG-TXN-00209,GG-APT-00242,2026-04-24,GG-CL-0041,Zoey Anderson,GG-PROV-003,Tori Nguyen,Gloss / Toner,Color,110,0,16.5,5.12,131.62,Apple Pay,no,0,
+GG-TXN-00210,GG-APT-00243,2026-04-24,GG-CL-0094,Madison Lee,GG-PROV-002,Janelle Brooks,Gloss / Toner,Color,95,5,17.1,4.18,111.28,Card,no,10,
+GG-TXN-00211,GG-APT-00244,2026-04-24,GG-CL-0014,Nora Jones,GG-PROV-003,Tori Nguyen,Facial,Skin,130,0,19.5,6.04,155.54,Apple Pay,no,0,
+GG-TXN-00212,GG-APT-00245,2026-04-24,GG-CL-0005,Chloe Walker,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,83,0,12.45,3.86,99.31,Apple Pay,no,5,Rebooked
+GG-TXN-00213,GG-APT-00246,2026-04-24,GG-CL-0056,Lily Rivera,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,110,0,22.0,5.12,137.12,Cash,no,0,High value
+GG-TXN-00214,GG-APT-00247,2026-04-24,GG-CL-0002,Mia Anderson,GG-PROV-001,Mia Carter,Lash Lift,Lashes,95,0,17.1,4.42,116.52,Cash,yes,5,High value
+GG-TXN-00215,GG-APT-00248,2026-04-24,GG-CL-0077,Layla Adams,GG-PROV-002,Janelle Brooks,Women's Haircut,Hair,85,0,15.3,3.95,104.25,Apple Pay,no,5,Gift opportunity
+GG-TXN-00216,GG-APT-00249,2026-04-24,GG-CL-0029,Aurora Thompson,GG-PROV-003,Tori Nguyen,Blowout,Hair,65,0,13.0,3.02,81.02,Cash,no,10,High value
+GG-TXN-00217,GG-APT-00250,2026-04-24,GG-CL-0053,Natalie Rodriguez,GG-PROV-002,Janelle Brooks,Blowout,Hair,65,0,0,3.02,68.02,VMB Gift,no,0,
+GG-TXN-00218,GG-APT-00251,2026-04-24,GG-CL-0020,Amelia Nguyen,GG-PROV-001,Mia Carter,Lash Lift,Lashes,90,0,13.5,4.18,107.69,Card,no,0,
+GG-TXN-00219,GG-APT-00252,2026-04-24,GG-CL-0064,Bella King,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,73,0,10.95,3.39,87.34,Apple Pay,yes,5,
+GG-TXN-00220,GG-APT-00253,2026-04-24,GG-CL-0070,Violet Ramirez,GG-PROV-004,Sasha Reed,Root Touch-Up,Color,135,0,0,6.28,141.28,Gift Card,no,0,
+GG-TXN-00221,GG-APT-00254,2026-04-24,GG-CL-0059,Violet Nelson,GG-PROV-001,Mia Carter,Lash Lift,Lashes,105,0,26.25,4.88,136.13,Card,no,10,Rebooked
+GG-TXN-00222,GG-APT-00255,2026-04-24,GG-CL-0016,Charlotte Taylor,GG-PROV-003,Tori Nguyen,Brow Wax,Wax,33,0,0,1.53,34.53,Gift Card,no,0,High value
+GG-TXN-00223,GG-APT-00256,2026-04-24,GG-CL-0075,Aurora Harris,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,62,0,12.4,2.88,77.28,Apple Pay,no,0,
+GG-TXN-00224,GG-APT-00258,2026-04-24,GG-CL-0017,Emilia Taylor,GG-PROV-004,Sasha Reed,Balayage,Color,250,0,45.0,11.62,306.62,Cash,no,0,
+GG-TXN-00225,GG-APT-00259,2026-04-25,GG-CL-0063,Amelia Nelson,GG-PROV-004,Sasha Reed,Lash Lift,Lashes,110,0,13.2,5.12,128.31,Gift Card,no,10,Rebooked
+GG-TXN-00226,GG-APT-00260,2026-04-25,GG-CL-0021,Caroline Perez,GG-PROV-001,Mia Carter,Lash Lift,Lashes,95,0,14.25,4.42,113.67,VMB Gift,no,0,
+GG-TXN-00227,GG-APT-00261,2026-04-25,GG-CL-0080,Ellie Taylor,GG-PROV-003,Tori Nguyen,Facial,Skin,115,0,28.75,5.35,149.1,Gift Card,no,0,Rebooked
+GG-TXN-00228,GG-APT-00262,2026-04-25,GG-CL-0037,Isabella Campbell,GG-PROV-003,Tori Nguyen,Spa Pedicure,Nails,67,0,13.4,3.12,83.52,Apple Pay,no,0,
+GG-TXN-00229,GG-APT-00263,2026-04-25,GG-CL-0063,Amelia Nelson,GG-PROV-002,Janelle Brooks,Blowout,Hair,75,0,18.75,3.49,97.24,Cash,yes,0,Rebooked
+GG-TXN-00230,GG-APT-00264,2026-04-25,GG-CL-0092,Audrey Flores,GG-PROV-001,Mia Carter,Women's Haircut,Hair,100,0,0,4.65,104.65,VMB Gift,no,5,High value
+GG-TXN-00231,GG-APT-00265,2026-04-25,GG-CL-0102,Victoria Campbell,GG-PROV-001,Mia Carter,Facial,Skin,110,15,27.5,4.42,126.92,Card,no,0,Rebooked
+GG-TXN-00232,GG-APT-00266,2026-04-25,GG-CL-0050,Anna Walker,GG-PROV-002,Janelle Brooks,Balayage,Color,245,0,49.0,11.39,305.39,VMB Gift,no,0,Rebooked
+GG-TXN-00233,GG-APT-00267,2026-04-27,GG-CL-0086,Lucy Nelson,GG-PROV-004,Sasha Reed,Blowout,Hair,90,0,16.2,4.18,110.39,VMB Gift,no,0,High value
+GG-TXN-00234,GG-APT-00270,2026-04-27,GG-CL-0058,Genesis Perez,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,75,0,15.0,3.49,93.49,Apple Pay,no,0,
+GG-TXN-00235,GG-APT-00271,2026-04-27,GG-CL-0099,Audrey Nelson,GG-PROV-003,Tori Nguyen,Lash Lift,Lashes,95,15,0,3.72,83.72,Cash,no,0,
+GG-TXN-00236,GG-APT-00272,2026-04-27,GG-CL-0033,Mia Martin,GG-PROV-003,Tori Nguyen,Blowout,Hair,65,15,16.25,2.33,68.58,VMB Gift,no,0,Rebooked
+GG-TXN-00237,GG-APT-00273,2026-04-27,GG-CL-0083,Harper Carter,GG-PROV-003,Tori Nguyen,Women's Haircut,Hair,75,0,11.25,3.49,89.74,Apple Pay,no,10,
+GG-TXN-00238,GG-APT-00274,2026-04-28,GG-CL-0082,Evelyn Martinez,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,75,0,11.25,3.49,89.74,Apple Pay,no,5,Gift opportunity
+GG-TXN-00239,GG-APT-00275,2026-04-28,GG-CL-0097,Riley Carter,GG-PROV-005,Bri Ellis,Facial,Skin,120,0,21.6,5.58,147.18,Cash,no,10,
+GG-TXN-00240,GG-APT-00276,2026-04-28,GG-CL-0071,Grace Baker,GG-PROV-004,Sasha Reed,Gloss / Toner,Color,120,0,21.6,5.58,147.18,Gift Card,no,5,Gift opportunity
+GG-TXN-00241,GG-APT-00277,2026-04-28,GG-CL-0084,Olivia Mitchell,GG-PROV-005,Bri Ellis,Balayage,Color,270,0,32.4,12.55,314.95,Cash,no,10,
+GG-TXN-00242,GG-APT-00278,2026-04-28,GG-CL-0015,Aria Wilson,GG-PROV-004,Sasha Reed,Spa Pedicure,Nails,72,0,10.8,3.35,86.15,Apple Pay,no,10,Gift opportunity
+GG-TXN-00243,GG-APT-00279,2026-04-28,GG-CL-0080,Ellie Taylor,GG-PROV-002,Janelle Brooks,Brow Wax,Wax,28,0,7.0,1.3,36.3,Card,no,0,Rebooked
+GG-TXN-00244,GG-APT-00280,2026-04-28,GG-CL-0119,Anna Robinson,GG-PROV-002,Janelle Brooks,Gloss / Toner,Color,90,0,13.5,4.18,107.69,VMB Gift,no,10,Rebooked
+GG-TXN-00245,GG-APT-00281,2026-04-28,GG-CL-0097,Riley Carter,GG-PROV-003,Tori Nguyen,Lash Lift,Lashes,95,0,23.75,4.42,123.17,VMB Gift,yes,0,
+GG-TXN-00246,GG-APT-00282,2026-04-28,GG-CL-0037,Isabella Campbell,GG-PROV-002,Janelle Brooks,Facial,Skin,135,0,33.75,6.28,175.03,Cash,no,0,
+GG-TXN-00247,GG-APT-00283,2026-04-28,GG-CL-0003,Penelope Thompson,GG-PROV-003,Tori Nguyen,Spa Pedicure,Nails,97,15,24.25,3.81,110.06,VMB Gift,no,0,Rebooked
+GG-TXN-00248,GG-APT-00284,2026-04-28,GG-CL-0124,Leah Johnson,GG-PROV-004,Sasha Reed,Lash Lift,Lashes,95,0,19.0,4.42,118.42,Apple Pay,yes,0,High value
+GG-TXN-00249,GG-APT-00285,2026-04-28,GG-CL-0081,Nora Taylor,GG-PROV-003,Tori Nguyen,Balayage,Color,235,0,58.75,10.93,304.68,VMB Gift,no,0,
+GG-TXN-00250,GG-APT-00286,2026-04-29,GG-CL-0018,Penelope Rivera,GG-PROV-001,Mia Carter,Spa Pedicure,Nails,72,0,12.96,3.35,88.31,VMB Gift,no,10,
+GG-TXN-00251,GG-APT-00287,2026-04-29,GG-CL-0027,Abigail Gonzalez,GG-PROV-002,Janelle Brooks,Facial,Skin,120,0,14.4,5.58,139.98,Apple Pay,no,0,Rebooked
+GG-TXN-00252,GG-APT-00288,2026-04-29,GG-CL-0118,Penelope Flores,GG-PROV-002,Janelle Brooks,Gel Manicure,Nails,83,15,20.75,3.16,91.91,Cash,no,5,Gift opportunity
+GG-TXN-00253,GG-APT-00290,2026-04-29,GG-CL-0079,Stella Harris,GG-PROV-003,Tori Nguyen,Facial,Skin,120,0,14.4,5.58,139.98,Gift Card,no,10,Gift opportunity
+GG-TXN-00254,GG-APT-00291,2026-04-29,GG-CL-0092,Audrey Flores,GG-PROV-003,Tori Nguyen,Root Touch-Up,Color,140,0,16.8,6.51,163.31,Card,no,5,
+GG-TXN-00255,GG-APT-00292,2026-04-29,GG-CL-0096,Amelia Clark,GG-PROV-002,Janelle Brooks,Balayage,Color,260,0,52.0,12.09,324.09,Apple Pay,no,0,Rebooked
+GG-TXN-00256,GG-APT-00293,2026-04-29,GG-CL-0095,Savannah Baker,GG-PROV-004,Sasha Reed,Gel Manicure,Nails,83,0,16.6,3.86,103.46,VMB Gift,no,5,
+GG-TXN-00257,GG-APT-00294,2026-04-30,GG-CL-0113,Ava Green,GG-PROV-002,Janelle Brooks,Lash Lift,Lashes,85,0,17.0,3.95,105.95,Cash,no,0,High value
+GG-TXN-00258,GG-APT-00295,2026-04-30,GG-CL-0060,Abigail Thompson,GG-PROV-002,Janelle Brooks,Spa Pedicure,Nails,62,0,15.5,2.88,80.38,Gift Card,no,10,
+GG-TXN-00259,GG-APT-00296,2026-04-30,GG-CL-0024,Leah Moore,GG-PROV-005,Bri Ellis,Lash Lift,Lashes,105,0,15.75,4.88,125.63,Apple Pay,no,0,High value
+GG-TXN-00260,GG-APT-00297,2026-04-30,GG-CL-0042,Scarlett Nelson,GG-PROV-002,Janelle Brooks,Blowout,Hair,80,0,20.0,3.72,103.72,VMB Gift,no,0,Gift opportunity
+GG-TXN-00261,GG-APT-00298,2026-04-30,GG-CL-0071,Grace Baker,GG-PROV-004,Sasha Reed,Women's Haircut,Hair,85,0,10.2,3.95,99.15,Card,no,0,Gift opportunity
+GG-TXN-00262,GG-APT-00299,2026-04-30,GG-CL-0037,Isabella Campbell,GG-PROV-002,Janelle Brooks,Blowout,Hair,55,0,11.0,2.56,68.56,Gift Card,no,0,Rebooked
+GG-TXN-00263,GG-APT-00300,2026-04-30,GG-CL-0113,Ava Green,GG-PROV-004,Sasha Reed,Balayage,Color,260,0,46.8,12.09,318.89,Card,no,10,High value
+GG-TXN-00264,GG-APT-00301,2026-04-30,GG-CL-0080,Ellie Taylor,GG-PROV-005,Bri Ellis,Balayage,Color,245,0,0,11.39,256.39,VMB Gift,no,0,High value
+GG-TXN-00265,GG-APT-00302,2026-04-30,GG-CL-0118,Penelope Flores,GG-PROV-001,Mia Carter,Women's Haircut,Hair,85,0,10.2,3.95,99.15,VMB Gift,no,10,
+GG-TXN-00266,GG-APT-00303,2026-04-30,GG-CL-0124,Leah Johnson,GG-PROV-004,Sasha Reed,Facial,Skin,115,0,17.25,5.35,137.6,Gift Card,no,0,High value
+GG-TXN-00267,GG-APT-00304,2026-04-30,GG-CL-0061,Hazel Miller,GG-PROV-002,Janelle Brooks,Blowout,Hair,90,0,16.2,4.18,110.39,Card,no,10,
+GG-TXN-00268,GG-APT-00305,2026-04-30,GG-CL-0062,Savannah Martinez,GG-PROV-005,Bri Ellis,Gloss / Toner,Color,100,0,15.0,4.65,119.65,VMB Gift,no,10,Gift opportunity
+GG-TXN-00269,GG-APT-00307,2026-04-30,GG-CL-0081,Nora Taylor,GG-PROV-001,Mia Carter,Balayage,Color,235,0,35.25,10.93,281.18,Apple Pay,no,0,
+GG-TXN-00270,GG-APT-00308,2026-04-30,GG-CL-0040,Abigail Walker,GG-PROV-003,Tori Nguyen,Lash Lift,Lashes,85,0,0,3.95,88.95,VMB Gift,no,0,
+GG-TXN-00271,GG-APT-00309,2026-04-30,GG-CL-0025,Ava Rodriguez,GG-PROV-003,Tori Nguyen,Gel Manicure,Nails,48,0,12.0,2.23,62.23,VMB Gift,no,5,Gift opportunity

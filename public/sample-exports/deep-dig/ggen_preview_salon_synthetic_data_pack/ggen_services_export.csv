@@ -1,0 +1,11 @@
+service_id,service_name,category,duration_min,base_price
+SVC-001,Women's Haircut,Hair,60,85
+SVC-002,Blowout,Hair,45,65
+SVC-003,Root Touch-Up,Color,90,125
+SVC-004,Balayage,Color,150,245
+SVC-005,Gloss / Toner,Color,45,95
+SVC-006,Gel Manicure,Nails,55,58
+SVC-007,Spa Pedicure,Nails,60,72
+SVC-008,Brow Wax,Wax,20,28
+SVC-009,Lash Lift,Lashes,60,95
+SVC-010,Facial,Skin,75,120

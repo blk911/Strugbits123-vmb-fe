@@ -43,18 +43,41 @@ function DashboardSidebar() {
     <div className="h-full bg-[#fffdfb]/90 flex flex-col border-r border-[#ded3cc] ">
       <div className="flex flex-col gap-y-[6px] px-[8px] py-[26px] flex-1 overflow-y-auto custom-scrollbar">
         {items.map((item, idx) => {
+          if (item.type === "divider") {
+            return (
+              <div
+                key={`divider-${idx}`}
+                className="my-3 flex items-center gap-2 px-1 select-none"
+                aria-hidden
+              >
+                <span className="h-px flex-1 border-t border-dashed border-[#c9bfb8]" />
+                <span className="font-studio-sans text-[9px] tracking-[0.35em] text-[#a9a09b]">
+                  ———————
+                </span>
+                <span className="h-px flex-1 border-t border-dashed border-[#c9bfb8]" />
+              </div>
+            );
+          }
+
           const isGroupActive =
-            item.children?.some((child) =>
-              location.pathname.startsWith(child.path),
-            ) || false;
+            (typeof item.groupPath === "string" &&
+              location.pathname.startsWith(item.groupPath)) ||
+            (!item.groupPath &&
+              item.children?.some((child) =>
+                location.pathname.startsWith(child.path),
+              )) ||
+            false;
 
           if (item.children?.length) {
             return (
               <div key={idx} className="flex flex-col gap-y-[4px]">
                 <NavLink
                   to={item.path}
-                  className={`flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
+                  className={`flex min-w-0 justify-start max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
    rounded-[4px] transition-all duration-200 border
+   ${
+     item.subtext ? "items-start" : "items-center"
+   }
    ${
      isGroupActive ?
        "border-[#d2b48a] bg-[linear-gradient(135deg,#f8eee9,#e8cfc7)] text-[#333232] shadow-[0_10px_24px_-20px_rgba(164,95,118,0.7)]"
@@ -66,12 +89,24 @@ function DashboardSidebar() {
                   }}
                 >
                   <span className="flex items-center justify-center flex-shrink-0 w-8 h-8">
-                    {React.cloneElement(item.icon, { className: "w-5 h-5" })}
+                    {item.menuIconUnstyled ?
+                      item.icon
+                    : React.cloneElement(item.icon, { className: "w-5 h-5" })}
                   </span>
 
-                  <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-all max-sm:hidden">
-                    {item.name}
-                  </span>
+                  {item.subtext ?
+                    <span className="flex min-w-0 flex-col gap-0.5 text-left max-[1100px]:items-center max-[1100px]:text-center max-sm:hidden">
+                      <span className="text-wrap break-words text-[11px] sm:text-[12px] xl:text-[13px] font-semibold leading-tight normal-case tracking-[0.02em]">
+                        {item.name}
+                      </span>
+                      <span className="text-wrap break-words text-[9px] sm:text-[10px] xl:text-[11px] font-medium leading-tight normal-case tracking-[0.05em] text-inherit opacity-70">
+                        {item.subtext}
+                      </span>
+                    </span>
+                  : <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-words min-w-0 max-sm:hidden">
+                      {item.name}
+                    </span>
+                  }
                 </NavLink>
 
                 <div className="ml-5 flex flex-col gap-y-[3px] border-l border-[#ded3cc] pl-2 max-[1100px]:ml-0 max-[1100px]:border-l-0 max-[1100px]:pl-0">
@@ -81,7 +116,7 @@ function DashboardSidebar() {
                       key={child.path}
                       end
                       className={({ isActive }) =>
-                        `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 rounded-[4px] px-2 py-[7px] transition-all duration-200 ${
+                        `flex min-w-0 justify-start items-center max-[1100px]:flex-col flex-row gap-2 rounded-[4px] px-2 py-[7px] transition-all duration-200 ${
                           isActive ?
                             "bg-[#f3e3de] text-[#333232]"
                           : "bg-transparent text-vmb-primary/70 hover:bg-[#f5eee9]"
@@ -97,7 +132,7 @@ function DashboardSidebar() {
                           className: "w-4 h-4",
                         })}
                       </span>
-                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] uppercase tracking-[0.04em] break-all max-sm:hidden">
+                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] uppercase tracking-[0.04em] break-words min-w-0 max-sm:hidden">
                         {child.name}
                       </span>
                     </NavLink>
@@ -113,7 +148,7 @@ function DashboardSidebar() {
               key={idx}
               end
               className={({ isActive }) =>
-                `flex justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
+                `flex min-w-0 justify-start items-center max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
    rounded-[4px] transition-all duration-200 border
    ${
      isActive ?
@@ -131,7 +166,7 @@ function DashboardSidebar() {
                   {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
 
-                <span className=" max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-all max-sm:hidden ">
+                <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-words min-w-0 max-sm:hidden">
                   {item.name}
                 </span>
               </>

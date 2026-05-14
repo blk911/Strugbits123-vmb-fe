@@ -1,0 +1,7 @@
+File,Purpose,Rows
+ggen_clients_export_april_2026.csv,"Client records, tags, opt-ins, lifetime values",125
+ggen_appointments_export_april_2026.csv,One month appointment book for 5-tech salon,309
+ggen_transactions_export_april_2026.csv,"Completed appointment payments, tips, discounts, VMB gifts",271
+ggen_services_export.csv,Service catalog with prices/durations/categories,10
+ggen_staff_providers_export.csv,5 providers/techs with roles and commission rates,5
+vmb_synthetic_insight_seed.csv,Expected insight hints to validate parser output,4

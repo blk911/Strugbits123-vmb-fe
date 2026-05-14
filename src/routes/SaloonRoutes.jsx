@@ -4,7 +4,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import {
   AppointmentHistory,
   DashboardHome,
-  DeepDig,
+  DeepInsightsAnalytics,
+  DeepInsightsDataCapture,
+  DeepInsightsLayout,
   SalonDetail,
   SalonInvites,
 } from "../pages/saloon";
@@ -22,16 +24,36 @@ export default function SalonRoutes() {
       />
       <Route
         path="/salon-owner/deep-dig"
-        element={<Navigate to="/salon-owner/data-mine" replace />}
+        element={
+          <Navigate to="/salon-owner/deep-insights/data-capture" replace />
+        }
       />
       <Route
         path="/salon-owner/data-mine"
         element={
-          <ProtectedRoute allowedRoles={["salon-owner"]}>
-            <DeepDig />
-          </ProtectedRoute>
+          <Navigate to="/salon-owner/deep-insights/data-capture" replace />
         }
       />
+      <Route
+        path="/salon-owner/deep-insights"
+        element={
+          <ProtectedRoute allowedRoles={["salon-owner"]}>
+            <DeepInsightsLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route
+          index
+          element={
+            <Navigate to="/salon-owner/deep-insights/data-capture" replace />
+          }
+        />
+        <Route
+          path="data-capture"
+          element={<DeepInsightsDataCapture />}
+        />
+        <Route path="analytics" element={<DeepInsightsAnalytics />} />
+      </Route>
       <Route path="/salon-invites" element={<SalonInvites />} />
       <Route path="/appointments" element={<AppointmentHistory />} />
       <Route path="/salon-detail" element={<SalonDetail />} />

@@ -12,6 +12,7 @@ import Support from "./Settings/Support";
 import Contacts from "./Settings/Contacts";
 import SalonIntelligence from "./SalonIntelligence/SalonIntelligence";
 import CredentialAssistQueue from "./CredentialAssistQueue/CredentialAssistQueue";
+import NetworkPropagationLab from "./NetworkPropagationLab/NetworkPropagationLab";
 export {
   Home,
   AppointmentHistory,
@@ -26,4 +27,5 @@ export {
   Contacts,
   SalonIntelligence,
   CredentialAssistQueue,
+  NetworkPropagationLab,
 };

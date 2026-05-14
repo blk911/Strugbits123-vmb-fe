@@ -1307,10 +1307,10 @@ const DEEP_DIG_STAGE_COPY = {
   upload: {
     pageTitle: "Upload Queue",
     headerBlurb:
-      "Upload the files you gathered. Data Mine organizes them by provider and report type.",
+      "Upload the files you gathered. Deep Insights organizes them by provider and report type.",
     infoTitle: "Step 2 — Upload",
     infoBody:
-      "Upload the files you gathered. Data Mine organizes them by provider and report type.",
+      "Upload the files you gathered. Deep Insights organizes them by provider and report type.",
   },
   preflight: {
     pageTitle: "Preflight Check",
@@ -1415,7 +1415,7 @@ function DeepDigWorkflowPipeline({ stage, onRequestStepInfo }) {
   const idx = activeIndex >= 0 ? activeIndex : 0;
   return (
     <nav
-      aria-label="Data Mine workflow"
+      aria-label="Deep Insights workflow"
       className="rounded-xl border border-[#e8ddd4]/90 bg-gradient-to-b from-[#fffdfb]/95 to-[#faf6f2]/90 px-2 py-2.5 shadow-[0_8px_28px_-22px_rgba(47,42,40,0.4)] sm:px-3 sm:py-3"
     >
       <div className="flex min-w-0 items-stretch gap-0 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden">
@@ -1507,7 +1507,7 @@ function DeepDigCompactPageHeader({ stage, backControl }) {
           <div className="shrink-0 pt-0.5">{backControl}</div>
           <div className="min-w-0">
             <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#b8966a]">
-              DATA MINE
+              Deep Insights
             </p>
             <h1 className="font-studio-serif text-xl font-semibold leading-tight tracking-tight text-[#2f2a28] sm:text-2xl">
               {copy.pageTitle}
@@ -1691,7 +1691,7 @@ function DeepDigProgressRail({
   return (
     <aside
       className="hidden min-w-0 lg:block"
-      aria-label="Data Mine progress"
+      aria-label="Deep Insights progress"
     >
       <div className="sticky top-[88px] rounded-xl border border-[#e2d6cf] bg-[#fffdfb]/95 p-3 shadow-[0_14px_40px_-30px_rgba(39,46,45,0.35)] xl:p-4">
         <h2 className="font-studio-serif text-sm font-semibold text-[#2f2a28]">
@@ -2019,7 +2019,7 @@ function DeepDigConciergeDrawer({
                   />
                   <span className="text-sm leading-relaxed text-[#5f5654]">
                     I authorize VMB to access this provider account only to
-                    gather the requested export files for my Data Mine
+                    gather the requested export files for my Deep Insights
                     analysis.
                   </span>
                 </label>
