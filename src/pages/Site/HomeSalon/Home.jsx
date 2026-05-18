@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import SalonHero from "../../../components/site/SalonHero/SalonHero";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import {
   Check,
   Lock,
 } from "lucide-react";
+// Note: Megaphone still used in HOW_STEPS step 04
 
 // ─── static data ──────────────────────────────────────────────────────────────
 
@@ -134,19 +135,13 @@ const TRUST_BULLETS = [
   "Results in minutes",
 ];
 
-const TAIKOS_FEATURES = [
-  "Build targeted client lists",
-  "Personalize every message",
-  "Automate invites & offers",
-  "Track responses in real time",
-  "Grow private client circles",
-];
-
-const CAMPAIGNS = [
-  { label: "VIP Re-Engagement",      status: "Active",  color: "bg-emerald-50 text-emerald-700" },
-  { label: "Bridal Circle Invite",   status: "Active",  color: "bg-emerald-50 text-emerald-700" },
-  { label: "Birthday Gift Campaign", status: "Queued",  color: "bg-amber-50 text-amber-700"     },
-  { label: "Win-Back Series",        status: "Preview", color: "bg-[#fceef2] text-[#c4506e]"    },
+const CLOSE_BULLETS = [
+  "Hidden revenue discovery",
+  "Private client circles",
+  "Gifting campaigns",
+  "Trusted referrals",
+  "VIP experiences",
+  "Client retention",
 ];
 
 // ─── shared tokens ────────────────────────────────────────────────────────────
@@ -168,6 +163,14 @@ export default function HomeSalon() {
     dispatch(setAuthMode("signup"));
     navigate("/register");
   }, [dispatch, navigate]);
+
+  const [form, setForm] = useState({ firstName: "", salonName: "", email: "", instagram: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleForm = useCallback((e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  }, []);
 
   return (
     <>
@@ -346,51 +349,54 @@ export default function HomeSalon() {
 
       {/* 5 · FREE SCAN / PAID ACTIVATION */}
       <section id="free-scan" className={`scroll-mt-16 bg-white ${secPad}`}>
-        <div className="mx-auto max-w-5xl">
-          <div className="lg:flex lg:gap-10">
+        <div className="mx-auto max-w-[1180px]">
 
-            {/* Left — opportunity cards */}
-            <div className="flex-1">
-              <p className={eyebrowRose}>Free to see · paid to activate</p>
-              <h2 className={h2}>
-                Your free scan reveals<br className="hidden sm:block" /> 3 opportunities.
-              </h2>
-              <p className={`${body} mt-3 max-w-lg`}>
-                The free scan shows you what's possible. Activate with VMB Pro to turn insights into action.
-              </p>
-              <div className="mt-6 space-y-3">
-                {OPPORTUNITIES.map((opp) => (
-                  <div
-                    key={opp.id}
-                    className="rounded-2xl border border-[#ede4df] bg-[#faf6f2] p-5"
-                  >
-                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
-                      Opportunity {opp.n}
-                    </p>
-                    <p className="mt-1.5 text-[15px] font-semibold text-[#1a1412]">{opp.title}</p>
-                    <p className="mt-1.5 text-[14px] leading-relaxed text-[#6b5e4e]">{opp.body}</p>
-                    <div className="mt-2.5 flex items-center gap-2">
-                      <span className="text-[10px] font-bold uppercase tracking-wide text-[#8a7f77]">
-                        Potential Revenue
-                      </span>
-                      <span className="text-[14px] font-bold text-[#b88f45]">{opp.revenue}</span>
-                    </div>
-                    <button
-                      type="button"
-                      disabled
-                      className="mt-3.5 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-[#ede4df] bg-white py-2.5 text-[12px] font-semibold text-[#9a8f86] opacity-70"
-                    >
-                      <Lock className="h-3 w-3" strokeWidth={2} />
-                      {opp.cta}
-                    </button>
-                  </div>
-                ))}
+          {/* Title area */}
+          <div className="mb-7">
+            <p className={eyebrowRose}>Free to see · paid to activate</p>
+            <h2 className={h2}>
+              Your free scan reveals 3 opportunities.
+            </h2>
+            <p className={`${body} mt-3 max-w-2xl`}>
+              The free scan shows you what's possible. Activate with VMB Pro to turn insights into action.
+            </p>
+          </div>
+
+          {/* 4-column grid — 3 opportunity cards + CTA panel */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+            {OPPORTUNITIES.map((opp) => (
+              <div
+                key={opp.id}
+                className="flex flex-col rounded-2xl border border-[#ede4df] bg-[#faf6f2] p-5"
+              >
+                <div className="flex-1">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
+                    Opportunity {opp.n}
+                  </p>
+                  <p className="mt-1.5 text-[15px] font-semibold text-[#1a1412]">{opp.title}</p>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-[#6b5e4e]">{opp.body}</p>
+                </div>
+                <div className="mt-3 flex items-center gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-[#8a7f77]">
+                    Potential Revenue
+                  </span>
+                  <span className="text-[14px] font-bold text-[#b88f45]">{opp.revenue}</span>
+                </div>
+                <button
+                  type="button"
+                  disabled
+                  className="mt-3 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-[#ede4df] bg-white py-2.5 text-[12px] font-semibold text-[#9a8f86] opacity-70"
+                >
+                  <Lock className="h-3 w-3" strokeWidth={2} />
+                  {opp.cta}
+                </button>
               </div>
-            </div>
+            ))}
 
-            {/* Right — CTA panel */}
-            <div className="mt-8 lg:mt-0 lg:w-[248px] lg:shrink-0 lg:pt-14">
-              <div className="rounded-2xl border border-[#f0c8d0] bg-[#fceef2] p-5">
+            {/* CTA panel — 4th column */}
+            <div className="flex flex-col rounded-2xl border border-[#f0c8d0] bg-[#fceef2] p-5">
+              <div className="flex-1">
                 <p className="font-studio-serif text-[17px] font-medium leading-snug text-[#1a1412]">
                   See what's hidden in your data today.
                 </p>
@@ -402,86 +408,136 @@ export default function HomeSalon() {
                     </li>
                   ))}
                 </ul>
-                <button
-                  type="button"
-                  onClick={goRegister}
-                  className="mt-5 w-full rounded-full bg-[#c4506e] py-3 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(196,80,110,0.28)] transition hover:bg-[#b0425e]"
-                >
-                  Analyze My Salon Free
-                </button>
-                <p className="mt-2.5 text-center text-[11px] text-[#8a7f77]">
-                  Takes less than 2 minutes
-                </p>
               </div>
+              <button
+                type="button"
+                onClick={goRegister}
+                className="mt-5 w-full rounded-full bg-[#c4506e] py-3 text-[14px] font-semibold text-white shadow-[0_4px_16px_rgba(196,80,110,0.28)] transition hover:bg-[#b0425e]"
+              >
+                Analyze My Salon Free
+              </button>
+              <p className="mt-2.5 text-center text-[11px] text-[#8a7f77]">
+                Takes less than 2 minutes
+              </p>
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* 6 · TAIKOS ACTIVATION */}
-      <section className={`bg-[#faf6f2] ${secPad}`}>
-        <div className="mx-auto max-w-5xl lg:flex lg:items-start lg:gap-14">
+      {/* 6 · EMOTIONAL CLOSE + INVITATION */}
+      <section className="bg-[#faf6f2] px-5 py-10 sm:px-8 sm:py-12 lg:px-12">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="overflow-hidden rounded-2xl border border-[#ede4df] bg-white shadow-[0_4px_24px_rgba(26,20,18,0.08)] lg:grid lg:grid-cols-[1fr_420px]">
 
-          {/* Left — copy */}
-          <div className="flex-1">
-            <p className={eyebrow}>TaikOS turns insights into action</p>
-            <h2 className={h2}>Analytics is just the beginning.</h2>
-            <p className={`${body} mt-3 max-w-md`}>
-              TaikOS activates every opportunity with automated campaigns, personalized outreach, and private client-network experiences.
-            </p>
-            <ul className="mt-5 space-y-2.5">
-              {TAIKOS_FEATURES.map((f) => (
-                <li key={f} className="flex items-center gap-3 text-[15px] text-[#4a3e38] sm:text-[16px]">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#fceef2]">
-                    <Check className="h-3 w-3 text-[#c4506e]" strokeWidth={2.5} />
-                  </span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-            <button
-              type="button"
-              onClick={goRegister}
-              className="mt-7 rounded-full bg-[#c4506e] px-7 py-3.5 text-[14px] font-semibold text-white shadow-[0_4px_20px_rgba(196,80,110,0.25)] transition hover:bg-[#b0425e] sm:text-[15px]"
-            >
-              Activate My Salon
-            </button>
-          </div>
-
-          {/* Right — Campaign Builder mockup */}
-          <div className="mt-8 lg:mt-0 lg:w-[310px] lg:shrink-0">
-            <div className="rounded-2xl border border-[#ede4df] bg-white p-4 shadow-[0_4px_24px_rgba(26,20,18,0.07)]">
-              <div className="flex items-center justify-between rounded-xl border border-[#ede4df] bg-[#faf6f2] px-4 py-3">
-                <p className="text-[12px] font-semibold text-[#1a1412]">Campaign Builder</p>
-                <span className="rounded-full border border-[#d4b87a]/50 bg-[#fdf5e4] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#8a6a20]">
-                  tAIkOS
-                </span>
-              </div>
-              <div className="mt-2 space-y-1.5">
-                {CAMPAIGNS.map((c) => (
-                  <div
-                    key={c.label}
-                    className="flex items-center justify-between rounded-xl border border-[#ede4df] bg-white px-3.5 py-2.5"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#fceef2]">
-                        <Megaphone className="h-2.5 w-2.5 text-[#c4506e]" strokeWidth={2} />
-                      </span>
-                      <span className="text-[12px] font-medium text-[#1a1412]">{c.label}</span>
-                    </div>
-                    <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${c.color}`}>
-                      {c.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-3 text-center text-[10px] text-[#9a8f86]">
-                Campaigns launch on activation
+            {/* Left — emotional copy + form */}
+            <div className="border-b border-[#ede4df] p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#b88f45]">
+                The future of salon growth
               </p>
-            </div>
-          </div>
+              <h2 className="font-studio-serif mt-3 text-[1.65rem] font-medium leading-[1.1] tracking-tight text-[#1a1412] sm:text-[1.9rem] lg:text-[2.1rem]">
+                The Strongest Salon Growth Never Feels Like Marketing.
+              </h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#5c4d45] sm:text-[16px]">
+                VMB helps salons grow through trust, referrals, gifting, VIP experiences, and private client relationships already inside their business.
+              </p>
+              <ul className="mt-4 grid grid-cols-2 gap-x-5 gap-y-2">
+                {CLOSE_BULLETS.map((b) => (
+                  <li key={b} className="flex items-center gap-2 text-[13px] text-[#4a3e38]">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#c4506e]" aria-hidden />
+                    {b}
+                  </li>
+                ))}
+              </ul>
 
+              {/* Invitation form */}
+              <div className="mt-6 rounded-xl border border-[#f0c8d0] bg-[#fceef2]/50 p-5">
+                <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#c4506e]">
+                  Join the first wave of VMB salons
+                </p>
+                <h3 className="font-studio-serif mt-1.5 text-[1.2rem] font-medium leading-[1.2] tracking-tight text-[#1a1412]">
+                  Request Your Invitation
+                </h3>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-[#6b5e4e]">
+                  Be first to receive launch updates, private access invitations, and early VMB Salon opportunities.
+                </p>
+
+                {submitted ? (
+                  <div className="mt-4 rounded-xl border border-[#f0c8d0] bg-white px-4 py-5 text-center">
+                    <p className="font-studio-serif text-[1.05rem] font-medium text-[#1a1412]">
+                      You're on the list.
+                    </p>
+                    <p className="mt-1 text-[12px] leading-relaxed text-[#6b5e4e]">
+                      We'll be in touch with your private invitation when we're ready.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleForm} className="mt-4 space-y-2.5">
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <div>
+                        <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-[#8a7f77]">First Name</label>
+                        <input type="text" required placeholder="Your first name" value={form.firstName}
+                          onChange={(e) => setForm((p) => ({ ...p, firstName: e.target.value }))}
+                          className="w-full rounded-xl border border-[#ede4df] bg-white px-3 py-2 text-[13px] text-[#1a1412] placeholder:text-[#c0b8b4] focus:border-[#c4506e] focus:outline-none focus:ring-1 focus:ring-[#c4506e]/30" />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-[#8a7f77]">Salon Name</label>
+                        <input type="text" required placeholder="Your salon name" value={form.salonName}
+                          onChange={(e) => setForm((p) => ({ ...p, salonName: e.target.value }))}
+                          className="w-full rounded-xl border border-[#ede4df] bg-white px-3 py-2 text-[13px] text-[#1a1412] placeholder:text-[#c0b8b4] focus:border-[#c4506e] focus:outline-none focus:ring-1 focus:ring-[#c4506e]/30" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <div>
+                        <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-[#8a7f77]">Email Address</label>
+                        <input type="email" required placeholder="you@yoursalon.com" value={form.email}
+                          onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                          className="w-full rounded-xl border border-[#ede4df] bg-white px-3 py-2 text-[13px] text-[#1a1412] placeholder:text-[#c0b8b4] focus:border-[#c4506e] focus:outline-none focus:ring-1 focus:ring-[#c4506e]/30" />
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-[#8a7f77]">
+                          Instagram <span className="font-normal normal-case tracking-normal text-[#b0a8a4]">(optional)</span>
+                        </label>
+                        <input type="text" placeholder="@yoursalon" value={form.instagram}
+                          onChange={(e) => setForm((p) => ({ ...p, instagram: e.target.value }))}
+                          className="w-full rounded-xl border border-[#ede4df] bg-white px-3 py-2 text-[13px] text-[#1a1412] placeholder:text-[#c0b8b4] focus:border-[#c4506e] focus:outline-none focus:ring-1 focus:ring-[#c4506e]/30" />
+                      </div>
+                    </div>
+                    <button type="submit"
+                      className="w-full rounded-full bg-[#c4506e] py-2.5 text-[13px] font-semibold text-white shadow-[0_4px_16px_rgba(196,80,110,0.28)] transition hover:bg-[#b0425e] active:scale-[0.99]">
+                      Request Invitation
+                    </button>
+                    <p className="text-center text-[10px] leading-relaxed text-[#8a7f77]">
+                      No spam. Just launch updates, early access, and private invitations.
+                    </p>
+                  </form>
+                )}
+              </div>
+            </div>
+
+            {/* Right — video, fills full column height */}
+            <div className="hidden lg:block">
+              <video
+                controls
+                playsInline
+                className="h-full w-full object-cover"
+              >
+                <source src="/VMB_ Trust 4.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            {/* Mobile — video below content */}
+            <div className="lg:hidden">
+              <video
+                controls
+                playsInline
+                className="w-full"
+              >
+                <source src="/VMB_ Trust 4.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+          </div>
         </div>
       </section>
 
