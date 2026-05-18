@@ -14,20 +14,64 @@ import {
 
 // ─── static data ──────────────────────────────────────────────────────────────
 
-const PLATFORMS = [
-  "Vagaro", "GlossGenius", "Square", "Fresha",
-  "Booksy", "Boulevard", "Mangomint", "CSV Export",
+const RELATIONSHIP_TAGS = [
+  "Loyal regulars",
+  "Bridal groups",
+  "Birthday clients",
+  "Best friends",
+  "Longtime clients",
+  "Women who refer others",
+  "Mothers & daughters",
+  "Wedding parties",
+  "Self-care regulars",
+  "Holiday gift clients",
 ];
 
-const BOOKING_FEATURES = ["Booking", "Payments", "Calendar", "Services"];
-const VMB_FEATURES     = ["Analytics", "Referrals", "Gifting", "Retention", "VIP Access"];
+const OPPORTUNITY_TAGS = [
+  "Hidden referral circles",
+  "Dormant loyal clients",
+  "Prepaid gift opportunities",
+  "Bridal group networks",
+  "VIP retention risks",
+  "High-trust repeat clients",
+  "Seasonal spending patterns",
+  "Best-friend booking behavior",
+];
 
-const METRICS = [
-  { stat: "23–35%",    body: "of revenue comes from inactive clients you can win back." },
-  { stat: "2–5×",      body: "more likely to rebook when personalized outreach is used." },
-  { stat: "3×",        body: "higher revenue from clients in referral circles." },
-  { stat: "20–40%",   body: "increase in prepaid revenue with gifting campaigns." },
-  { stat: "Up to 60%", body: "prefer private, invite-only offers over public promotions." },
+const INSIGHT_CARDS = [
+  {
+    id: "dormant",
+    stat: "38",
+    label: "loyal clients haven't booked in 60+ days",
+    potential: "Potential recovery: $11,200",
+  },
+  {
+    id: "circles",
+    stat: "11",
+    label: "bridal & friend circles identified",
+    potential: "Potential: Private invite campaign",
+  },
+  {
+    id: "gifts",
+    stat: "26",
+    label: "giftable moments detected",
+    potential: "Potential: Birthday + best-friend offers",
+  },
+  {
+    id: "vip",
+    stat: "14",
+    label: "VIP repeat clients identified",
+    potential: "Potential: Exclusive prepaid access",
+  },
+];
+
+const HIDDEN_REVENUE_BULLETS = [
+  "Hidden referral circles",
+  "Loyal clients who stopped booking",
+  "Bridal & best-friend networks",
+  "VIP repeat spending patterns",
+  "Giftable service moments",
+  "Prepaid opportunity detection",
 ];
 
 const HOW_STEPS = [
@@ -130,117 +174,147 @@ export default function HomeSalon() {
       {/* 1 · HERO */}
       <SalonHero />
 
-      {/* 2 · NOT ANOTHER BOOKING APP */}
-      <section className="bg-[#faf6f2] px-5 py-8 sm:px-8 sm:py-10">
-        <div className="mx-auto max-w-5xl">
-          <div className="overflow-hidden rounded-2xl border border-[#ede4df] bg-white shadow-[0_2px_20px_rgba(26,20,18,0.07)]">
+      {/* 2 · RELATIONSHIPS + OPPORTUNITIES — 3-column container */}
+      <section className="bg-[#faf6f2] px-5 py-6 sm:px-8 sm:py-8 lg:px-12">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="overflow-hidden rounded-2xl border border-[#ede4df] bg-white shadow-[0_2px_16px_rgba(26,20,18,0.06)]">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_36px_1fr_1.3fr]">
 
-            {/* Comparison row */}
-            <div className="flex flex-col sm:flex-row">
-
-              {/* Left — Traditional platforms */}
-              <div className="flex-1 p-6 sm:p-7">
-                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8a7f77]">
-                  Not another booking app
-                </p>
-                <h3 className="font-studio-serif mt-2 text-[1.25rem] font-medium text-[#4a3e38] sm:text-[1.4rem]">
-                  Traditional Platforms
-                </h3>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-[#7a6b62]">
-                  Manage appointments and payments.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {BOOKING_FEATURES.map((f) => (
-                    <span
-                      key={f}
-                      className="rounded-full border border-[#ede4df] bg-[#faf6f2] px-3 py-1.5 text-[12px] font-medium text-[#7a6b62]"
-                    >
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Center VS */}
-              <div className="flex items-center justify-center border-y border-[#ede4df] py-4 sm:border-x sm:border-y-0 sm:px-5 sm:py-0">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#ede4df] bg-[#faf6f2] text-[12px] font-bold tracking-tight text-[#9a8f86]">
-                  VS
-                </div>
-              </div>
-
-              {/* Right — VMB */}
-              <div className="flex-1 bg-[#fffcfa] p-6 sm:p-7">
-                <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#c4506e]">
-                  VMB
-                </p>
-                <h3 className="font-studio-serif mt-2 text-[1.25rem] font-medium text-[#1a1412] sm:text-[1.4rem]">
-                  Grows Your Business
-                </h3>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-[#5c4d45]">
-                  Through relationships, data, and activation.
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {VMB_FEATURES.map((f) => (
-                    <span
-                      key={f}
-                      className="rounded-full border border-[#f0c8d0] bg-[#fceef2] px-3 py-1.5 text-[12px] font-medium text-[#c4506e]"
-                    >
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-
-            {/* Bottom strip — platforms + import copy */}
-            <div className="border-t border-[#ede4df] bg-[#faf6f2] px-6 py-4 sm:px-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-                <div className="shrink-0">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
-                    Connects to
+              {/* Col 1 — Trust / Relationships */}
+              <div className="flex flex-col border-b border-[#ede4df] p-5 sm:p-6 lg:border-b-0 lg:border-r">
+                <div className="flex-1">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8a7f77]">
+                    Women you already know
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-1.5">
-                    {PLATFORMS.map((p) => (
-                      <span
-                        key={p}
-                        className="rounded-md border border-[#ede4df] bg-white px-2.5 py-1 text-[11px] font-medium text-[#4a3e38]"
-                      >
-                        {p}
+                  <h2 className="font-studio-serif mt-2.5 text-[1.15rem] font-medium leading-[1.2] tracking-tight text-[#1a1412]">
+                    The Strongest Salon Growth Travels Through Trusted Relationships.
+                  </h2>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {RELATIONSHIP_TAGS.map((tag) => (
+                      <span key={tag} className="rounded-md bg-[#f8f3ef] px-2.5 py-1.5 text-[11px] font-medium text-[#4a3e38]">
+                        {tag}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="hidden h-10 w-px shrink-0 bg-[#ede4df] sm:block" aria-hidden />
-                <p className="text-[13px] leading-relaxed text-[#6b5e4e]">
-                  Import clients, emails, phone numbers, appointments, services, sales, visit cadence, and spend history.
-                </p>
+                <div className="mt-5 border-t border-[#f0ebe6] pt-3 text-center">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#b88f45]">Trust</span>
+                </div>
               </div>
-            </div>
 
+              {/* Connector — desktop only */}
+              <div className="hidden lg:flex lg:flex-col lg:items-center lg:border-r lg:border-[#ede4df]">
+                <div className="flex flex-1 items-center justify-center">
+                  <div className="h-full w-px bg-gradient-to-b from-[#f5f0ec] via-[#e8ddd8] to-[#f5f0ec]" />
+                </div>
+                <div className="w-full shrink-0 border-t border-[#f0ebe6] py-3 text-center">
+                  <span className="text-[11px] leading-none text-[#d4b8c0]">→</span>
+                </div>
+              </div>
+
+              {/* Col 2 — Opportunities / What VMB reveals */}
+              <div className="flex flex-col border-b border-[#ede4df] p-5 sm:p-6 lg:border-b-0 lg:border-r">
+                <div className="flex-1">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#c4506e]">
+                    What VMB reveals
+                  </p>
+                  <h3 className="font-studio-serif mt-2.5 text-[1.05rem] font-medium leading-[1.25] tracking-tight text-[#1a1412]">
+                    What Traditional Salon Software Never Shows You
+                  </h3>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {OPPORTUNITY_TAGS.map((tag) => (
+                      <span key={tag} className="rounded-md bg-[#fdf0f4] px-2.5 py-1.5 text-[11px] font-medium text-[#7a3e52]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-5 border-t border-[#f0ebe6] pt-3 text-center">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#c4506e]">Opportunities</span>
+                </div>
+              </div>
+
+              {/* Col 3 — Revenue Found / Insight cards */}
+              <div className="flex flex-col p-5 sm:p-6">
+                <div className="flex-1">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#8a7f77]">
+                    Opportunities found
+                  </p>
+                  <h3 className="font-studio-serif mt-2.5 text-[1.05rem] font-medium leading-[1.25] tracking-tight text-[#1a1412]">
+                    VMB Finds The Revenue Opportunities Salon Booking Software Misses.
+                  </h3>
+                  <div className="mt-3 space-y-1.5">
+                    {INSIGHT_CARDS.map((card) => (
+                      <div key={card.id} className="rounded-lg bg-[#faf6f2] px-3 py-2.5">
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="font-studio-serif text-[1.2rem] font-medium leading-none text-[#c4506e]">
+                            {card.stat}
+                          </span>
+                          <span className="text-[12px] leading-snug text-[#4a3e38]">{card.label}</span>
+                        </div>
+                        <p className="mt-0.5 text-[10px] font-medium text-[#b88f45]">{card.potential}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-5 border-t border-[#f0ebe6] pt-3 text-center">
+                  <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-[#b88f45]">Revenue Found</span>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3 · WHAT YOUR DATA CAN REVEAL */}
-      <section className="bg-white px-5 py-10 sm:px-8 sm:py-12">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-5 flex items-center gap-4">
-            <p className={eyebrow}>What your data can reveal</p>
-            <div className="h-px flex-1 bg-[#ede4df]" aria-hidden />
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {METRICS.map((m) => (
-              <div
-                key={m.stat}
-                className="rounded-xl border border-[#f0c8d0] bg-[#fceef2] px-4 py-4"
+
+      {/* 3 · HIDDEN REVENUE VIDEO */}
+      <section className="bg-white px-5 py-8 sm:px-8 sm:py-10 lg:px-12">
+        <div className="mx-auto max-w-[1180px]">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:gap-12">
+
+            {/* Left: copy */}
+            <div className="flex-1">
+              <p className={eyebrow}>Hidden revenue inside your client base</p>
+              <h2 className="font-studio-serif mt-3 text-[1.75rem] font-medium leading-[1.1] tracking-tight text-[#1a1412] sm:text-[2.1rem] lg:text-[2.3rem]">
+                The Revenue You're Looking For May Already Be Sitting In Your Chair.
+              </h2>
+              <p className="mt-4 text-[15px] leading-relaxed text-[#5c4d45] sm:text-[16px]">
+                VMB analyzes your existing salon data to uncover hidden referral networks, dormant loyal clients, gifting opportunities, bridal groups, VIP retention risks, and revenue opportunities already inside your business.
+              </p>
+              <ul className="mt-5 space-y-2">
+                {HIDDEN_REVENUE_BULLETS.map((b) => (
+                  <li key={b} className="flex items-center gap-2.5 text-[14px] text-[#4a3e38] sm:text-[15px]">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#c4506e]" aria-hidden />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={goRegister}
+                className="mt-6 rounded-full bg-[#c4506e] px-7 py-3 text-[14px] font-semibold text-white shadow-[0_4px_20px_rgba(196,80,110,0.25)] transition hover:bg-[#b0425e] active:scale-[0.99] sm:text-[15px]"
               >
-                <p className="font-studio-serif text-[1.55rem] font-medium leading-none text-[#c4506e]">
-                  {m.stat}
-                </p>
-                <p className="mt-1.5 text-[12px] leading-snug text-[#6b5e4e]">{m.body}</p>
+                Analyze My Salon
+              </button>
+              <p className="mt-3 text-[11px] leading-relaxed text-[#b8b0ab]">
+                Works with GlossGenius, Vagaro, Square, Fresha, Booksy, Boulevard, Mangomint, and CSV exports.
+              </p>
+            </div>
+
+            {/* Right: video */}
+            <div className="w-full lg:w-[48%] lg:shrink-0">
+              <div className="overflow-hidden rounded-2xl border border-[#ede4df] shadow-[0_6px_32px_rgba(26,20,18,0.10)]">
+                <video
+                  controls
+                  playsInline
+                  className="w-full"
+                >
+                  <source src="/VMB_ Trust 3.mp4" type="video/mp4" />
+                </video>
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
