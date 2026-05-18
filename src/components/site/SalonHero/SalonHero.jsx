@@ -1,18 +1,17 @@
 import React, { useCallback } from "react";
-import heroBackdrop from "../../../assets/salon_hero_bg.png";
-import HeroOverlay from "./HeroOverlay";
+import advocateImg from "../../../assets/brand/benefits/advocate.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
 
 const SCAN_STATS = [
-  { label: "Clients imported", value: "847", done: true },
-  { label: "Appointments analyzed", value: "3,241", done: true },
-  { label: "Revenue patterns detected", value: "", done: true },
-  { label: "Opportunities found", value: "3", highlight: true },
+  { label: "Clients imported",          value: "847",      highlight: false },
+  { label: "Appointments analyzed",     value: "3,241",    highlight: false },
+  { label: "Revenue patterns detected", value: "$128,760", highlight: false },
+  { label: "Opportunities found",       value: "3",        highlight: true  },
 ];
 
-const OPPORTUNITY_PILLS = [
+const OPP_PILLS = [
   "38 dormant high-value clients",
   "Referral circles identified",
   "Giftable moments mapped",
@@ -33,146 +32,151 @@ export default function SalonHero() {
   }, []);
 
   return (
-    <section className="relative isolate w-full overflow-hidden bg-[#0a0f18]">
-      <style>{`
-        @keyframes salonHeroKen {
-          0%   { transform: scale(1)    translate(0,0); }
-          100% { transform: scale(1.07) translate(-1.5%,0.8%); }
-        }
-        .salon-hero-ken { animation: salonHeroKen 24s ease-in-out infinite alternate; }
-        @keyframes scanPulse {
-          0%, 100% { opacity: 0.55; }
-          50%       { opacity: 1; }
-        }
-        .scan-pulse { animation: scanPulse 2.6s ease-in-out infinite; }
-      `}</style>
+    <section className="bg-[#faf6f2] px-5 pb-24 pt-12 sm:px-8 sm:pb-28 sm:pt-14 lg:px-12 lg:pb-32">
+      <div className="mx-auto max-w-6xl lg:flex lg:items-start lg:gap-14">
 
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img
-          src={heroBackdrop}
-          alt=""
-          className="salon-hero-ken h-full w-full object-cover object-[center_28%]"
-        />
-        <HeroOverlay />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0a0f18]/85 via-[#0a0f18]/50 to-[#0a0f18]/15"
-          aria-hidden
-        />
-      </div>
-
-      <div className="relative z-[1] mx-auto flex max-w-[1440px] flex-col items-start px-5 pb-16 pt-14 sm:px-8 sm:pb-18 sm:pt-16 lg:flex-row lg:items-center lg:gap-10 lg:px-12 lg:pb-20 lg:pt-18">
-
-        {/* Left — copy */}
-        <div className="flex min-w-0 flex-1 flex-col justify-center lg:pr-6">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#F7E7CE]/55 sm:text-[11px]">
+        {/* ── Left copy ── */}
+        <div className="flex-1 lg:pt-6">
+          <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b88f45]">
             Salon Growth Engine
           </p>
-          <h1 className="font-studio-serif mt-3 text-[2.05rem] font-medium leading-[1.08] tracking-tight text-[#faf6ef] sm:mt-4 sm:text-[2.55rem] lg:text-[3.05rem] lg:leading-[1.04]">
-            Your Client List<br className="hidden sm:block" /> Is Worth More<br className="hidden sm:block" /> Than You Think.
+
+          <h1 className="font-studio-serif mt-3 text-[2.35rem] font-medium leading-[1.08] tracking-tight text-[#1a1412] sm:text-[2.85rem] lg:text-[3.25rem]">
+            Your Client List<br />
+            Is Worth More<br />
+            Than You Think.
           </h1>
-          <p className="mt-4 max-w-[520px] text-[15px] leading-relaxed text-[#ccc7be] sm:text-[16px] lg:text-[17px]">
+
+          <p className="mt-5 max-w-[500px] text-[16px] leading-relaxed text-[#5c4d45] sm:text-[17px]">
             VMB connects to your existing salon software, analyzes your client and appointment history, and reveals hidden revenue opportunities already inside your business.
           </p>
+
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={goRegister}
-              className="group relative overflow-hidden rounded-full bg-[#F7E7CE] px-7 py-3 text-[14px] font-semibold tracking-wide text-[#1a1520] shadow-[0_8px_32px_-8px_rgba(247,231,206,0.45)] transition duration-300 hover:brightness-[1.04] active:scale-[0.99] sm:text-[15px]"
+              className="rounded-full bg-[#c4506e] px-7 py-3.5 text-[14px] font-semibold text-white shadow-[0_4px_20px_rgba(196,80,110,0.28)] transition hover:bg-[#b0425e] active:scale-[0.99] sm:text-[15px]"
             >
-              <span className="relative z-[1]">Analyze My Salon</span>
-              <span
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 transition duration-700 group-hover:translate-x-full group-hover:opacity-100"
-                aria-hidden
-              />
+              Analyze My Salon
             </button>
             <button
               type="button"
               onClick={scrollToScan}
-              className="rounded-full border border-white/[0.18] bg-[#1a2235]/55 px-7 py-3 text-[14px] font-semibold tracking-wide text-[#f8f4eb] backdrop-blur-md transition duration-300 hover:border-[#F7E7CE]/35 hover:bg-[#232f4a]/55 sm:text-[15px]"
+              className="rounded-full border border-[#1a1412]/22 bg-white px-7 py-3.5 text-[14px] font-semibold text-[#1a1412] transition hover:border-[#1a1412]/40 hover:bg-[#f8f4f0] sm:text-[15px]"
             >
               See Sample Opportunities
             </button>
           </div>
+
+          {/* Social proof */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex -space-x-2">
+              {["#d4a078", "#c48a60", "#e8c4a4", "#ba7d55", "#d8b090"].map((c, i) => (
+                <div
+                  key={i}
+                  className="h-7 w-7 rounded-full border-2 border-[#faf6f2]"
+                  style={{ background: c }}
+                  aria-hidden
+                />
+              ))}
+            </div>
+            <p className="text-[12px] leading-snug text-[#7a6b62]">
+              Join <span className="font-semibold text-[#1a1412]">2,000+</span> salon owners growing with VMB
+            </p>
+          </div>
         </div>
 
-        {/* Right — Intelligence Scan mock card */}
-        <div className="mt-10 w-full max-w-[370px] shrink-0 self-start sm:self-auto lg:mt-0 lg:w-[370px]">
-          <div className="rounded-2xl border border-white/[0.10] bg-[#0d1628]/82 p-5 shadow-[0_28px_64px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-6">
+        {/* ── Right: image + scan card ── */}
+        <div className="mt-10 lg:mt-0 lg:w-[430px] lg:shrink-0">
+          {/* Hero image */}
+          <div className="relative h-[280px] overflow-hidden rounded-2xl shadow-[0_4px_24px_rgba(26,20,18,0.10)] sm:h-[320px] lg:h-[350px]">
+            <img
+              src={advocateImg}
+              alt="Salon stylist with client"
+              className="h-full w-full object-cover object-top"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1412]/20 via-transparent to-transparent"
+              aria-hidden
+            />
+          </div>
 
+          {/* Scan card — overlaps image bottom */}
+          <div className="relative z-10 mx-3 -mt-20 rounded-2xl border border-[#ede4df] bg-white p-4 shadow-[0_8px_40px_rgba(26,20,18,0.13)] sm:mx-4 sm:p-5">
             {/* Card header */}
             <div className="flex items-center justify-between">
-              <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#F7E7CE]/55">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1a1412]">
                 Salon Intelligence Scan
               </p>
-              <span className="scan-pulse flex h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
+              <span className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[9px] font-semibold text-emerald-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+                Scan complete
+              </span>
             </div>
 
             {/* Stats */}
-            <div className="mt-4 space-y-2">
+            <div className="mt-3 space-y-1.5">
               {SCAN_STATS.map((s) => (
                 <div
                   key={s.label}
-                  className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 ${
+                  className={`flex items-center justify-between rounded-lg px-3 py-2 ${
                     s.highlight
-                      ? "border border-[#b88f45]/40 bg-[#b88f45]/10"
-                      : "border border-white/[0.07] bg-white/[0.04]"
+                      ? "border border-[#f0c8d0] bg-[#fceef2]"
+                      : "bg-[#faf6f2]"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     <span
                       className={`text-[11px] leading-none ${
-                        s.highlight ? "text-[#F7E7CE]" : "text-emerald-400"
+                        s.highlight ? "text-[#c4506e]" : "text-emerald-500"
                       }`}
                     >
                       {s.highlight ? "★" : "✓"}
                     </span>
                     <span
-                      className={`text-[12px] font-medium ${
-                        s.highlight ? "text-[#F7E7CE]" : "text-[#ccc7be]"
+                      className={`text-[12px] ${
+                        s.highlight ? "font-semibold text-[#c4506e]" : "text-[#4a3e38]"
                       }`}
                     >
                       {s.label}
                     </span>
                   </div>
-                  {s.value && (
-                    <span
-                      className={`text-[13px] font-bold tabular-nums ${
-                        s.highlight ? "text-[#F7E7CE]" : "text-white"
-                      }`}
-                    >
-                      {s.value}
-                    </span>
-                  )}
+                  <span
+                    className={`text-[12px] font-bold tabular-nums ${
+                      s.highlight ? "text-[#c4506e]" : "text-[#1a1412]"
+                    }`}
+                  >
+                    {s.value}
+                  </span>
                 </div>
               ))}
             </div>
 
             {/* Opportunities */}
-            <div className="mt-4 border-t border-white/[0.08] pt-4">
-              <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#F7E7CE]/45">
+            <div className="mt-3 border-t border-[#ede4df] pt-3">
+              <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.15em] text-[#8a7f77]">
                 Top opportunities detected
               </p>
               <div className="space-y-1.5">
-                {OPPORTUNITY_PILLS.map((pill, i) => (
+                {OPP_PILLS.map((pill, i) => (
                   <div
                     key={pill}
-                    className="flex items-center gap-2.5 rounded-lg border border-[#b88f45]/20 bg-[#b88f45]/[0.07] px-3 py-2"
+                    className="flex items-center justify-between rounded-lg border border-[#ede4df] bg-white px-3 py-2"
                   >
-                    <span className="text-[10px] font-bold tabular-nums text-[#b88f45]">
-                      {i + 1}
-                    </span>
-                    <span className="text-[11px] text-[#ccc7be]">{pill}</span>
-                    <span className="ml-auto shrink-0 rounded border border-white/10 bg-white/[0.06] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-white/35">
-                      Locked
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold tabular-nums text-[#b88f45]">
+                        {i + 1}
+                      </span>
+                      <span className="text-[11px] text-[#4a3e38]">{pill}</span>
+                    </div>
+                    <span className="text-[10px] font-semibold text-[#c4506e]">Preview</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <p className="mt-4 text-center text-[9px] text-[#8a9bb8]/65">
-              Free scan · subscribe to unlock campaigns
+            <p className="mt-3 text-center text-[9px] text-[#8a7f77]">
+              Free scan · Paid activation to launch campaigns
             </p>
           </div>
         </div>

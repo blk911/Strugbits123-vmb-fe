@@ -3,140 +3,129 @@ import SalonHero from "../../../components/site/SalonHero/SalonHero";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
+import {
+  CloudUpload,
+  BarChart2,
+  Target,
+  Megaphone,
+  Check,
+  Lock,
+} from "lucide-react";
 
 // ─── static data ──────────────────────────────────────────────────────────────
 
 const PLATFORMS = [
-  "Vagaro",
-  "GlossGenius",
-  "Square",
-  "Fresha",
-  "Booksy",
-  "Boulevard",
-  "Mangomint",
-  "CSV export",
+  "Vagaro", "GlossGenius", "Square", "Fresha",
+  "Booksy", "Boulevard", "Mangomint", "CSV Export",
 ];
 
 const HOW_STEPS = [
   {
+    Icon: CloudUpload,
     n: "01",
     title: "Connect",
-    body: "Import your existing salon data from any major booking platform or upload a CSV export.",
+    body: "Import your existing salon data from your booking platform or upload a CSV export.",
   },
   {
+    Icon: BarChart2,
     n: "02",
     title: "Analyze",
-    body: "VMB finds hidden revenue, retention, referral, and gifting opportunities inside your current client history.",
+    body: "VMB finds hidden revenue, retention, referral, and gifting opportunities in your client history.",
   },
   {
+    Icon: Target,
     n: "03",
     title: "Preview",
-    body: "The free Salon Intelligence Scan shows your top 3 opportunities — no subscription required.",
+    body: "Your free Salon Intelligence Scan reveals your top 3 opportunities — no subscription needed.",
   },
   {
+    Icon: Megaphone,
     n: "04",
     title: "Activate",
-    body: "Subscribe to VMB Pro to launch recovery, referral, gifting, VIP, and client-network campaigns through TaikOS.",
+    body: "Subscribe to launch recovery, referral, gifting, VIP, and client-network campaigns through TaikOS.",
   },
 ];
 
 const OPPORTUNITIES = [
   {
     id: "dormant",
-    eyebrow: "Dormant High-Value Clients",
+    n: 1,
+    title: "Dormant High-Value Clients",
     body: "38 premium clients spent over $2,400 in the last year but have not booked in 60+ days.",
+    revenueLabel: "Potential Revenue",
+    revenue: "$11,200+",
     cta: "Unlock Recovery Campaign",
   },
   {
     id: "referral",
-    eyebrow: "Referral & Friend Circles",
+    n: 2,
+    title: "Referral & Friend Circles",
     body: "Your best clients already cluster around friends, bridal parties, and trusted recommendations.",
+    revenueLabel: "Potential Revenue",
+    revenue: "$8,600+",
     cta: "Activate Client Circles",
   },
   {
     id: "gifts",
-    eyebrow: "Giftable Service Moments",
+    n: 3,
+    title: "Giftable Service Moments",
     body: "Mother's Day, birthdays, bridal events, and best-friend gifts can become prepaid salon commerce.",
+    revenueLabel: "Potential Revenue",
+    revenue: "$6,300+",
     cta: "Launch Gift Campaign",
   },
 ];
 
-const TAIKOS_BULLETS = [
-  "Build client invite lists",
-  "Create personalized outreach",
-  "Launch prepaid service offers",
-  "Activate gifting moments",
-  "Trigger referral campaigns",
-  "Track client response",
+const TRUST_BULLETS = [
+  "100% Secure & Private",
+  "No credit card required",
+  "Results in minutes",
+];
+
+const METRICS = [
+  {
+    stat: "23–35%",
+    body: "of revenue comes from inactive clients you can win back.",
+  },
+  {
+    stat: "2–5×",
+    body: "more likely to rebook when personalized outreach is used.",
+  },
+  {
+    stat: "3×",
+    body: "higher revenue from clients in referral circles.",
+  },
+  {
+    stat: "20–40%",
+    body: "increase in prepaid revenue with gifting campaigns.",
+  },
+  {
+    stat: "Up to 60%",
+    body: "of clients prefer private, invite-only offers over public promotions.",
+  },
+];
+
+const TAIKOS_FEATURES = [
+  "Build targeted client lists",
+  "Personalize every message",
+  "Automate invites & offers",
+  "Track responses in real time",
   "Grow private client circles",
 ];
 
-const BOOKING_COLS = {
-  left: {
-    label: "Your booking platform",
-    note: "Vagaro · GlossGenius · Square · Booksy · Boulevard",
-    items: ["Appointment booking", "Payment processing", "Calendar management", "Service menu"],
-    accent: "text-[#6b6262]",
-    tag: "Manages appointments",
-    tagColor: "bg-[#f5eee9] text-[#6b5e4e] border-[#e2d0c4]",
-  },
-  right: {
-    label: "VMB",
-    note: "Works alongside your platform",
-    items: [
-      "Relationship intelligence",
-      "Client network activation",
-      "Referral campaigns",
-      "Gifting & prepaid offers",
-      "Private access programs",
-      "Growth orchestration",
-    ],
-    accent: "text-[#b88f45]",
-    tag: "Grows demand",
-    tagColor: "bg-[#fdf5e4] text-[#7a5c1e] border-[#d4b87a]/50",
-  },
-};
-
-const CLIENT_WHY = [
-  {
-    icon: "★",
-    title: "VIP access",
-    body: "Exclusive access from a salon they already trust.",
-  },
-  {
-    icon: "♡",
-    title: "Easy gifting",
-    body: "Send services to friends and family effortlessly.",
-  },
-  {
-    icon: "◎",
-    title: "Private invites",
-    body: "Personal invitations — not mass social media posts.",
-  },
-  {
-    icon: "◈",
-    title: "Better access",
-    body: "Priority availability with their favorite providers.",
-  },
-  {
-    icon: "⌾",
-    title: "Trusted referrals",
-    body: "Cross-category beauty and personal care recommendations.",
-  },
+const CAMPAIGNS = [
+  { label: "VIP Re-Engagement",     status: "Active",   color: "bg-emerald-50 text-emerald-700" },
+  { label: "Bridal Circle Invite",  status: "Active",   color: "bg-emerald-50 text-emerald-700" },
+  { label: "Birthday Gift Campaign",status: "Queued",   color: "bg-amber-50   text-amber-700"   },
+  { label: "Win-Back Series",       status: "Preview",  color: "bg-[#fceef2]  text-[#c4506e]"   },
 ];
 
-// ─── shared style tokens ──────────────────────────────────────────────────────
+// ─── shared tokens ────────────────────────────────────────────────────────────
 
-const eyebrow =
-  "text-[9px] font-bold uppercase tracking-[0.22em] text-[#b88f45]";
-const eyebrowLight =
-  "text-[9px] font-bold uppercase tracking-[0.22em] text-[#b88f45]/75";
-const sectionH2Dark =
-  "font-studio-serif text-[1.75rem] font-medium leading-[1.1] tracking-tight text-[#faf6ef] sm:text-[2.1rem]";
-const sectionH2Light =
-  "font-studio-serif text-[1.75rem] font-medium leading-[1.1] tracking-tight text-[#231f1d] sm:text-[2.1rem]";
-const bodyLight = "text-[14px] leading-relaxed text-[#5c534d] sm:text-[15px]";
-const bodyDark  = "text-[14px] leading-relaxed text-[#b0aaa3] sm:text-[15px]";
+const eyebrow = "text-[10px] font-bold uppercase tracking-[0.26em] text-[#b88f45]";
+const eyebrowRose = "text-[10px] font-bold uppercase tracking-[0.26em] text-[#c4506e]";
+const h2 = "font-studio-serif mt-2 text-[1.8rem] font-medium leading-[1.1] tracking-tight text-[#1a1412] sm:text-[2.15rem]";
+const body = "text-[15px] leading-relaxed text-[#5c4d45] sm:text-[16px]";
 
 // ─── component ────────────────────────────────────────────────────────────────
 
@@ -156,26 +145,26 @@ export default function HomeSalon() {
       <SalonHero />
 
       {/* 2 · PLATFORM IMPORT BAR */}
-      <section className="border-b border-[#ebe4dc] bg-[#fffdfb] px-5 py-7 sm:px-8">
+      <section className="border-y border-[#ede4df] bg-white px-5 py-7 sm:px-8">
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-8">
-            <div className="shrink-0 text-center sm:text-left">
-              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
-                Works with
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-10">
+            <div className="shrink-0">
+              <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#8a7f77]">
+                Works with your existing salon software
               </p>
-              <div className="mt-2 flex flex-wrap justify-center gap-2 sm:justify-start">
+              <div className="mt-3 flex flex-wrap gap-2">
                 {PLATFORMS.map((p) => (
                   <span
                     key={p}
-                    className="rounded-md border border-[#e2d6cf] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4a423d]"
+                    className="rounded-full border border-[#ede4df] bg-[#faf6f2] px-3 py-1 text-[12px] font-medium text-[#4a3e38]"
                   >
                     {p}
                   </span>
                 ))}
               </div>
             </div>
-            <div className="hidden h-10 w-px shrink-0 self-center bg-[#e2d6cf] sm:block" aria-hidden />
-            <p className="max-w-sm text-center text-[12px] leading-relaxed text-[#6b5e4e] sm:text-left sm:text-[13px]">
+            <div className="hidden self-stretch w-px bg-[#ede4df] sm:block" aria-hidden />
+            <p className="max-w-xs text-[13px] leading-relaxed text-[#6b5e4e] sm:text-[14px]">
               Import clients, emails, phone numbers, appointments, services, sales, visit cadence, and spend history.
             </p>
           </div>
@@ -183,23 +172,24 @@ export default function HomeSalon() {
       </section>
 
       {/* 3 · HOW IT WORKS */}
-      <section className="bg-[#0a0f18] px-5 py-14 sm:px-8 sm:py-16">
+      <section className="bg-[#faf6f2] px-5 py-14 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-5xl">
           <div className="mb-10 text-center">
-            <p className={eyebrowLight}>How it works</p>
-            <h2 className={`${sectionH2Dark} mt-2`}>
-              Four steps from data to revenue.
-            </h2>
+            <p className={eyebrow}>How it works</p>
+            <h2 className={h2}>From data to revenue in four simple steps.</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {HOW_STEPS.map((s) => (
+            {HOW_STEPS.map(({ Icon, n, title, body: stepBody }) => (
               <div
-                key={s.n}
-                className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-5"
+                key={n}
+                className="rounded-2xl border border-[#ede4df] bg-white p-5 shadow-[0_1px_4px_rgba(26,20,18,0.05)]"
               >
-                <p className="text-[11px] font-bold tabular-nums text-[#b88f45]/70">{s.n}</p>
-                <p className="mt-2 text-[15px] font-semibold text-[#faf6ef]">{s.title}</p>
-                <p className="mt-2 text-[12px] leading-relaxed text-[#9a9490]">{s.body}</p>
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#fceef2]">
+                  <Icon className="h-4 w-4 text-[#c4506e]" strokeWidth={1.8} />
+                </div>
+                <p className="mt-3 text-[10px] font-bold tabular-nums text-[#b88f45]">{n}</p>
+                <p className="mt-1 text-[15px] font-semibold text-[#1a1412]">{title}</p>
+                <p className="mt-2 text-[13px] leading-relaxed text-[#6b5e4e]">{stepBody}</p>
               </div>
             ))}
           </div>
@@ -207,199 +197,187 @@ export default function HomeSalon() {
       </section>
 
       {/* 4 · FREE SCAN / PAID ACTIVATION */}
-      <section id="free-scan" className="scroll-mt-16 bg-[#faf6ef] px-5 py-14 sm:px-8 sm:py-16">
+      <section id="free-scan" className="scroll-mt-16 bg-white px-5 py-14 sm:px-8 sm:py-16">
         <div className="mx-auto max-w-5xl">
-          <div className="mb-3 text-center">
-            <p className={eyebrow}>Free scan · paid activation</p>
-            <h2 className={`${sectionH2Light} mt-2`}>
-              Free to see the opportunity.<br className="hidden sm:block" /> Paid to activate the growth.
-            </h2>
-            <p className={`${bodyLight} mx-auto mt-3 max-w-xl text-center`}>
-              The free Salon Intelligence Scan reveals three actionable opportunities from your existing data. To launch recovery, referral, gifting, VIP, or client-network campaigns, salons activate VMB Pro.
-            </p>
-          </div>
+          <div className="lg:flex lg:gap-10">
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {OPPORTUNITIES.map((opp, i) => (
-              <div
-                key={opp.id}
-                className="flex flex-col rounded-2xl border border-[#e8ddd4] bg-white p-5 shadow-sm"
-              >
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
-                  Opportunity {i + 1}
-                </p>
-                <p className="mt-2 text-[14px] font-semibold text-[#231f1d]">{opp.eyebrow}</p>
-                <p className="mt-2 flex-1 text-[12px] leading-relaxed text-[#5c534d]">{opp.body}</p>
-                <div className="mt-5 rounded-lg border border-dashed border-[#d4bc8c]/60 bg-[#fdf8ef] px-3 py-3 text-center">
-                  <p className="text-[10px] font-bold uppercase tracking-wide text-[#b88f45]/60">
-                    VMB Pro
-                  </p>
-                  <p className="mt-1 text-[11px] font-semibold text-[#7a5c1e] opacity-60">
-                    {opp.cta}
-                  </p>
-                  <div className="mt-2 flex items-center justify-center gap-1.5">
-                    <span className="text-[9px] text-[#9a8778]">🔒 Activate to unlock</span>
+            {/* Left — cards */}
+            <div className="flex-1">
+              <p className={eyebrowRose}>Free to see · paid to activate</p>
+              <h2 className={h2}>
+                Your free scan reveals<br className="hidden sm:block" /> 3 opportunities.
+              </h2>
+              <p className={`${body} mt-3 max-w-lg`}>
+                The free scan shows you what's possible. Activate with VMB Pro to turn insights into action.
+              </p>
+
+              <div className="mt-7 space-y-4">
+                {OPPORTUNITIES.map((opp) => (
+                  <div
+                    key={opp.id}
+                    className="rounded-2xl border border-[#ede4df] bg-[#faf6f2] p-5"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
+                          Opportunity {opp.n}
+                        </p>
+                        <p className="mt-1.5 text-[15px] font-semibold text-[#1a1412]">{opp.title}</p>
+                        <p className="mt-1.5 text-[13px] leading-relaxed text-[#6b5e4e]">{opp.body}</p>
+                        <div className="mt-3 flex items-center gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wide text-[#8a7f77]">
+                            {opp.revenueLabel}
+                          </span>
+                          <span className="text-[14px] font-bold text-[#b88f45]">{opp.revenue}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      disabled
+                      className="mt-4 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-[#ede4df] bg-white py-2.5 text-[12px] font-semibold text-[#9a8f86] opacity-70"
+                    >
+                      <Lock className="h-3 w-3" strokeWidth={2} />
+                      {opp.cta}
+                    </button>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="mt-8 text-center">
-            <button
-              type="button"
-              onClick={goRegister}
-              className="rounded-full bg-[#231f1d] px-8 py-3 text-[14px] font-semibold text-[#F7E7CE] shadow-sm transition hover:bg-[#3a322c] sm:text-[15px]"
-            >
-              Run My Free Salon Scan
-            </button>
+            {/* Right — CTA panel */}
+            <div className="mt-10 lg:mt-0 lg:w-[260px] lg:shrink-0 lg:pt-16">
+              <div className="rounded-2xl border border-[#f0c8d0] bg-[#fceef2] p-5">
+                <p className="font-studio-serif text-[17px] font-medium leading-snug text-[#1a1412]">
+                  See what's hidden in your data today.
+                </p>
+                <ul className="mt-4 space-y-2.5">
+                  {TRUST_BULLETS.map((b) => (
+                    <li key={b} className="flex items-center gap-2.5 text-[13px] text-[#4a3e38]">
+                      <Check className="h-3.5 w-3.5 shrink-0 text-[#c4506e]" strokeWidth={2.5} />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  onClick={goRegister}
+                  className="mt-5 w-full rounded-full bg-[#c4506e] py-3 text-[13px] font-semibold text-white shadow-[0_4px_16px_rgba(196,80,110,0.28)] transition hover:bg-[#b0425e]"
+                >
+                  Analyze My Salon Free
+                </button>
+                <p className="mt-2.5 text-center text-[11px] text-[#8a7f77]">
+                  Takes less than 2 minutes
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* 5 · TAIKOS ACTIVATION */}
-      <section className="bg-[#0e1420] px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-5xl lg:flex lg:items-start lg:gap-16">
-          <div className="lg:flex-1">
-            <p className={eyebrowLight}>TaikOS</p>
-            <h2 className={`${sectionH2Dark} mt-2`}>
-              TaikOS turns insights<br className="hidden sm:block" /> into action.
+      {/* 5 · WHY ANALYTICS MATTER */}
+      <section className="bg-[#faf6f2] px-5 py-14 sm:px-8 sm:py-16">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-10 text-center">
+            <p className={eyebrow}>Why analytics matter</p>
+            <h2 className={h2}>
+              The money isn't just in new clients —<br className="hidden sm:block" /> it's in the ones you already have.
             </h2>
-            <p className={`${bodyDark} mt-4 max-w-lg`}>
-              VMB does not stop at analytics. TaikOS turns each opportunity into a campaign, message flow, invite path, gift offer, referral prompt, or private client-network activation.
-            </p>
           </div>
-          <div className="mt-8 lg:mt-0 lg:w-[320px] lg:shrink-0">
-            <ul className="space-y-2.5">
-              {TAIKOS_BULLETS.map((b) => (
-                <li
-                  key={b}
-                  className="flex items-center gap-3 rounded-lg border border-white/[0.07] bg-white/[0.03] px-4 py-3"
-                >
-                  <span className="shrink-0 text-[#b88f45]" aria-hidden>→</span>
-                  <span className="text-[13px] text-[#d8d2c8]">{b}</span>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+            {METRICS.map((m) => (
+              <div
+                key={m.stat}
+                className="rounded-2xl border border-[#ede4df] bg-white p-4 text-center shadow-[0_1px_4px_rgba(26,20,18,0.05)]"
+              >
+                <p className="font-studio-serif text-[1.7rem] font-medium leading-none text-[#c4506e] sm:text-[2rem]">
+                  {m.stat}
+                </p>
+                <p className="mt-2 text-[11px] leading-relaxed text-[#6b5e4e]">{m.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6 · TAIKOS ACTIVATION */}
+      <section className="bg-white px-5 py-14 sm:px-8 sm:py-16">
+        <div className="mx-auto max-w-5xl lg:flex lg:items-start lg:gap-14">
+
+          {/* Left — copy */}
+          <div className="flex-1">
+            <p className={eyebrow}>TaikOS turns insights into action</p>
+            <h2 className={h2}>Analytics is just the beginning.</h2>
+            <p className={`${body} mt-4 max-w-md`}>
+              TaikOS activates every opportunity with automated campaigns, personalized outreach, and private client-network experiences.
+            </p>
+            <ul className="mt-6 space-y-3">
+              {TAIKOS_FEATURES.map((f) => (
+                <li key={f} className="flex items-center gap-3 text-[14px] text-[#4a3e38] sm:text-[15px]">
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#fceef2]">
+                    <Check className="h-3 w-3 text-[#c4506e]" strokeWidth={2.5} />
+                  </span>
+                  {f}
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* 6 · NOT ANOTHER BOOKING APP */}
-      <section className="bg-[#fffdfb] px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-8 text-center">
-            <p className={eyebrow}>Positioning</p>
-            <h2 className={`${sectionH2Light} mt-2`}>
-              VMB works with your booking platform.<br className="hidden sm:block" /> It does not replace it.
-            </h2>
-          </div>
-
-          <div className="grid gap-0 overflow-hidden rounded-2xl border border-[#e8ddd4] sm:grid-cols-[1fr_auto_1fr]">
-            {/* Left — booking platforms */}
-            <div className="bg-[#faf6ef] p-6 sm:p-8">
-              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#8a7f77]">
-                {BOOKING_COLS.left.label}
-              </p>
-              <p className="mt-1 text-[10px] text-[#a09a98]">{BOOKING_COLS.left.note}</p>
-              <span className={`mt-3 inline-block rounded-md border px-2.5 py-1 text-[10px] font-semibold ${BOOKING_COLS.left.tagColor}`}>
-                {BOOKING_COLS.left.tag}
-              </span>
-              <ul className="mt-5 space-y-2">
-                {BOOKING_COLS.left.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-[13px] text-[#4a423d]">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ccc0b5]" aria-hidden />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Divider + VS */}
-            <div className="hidden flex-col items-center justify-center gap-3 border-x border-[#e8ddd4] bg-white px-4 sm:flex">
-              <div className="h-16 w-px bg-[#e8ddd4]" aria-hidden />
-              <span className="rounded-full border border-[#e2d6cf] bg-[#fffdfb] px-2.5 py-1 text-[10px] font-bold text-[#8a7f77]">
-                +
-              </span>
-              <div className="h-16 w-px bg-[#e8ddd4]" aria-hidden />
-            </div>
-
-            {/* Right — VMB */}
-            <div className="border-t border-[#e8ddd4] bg-white p-6 sm:border-t-0 sm:p-8">
-              <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#b88f45]">
-                {BOOKING_COLS.right.label}
-              </p>
-              <p className="mt-1 text-[10px] text-[#a09a98]">{BOOKING_COLS.right.note}</p>
-              <span className={`mt-3 inline-block rounded-md border px-2.5 py-1 text-[10px] font-semibold ${BOOKING_COLS.right.tagColor}`}>
-                {BOOKING_COLS.right.tag}
-              </span>
-              <ul className="mt-5 space-y-2">
-                {BOOKING_COLS.right.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2.5 text-[13px] font-medium text-[#231f1d]">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#b88f45]" aria-hidden />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7 · WHY CLIENTS PARTICIPATE */}
-      <section className="bg-[#faf6ef] px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-8 text-center">
-            <p className={eyebrow}>Why clients participate</p>
-            <h2 className={`${sectionH2Light} mt-2`}>
-              Clients join because it feels personal.
-            </h2>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {CLIENT_WHY.map((c) => (
-              <div
-                key={c.title}
-                className="rounded-xl border border-[#e8ddd4] bg-white p-4 text-center shadow-sm"
-              >
-                <span className="text-[22px] text-[#b88f45]" aria-hidden>{c.icon}</span>
-                <p className="mt-2 text-[13px] font-semibold text-[#231f1d]">{c.title}</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-[#6b5e4e]">{c.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 8 · FINAL CTA */}
-      <section className="bg-[#0a0f18] px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className={eyebrowLight}>Get started</p>
-          <h2 className={`${sectionH2Dark} mt-3`}>
-            Start with the clients<br className="hidden sm:block" /> you already have.
-          </h2>
-          <p className={`${bodyDark} mx-auto mt-4 max-w-lg`}>
-            Connect your salon platform, reveal your top opportunities, and decide what you want VMB to activate first.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <button
               type="button"
               onClick={goRegister}
-              className="group relative overflow-hidden rounded-full bg-[#F7E7CE] px-8 py-3.5 text-[14px] font-semibold tracking-wide text-[#1a1520] shadow-[0_8px_32px_-8px_rgba(247,231,206,0.45)] transition duration-300 hover:brightness-[1.04] sm:text-[15px]"
+              className="mt-8 rounded-full bg-[#c4506e] px-7 py-3.5 text-[14px] font-semibold text-white shadow-[0_4px_20px_rgba(196,80,110,0.25)] transition hover:bg-[#b0425e] sm:text-[15px]"
             >
-              <span className="relative z-[1]">Run My Free Salon Scan</span>
-              <span
-                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 transition duration-700 group-hover:translate-x-full group-hover:opacity-100"
-                aria-hidden
-              />
-            </button>
-            <button
-              type="button"
-              onClick={() => document.getElementById("free-scan")?.scrollIntoView({ behavior: "smooth" })}
-              className="rounded-full border border-white/[0.18] bg-white/[0.05] px-8 py-3.5 text-[14px] font-semibold tracking-wide text-[#f8f4eb] backdrop-blur-md transition hover:border-[#F7E7CE]/35 hover:bg-white/[0.08] sm:text-[15px]"
-            >
-              See Example Report
+              Activate My Salon
             </button>
           </div>
+
+          {/* Right — Campaign Builder mockup */}
+          <div className="mt-10 lg:mt-0 lg:w-[320px] lg:shrink-0">
+            <div className="rounded-2xl border border-[#ede4df] bg-[#faf6f2] p-4 shadow-[0_4px_24px_rgba(26,20,18,0.07)]">
+              {/* Card header */}
+              <div className="flex items-center justify-between rounded-xl border border-[#ede4df] bg-white px-4 py-3">
+                <p className="text-[12px] font-semibold text-[#1a1412]">Campaign Builder</p>
+                <span className="rounded-full border border-[#d4b87a]/50 bg-[#fdf5e4] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-[#8a6a20]">
+                  tAIkOS
+                </span>
+              </div>
+              {/* Campaign rows */}
+              <div className="mt-2 space-y-1.5">
+                {CAMPAIGNS.map((c) => (
+                  <div
+                    key={c.label}
+                    className="flex items-center justify-between rounded-xl border border-[#ede4df] bg-white px-3.5 py-3"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#fceef2]">
+                        <Megaphone className="h-2.5 w-2.5 text-[#c4506e]" strokeWidth={2} />
+                      </span>
+                      <span className="text-[12px] font-medium text-[#1a1412]">{c.label}</span>
+                    </div>
+                    <span className={`rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ${c.color}`}>
+                      {c.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-center text-[10px] text-[#9a8f86]">
+                Campaigns launch on activation
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 7 · TRUST NOTE */}
+      <section className="bg-[#faf6f2] px-5 py-12 sm:px-8">
+        <div className="mx-auto max-w-lg text-center">
+          <div className="mx-auto mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#ede4df] bg-white">
+            <Lock className="h-4 w-4 text-[#8a7f77]" strokeWidth={1.8} />
+          </div>
+          <p className="text-[14px] leading-relaxed text-[#6b5e4e] sm:text-[15px]">
+            Your data is secure, private, and never sold. You own your relationships — VMB helps you grow them.
+          </p>
         </div>
       </section>
     </>
