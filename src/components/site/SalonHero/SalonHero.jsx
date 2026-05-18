@@ -32,11 +32,11 @@ export default function SalonHero() {
   }, []);
 
   return (
-    <section className="bg-[#faf6f2] px-5 pb-24 pt-12 sm:px-8 sm:pb-28 sm:pt-14 lg:px-12 lg:pb-32">
-      <div className="mx-auto max-w-6xl lg:flex lg:items-start lg:gap-14">
+    <section className="bg-[#faf6f2] px-5 pb-10 pt-9 sm:px-8 sm:pb-12 sm:pt-11 lg:px-12 lg:pb-14 lg:pt-12">
+      <div className="mx-auto max-w-6xl lg:flex lg:items-start lg:gap-10">
 
         {/* ── Left copy ── */}
-        <div className="flex-1 lg:pt-6">
+        <div className="flex-1 lg:pt-2">
           <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#b88f45]">
             Salon Growth Engine
           </p>
@@ -51,7 +51,7 @@ export default function SalonHero() {
             VMB connects to your existing salon software, analyzes your client and appointment history, and reveals hidden revenue opportunities already inside your business.
           </p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={goRegister}
@@ -69,7 +69,7 @@ export default function SalonHero() {
           </div>
 
           {/* Social proof */}
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-5 flex items-center gap-3">
             <div className="flex -space-x-2">
               {["#d4a078", "#c48a60", "#e8c4a4", "#ba7d55", "#d8b090"].map((c, i) => (
                 <div
@@ -87,9 +87,9 @@ export default function SalonHero() {
         </div>
 
         {/* ── Right: image + scan card ── */}
-        <div className="mt-10 lg:mt-0 lg:w-[430px] lg:shrink-0">
+        <div className="mt-8 lg:mt-0 lg:w-[400px] lg:shrink-0">
           {/* Hero image */}
-          <div className="relative h-[280px] overflow-hidden rounded-2xl shadow-[0_4px_24px_rgba(26,20,18,0.10)] sm:h-[320px] lg:h-[350px]">
+          <div className="relative h-[230px] overflow-hidden rounded-2xl shadow-[0_4px_24px_rgba(26,20,18,0.10)] sm:h-[260px] lg:h-[285px]">
             <img
               src={advocateImg}
               alt="Salon stylist with client"
@@ -102,7 +102,7 @@ export default function SalonHero() {
           </div>
 
           {/* Scan card — overlaps image bottom */}
-          <div className="relative z-10 mx-3 -mt-20 rounded-2xl border border-[#ede4df] bg-white p-4 shadow-[0_8px_40px_rgba(26,20,18,0.13)] sm:mx-4 sm:p-5">
+          <div className="relative z-10 mx-3 -mt-14 rounded-2xl border border-[#ede4df] bg-white p-4 shadow-[0_6px_28px_rgba(26,20,18,0.11)] sm:mx-4">
             {/* Card header */}
             <div className="flex items-center justify-between">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#1a1412]">
@@ -115,7 +115,7 @@ export default function SalonHero() {
             </div>
 
             {/* Stats */}
-            <div className="mt-3 space-y-1.5">
+            <div className="mt-2.5 space-y-1">
               {SCAN_STATS.map((s) => (
                 <div
                   key={s.label}
@@ -153,11 +153,11 @@ export default function SalonHero() {
             </div>
 
             {/* Opportunities */}
-            <div className="mt-3 border-t border-[#ede4df] pt-3">
-              <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.15em] text-[#8a7f77]">
+            <div className="mt-2.5 border-t border-[#ede4df] pt-2.5">
+              <p className="mb-1.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[#8a7f77]">
                 Top opportunities detected
               </p>
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 {OPP_PILLS.map((pill, i) => (
                   <div
                     key={pill}
@@ -175,7 +175,7 @@ export default function SalonHero() {
               </div>
             </div>
 
-            <p className="mt-3 text-center text-[9px] text-[#8a7f77]">
+            <p className="mt-2 text-center text-[9px] text-[#8a7f77]">
               Free scan · Paid activation to launch campaigns
             </p>
           </div>
