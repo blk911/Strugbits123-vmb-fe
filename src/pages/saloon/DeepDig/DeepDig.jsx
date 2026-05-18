@@ -2711,7 +2711,7 @@ export default function DeepDig() {
   const deepDigBackControl =
     stage === "capture" ?
       <Link
-        to="/salon-owner"
+        to="/salon-owner/dashboard"
         className="inline-flex items-center justify-center rounded-full border border-[#e2d6cf] bg-[#fffdfb] p-2 text-[#6b6262] transition hover:border-[#b88f45]/45 hover:text-[#b88f45]"
         aria-label="Back to dashboard"
       >

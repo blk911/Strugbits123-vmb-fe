@@ -145,7 +145,7 @@ export default function AuthForm() {
 
       const target =
         apiRole === "customer" ? "/client"
-        : apiRole === "salon-owner" ? "/salon-owner"
+        : apiRole === "salon-owner" ? "/salon-owner/dashboard"
         : apiRole === "admin" ? "/admin"
         : "/";
 
@@ -255,7 +255,7 @@ export default function AuthForm() {
 
     const targetMap = {
       customer: "/client",
-      "salon-owner": "/salon-owner",
+      "salon-owner": "/salon-owner/dashboard",
       admin: "/admin",
     };
 

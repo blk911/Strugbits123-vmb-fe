@@ -17,8 +17,6 @@ import {
   CredentialAssistQueue,
   NetworkPropagationLab,
 } from "../pages/admin";
-import { SalonDetail } from "../pages/client";
-
 export default function AdminRoutes() {
   return (
     <Route element={<DashboardLayout />}>
@@ -31,7 +29,6 @@ export default function AdminRoutes() {
         }
       />
       <Route path="/salons" element={<Salons />} />
-      <Route path="/salon/:id" element={<SalonDetail />} />
       <Route path="/service-presets" element={<ServicePresets />} />
       <Route path="/gifts" element={<GiftHistory />} />
       <Route path="/appointments" element={<AppointmentHistory />} />

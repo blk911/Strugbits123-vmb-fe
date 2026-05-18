@@ -3,7 +3,6 @@ import DashboardLayout from "../components/layout/dashboard/DashboardLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import {
   DashboardHome,
-  SalonDetail,
   Salons,
   GiftHistory,
   AppointmentHistory,
@@ -21,7 +20,6 @@ export default function ClientRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route path="/salon/:id" element={<SalonDetail />} />
 
       <Route path="/salons" element={<Salons />} />
 

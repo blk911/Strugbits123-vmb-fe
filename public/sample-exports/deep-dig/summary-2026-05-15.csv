@@ -1,0 +1,13 @@
+SUMMARY LEVEL,Service provider,"","",Total price of service client ordered,Amount paid by client,Deposits for future services,Any payment processing incurred by user,Any discounts taken,Total earned minus payment processing and item discount,Any sales tax,Cost of product,Net sales minus cost of good,How much tip was earned by GG user (not counted in commission)
+Service,Name,# of services offered,# of clients seen,Total service price,Gross payment amount (incl. tip),Total deposits,Payment processing fee,Service discount,Net sales,Sales tax,,,Tip earned,Commission earned from total price,Commission earned from net sales
+ ,James Wendt,1,1,200.0,240.0,0,0.0,0,200.0,0,,,40.0,0.0,0.0
+ ,Total,1,1,200.0,240.0,0,0.0,0,200.0,0,,,40.0,0.0,0.0
+Product,"",# of products sold,# of clients sold to,Total product price,Total payment amount,Total deposits,Payment processing fee,Item discount,Net sales,Sales tax,Product cost,Net sales post cost,Tip earned,Commission earned from total price,Commission earned from net sales
+ ,James Wendt,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ ,Total,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Other,"",# of other items,# of clients sold to,Total other price,Total payment amount,Total deposits,Payment processing fee,Item discount,Net sales,Sales tax,,,Tip earned
+ ,James Wendt,0,0,0,0,0,0,0,0,0,,,0,0,0
+ ,Total,0,0,0,0,0,0,0,0,0,,,0,0,0
+Refunds,"",# of services offered,# of clients seen,Total service price,Total refunded amount,"",Payment processing fee,Service discount,Net sales,Sales tax,,,Tip earned,Commission earned from total price,Commission earned from net sales
+ ,James Wendt,0,0,0,0,0,0,0,0,0,,,0,0,0
+ ,Total,0,0,0,0,0,0,0,0,0,,,0,0,0

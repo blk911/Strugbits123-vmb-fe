@@ -254,7 +254,7 @@ export default function OpportunityModal({
             type="button"
             className="rounded-lg border border-vmb-border-light bg-white px-3 py-2 text-xs font-semibold text-vmb-text-dark shadow-sm transition hover:bg-vmb-bg-soft"
           >
-            Save opportunity
+            Hold
           </button>
           <button
             type="button"
@@ -266,7 +266,7 @@ export default function OpportunityModal({
             type="button"
             className={`${intelligenceBtnPrimaryClass} px-4 py-2 text-xs`}
           >
-            Take action
+            Approve
           </button>
         </footer>
       </div>

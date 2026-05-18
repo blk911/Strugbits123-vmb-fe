@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
   LuArrowRight,
   LuChevronDown,
@@ -7,10 +6,9 @@ import {
   LuExternalLink,
   LuHeadset,
   LuImage,
-  LuLoaderCircle,
-  LuX,
 } from "react-icons/lu";
 import { intelligenceBtnPrimaryClass } from "./IntelligenceLayoutShell";
+import DeepInsightsMemberIngestionCard from "../deep-insights/DeepInsightsMemberIngestionCard.jsx";
 
 /**
  * @typedef {import("../../config/providerOnboardingData.js").ProviderConfig} ProviderConfig
@@ -78,510 +76,12 @@ const memberColumnHeaderRow =
 
 const instructionSectionIds = new Set(["needs", "links", "steps"]);
 
-// TODO: wire parser + storage endpoint — set VITE_DEEP_INSIGHTS_UPLOAD_ENABLED=true when
-// POST /api/salon/deep-insights/upload is live (multipart field name: "files").
-const DEEP_INSIGHTS_UPLOAD_URL = "/api/salon/deep-insights/upload";
-const deepInsightsUploadApiEnabled =
-  import.meta.env.VITE_DEEP_INSIGHTS_UPLOAD_ENABLED === "true";
-
-const DEEP_INSIGHTS_ANALYSIS_STEPS = [
-  "Upload files",
-  "Parse files",
-  "Normalize records",
-  "Generate metrics",
-  "Prepare analytics workspace",
-];
-
-const DEEP_INSIGHTS_ANALYSIS_STEP_MS = 620;
-
-/** @param {File} file */
-function csvFileKey(file) {
-  return `${file.name}:${file.size}:${file.lastModified}`;
-}
-
-/** @param {File} file */
-function isCsvFile(file) {
-  if (!file.name.toLowerCase().endsWith(".csv")) return false;
-  const t = (file.type || "").toLowerCase();
-  if (!t) return true;
-  return (
-    t === "text/csv" ||
-    t === "application/csv" ||
-    t === "application/vnd.ms-excel" ||
-    t === "text/comma-separated-values"
-  );
-}
-
-/** @param {File[]} files */
-function partitionCsvFiles(files) {
-  const ok = [];
-  const bad = [];
-  for (const f of files) {
-    if (isCsvFile(f)) ok.push(f);
-    else bad.push(f);
-  }
-  return { ok, bad };
-}
-
-/** @param {File[]} existing @param {File[]} incoming */
-function mergeCsvFiles(existing, incoming) {
-  const keys = new Set(existing.map(csvFileKey));
-  const out = [...existing];
-  for (const f of incoming) {
-    const k = csvFileKey(f);
-    if (!keys.has(k)) {
-      keys.add(k);
-      out.push(f);
-    }
-  }
-  return out;
-}
-
-/** @param {number} bytes */
-function formatFileSize(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-/** @param {string} providerKey @param {React.MutableRefObject<(() => void) | null | undefined>} [pipelineCompleteRef] */
-function useDeepInsightsCsvUpload(providerKey, pipelineCompleteRef) {
-  const [uploadedFiles, setUploadedFiles] = useState(/** @type {File[]} */ ([]));
-  const [fileRejectError, setFileRejectError] = useState(
-    /** @type {string | null} */ (null),
-  );
-  const [serverError, setServerError] = useState(/** @type {string | null} */ (null));
-  const [analysisStatus, setAnalysisStatus] = useState(
-    /** @type {"idle" | "processing" | "complete"} */ ("idle"),
-  );
-  const [analysisStepDone, setAnalysisStepDone] = useState(0);
-  const pipelineRunIdRef = useRef(0);
-  const analysisRunLockRef = useRef(false);
-
-  useEffect(() => {
-    pipelineRunIdRef.current += 1;
-    analysisRunLockRef.current = false;
-    setUploadedFiles([]);
-    setFileRejectError(null);
-    setServerError(null);
-    setAnalysisStatus("idle");
-    setAnalysisStepDone(0);
-  }, [providerKey]);
-
-  useEffect(() => {
-    if (uploadedFiles.length === 0) {
-      setAnalysisStatus("idle");
-      setAnalysisStepDone(0);
-      setServerError(null);
-    }
-  }, [uploadedFiles.length]);
-
-  const addFilesFromList = useCallback(
-    (list) => {
-      if (analysisStatus === "processing") return;
-      if (!list?.length) return;
-      const { ok, bad } = partitionCsvFiles(Array.from(list));
-      if (bad.length) {
-        setFileRejectError(
-          bad.length === 1 ?
-            `"${bad[0].name}" is not a CSV file. Only .csv exports are accepted.`
-          : `${bad.length} file(s) skipped — only .csv files are accepted.`,
-        );
-      } else {
-        setFileRejectError(null);
-      }
-      if (!ok.length) return;
-      setUploadedFiles((prev) => mergeCsvFiles(prev, ok));
-      setServerError(null);
-      if (analysisStatus === "complete") {
-        setAnalysisStatus("idle");
-        setAnalysisStepDone(0);
-      }
-    },
-    [analysisStatus],
-  );
-
-  const removeFile = useCallback(
-    (index) => {
-      if (analysisStatus === "processing") return;
-      setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
-      if (analysisStatus === "complete") {
-        setAnalysisStatus("idle");
-        setAnalysisStepDone(0);
-      }
-    },
-    [analysisStatus],
-  );
-
-  const runUploadAndAnalyze = useCallback(async () => {
-    if (uploadedFiles.length === 0 || analysisRunLockRef.current) return;
-    analysisRunLockRef.current = true;
-    const runId = ++pipelineRunIdRef.current;
-    setServerError(null);
-    setAnalysisStatus("processing");
-    setAnalysisStepDone(0);
-
-    try {
-      if (deepInsightsUploadApiEnabled) {
-        const fd = new FormData();
-        uploadedFiles.forEach((f) => {
-          fd.append("files", f, f.name);
-        });
-        const res = await fetch(DEEP_INSIGHTS_UPLOAD_URL, {
-          method: "POST",
-          body: fd,
-          credentials: "include",
-        });
-        if (!res.ok) {
-          let detail = res.statusText;
-          try {
-            const ct = res.headers.get("content-type") || "";
-            if (ct.includes("application/json")) {
-              const j = await res.json();
-              detail =
-                (typeof j.message === "string" && j.message) ||
-                (typeof j.error === "string" && j.error) ||
-                JSON.stringify(j);
-            } else {
-              const t = await res.text();
-              if (t) detail = t.slice(0, 300);
-            }
-          } catch {
-            /* keep statusText */
-          }
-          throw new Error(detail || `HTTP ${res.status}`);
-        }
-      }
-
-      for (let i = 0; i < DEEP_INSIGHTS_ANALYSIS_STEPS.length; i++) {
-        await new Promise((r) => {
-          window.setTimeout(r, DEEP_INSIGHTS_ANALYSIS_STEP_MS);
-        });
-        if (pipelineRunIdRef.current !== runId) return;
-        setAnalysisStepDone(i + 1);
-      }
-
-      if (pipelineRunIdRef.current !== runId) return;
-      setAnalysisStatus("complete");
-      window.setTimeout(() => {
-        pipelineCompleteRef?.current?.();
-      }, 1100);
-    } catch (e) {
-      if (pipelineRunIdRef.current !== runId) return;
-      setAnalysisStatus("idle");
-      setAnalysisStepDone(0);
-      setServerError(
-        e instanceof Error ? e.message : "Something went wrong. Please try again.",
-      );
-    } finally {
-      if (pipelineRunIdRef.current === runId) {
-        analysisRunLockRef.current = false;
-      }
-    }
-  }, [uploadedFiles]);
-
-  const statusLabel = useMemo(() => {
-    if (analysisStatus === "complete") return "Analysis Complete";
-    if (analysisStatus === "processing") return "Processing Salon Data";
-    if (uploadedFiles.length === 0) return "No files selected";
-    return "Files ready for analysis";
-  }, [analysisStatus, uploadedFiles.length]);
-
-  return {
-    uploadedFiles,
-    fileRejectError,
-    serverError,
-    analysisStatus,
-    analysisStepDone,
-    addFilesFromList,
-    removeFile,
-    runUploadAndAnalyze,
-    statusLabel,
-    analysisSteps: DEEP_INSIGHTS_ANALYSIS_STEPS,
-  };
-}
-
 /** @param {boolean} active */
 function pulseRing(active) {
   return [
     "scroll-mt-24 rounded-lg transition-[box-shadow] duration-300",
     active ? "ring-2 ring-vmb-secondary ring-offset-2 ring-offset-white" : "",
   ].join(" ");
-}
-
-/** @param {{ analysisStatus: string; analysisStepDone: number; steps: string[] }} props */
-function DeepInsightsAnalysisPipeline({ analysisStatus, analysisStepDone, steps }) {
-  const visible = analysisStatus === "processing" || analysisStatus === "complete";
-  if (!visible) return null;
-  return (
-    <div
-      className="mt-3 space-y-2"
-      aria-busy={analysisStatus === "processing"}
-    >
-      <p className="text-[10px] font-bold uppercase tracking-wide text-vmb-text-muted">
-        Extracting intelligence
-      </p>
-      <ul className="space-y-2">
-        {steps.map((label, i) => {
-          const done = i < analysisStepDone;
-          const active =
-            analysisStatus === "processing" && i === analysisStepDone;
-          return (
-            <li
-              key={label}
-              className={[
-                "flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition",
-                done ?
-                  "border-vmb-success/35 bg-vmb-success/5 text-vmb-text-dark"
-                : active ?
-                  "border-vmb-secondary/50 bg-vmb-secondary/8 text-vmb-text-dark shadow-sm"
-                : "border-vmb-border-light bg-white/80 text-vmb-text-muted",
-              ].join(" ")}
-            >
-              {done ?
-                <span className="text-vmb-success" aria-hidden>
-                  ✓
-                </span>
-              : active ?
-                <LuLoaderCircle
-                  className="h-3.5 w-3.5 shrink-0 animate-spin text-vmb-secondary"
-                  aria-hidden
-                />
-              : <span className="w-3.5 text-center text-vmb-text-muted" aria-hidden>
-                  ○
-                </span>
-              }
-              <span className="font-medium leading-snug">{label}</span>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
-function DeepInsightsResultsStub() {
-  return (
-    <div className="mt-3 rounded-lg border border-vmb-border-light bg-white p-3 shadow-sm">
-      <p className="text-[10px] font-bold uppercase tracking-wide text-vmb-secondary">
-        Analysis ready
-      </p>
-      <p className="mt-2 text-xs leading-relaxed text-vmb-text-dark">
-        Your import finished. Opening the analytics workspace with discovery-grade
-        signals tailored to your salon.
-      </p>
-      <Link
-        to="/salon-owner/deep-insights/analytics"
-        className={`mt-3 inline-flex w-full items-center justify-center gap-1.5 ${intelligenceBtnPrimaryClass} py-2.5 text-sm font-semibold`}
-      >
-        Open Analytics
-      </Link>
-    </div>
-  );
-}
-
-/**
- * CSV staging UI for Deep Insights (member right column): input, dropzone, file list, status.
- * @param {{
- *   csvUpload: {
- *     uploadedFiles: File[];
- *     fileRejectError: string | null;
- *     serverError: string | null;
- *     analysisStatus: string;
- *     analysisStepDone: number;
- *     analysisSteps: string[];
- *     statusLabel: string;
- *     addFilesFromList: (list: FileList | null | undefined) => void;
- *     removeFile: (index: number) => void;
- *     runUploadAndAnalyze: () => Promise<void>;
- *   };
- *   uploadInputRef: React.RefObject<HTMLInputElement | null>;
- *   uploadDropzoneRef?: React.RefObject<HTMLDivElement | null>;
- *   highlightUpload?: boolean;
- *   browseButtonClass: string;
- *   compactDropzone?: boolean;
- * }} props
- */
-function MemberCsvStagingUi({
-  csvUpload,
-  uploadInputRef,
-  uploadDropzoneRef,
-  highlightUpload = false,
-  browseButtonClass,
-  compactDropzone = false,
-}) {
-  const {
-    uploadedFiles,
-    fileRejectError,
-    serverError,
-    analysisStatus,
-    analysisStepDone,
-    analysisSteps,
-    statusLabel,
-    addFilesFromList,
-    removeFile,
-    runUploadAndAnalyze,
-  } = csvUpload;
-
-  const isProcessing = analysisStatus === "processing";
-  const isComplete = analysisStatus === "complete";
-  const hasFiles = uploadedFiles.length > 0;
-  const inputsLocked = isProcessing || isComplete;
-
-  const onDrop = useCallback(
-    (e) => {
-      if (inputsLocked) return;
-      e.preventDefault();
-      e.stopPropagation();
-      addFilesFromList(e.dataTransfer?.files);
-    },
-    [addFilesFromList, inputsLocked],
-  );
-
-  const onDragOver = useCallback(
-    (e) => {
-      if (inputsLocked) return;
-      e.preventDefault();
-      e.stopPropagation();
-      e.dataTransfer.dropEffect = "copy";
-    },
-    [inputsLocked],
-  );
-
-  const onDragEnter = useCallback(
-    (e) => {
-      if (inputsLocked) return;
-      e.preventDefault();
-      e.stopPropagation();
-    },
-    [inputsLocked],
-  );
-
-  const dzMin = compactDropzone ? "min-h-[100px]" : "min-h-[168px]";
-  const iconSz = compactDropzone ? "h-8 w-8" : "h-11 w-11";
-  const textSz = compactDropzone ? "text-xs" : "text-sm";
-
-  return (
-    <>
-      <input
-        ref={uploadInputRef}
-        type="file"
-        accept=".csv,text/csv"
-        className="sr-only"
-        multiple
-        tabIndex={-1}
-        disabled={inputsLocked}
-        onChange={(e) => {
-          if (inputsLocked) return;
-          addFilesFromList(e.target.files);
-          e.target.value = "";
-        }}
-      />
-      {!isComplete ?
-        <div
-          ref={uploadDropzoneRef}
-          className={`mt-3 flex ${dzMin} flex-col items-center justify-center rounded-xl border-2 border-dashed border-vmb-border-light bg-white px-3 py-6 transition hover:border-vmb-secondary/45 hover:bg-vmb-bg-soft/30 ${inputsLocked ? "pointer-events-none opacity-50" : ""} ${pulseRing(!!highlightUpload && !inputsLocked)}`}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          onDragEnter={onDragEnter}
-        >
-          <LuCloudUpload className={`${iconSz} text-vmb-secondary`} aria-hidden />
-          <span
-            className={`mt-2 text-center font-semibold text-vmb-text-dark ${textSz}`}
-          >
-            Drop CSV files here
-          </span>
-          <span className="mt-1 text-center text-[11px] text-vmb-text-muted">
-            .csv only · multiple files OK
-          </span>
-        </div>
-      : null}
-
-      {hasFiles ?
-        <ul
-          className={`mt-2 max-h-40 space-y-1.5 overflow-y-auto rounded-lg border border-vmb-border-light bg-vmb-bg-soft/20 p-2 ${isComplete ? "mt-3" : ""}`}
-        >
-          {uploadedFiles.map((f, index) => (
-            <li
-              key={csvFileKey(f)}
-              className="flex items-start gap-2 rounded-md bg-white px-2 py-1.5 text-xs shadow-sm"
-            >
-              <span className="min-w-0 flex-1 truncate font-medium text-vmb-text-dark">
-                {f.name}
-              </span>
-              <span className="shrink-0 text-vmb-text-muted">
-                {formatFileSize(f.size)}
-              </span>
-              {!isComplete ?
-                <button
-                  type="button"
-                  className="shrink-0 rounded p-0.5 text-vmb-text-muted transition hover:bg-vmb-bg-soft hover:text-vmb-text-dark disabled:opacity-40"
-                  aria-label={`Remove ${f.name}`}
-                  disabled={isProcessing}
-                  onClick={() => removeFile(index)}
-                >
-                  <LuX className="h-4 w-4" aria-hidden />
-                </button>
-              : null}
-            </li>
-          ))}
-        </ul>
-      : null}
-
-      <p
-        className={`mt-2 text-xs font-semibold ${isComplete ? "text-vmb-secondary" : "text-vmb-text-muted"}`}
-        role="status"
-        aria-live="polite"
-      >
-        {statusLabel}
-      </p>
-
-      {fileRejectError ?
-        <p
-          className="mt-1.5 text-xs font-medium text-red-600"
-          role="alert"
-        >
-          {fileRejectError}
-        </p>
-      : null}
-
-      {!isComplete ?
-        <button
-          type="button"
-          className={`mt-3 w-full ${browseButtonClass} disabled:pointer-events-none disabled:opacity-65`}
-          disabled={isProcessing}
-          onClick={() => {
-            if (isProcessing) return;
-            if (!hasFiles) {
-              uploadInputRef.current?.click();
-              return;
-            }
-            void runUploadAndAnalyze();
-          }}
-        >
-          {isProcessing ?
-            "Processing Salon Data..."
-          : hasFiles ?
-            "Upload + Analyze"
-          : "Select CSV Files"}
-        </button>
-      : null}
-
-      {serverError ?
-        <p className="mt-2 text-xs font-medium text-red-600" role="alert">
-          {serverError}
-        </p>
-      : null}
-
-      <DeepInsightsAnalysisPipeline
-        analysisStatus={analysisStatus}
-        analysisStepDone={analysisStepDone}
-        steps={analysisSteps}
-      />
-
-      {isComplete ? <DeepInsightsResultsStub /> : null}
-    </>
-  );
 }
 
 /**
@@ -595,7 +95,6 @@ function MemberCsvStagingUi({
  *   railRef?: React.RefObject<HTMLElement | null>;
  *   emptyStateMessage?: string;
  *   onChoosePlatform?: () => void;
- *   onDeepInsightsPipelineComplete?: () => void;
  * }} props
  */
 export default function ProviderOnboardingExperience({
@@ -608,17 +107,7 @@ export default function ProviderOnboardingExperience({
   railRef,
   emptyStateMessage,
   onChoosePlatform,
-  onDeepInsightsPipelineComplete,
 }) {
-  const pipelineCompleteRef = useRef(
-    /** @type {(() => void) | null | undefined} */ (null),
-  );
-  if (variant === "member") {
-    pipelineCompleteRef.current = onDeepInsightsPipelineComplete;
-  } else {
-    pipelineCompleteRef.current = null;
-  }
-
   const uploadInputRef = useRef(/** @type {HTMLInputElement | null} */ (null));
   const memberInstructionsRef = useRef(/** @type {HTMLDivElement | null} */ (null));
   const memberUploadDropzoneRef = useRef(/** @type {HTMLDivElement | null} */ (null));
@@ -650,11 +139,6 @@ export default function ProviderOnboardingExperience({
   const [assistedNotice, setAssistedNotice] = useState(false);
   const [assistedUpload, setAssistedUpload] = useState(false);
   const [apiAcknowledged, setApiAcknowledged] = useState(false);
-
-  const deepInsightsCsv = useDeepInsightsCsvUpload(
-    providerKey ?? "",
-    pipelineCompleteRef,
-  );
 
   const p = useMemo(
     () => (providerKey ? providers[providerKey] ?? null : null),
@@ -1208,7 +692,6 @@ export default function ProviderOnboardingExperience({
           : <MemberActionColumn
               p={p}
               actionCardShell={actionCardInner}
-              csvUpload={deepInsightsCsv}
               assistedUpload={assistedUpload}
               assistedNotice={assistedNotice}
               apiAcknowledged={apiAcknowledged}
@@ -1363,18 +846,6 @@ function LabActionBlock({
  * @param {{
  *   p: ProviderConfig;
  *   actionCardShell: string;
- *   csvUpload: {
- *     uploadedFiles: File[];
- *     fileRejectError: string | null;
- *     serverError: string | null;
- *     analysisStatus: string;
- *     analysisStepDone: number;
- *     analysisSteps: string[];
- *     statusLabel: string;
- *     addFilesFromList: (list: FileList | null | undefined) => void;
- *     removeFile: (index: number) => void;
- *     runUploadAndAnalyze: () => Promise<void>;
- *   };
  *   assistedUpload: boolean;
  *   assistedNotice: boolean;
  *   apiAcknowledged: boolean;
@@ -1398,7 +869,6 @@ function LabActionBlock({
 function MemberActionColumn({
   p,
   actionCardShell,
-  csvUpload,
   assistedUpload,
   assistedNotice,
   apiAcknowledged,
@@ -1440,8 +910,7 @@ function MemberActionColumn({
             </li>
           ))}
         </ul>
-        <MemberCsvStagingUi
-          csvUpload={csvUpload}
+        <DeepInsightsMemberIngestionCard
           uploadInputRef={uploadInputRef}
           uploadDropzoneRef={uploadDropzoneRef}
           highlightUpload={highlightUpload}
@@ -1492,8 +961,7 @@ function MemberActionColumn({
           <p className="mt-1 text-[11px] leading-snug text-vmb-text-muted">
             Upload reports here if you’re not using the live connection yet.
           </p>
-          <MemberCsvStagingUi
-            csvUpload={csvUpload}
+          <DeepInsightsMemberIngestionCard
             uploadInputRef={uploadInputRef}
             highlightUpload={highlightApiCsv}
             browseButtonClass={btnPrimary}

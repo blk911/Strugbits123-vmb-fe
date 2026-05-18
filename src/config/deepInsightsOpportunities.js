@@ -458,6 +458,11 @@ function buildSegmentOpportunity(segmentId, name, count, spendSummary) {
   };
 }
 
+/** All predefined opportunity records (excludes dynamic segment builders). */
+export function listStaticOpportunityRecords() {
+  return Object.values(OPPORTUNITIES_BY_ID);
+}
+
 /** @param {string} id */
 export function getOpportunityById(id) {
   const direct = OPPORTUNITIES_BY_ID[id];

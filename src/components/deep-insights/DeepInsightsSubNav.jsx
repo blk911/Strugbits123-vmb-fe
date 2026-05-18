@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 const links = [
   { to: "/salon-owner/deep-insights/data-capture", label: "Data Capture" },
   { to: "/salon-owner/deep-insights/analytics", label: "Analytics" },
+  { to: "/salon-owner/opportunities", label: "Opportunities" },
+  { to: "/salon-owner/campaigns", label: "Campaigns" },
 ];
 
 export default function DeepInsightsSubNav() {

@@ -7,7 +7,7 @@ export default function RedirectIfAuthenticated({ children }) {
   if (role) {
     const target =
       role === "customer" ? "/client"
-      : role === "salon-owner" ? "/salon-owner"
+      : role === "salon-owner" ? "/salon-owner/dashboard"
       : role === "admin" ? "/admin"
       : null;
 

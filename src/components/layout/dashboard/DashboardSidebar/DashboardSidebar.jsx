@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useReducer } from "react";
 import { menus } from "../../../../config/menuConfig";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { useUser } from "../../../../hooks/useUser";
 import LoadingIndicator from "../../../common/LoadingIndicator/LoadingIndicator";
 import { LuExternalLink } from "react-icons/lu";
+import {
+  DEEP_INSIGHTS_DATASET_EVENT,
+  deepInsightsPreferredPath,
+} from "../../../../lib/deep-insights/storageKeys.js";
 
 function DashboardSidebar() {
   const { user, loading } = useUser();
   const location = useLocation();
+  const [, forceDeepInsightsNav] = useReducer((x) => x + 1, 0);
+
+  useEffect(() => {
+    const onDatasetChange = () => forceDeepInsightsNav();
+    window.addEventListener(DEEP_INSIGHTS_DATASET_EVENT, onDatasetChange);
+    return () => window.removeEventListener(DEEP_INSIGHTS_DATASET_EVENT, onDatasetChange);
+  }, []);
+
   const role = user?.role;
   const roleMap = {
     "salon-owner": "salonOwner",
@@ -40,7 +52,7 @@ function DashboardSidebar() {
   }
 
   return (
-    <div className="h-full bg-[#fffdfb]/90 flex flex-col border-r border-[#ded3cc] ">
+    <div className="h-full bg-[#fffdfb]/90 flex flex-col border-r border-[#ded3cc]" lang="en">
       <div className="flex flex-col gap-y-[6px] px-[8px] py-[26px] flex-1 overflow-y-auto custom-scrollbar">
         {items.map((item, idx) => {
           if (item.type === "divider") {
@@ -60,6 +72,10 @@ function DashboardSidebar() {
           }
 
           const isGroupActive =
+            (Array.isArray(item.activeGroupPrefixes) &&
+              item.activeGroupPrefixes.some((p) =>
+                location.pathname.startsWith(p),
+              )) ||
             (typeof item.groupPath === "string" &&
               location.pathname.startsWith(item.groupPath)) ||
             (!item.groupPath &&
@@ -69,10 +85,12 @@ function DashboardSidebar() {
             false;
 
           if (item.children?.length) {
+            const groupParentTo =
+              item.deepInsightsPreferredEntry ? deepInsightsPreferredPath() : item.path;
             return (
               <div key={idx} className="flex flex-col gap-y-[4px]">
                 <NavLink
-                  to={item.path}
+                  to={groupParentTo}
                   className={`flex min-w-0 justify-start max-[1100px]:flex-col flex-row gap-2 py-[9px] sm:px-[8px]
    rounded-[4px] transition-all duration-200 border
    ${
@@ -103,7 +121,7 @@ function DashboardSidebar() {
                         {item.subtext}
                       </span>
                     </span>
-                  : <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-words min-w-0 max-sm:hidden">
+                  : <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] hyphens-auto break-normal min-w-0 max-sm:hidden">
                       {item.name}
                     </span>
                   }
@@ -132,7 +150,7 @@ function DashboardSidebar() {
                           className: "w-4 h-4",
                         })}
                       </span>
-                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] uppercase tracking-[0.04em] break-words min-w-0 max-sm:hidden">
+                      <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[12px] uppercase tracking-[0.04em] hyphens-auto break-normal min-w-0 max-sm:hidden">
                         {child.name}
                       </span>
                     </NavLink>
@@ -166,7 +184,7 @@ function DashboardSidebar() {
                   {React.cloneElement(item.icon, { className: "w-5 h-5" })}
                 </span>
 
-                <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] break-words min-w-0 max-sm:hidden">
+                <span className="max-[1100px]:text-center text-left text-wrap text-[10px] sm:text-[11px] xl:text-[13px] uppercase tracking-[0.05em] hyphens-auto break-normal min-w-0 max-sm:hidden">
                   {item.name}
                 </span>
               </>

@@ -33,5 +33,14 @@ export function DashboardModalProvider({ children }) {
 }
 
 export function useDashboardModal() {
-  return useContext(DashboardModalContext);
+  const ctx = useContext(DashboardModalContext);
+  if (ctx == null) {
+    return {
+      activeModal: null,
+      modalData: null,
+      openModal: () => {},
+      closeModal: () => {},
+    };
+  }
+  return ctx;
 }

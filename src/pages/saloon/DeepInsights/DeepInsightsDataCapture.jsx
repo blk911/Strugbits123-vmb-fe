@@ -1,14 +1,17 @@
-import React, { useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import { LuSparkles } from "react-icons/lu";
+import ImportReviewPanel from "../../../components/deep-insights/ImportReviewPanel";
+import ImportRunSummaryPanel from "../../../components/deep-insights/ImportRunSummaryPanel";
 import IntelligenceLayoutShell from "../../../components/intelligence/IntelligenceLayoutShell";
 import ProviderOnboardingExperience from "../../../components/intelligence/ProviderOnboardingExperience";
+import TruthThreadArchitectureNote from "../../../components/taikos/TruthThreadArchitectureNote";
 import {
   MEMBER_PROVIDERS,
   PRIMARY_ORDER,
   SECONDARY_ORDER,
 } from "../../../config/providerOnboardingData";
-import { MOCK_IMPORT_META } from "../../../config/deepInsightsMockDataset";
-import { useNavigate } from "react-router-dom";
+
+import { useDeepInsightsHydration } from "../../../hooks/useDeepInsightsHydration";
 
 const insightBullets = [
   "Booking patterns",
@@ -19,24 +22,12 @@ const insightBullets = [
 ];
 
 export default function DeepInsightsDataCapture() {
+  useDeepInsightsHydration();
   const railRef = useRef(/** @type {HTMLDivElement | null} */ (null));
-  const navigate = useNavigate();
 
   const focusRail = () => {
     railRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   };
-
-  const onPipelineComplete = useCallback(() => {
-    try {
-      sessionStorage.setItem(
-        "vmb_deep_insights_canonical_preview",
-        JSON.stringify(MOCK_IMPORT_META),
-      );
-    } catch {
-      /* ignore quota / privacy mode */
-    }
-    navigate("/salon-owner/deep-insights/analytics");
-  }, [navigate]);
 
   const hero = (
     <>
@@ -76,8 +67,10 @@ export default function DeepInsightsDataCapture() {
         secondaryOrder={SECONDARY_ORDER}
         railRef={railRef}
         onChoosePlatform={focusRail}
-        onDeepInsightsPipelineComplete={onPipelineComplete}
       />
+      <ImportReviewPanel />
+      <ImportRunSummaryPanel />
+      <TruthThreadArchitectureNote />
     </IntelligenceLayoutShell>
   );
 }

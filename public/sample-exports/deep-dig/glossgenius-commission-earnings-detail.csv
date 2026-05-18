@@ -1,0 +1,4 @@
+Date,Provider,Charge ID,Payment Source,Client,Descriptor,Price,Total Payment Amount,Payment Method,Payment Processing Fee Paid by Business,Item Discount,Net Sale,Sales Tax,Tip Earned,Commission Earned from Total Price,Commission Earned from Net Sale,Product Cost,Net Sales Minus Cost,Line Item Type
+2026-05-01,Nina K.,GG-CHG-1001,In-person,Jenny Martinez,Gel Manicure,45.00,57.78,Card,1.85,0.00,45.00,3.78,9.00,12.50,10.20,0.00,45.00,Service
+2026-05-01,Nina K.,GG-CHG-1001,In-person,Jenny Martinez,Cuticle Oil Retail,12.00,12.00,Card,0.00,0.00,12.00,0.00,0.00,1.50,1.20,4.50,7.50,Product
+2026-05-02,Maya T.,GG-CHG-1002,Online,Ashley Chen,Misc booking fee,5.00,5.41,Apple Pay,0.18,0.00,5.00,0.41,0.00,0.75,0.60,0.00,5.00,Other

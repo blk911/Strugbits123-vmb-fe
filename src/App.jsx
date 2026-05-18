@@ -10,7 +10,9 @@ import { useSelector, useDispatch } from "react-redux";
 import PublicRoutes from "./routes/PublicRoutes";
 import AdminRoutes from "./routes/AdminRoutes";
 import SaloonRoutes from "./routes/SaloonRoutes";
+import DeepInsightsPreferredNavigate from "./components/deep-insights/DeepInsightsPreferredNavigate.jsx";
 import ClientRoutes from "./routes/ClientRoutes";
+import SalonPublicOrDashboardRoute from "./routes/SalonPublicOrDashboardRoute";
 import ScrollToTop from "./components/common/site/ScrollToTop";
 import { BookingCancel, BookingSuccess } from "./pages/client";
 
@@ -38,7 +40,7 @@ export default function App() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <LoadingIndicator size="xl" />;
+        <LoadingIndicator size="xl" />
       </div>
     );
   }
@@ -46,18 +48,17 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <Routes>
+        <Route
+          path="/salon/deep-insights"
+          element={<DeepInsightsPreferredNavigate />}
+        />
+        <Route path="/salon/:id" element={<SalonPublicOrDashboardRoute />} />
         {PublicRoutes()}
         {role === "admin" && AdminRoutes()}
         {role === "salon-owner" && SaloonRoutes()}
         {role === "customer" && ClientRoutes()}
         <Route path="/booking-success" element={<BookingSuccess />} />
         <Route path="/booking-cancel" element={<BookingCancel />} />
-        <Route
-          path="/salon/deep-insights"
-          element={
-            <Navigate to="/salon-owner/deep-insights/data-capture" replace />
-          }
-        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
