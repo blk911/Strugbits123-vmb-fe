@@ -1,50 +1,53 @@
 import React, { useCallback } from "react";
 import heroBackdrop from "../../../assets/salon_hero_bg.png";
-import stylistStill from "../../../assets/brand/benefits/girls-night.jpg";
 import HeroOverlay from "./HeroOverlay";
-import FloatingTrustPill from "./FloatingTrustPill";
-import AvatarStack from "./AvatarStack";
-import HeroActions from "./HeroActions";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAuthMode, setAuthType } from "../../../store/features/authSlice";
+
+const SCAN_STATS = [
+  { label: "Clients imported", value: "847", done: true },
+  { label: "Appointments analyzed", value: "3,241", done: true },
+  { label: "Revenue patterns detected", value: "", done: true },
+  { label: "Opportunities found", value: "3", highlight: true },
+];
+
+const OPPORTUNITY_PILLS = [
+  "38 dormant high-value clients",
+  "Referral circles identified",
+  "Giftable moments mapped",
+];
 
 export default function SalonHero() {
-  const scrollToId = useCallback((id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const goRegister = useCallback(() => {
+    dispatch(setAuthType("salon"));
+    dispatch(setAuthMode("signup"));
+    navigate("/register");
+  }, [dispatch, navigate]);
+
+  const scrollToScan = useCallback(() => {
+    document.getElementById("free-scan")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
     <section className="relative isolate w-full overflow-hidden bg-[#0a0f18]">
       <style>{`
         @keyframes salonHeroKen {
-          0% { transform: scale(1) translate(0, 0); }
-          100% { transform: scale(1.07) translate(-1.5%, 0.8%); }
+          0%   { transform: scale(1)    translate(0,0); }
+          100% { transform: scale(1.07) translate(-1.5%,0.8%); }
         }
-        @keyframes salonHeroDrift {
-          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
-          50% { transform: translate(10px, -18px) scale(1.05); opacity: 0.55; }
+        .salon-hero-ken { animation: salonHeroKen 24s ease-in-out infinite alternate; }
+        @keyframes scanPulse {
+          0%, 100% { opacity: 0.55; }
+          50%       { opacity: 1; }
         }
-        @keyframes salonHeroDrift2 {
-          0%, 100% { transform: translate(0, 0); opacity: 0.25; }
-          50% { transform: translate(-16px, 12px); opacity: 0.45; }
-        }
-        @keyframes salonHeroShimmer {
-          0% { opacity: 0.15; transform: translateX(-20%); }
-          100% { opacity: 0.35; transform: translateX(20%); }
-        }
-        .salon-hero-ken {
-          animation: salonHeroKen 24s ease-in-out infinite alternate;
-        }
-        .salon-hero-drift {
-          animation: salonHeroDrift 14s ease-in-out infinite;
-        }
-        .salon-hero-drift-2 {
-          animation: salonHeroDrift2 18s ease-in-out infinite;
-        }
-        .salon-hero-shimmer {
-          animation: salonHeroShimmer 12s ease-in-out infinite alternate;
-        }
+        .scan-pulse { animation: scanPulse 2.6s ease-in-out infinite; }
       `}</style>
 
-      {/* Background layer */}
+      {/* Background */}
       <div className="absolute inset-0">
         <img
           src={heroBackdrop}
@@ -52,83 +55,128 @@ export default function SalonHero() {
           className="salon-hero-ken h-full w-full object-cover object-[center_28%]"
         />
         <HeroOverlay />
-        {/* Soft light haze — cinematic, not neon */}
         <div
-          className="salon-hero-shimmer pointer-events-none absolute -left-1/4 top-0 h-1/2 w-[70%] bg-gradient-to-r from-transparent via-[#F7E7CE]/10 to-transparent blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="salon-hero-drift pointer-events-none absolute -right-20 top-1/4 h-64 w-64 rounded-full bg-[#F7E7CE]/8 blur-[100px]"
-          aria-hidden
-        />
-        <div
-          className="salon-hero-drift-2 pointer-events-none absolute bottom-1/4 left-1/3 h-48 w-48 rounded-full bg-[#6b8cae]/15 blur-[80px]"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0a0f18]/85 via-[#0a0f18]/50 to-[#0a0f18]/15"
           aria-hidden
         />
       </div>
 
-      <div className="relative z-[1] mx-auto flex min-h-[31vh] max-w-[1440px] flex-col px-5 pb-7 pt-14 sm:min-h-[33vh] sm:px-8 sm:pb-9 sm:pt-16 lg:min-h-[35vh] lg:flex-row lg:items-center lg:gap-3 lg:px-12 lg:pb-10 lg:pt-16">
-        {/* Left — primary narrative (~60% shorter hero vs prior viewport mins) */}
-        <div className="flex min-w-0 flex-1 flex-col justify-center lg:flex-[1.05] lg:pr-6">
+      <div className="relative z-[1] mx-auto flex max-w-[1440px] flex-col items-start px-5 pb-16 pt-14 sm:px-8 sm:pb-18 sm:pt-16 lg:flex-row lg:items-center lg:gap-10 lg:px-12 lg:pb-20 lg:pt-18">
+
+        {/* Left — copy */}
+        <div className="flex min-w-0 flex-1 flex-col justify-center lg:pr-6">
           <p className="text-[10px] font-semibold uppercase tracking-[0.36em] text-[#F7E7CE]/55 sm:text-[11px]">
-            Private Studio
+            Salon Growth Engine
           </p>
-          <h1 className="font-studio-serif mt-3 text-[1.85rem] font-medium leading-[1.1] tracking-tight text-[#faf6ef] sm:mt-4 sm:text-[2.15rem] lg:text-[2.65rem] lg:leading-[1.06]">
-            The Private Studio
+          <h1 className="font-studio-serif mt-3 text-[2.05rem] font-medium leading-[1.08] tracking-tight text-[#faf6ef] sm:mt-4 sm:text-[2.55rem] lg:text-[3.05rem] lg:leading-[1.04]">
+            Your Client List<br className="hidden sm:block" /> Is Worth More<br className="hidden sm:block" /> Than You Think.
           </h1>
-          <p className="mt-3 max-w-xl text-[15px] leading-snug text-[#d8d2c8] sm:mt-4 sm:text-[16px] sm:leading-relaxed lg:text-[17px]">
-            Luxury nail experiences for trusted clients and curated referrals.
+          <p className="mt-4 max-w-[520px] text-[15px] leading-relaxed text-[#ccc7be] sm:text-[16px] lg:text-[17px]">
+            VMB connects to your existing salon software, analyzes your client and appointment history, and reveals hidden revenue opportunities already inside your business.
           </p>
-          <p className="mt-2 text-xs font-medium tracking-wide text-[#F7E7CE]/50 sm:text-sm">
-            Cherry Creek · Invite-only access
-          </p>
-
-          <HeroActions
-            className="mt-6 sm:mt-7"
-            onSendGift={() => scrollToId("salon-gift-flow")}
-            onBookExperience={() => scrollToId("salon-book-experience")}
-          />
-        </div>
-
-        {/* Right — trust & human presence (asymmetrical) */}
-        <div className="relative mt-8 flex min-h-[168px] flex-1 justify-end sm:mt-9 lg:mt-0 lg:min-h-[200px] lg:flex-[0.95]">
-          {/* Stylist / lifestyle focal */}
-          <div className="relative w-full max-w-[360px] lg:max-w-none">
-            <div className="relative ml-auto aspect-[4/5] w-[82%] max-w-[300px] overflow-hidden rounded-[1.35rem] sm:w-[80%] sm:max-w-[320px] sm:rounded-[1.65rem] lg:mr-0 lg:w-full lg:max-w-[360px] lg:rounded-[1.75rem]">
-              <img
-                src={stylistStill}
-                alt="Salon experience"
-                className="h-full w-full object-cover transition duration-[2.2s] ease-out hover:scale-[1.03]"
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <button
+              type="button"
+              onClick={goRegister}
+              className="group relative overflow-hidden rounded-full bg-[#F7E7CE] px-7 py-3 text-[14px] font-semibold tracking-wide text-[#1a1520] shadow-[0_8px_32px_-8px_rgba(247,231,206,0.45)] transition duration-300 hover:brightness-[1.04] active:scale-[0.99] sm:text-[15px]"
+            >
+              <span className="relative z-[1]">Analyze My Salon</span>
+              <span
+                className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 transition duration-700 group-hover:translate-x-full group-hover:opacity-100"
+                aria-hidden
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a1525]/55 via-transparent to-[#0d1528]/20" />
-            </div>
-
-            {/* Floating trust — layered, not card grids */}
-            <div className="absolute -left-2 top-[8%] z-[2] max-w-[240px] sm:left-0 lg:-left-6 lg:max-w-[260px]">
-              <FloatingTrustPill className="salon-hero-drift shadow-[0_8px_40px_-12px_rgba(0,0,0,0.5)]">
-                Trusted by <span className="whitespace-nowrap font-semibold text-[#F7E7CE]">248 clients</span>
-              </FloatingTrustPill>
-            </div>
-            <div className="absolute bottom-[18%] right-0 z-[2] max-w-[260px] sm:right-2 lg:-right-4 lg:bottom-[22%] lg:max-w-[280px]">
-              <FloatingTrustPill className="salon-hero-drift-2 shadow-[0_8px_40px_-12px_rgba(0,0,0,0.5)]">
-                <span className="text-[#F7E7CE]/90">12 invitations</span> sent
-                this week
-              </FloatingTrustPill>
-            </div>
-            <div className="absolute bottom-2 left-[6%] z-[2] sm:bottom-6 sm:left-[10%] lg:bottom-8">
-              <FloatingTrustPill>
-                <span className="text-[#F7E7CE]">VIP Bridal Circle</span> active
-              </FloatingTrustPill>
-            </div>
-
-            <div className="absolute right-[4%] top-[40%] z-[2] hidden items-center gap-3 sm:flex lg:right-[6%]">
-              <AvatarStack />
-              <FloatingTrustPill className="!py-2 !text-xs">
-                Invites circulating
-              </FloatingTrustPill>
-            </div>
+            </button>
+            <button
+              type="button"
+              onClick={scrollToScan}
+              className="rounded-full border border-white/[0.18] bg-[#1a2235]/55 px-7 py-3 text-[14px] font-semibold tracking-wide text-[#f8f4eb] backdrop-blur-md transition duration-300 hover:border-[#F7E7CE]/35 hover:bg-[#232f4a]/55 sm:text-[15px]"
+            >
+              See Sample Opportunities
+            </button>
           </div>
         </div>
+
+        {/* Right — Intelligence Scan mock card */}
+        <div className="mt-10 w-full max-w-[370px] shrink-0 self-start sm:self-auto lg:mt-0 lg:w-[370px]">
+          <div className="rounded-2xl border border-white/[0.10] bg-[#0d1628]/82 p-5 shadow-[0_28px_64px_rgba(0,0,0,0.55)] backdrop-blur-md sm:p-6">
+
+            {/* Card header */}
+            <div className="flex items-center justify-between">
+              <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#F7E7CE]/55">
+                Salon Intelligence Scan
+              </p>
+              <span className="scan-pulse flex h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
+            </div>
+
+            {/* Stats */}
+            <div className="mt-4 space-y-2">
+              {SCAN_STATS.map((s) => (
+                <div
+                  key={s.label}
+                  className={`flex items-center justify-between rounded-xl px-3.5 py-2.5 ${
+                    s.highlight
+                      ? "border border-[#b88f45]/40 bg-[#b88f45]/10"
+                      : "border border-white/[0.07] bg-white/[0.04]"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={`text-[11px] leading-none ${
+                        s.highlight ? "text-[#F7E7CE]" : "text-emerald-400"
+                      }`}
+                    >
+                      {s.highlight ? "★" : "✓"}
+                    </span>
+                    <span
+                      className={`text-[12px] font-medium ${
+                        s.highlight ? "text-[#F7E7CE]" : "text-[#ccc7be]"
+                      }`}
+                    >
+                      {s.label}
+                    </span>
+                  </div>
+                  {s.value && (
+                    <span
+                      className={`text-[13px] font-bold tabular-nums ${
+                        s.highlight ? "text-[#F7E7CE]" : "text-white"
+                      }`}
+                    >
+                      {s.value}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Opportunities */}
+            <div className="mt-4 border-t border-white/[0.08] pt-4">
+              <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#F7E7CE]/45">
+                Top opportunities detected
+              </p>
+              <div className="space-y-1.5">
+                {OPPORTUNITY_PILLS.map((pill, i) => (
+                  <div
+                    key={pill}
+                    className="flex items-center gap-2.5 rounded-lg border border-[#b88f45]/20 bg-[#b88f45]/[0.07] px-3 py-2"
+                  >
+                    <span className="text-[10px] font-bold tabular-nums text-[#b88f45]">
+                      {i + 1}
+                    </span>
+                    <span className="text-[11px] text-[#ccc7be]">{pill}</span>
+                    <span className="ml-auto shrink-0 rounded border border-white/10 bg-white/[0.06] px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-white/35">
+                      Locked
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="mt-4 text-center text-[9px] text-[#8a9bb8]/65">
+              Free scan · subscribe to unlock campaigns
+            </p>
+          </div>
+        </div>
+
       </div>
     </section>
   );
