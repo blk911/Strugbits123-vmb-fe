@@ -1,0 +1,17 @@
+export const VMB_CARD_TEMPLATE_TOKENS = [
+    "{clientName}",
+    "{ownerName}",
+    "{salonName}",
+    "{serviceName}",
+    "{lastVisit}",
+    "{lastAppointmentDate}",
+    "{visitCount}",
+    "{referralCount}",
+    "{offer}",
+    "{offerValue}",
+    "{offerTerms}",
+    "{nextOpening}",
+    "{styleName}",
+    "{preferredDay}",
+    "{preferredTime}",
+];
