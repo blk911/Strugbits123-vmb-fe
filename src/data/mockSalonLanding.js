@@ -11,6 +11,7 @@
  *   pageTitle: string;
  *   salonName: string;
  *   ownerFirstName: string;
+ *   recipientFirstName: string;
  *   heroMessage: string;
  *   heroImageLabel: string;
  *   featuredOffer: {
@@ -35,6 +36,7 @@ const BY_SLUG = {
     pageTitle: "Jenny's Private Client Network",
     salonName: "Jenny's Studio",
     ownerFirstName: "Jenny",
+    recipientFirstName: "Maya",
     heroImageLabel: "Salon portrait",
     heroMessage:
       "You're invited into a quieter, relationship-first circle — reserved time, honest recommendations, and zero pressure. We'd love to have you close to the schedule.",
@@ -59,7 +61,7 @@ const BY_SLUG = {
     inviteTeaser:
       "Know someone who’d fit this circle? Invite them privately — no broadcast, no blast messages.",
     trustedFavoritesPlaceholder:
-      "When you tell us what you love elsewhere — books, coffee, small brands — we’ll keep a tasteful shortlist here. (Preview only for now.)",
+      "When you tell us what you love elsewhere — books, coffee, small brands — we’ll keep a tasteful shortlist here. (Concept only for now.)",
     favorites: [
       { id: "f1", name: "Quiet Hour coffee", note: "Neighborhood roast · low noise" },
       { id: "f2", name: "Lineage oils", note: "Scent you mentioned last visit" },
@@ -67,9 +69,10 @@ const BY_SLUG = {
   },
   "preview-salon": {
     slug: "preview-salon",
-    pageTitle: "Preview Salon · Private Client Network",
-    salonName: "Preview Salon",
+    pageTitle: "Salon Invitation · Private Client Network",
+    salonName: "Jenny's Studio",
     ownerFirstName: "Jenny",
+    recipientFirstName: "Ava",
     heroImageLabel: "Welcome",
     heroMessage:
       "A soft invitation to join our private client path — your offers, holds, and gifts stay human-reviewed.",
