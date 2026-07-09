@@ -56,6 +56,12 @@ export const menus = {
       icon: <LuUserRoundPlus className="h-5 w-5" />,
     },
     {
+      name: "VMB Templates",
+      path: "/admin/vmb/templates",
+      icon: <BsEnvelopePaperHeart className="h-5 w-5" />,
+      allowedRoles: ["admin"],
+    },
+    {
       name: "Appoint\u00ADments",
       path: "/appointments",
       icon: <FaCalendarDays className="h-5 w-5" />,
