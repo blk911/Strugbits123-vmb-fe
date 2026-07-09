@@ -13,6 +13,7 @@ import Contacts from "./Settings/Contacts";
 import SalonIntelligence from "./SalonIntelligence/SalonIntelligence";
 import CredentialAssistQueue from "./CredentialAssistQueue/CredentialAssistQueue";
 import NetworkPropagationLab from "./NetworkPropagationLab/NetworkPropagationLab";
+import VmbTemplateLibrary from "./VmbTemplateLibrary/VmbTemplateLibrary";
 export {
   Home,
   AppointmentHistory,
@@ -28,4 +29,5 @@ export {
   SalonIntelligence,
   CredentialAssistQueue,
   NetworkPropagationLab,
+  VmbTemplateLibrary,
 };

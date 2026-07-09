@@ -16,6 +16,7 @@ import {
   SalonIntelligence,
   CredentialAssistQueue,
   NetworkPropagationLab,
+  VmbTemplateLibrary,
 } from "../pages/admin";
 export default function AdminRoutes() {
   return (
@@ -88,6 +89,14 @@ export default function AdminRoutes() {
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <NetworkPropagationLab />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/vmb/templates"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <VmbTemplateLibrary />
           </ProtectedRoute>
         }
       />
