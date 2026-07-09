@@ -13,6 +13,7 @@ import SaloonRoutes from "./routes/SaloonRoutes";
 import DeepInsightsPreferredNavigate from "./components/deep-insights/DeepInsightsPreferredNavigate.jsx";
 import ClientRoutes from "./routes/ClientRoutes";
 import SalonPublicOrDashboardRoute from "./routes/SalonPublicOrDashboardRoute";
+import SalonClientInvitePage from "./pages/Site/SalonClientInvite/SalonClientInvitePage";
 import ScrollToTop from "./components/common/site/ScrollToTop";
 import { BookingCancel, BookingSuccess } from "./pages/client";
 
@@ -52,6 +53,7 @@ export default function App() {
           path="/salon/deep-insights"
           element={<DeepInsightsPreferredNavigate />}
         />
+        <Route path="/salon/:id/invite" element={<SalonClientInvitePage />} />
         <Route path="/salon/:id" element={<SalonPublicOrDashboardRoute />} />
         {PublicRoutes()}
         {role === "admin" && AdminRoutes()}
