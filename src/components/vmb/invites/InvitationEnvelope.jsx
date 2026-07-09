@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function InvitationEnvelope({ salon, isOpen, onOpen }) {
-  const salonName = salon.slug === "preview-salon" ? `${salon.ownerFirstName}'s Studio` : salon.salonName;
+  const salonName = salon.displaySalonName || (salon.slug === "preview-salon" ? `${salon.ownerFirstName}'s Studio` : salon.salonName);
 
   return (
     <div

@@ -7,17 +7,17 @@ const secondary =
 const tertiary =
   "inline-flex min-h-12 w-full items-center justify-center rounded-full px-7 text-sm font-semibold text-[#8b6b67] transition hover:bg-[#f8ebe7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#edd1ca]";
 
-export default function InviteActions() {
+export default function InviteActions({ labels }) {
   return (
     <div className="mt-8 space-y-3">
       <button type="button" className={primary}>
-        Claim My Gift
+        {labels?.primary || "Claim My Gift"}
       </button>
       <button type="button" className={secondary}>
-        Ask for an Adjustment
+        {labels?.secondary || "Ask for an Adjustment"}
       </button>
       <button type="button" className={tertiary}>
-        Hold Until Later
+        {labels?.tertiary || "Hold Until Later"}
       </button>
     </div>
   );

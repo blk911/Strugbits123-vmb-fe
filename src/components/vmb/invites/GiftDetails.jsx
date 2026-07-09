@@ -12,6 +12,11 @@ export default function GiftDetails({ salon }) {
       <p className="mt-4 text-[1rem] leading-7 text-[#65514f]">
         {salon.featuredOffer.detail}
       </p>
+      {salon.templateCtaLabel ? (
+        <p className="mt-4 text-sm font-semibold text-[#8f5f62]">
+          {salon.templateCtaLabel}
+        </p>
+      ) : null}
       <div className="mt-6 rounded-2xl border border-[#f0ddd8] bg-[#fff8f5] p-5">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#b27a7d]">
           Gift window

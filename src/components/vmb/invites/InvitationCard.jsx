@@ -4,7 +4,7 @@ import InviteActions from "./InviteActions";
 
 export default function InvitationCard({ salon, isOpen }) {
   const firstName = salon.recipientFirstName || "there";
-  const salonName = salon.slug === "preview-salon" ? `${salon.ownerFirstName}'s Studio` : salon.salonName;
+  const salonName = salon.displaySalonName || (salon.slug === "preview-salon" ? `${salon.ownerFirstName}'s Studio` : salon.salonName);
 
   return (
     <div
@@ -33,14 +33,14 @@ export default function InvitationCard({ salon, isOpen }) {
                 {salon.featuredOffer.headline}
               </p>
               <p className="mt-3 text-sm leading-6 text-[#735b58]">
-                A private note from {salonName}, held in a softer place than a standard booking link.
+                {salon.privateNote || `A private note from ${salonName}, held in a softer place than a standard booking link.`}
               </p>
             </div>
           </aside>
 
           <section className="px-7 py-8 sm:px-10 sm:py-10">
             <GiftDetails salon={salon} />
-            <InviteActions />
+            <InviteActions labels={salon.actionLabels} />
           </section>
         </div>
       </article>

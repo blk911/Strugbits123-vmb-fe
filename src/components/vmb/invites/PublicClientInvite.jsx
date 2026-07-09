@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import InvitationEnvelope from "./InvitationEnvelope";
 import InvitationCard from "./InvitationCard";
+import { buildPublicInviteViewModel } from "../../../lib/vmb/invites/public-invite-view-model";
 
 export default function PublicClientInvite({ salon }) {
   const [isOpen, setIsOpen] = useState(false);
+  const invite = buildPublicInviteViewModel(salon);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#fff8f5] text-[#332a28]">
@@ -12,8 +14,8 @@ export default function PublicClientInvite({ salon }) {
 
       <section className="relative mx-auto flex min-h-screen w-full max-w-5xl items-center justify-center px-5 py-10 sm:px-8 lg:py-14">
         <div className="w-full">
-          <InvitationEnvelope salon={salon} isOpen={isOpen} onOpen={() => setIsOpen(true)} />
-          {isOpen ? <InvitationCard salon={salon} isOpen={isOpen} /> : null}
+          <InvitationEnvelope salon={invite} isOpen={isOpen} onOpen={() => setIsOpen(true)} />
+          {isOpen ? <InvitationCard salon={invite} isOpen={isOpen} /> : null}
         </div>
       </section>
     </main>
